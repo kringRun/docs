@@ -442,216 +442,9 @@
             ]
           },
           {
-            "dropdown": "LangGraph Platform",
-            "icon": "rocket-launch",
-            "description": "Platform for building and deploying AI agents",
-            "tabs": [
-              {
-                "tab": "Get started",
-                "groups": [
-                  {
-                    "group": "Overview",
-                    "pages": [
-                      "langgraph-platform/index",
-                      {
-                        "group": "Components",
-                        "pages": [
-                          "langgraph-platform/components",
-                          "langgraph-platform/langgraph-server",
-                          "langgraph-platform/data-plane",
-                          "langgraph-platform/control-plane"
-                        ]
-                      },
-                      "langgraph-platform/application-structure"
-                    ]
-                  },
-                  {
-                    "group": "Quickstarts",
-                    "pages": [
-                      "langgraph-platform/local-server",
-                      "langgraph-platform/deployment-quickstart",
-                      "langgraph-platform/quick-start-studio"
-                    ]
-                  },
-                  {
-                    "group": "Plans",
-                    "pages": [
-                      "langgraph-platform/plans"
-                    ]
-                  }
-                ]
-              },
-              {
-                "tab": "Build",
-                "groups": [
-                  {
-                    "group": "Build with LangGraph Platform",
-                    "pages": [
-                      "langgraph-platform/why-langgraph"
-                    ]
-                  },
-                  {
-                    "group": "Data models",
-                    "pages": [
-                      {
-                        "group": "Assistants",
-                        "pages": [
-                          "langgraph-platform/assistants",
-                          "langgraph-platform/configuration-cloud",
-                          "langgraph-platform/use-threads"
-                        ]
-                      },
-                      {
-                        "group": "Runs",
-                        "pages": [
-                          "langgraph-platform/background-run",
-                          "langgraph-platform/same-thread",
-                          "langgraph-platform/cron-jobs",
-                          "langgraph-platform/stateless-runs",
-                          "langgraph-platform/configurable-headers"
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "group": "Core capabilities",
-                    "pages": [
-                      "langgraph-platform/streaming",
-                      "langgraph-platform/add-human-in-the-loop",
-                      "langgraph-platform/human-in-the-loop-time-travel",
-                      "langgraph-platform/server-mcp",
-                      "langgraph-platform/server-a2a",
-                      "langgraph-platform/use-webhooks",
-                      {
-                        "group": "Double-texting",
-                        "pages": [
-                          "langgraph-platform/double-texting",
-                          "langgraph-platform/interrupt-concurrent",
-                          "langgraph-platform/rollback-concurrent",
-                          "langgraph-platform/reject-concurrent",
-                          "langgraph-platform/enqueue-concurrent"
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "group": "LangGraph Studio",
-                    "pages": [
-                      "langgraph-platform/langgraph-studio",
-                      "langgraph-platform/use-studio",
-                      "langgraph-platform/observability-studio",
-                      "langgraph-platform/troubleshooting-studio"
-                    ]
-                  }
-                ]
-              },
-              {
-                "tab": "Deploy",
-                "groups": [
-                  {
-                    "group": "Overview",
-                    "pages": [
-                      "langgraph-platform/deployment-options",
-                      "langgraph-platform/cloud",
-                      "langgraph-platform/hybrid",
-                      "langgraph-platform/self-hosted"
-                    ]
-                  },
-                  {
-                    "group": "Guides for deployment",
-                    "pages": [
-                      "langgraph-platform/deploy-to-cloud",
-                      "langgraph-platform/deploy-hybrid",
-                      "langgraph-platform/deploy-self-hosted-full-platform",
-                      "langgraph-platform/deploy-standalone-server",
-                      "langgraph-platform/use-remote-graph"
-                    ]
-                  },
-                  {
-                    "group": "Configure app for deployment",
-                    "pages": [
-                      "langgraph-platform/setup-app-requirements-txt",
-                      "langgraph-platform/setup-pyproject",
-                      "langgraph-platform/setup-javascript",
-                      "langgraph-platform/custom-docker",
-                      "langgraph-platform/graph-rebuild",
-                      "langgraph-platform/langgraph-cli",
-                      "langgraph-platform/sdk",
-                      "langgraph-platform/egress-metrics-metadata",
-                      "langgraph-platform/monorepo-support"
-                    ]
-                  }
-                ]
-              },
-              {
-                "tab": "Manage",
-                "groups": [
-                  {
-                    "group": "Authentication & access control",
-                    "pages": [
-                      "langgraph-platform/auth",
-                      "langgraph-platform/custom-auth",
-                      "langgraph-platform/set-up-custom-auth",
-                      "langgraph-platform/resource-auth",
-                      "langgraph-platform/add-auth-server",
-                      "langgraph-platform/openapi-security",
-                      "langgraph-platform/agent-auth"
-                    ]
-                  },
-                  {
-                    "group": "Scalability & resilience",
-                    "pages": [
-                      "langgraph-platform/scalability-and-resilience"
-                    ]
-                  },
-                  {
-                    "group": "Server customization",
-                    "pages": [
-                      "langgraph-platform/custom-lifespan",
-                      "langgraph-platform/custom-middleware",
-                      "langgraph-platform/custom-routes"
-                    ]
-                  },
-                  {
-                    "group": "Data management",
-                    "pages": [
-                      "langgraph-platform/data-storage-and-privacy",
-                      "langgraph-platform/semantic-search",
-                      "langgraph-platform/configure-ttl"
-                    ]
-                  },
-                  {
-                    "group": "Tutorials",
-                    "pages": [
-                      "langgraph-platform/autogen-integration",
-                      "langgraph-platform/use-stream-react",
-                      "langgraph-platform/generative-ui-react"
-                    ]
-                  }
-                ]
-              },
-              {
-                "tab": "Reference",
-                "pages": [
-                  "langgraph-platform/reference-overview",
-                  "langgraph-platform/server-api-ref",
-                  "langgraph-platform/langgraph-server-changelog",
-                  "langgraph-platform/release-versions",
-                  "langgraph-platform/api-ref-control-plane",
-                  "langgraph-platform/cli",
-                  "langgraph-platform/env-var",
-                  "langgraph-platform/python-sdk",
-                  "langgraph-platform/js-ts-sdk",
-                  "langgraph-platform/remote-graph",
-                  "langgraph-platform/faq"
-                ]
-              }
-            ]
-          },
-          {
             "dropdown": "LangSmith",
-            "icon": "screwdriver-wrench",
-            "description": "Platform for LLM observability and evaluation",
+            "icon": "rocket",
+            "description": "Platform for deployment, LLM observability, and evaluation",
             "tabs": [
               {
                 "tab": "Get started",
@@ -662,15 +455,77 @@
                     "pages": [
                       "langsmith/observability-quickstart",
                       "langsmith/evaluation-quickstart",
-                      "langsmith/prompt-engineering-quickstart"
+                      "langsmith/prompt-engineering-quickstart",
+                      "langsmith/local-server",
+                      "langsmith/deployment-quickstart",
+                      "langsmith/quick-start-studio"
                     ]
                   },
                   {
-                    "group": "API & SDKs",
+                    "group": "App development",
                     "pages": [
-                      "langsmith/api-ref",
-                      "langsmith/python-sdk",
-                      "langsmith/js-ts-sdk"
+                      "langsmith/why-langgraph",
+                      {
+                        "group": "Data models",
+                        "pages": [
+                          {
+                            "group": "Assistants",
+                            "pages": [
+                              "langsmith/assistants",
+                              "langsmith/configuration-cloud",
+                              "langsmith/use-threads"
+                            ]
+                          },
+                          {
+                            "group": "Runs",
+                            "pages": [
+                              "langsmith/background-run",
+                              "langsmith/same-thread",
+                              "langsmith/cron-jobs",
+                              "langsmith/stateless-runs",
+                              "langsmith/configurable-headers"
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "group": "Core capabilities",
+                        "pages": [
+                          "langsmith/streaming",
+                          "langsmith/add-human-in-the-loop",
+                          "langsmith/human-in-the-loop-time-travel",
+                          "langsmith/server-mcp",
+                          "langsmith/server-a2a",
+                          "langsmith/use-webhooks",
+                          {
+                            "group": "Double-texting",
+                            "pages": [
+                              "langsmith/double-texting",
+                              "langsmith/interrupt-concurrent",
+                              "langsmith/rollback-concurrent",
+                              "langsmith/reject-concurrent",
+                              "langsmith/enqueue-concurrent"
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "group": "Tutorials",
+                        "pages": [
+                          "langsmith/autogen-integration",
+                          "langsmith/use-stream-react",
+                          "langsmith/generative-ui-react"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "group": "Studio",
+                    "pages": [
+                      "langsmith/langgraph-studio",
+                      "langsmith/use-studio",
+                      "langsmith/observability-studio",
+                      "langsmith/troubleshooting-studio"
                     ]
                   },
                   {
@@ -955,78 +810,183 @@
                 ]
               },
               {
-                "tab": "Self-hosting",
-                "pages": [
-                  "langsmith/architectural-overview",
+                "tab": "Deployment",
+                "groups": [
                   {
-                    "group": "Setup",
+                    "group": "Overview",
                     "pages": [
-                      "langsmith/kubernetes",
-                      "langsmith/docker",
-                      "langsmith/self-host-usage",
-                      "langsmith/self-host-upgrades",
-                      "langsmith/self-host-egress",
-                      "langsmith/self-host-organization-charts",
-                      "langsmith/langsmith-managed-clickhouse"
+                      "langsmith/deployment-options",
+                      {
+                        "group": "Platform components",
+                        "pages": [
+                          "langsmith/components",
+                          "langsmith/langgraph-server",
+                          "langsmith/data-plane",
+                          "langsmith/control-plane"
+                        ]
+                      }
                     ]
                   },
                   {
-                    "group": "Configuration",
+                    "group": "Cloud",
                     "pages": [
-                      "langsmith/self-host-scale",
-                      "langsmith/self-host-ttl",
-                      "langsmith/self-host-ingress",
-                      "langsmith/self-host-mirroring-images",
-                      "langsmith/self-host-playground-environment-settings",
-                      "langsmith/troubleshooting"
+                      "langsmith/cloud",
+                      "langsmith/deploy-to-cloud"
+                    ]
+                  },
+                  {
+                    "group": "Hybrid",
+                    "pages": [
+                      "langsmith/hybrid",
+                      "langsmith/deploy-hybrid"
+                    ]
+                  },
+                  {
+                    "group": "Self-hosted",
+                    "pages": [
+                      "langsmith/self-hosted",
+                      {
+                        "group": "Deployment guides",
+                        "pages": [
+                          "langsmith/deploy-self-hosted-full-platform",
+                          "langsmith/deploy-standalone-server"
+                        ]
+                      },
+                      {
+                        "group": "Configuration",
+                        "pages": [
+                          "langsmith/custom-docker",
+                          "langsmith/egress-metrics-metadata"
+                        ]
+                      },
+                      {
+                        "group": "(Existing LS content to organize) Self-host",
+                        "pages": [
+                          "langsmith/architectural-overview",
+                          {
+                            "group": "Setup",
+                            "pages": [
+                              "langsmith/kubernetes",
+                              "langsmith/docker",
+                              "langsmith/self-host-usage",
+                              "langsmith/self-host-upgrades",
+                              "langsmith/self-host-egress",
+                              "langsmith/self-host-organization-charts",
+                              "langsmith/langsmith-managed-clickhouse"
+                            ]
+                          },
+                          {
+                            "group": "Configuration",
+                            "pages": [
+                              "langsmith/self-host-scale",
+                              "langsmith/self-host-ttl",
+                              "langsmith/self-host-ingress",
+                              "langsmith/self-host-mirroring-images",
+                              "langsmith/self-host-playground-environment-settings",
+                              "langsmith/troubleshooting"
+                            ]
+                          },
+                          {
+                            "group": "Authentication & access control",
+                            "pages": [
+                              "langsmith/self-host-basic-auth",
+                              "langsmith/self-host-sso",
+                              "langsmith/self-host-user-management",
+                              "langsmith/self-host-custom-tls-certificates",
+                              "langsmith/self-host-using-an-existing-secret"
+                            ]
+                          },
+                          {
+                            "group": "Connect external services",
+                            "pages": [
+                              "langsmith/self-host-blob-storage",
+                              "langsmith/self-host-external-clickhouse",
+                              "langsmith/self-host-external-postgres",
+                              "langsmith/self-host-external-redis"
+                            ]
+                          },
+                          {
+                            "group": "Scripts",
+                            "pages": [
+                              "langsmith/script-delete-a-workspace",
+                              "langsmith/script-delete-an-organization",
+                              "langsmith/script-delete-traces",
+                              "langsmith/script-generate-clickhouse-stats",
+                              "langsmith/script-generate-query-stats",
+                              "langsmith/script-running-pg-support-queries",
+                              "langsmith/script-running-ch-support-queries"
+                            ]
+                          },
+                          {
+                            "group": "Observability",
+                            "pages": [
+                              "langsmith/export-backend",
+                              "langsmith/langsmith-collector",
+                              "langsmith/observability-stack"
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "group": "Configure app for deployment",
+                    "pages": [
+                      "langsmith/application-structure",
+                      {
+                        "group": "Setup",
+                        "pages": [
+                          "langsmith/setup-app-requirements-txt",
+                          "langsmith/setup-pyproject",
+                          "langsmith/setup-javascript"
+                        ]
+                      },
+                      "langsmith/graph-rebuild",
+                      "langsmith/use-remote-graph",
+                      "langsmith/monorepo-support",
+                      "langsmith/semantic-search",
+                      "langsmith/configure-ttl"
                     ]
                   },
                   {
                     "group": "Authentication & access control",
                     "pages": [
-                      "langsmith/self-host-basic-auth",
-                      "langsmith/self-host-sso",
-                      "langsmith/self-host-user-management",
-                      "langsmith/self-host-custom-tls-certificates",
-                      "langsmith/self-host-using-an-existing-secret"
+                      "langsmith/auth",
+                      "langsmith/custom-auth",
+                      "langsmith/set-up-custom-auth",
+                      "langsmith/resource-auth",
+                      "langsmith/add-auth-server",
+                      "langsmith/openapi-security",
+                      "langsmith/agent-auth"
                     ]
                   },
                   {
-                    "group": "Connect external services",
+                    "group": "Server customization",
                     "pages": [
-                      "langsmith/self-host-blob-storage",
-                      "langsmith/self-host-external-clickhouse",
-                      "langsmith/self-host-external-postgres",
-                      "langsmith/self-host-external-redis"
-                    ]
-                  },
-                  {
-                    "group": "Scripts",
-                    "pages": [
-                      "langsmith/script-delete-a-workspace",
-                      "langsmith/script-delete-an-organization",
-                      "langsmith/script-delete-traces",
-                      "langsmith/script-generate-clickhouse-stats",
-                      "langsmith/script-generate-query-stats",
-                      "langsmith/script-running-pg-support-queries",
-                      "langsmith/script-running-ch-support-queries"
-                    ]
-                  },
-                  {
-                    "group": "Observability",
-                    "pages": [
-                      "langsmith/export-backend",
-                      "langsmith/langsmith-collector",
-                      "langsmith/observability-stack"
+                       "langsmith/custom-lifespan",
+                       "langsmith/custom-middleware",
+                       "langsmith/custom-routes"
                     ]
                   }
                 ]
               },
               {
-                "tab": "Administration",
+                "tab": "Agent builder",
+                "pages": [
+                  "langsmith/agent-builder-overview"
+                ]
+              },
+              {
+                "tab": "Reference",
                 "pages": [
                   {
-                    "group": "Setup",
+                    "group": "Overview",
+                    "pages": [
+                      "langsmith/reference-overview"
+                    ]
+                  },
+                  {
+                    "group": "Account administration",
                     "pages": [
                       "langsmith/administration-overview",
                       "langsmith/create-account-api-key",
@@ -1038,14 +998,58 @@
                     ]
                   },
                   {
+                    "group": "API & SDKs",
+                    "pages": [
+                      {
+                        "group": "SDKs",
+                        "pages": [
+                          "langsmith/smith-python-sdk",
+                          "langsmith/smith-js-ts-sdk",
+                          "langsmith/langgraph-python-sdk",
+                          "langsmith/langgraph-js-ts-sdk"
+                        ]
+                      },
+                      {
+                        "group": "APIs",
+                        "pages": [
+                          "langsmith/smith-api-ref",
+                          "langsmith/server-api-ref",
+                          "langsmith/api-ref-control-plane",
+                          "langsmith/remote-graph"
+                        ]
+                      },
+                      "langsmith/cli",
+                      "langsmith/env-var",
+                      "langsmith/langgraph-cli"
+                    ]
+                  },
+                  {
+                    "group": "Scalability & resilience",
+                    "pages": [
+                      "langsmith/cloud-architecture-and-scalability",
+                      "langsmith/scalability-and-resilience"
+                    ]
+                  },
+                  {
+                    "group": "Data management",
+                    "pages": [
+                       "langsmith/data-storage-and-privacy",
+                      "langsmith/data-purging-compliance"
+                    ]
+                  },
+                  {
+                    "group": "Releases & changelogs",
+                    "pages": [
+                      "langsmith/langgraph-server-changelog",
+                      "langsmith/release-versions"
+                    ]
+                  },
+                  {
                     "group": "Additional resources",
                     "pages": [
                       "langsmith/faq",
-                      "langsmith/cloud-architecture-and-scalability",
                       "langsmith/regions-faq",
-                      "langsmith/authentication-methods",
-                      "langsmith/data-purging-compliance",
-                      "langsmith/release-versions"
+                      "langsmith/authentication-methods"
                     ]
                   }
                 ]
@@ -1494,248 +1498,90 @@
             ]
           },
           {
-            "dropdown": "LangGraph Platform",
-            "icon": "rocket-launch",
-            "description": "Platform for building and deploying AI agents",
-            "tabs": [
-              {
-                "tab": "Get started",
-                "groups": [
-                  {
-                    "group": "Overview",
-                    "pages": [
-                      "langgraph-platform/index",
-                      {
-                        "group": "Components",
-                        "pages": [
-                          "langgraph-platform/components",
-                          "langgraph-platform/langgraph-server",
-                          "langgraph-platform/data-plane",
-                          "langgraph-platform/control-plane"
-                        ]
-                      },
-                      "langgraph-platform/application-structure"
-                    ]
-                  },
-                  {
-                    "group": "Quickstarts",
-                    "pages": [
-                      "langgraph-platform/local-server",
-                      "langgraph-platform/deployment-quickstart",
-                      "langgraph-platform/quick-start-studio"
-                    ]
-                  },
-                  {
-                    "group": "Plans and deployment",
-                    "pages": [
-                      "langgraph-platform/plans"
-                    ]
-                  }
-                ]
-              },
-              {
-                "tab": "Build",
-                "groups": [
-                  {
-                    "group": "Build with LangGraph Platform",
-                    "pages": [
-                      "langgraph-platform/why-langgraph"
-                    ]
-                  },
-                  {
-                    "group": "Data models",
-                    "pages": [
-                      {
-                        "group": "Assistants",
-                        "pages": [
-                          "langgraph-platform/assistants",
-                          "langgraph-platform/configuration-cloud",
-                          "langgraph-platform/use-threads"
-                        ]
-                      },
-                      {
-                        "group": "Runs",
-                        "pages": [
-                          "langgraph-platform/background-run",
-                          "langgraph-platform/same-thread",
-                          "langgraph-platform/cron-jobs",
-                          "langgraph-platform/stateless-runs",
-                          "langgraph-platform/configurable-headers"
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "group": "Core capabilities",
-                    "pages": [
-                      "langgraph-platform/streaming",
-                      "langgraph-platform/add-human-in-the-loop",
-                      "langgraph-platform/human-in-the-loop-time-travel",
-                      "langgraph-platform/server-mcp",
-                      "langgraph-platform/server-a2a",
-                      "langgraph-platform/use-webhooks",
-                      {
-                        "group": "Double-texting",
-                        "pages": [
-                          "langgraph-platform/double-texting",
-                          "langgraph-platform/interrupt-concurrent",
-                          "langgraph-platform/rollback-concurrent",
-                          "langgraph-platform/reject-concurrent",
-                          "langgraph-platform/enqueue-concurrent"
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "group": "LangGraph Studio",
-                    "pages": [
-                      "langgraph-platform/langgraph-studio",
-                      "langgraph-platform/use-studio",
-                      "langgraph-platform/observability-studio",
-                      "langgraph-platform/troubleshooting-studio"
-                    ]
-                  }
-                ]
-              },
-              {
-                "tab": "Deploy",
-                "groups": [
-                  {
-                    "group": "Overview",
-                    "pages": [
-                      "langgraph-platform/deployment-options",
-                      "langgraph-platform/cloud",
-                      "langgraph-platform/hybrid",
-                      "langgraph-platform/self-hosted"
-                    ]
-                  },
-                  {
-                    "group": "Guides for deployment",
-                    "pages": [
-                      "langgraph-platform/deploy-to-cloud",
-                      "langgraph-platform/deploy-hybrid",
-                      "langgraph-platform/deploy-self-hosted-full-platform",
-                      "langgraph-platform/deploy-standalone-server",
-                      "langgraph-platform/use-remote-graph"
-                    ]
-                  },
-                  {
-                    "group": "Configure app for deployment",
-                    "pages": [
-                      "langgraph-platform/setup-app-requirements-txt",
-                      "langgraph-platform/setup-pyproject",
-                      "langgraph-platform/setup-javascript",
-                      "langgraph-platform/custom-docker",
-                      "langgraph-platform/graph-rebuild",
-                      "langgraph-platform/langgraph-cli",
-                      "langgraph-platform/sdk",
-                      "langgraph-platform/egress-metrics-metadata",
-                      "langgraph-platform/monorepo-support"
-                    ]
-                  }
-                ]
-              },
-              {
-                "tab": "Manage",
-                "groups": [
-                  {
-                    "group": "Authentication & access control",
-                    "pages": [
-                      "langgraph-platform/auth",
-                      "langgraph-platform/custom-auth",
-                      "langgraph-platform/set-up-custom-auth",
-                      "langgraph-platform/resource-auth",
-                      "langgraph-platform/add-auth-server",
-                      "langgraph-platform/openapi-security",
-                      "langgraph-platform/agent-auth"
-                    ]
-                  },
-                  {
-                    "group": "Scalability & resilience",
-                    "pages": [
-                      "langgraph-platform/scalability-and-resilience"
-                    ]
-                  },
-                  {
-                    "group": "Server customization",
-                    "pages": [
-                      "langgraph-platform/custom-lifespan",
-                      "langgraph-platform/custom-middleware",
-                      "langgraph-platform/custom-routes"
-                    ]
-                  },
-                  {
-                    "group": "Data management",
-                    "pages": [
-                      "langgraph-platform/data-storage-and-privacy",
-                      "langgraph-platform/semantic-search",
-                      "langgraph-platform/configure-ttl"
-                    ]
-                  },
-                  {
-                    "group": "Tutorials",
-                    "pages": [
-                      "langgraph-platform/autogen-integration",
-                      "langgraph-platform/use-stream-react",
-                      "langgraph-platform/generative-ui-react"
-                    ]
-                  }
-                ]
-              },
-              {
-                "tab": "Reference",
-                "pages": [
-                  "langgraph-platform/reference-overview",
-                  "langgraph-platform/server-api-ref",
-                  "langgraph-platform/langgraph-server-changelog",
-                  "langgraph-platform/release-versions",
-                  "langgraph-platform/api-ref-control-plane",
-                  "langgraph-platform/cli",
-                  "langgraph-platform/env-var",
-                  "langgraph-platform/python-sdk",
-                  "langgraph-platform/js-ts-sdk",
-                  "langgraph-platform/remote-graph",
-                  "langgraph-platform/faq"
-                ]
-              }
-            ]
-          },
-          {
             "dropdown": "LangSmith",
-            "icon": "screwdriver-wrench",
-            "description": "Platform for LLM observability and evaluation",
+            "icon": "rocket",
+            "description": "Platform for deployment, LLM observability, and evaluation",
             "tabs": [
               {
                 "tab": "Get started",
                 "pages": [
                   "langsmith/home",
                   {
-                    "group": "Start tracing",
+                    "group": "Quickstarts",
                     "pages": [
                       "langsmith/observability-quickstart",
-                      "langsmith/observability-concepts"
-                    ]
-                  },
-                  {
-                    "group": "Evaluate your application",
-                    "pages": [
                       "langsmith/evaluation-quickstart",
-                      "langsmith/evaluation-concepts"
-                    ]
-                  },
-                  {
-                    "group": "Test your prompts",
-                    "pages": [
                       "langsmith/prompt-engineering-quickstart",
-                      "langsmith/prompt-engineering-concepts"
+                      "langsmith/local-server",
+                      "langsmith/deployment-quickstart",
+                      "langsmith/quick-start-studio"
                     ]
                   },
                   {
-                    "group": "API & SDKs",
+                    "group": "App development",
                     "pages": [
-                      "langsmith/api-ref",
-                      "langsmith/python-sdk",
-                      "langsmith/js-ts-sdk"
+                      "langsmith/why-langgraph",
+                      {
+                        "group": "Data models",
+                        "pages": [
+                          {
+                            "group": "Assistants",
+                            "pages": [
+                              "langsmith/assistants",
+                              "langsmith/configuration-cloud",
+                              "langsmith/use-threads"
+                            ]
+                          },
+                          {
+                            "group": "Runs",
+                            "pages": [
+                              "langsmith/background-run",
+                              "langsmith/same-thread",
+                              "langsmith/cron-jobs",
+                              "langsmith/stateless-runs",
+                              "langsmith/configurable-headers"
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "group": "Core capabilities",
+                        "pages": [
+                          "langsmith/streaming",
+                          "langsmith/add-human-in-the-loop",
+                          "langsmith/human-in-the-loop-time-travel",
+                          "langsmith/server-mcp",
+                          "langsmith/server-a2a",
+                          "langsmith/use-webhooks",
+                          {
+                            "group": "Double-texting",
+                            "pages": [
+                              "langsmith/double-texting",
+                              "langsmith/interrupt-concurrent",
+                              "langsmith/rollback-concurrent",
+                              "langsmith/reject-concurrent",
+                              "langsmith/enqueue-concurrent"
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "group": "Tutorials",
+                        "pages": [
+                          "langsmith/autogen-integration",
+                          "langsmith/use-stream-react",
+                          "langsmith/generative-ui-react"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "group": "Studio",
+                    "pages": [
+                      "langsmith/langgraph-studio",
+                      "langsmith/use-studio",
+                      "langsmith/observability-studio",
+                      "langsmith/troubleshooting-studio"
                     ]
                   },
                   {
@@ -1873,7 +1719,8 @@
                 "tab": "Evaluation",
                 "pages": [
                   "langsmith/evaluation",
-                  "langsmith/evaluation-techniques",
+                  "langsmith/evaluation-concepts",
+                  "langsmith/evaluation-approaches",
                   {
                     "group": "Datasets",
                     "pages": [
@@ -1888,19 +1735,14 @@
                     ]
                   },
                   {
-                    "group": "Evaluations",
+                    "group": "Set up evaluations",
                     "pages": [
                       {
                         "group": "Run an evaluation",
                         "pages": [
                           "langsmith/evaluate-llm-application",
                           "langsmith/run-evaluation-from-prompt-playground",
-                          {
-                            "group": "Prebuilt evaluators",
-                            "pages": [
-                              "langsmith/prebuilt-evaluators"
-                            ]
-                          }
+                          "langsmith/prebuilt-evaluators"
                         ]
                       },
                       {
@@ -1908,6 +1750,7 @@
                         "pages": [
                           "langsmith/code-evaluator",
                           "langsmith/llm-as-judge",
+                          "langsmith/composite-evaluators",
                           "langsmith/summary",
                           "langsmith/evaluate-pairwise"
                         ]
@@ -1946,6 +1789,16 @@
                           "langsmith/create-few-shot-evaluators",
                           "langsmith/index-datasets-for-dynamic-few-shot-example-selection"
                         ]
+                      },
+                      {
+                        "group": "Tutorials",
+                        "pages": [
+                          "langsmith/evaluate-chatbot-tutorial",
+                          "langsmith/evaluate-rag-tutorial",
+                          "langsmith/test-react-agent-pytest",
+                          "langsmith/evaluate-complex-agent",
+                          "langsmith/run-backtests-new-agent"
+                        ]
                       }
                     ]
                   },
@@ -1969,16 +1822,6 @@
                     ]
                   },
                   {
-                    "group": "Tutorials",
-                    "pages": [
-                      "langsmith/evaluate-chatbot-tutorial",
-                      "langsmith/evaluate-rag-tutorial",
-                      "langsmith/test-react-agent-pytest",
-                      "langsmith/evaluate-complex-agent",
-                      "langsmith/run-backtests-new-agent"
-                    ]
-                  },
-                  {
                     "group": "Common data types",
                     "pages": [
                       "langsmith/example-data-format",
@@ -1992,6 +1835,7 @@
                 "tab": "Prompt engineering",
                 "pages": [
                   "langsmith/prompt-engineering",
+                  "langsmith/prompt-engineering-concepts",
                   {
                     "group": "Create and update prompts",
                     "pages": [
@@ -2022,78 +1866,183 @@
                 ]
               },
               {
-                "tab": "Self-hosting",
-                "pages": [
-                  "langsmith/architectural-overview",
+                "tab": "Deployment",
+                "groups": [
                   {
-                    "group": "Setup",
+                    "group": "Overview",
                     "pages": [
-                      "langsmith/kubernetes",
-                      "langsmith/docker",
-                      "langsmith/self-host-usage",
-                      "langsmith/self-host-upgrades",
-                      "langsmith/self-host-egress",
-                      "langsmith/self-host-organization-charts",
-                      "langsmith/langsmith-managed-clickhouse"
+                      "langsmith/deployment-options",
+                      {
+                        "group": "Platform components",
+                        "pages": [
+                          "langsmith/components",
+                          "langsmith/langgraph-server",
+                          "langsmith/data-plane",
+                          "langsmith/control-plane"
+                        ]
+                      }
                     ]
                   },
                   {
-                    "group": "Configuration",
+                    "group": "Cloud",
                     "pages": [
-                      "langsmith/self-host-scale",
-                      "langsmith/self-host-ttl",
-                      "langsmith/self-host-ingress",
-                      "langsmith/self-host-mirroring-images",
-                      "langsmith/self-host-playground-environment-settings",
-                      "langsmith/troubleshooting"
+                      "langsmith/cloud",
+                      "langsmith/deploy-to-cloud"
+                    ]
+                  },
+                  {
+                    "group": "Hybrid",
+                    "pages": [
+                      "langsmith/hybrid",
+                      "langsmith/deploy-hybrid"
+                    ]
+                  },
+                  {
+                    "group": "Self-hosted",
+                    "pages": [
+                      "langsmith/self-hosted",
+                      {
+                        "group": "Deployment guides",
+                        "pages": [
+                          "langsmith/deploy-self-hosted-full-platform",
+                          "langsmith/deploy-standalone-server"
+                        ]
+                      },
+                      {
+                        "group": "Configuration",
+                        "pages": [
+                          "langsmith/custom-docker",
+                          "langsmith/egress-metrics-metadata"
+                        ]
+                      },
+                      {
+                        "group": "(Existing LS content to organize) Self-host",
+                        "pages": [
+                          "langsmith/architectural-overview",
+                          {
+                            "group": "Setup",
+                            "pages": [
+                              "langsmith/kubernetes",
+                              "langsmith/docker",
+                              "langsmith/self-host-usage",
+                              "langsmith/self-host-upgrades",
+                              "langsmith/self-host-egress",
+                              "langsmith/self-host-organization-charts",
+                              "langsmith/langsmith-managed-clickhouse"
+                            ]
+                          },
+                          {
+                            "group": "Configuration",
+                            "pages": [
+                              "langsmith/self-host-scale",
+                              "langsmith/self-host-ttl",
+                              "langsmith/self-host-ingress",
+                              "langsmith/self-host-mirroring-images",
+                              "langsmith/self-host-playground-environment-settings",
+                              "langsmith/troubleshooting"
+                            ]
+                          },
+                          {
+                            "group": "Authentication & access control",
+                            "pages": [
+                              "langsmith/self-host-basic-auth",
+                              "langsmith/self-host-sso",
+                              "langsmith/self-host-user-management",
+                              "langsmith/self-host-custom-tls-certificates",
+                              "langsmith/self-host-using-an-existing-secret"
+                            ]
+                          },
+                          {
+                            "group": "Connect external services",
+                            "pages": [
+                              "langsmith/self-host-blob-storage",
+                              "langsmith/self-host-external-clickhouse",
+                              "langsmith/self-host-external-postgres",
+                              "langsmith/self-host-external-redis"
+                            ]
+                          },
+                          {
+                            "group": "Scripts",
+                            "pages": [
+                              "langsmith/script-delete-a-workspace",
+                              "langsmith/script-delete-an-organization",
+                              "langsmith/script-delete-traces",
+                              "langsmith/script-generate-clickhouse-stats",
+                              "langsmith/script-generate-query-stats",
+                              "langsmith/script-running-pg-support-queries",
+                              "langsmith/script-running-ch-support-queries"
+                            ]
+                          },
+                          {
+                            "group": "Observability",
+                            "pages": [
+                              "langsmith/export-backend",
+                              "langsmith/langsmith-collector",
+                              "langsmith/observability-stack"
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "group": "Configure app for deployment",
+                    "pages": [
+                      "langsmith/application-structure",
+                      {
+                        "group": "Setup",
+                        "pages": [
+                          "langsmith/setup-app-requirements-txt",
+                          "langsmith/setup-pyproject",
+                          "langsmith/setup-javascript"
+                        ]
+                      },
+                      "langsmith/graph-rebuild",
+                      "langsmith/use-remote-graph",
+                      "langsmith/monorepo-support",
+                      "langsmith/semantic-search",
+                      "langsmith/configure-ttl"
                     ]
                   },
                   {
                     "group": "Authentication & access control",
                     "pages": [
-                      "langsmith/self-host-basic-auth",
-                      "langsmith/self-host-sso",
-                      "langsmith/self-host-user-management",
-                      "langsmith/self-host-custom-tls-certificates",
-                      "langsmith/self-host-using-an-existing-secret"
+                      "langsmith/auth",
+                      "langsmith/custom-auth",
+                      "langsmith/set-up-custom-auth",
+                      "langsmith/resource-auth",
+                      "langsmith/add-auth-server",
+                      "langsmith/openapi-security",
+                      "langsmith/agent-auth"
                     ]
                   },
                   {
-                    "group": "Connect external services",
+                    "group": "Server customization",
                     "pages": [
-                      "langsmith/self-host-blob-storage",
-                      "langsmith/self-host-external-clickhouse",
-                      "langsmith/self-host-external-postgres",
-                      "langsmith/self-host-external-redis"
-                    ]
-                  },
-                  {
-                    "group": "Scripts",
-                    "pages": [
-                      "langsmith/script-delete-a-workspace",
-                      "langsmith/script-delete-an-organization",
-                      "langsmith/script-delete-traces",
-                      "langsmith/script-generate-clickhouse-stats",
-                      "langsmith/script-generate-query-stats",
-                      "langsmith/script-running-pg-support-queries",
-                      "langsmith/script-running-ch-support-queries"
-                    ]
-                  },
-                  {
-                    "group": "Observability",
-                    "pages": [
-                      "langsmith/export-backend",
-                      "langsmith/langsmith-collector",
-                      "langsmith/observability-stack"
+                       "langsmith/custom-lifespan",
+                       "langsmith/custom-middleware",
+                       "langsmith/custom-routes"
                     ]
                   }
                 ]
               },
               {
-                "tab": "Administration",
+                "tab": "Agent builder",
+                "pages": [
+                  "langsmith/agent-builder-overview"
+                ]
+              },
+              {
+                "tab": "Reference",
                 "pages": [
                   {
-                    "group": "Setup",
+                    "group": "Overview",
+                    "pages": [
+                      "langsmith/reference-overview"
+                    ]
+                  },
+                  {
+                    "group": "Account administration",
                     "pages": [
                       "langsmith/administration-overview",
                       "langsmith/create-account-api-key",
@@ -2105,14 +2054,58 @@
                     ]
                   },
                   {
+                    "group": "API & SDKs",
+                    "pages": [
+                      {
+                        "group": "SDKs",
+                        "pages": [
+                          "langsmith/smith-python-sdk",
+                          "langsmith/smith-js-ts-sdk",
+                          "langsmith/langgraph-python-sdk",
+                          "langsmith/langgraph-js-ts-sdk"
+                        ]
+                      },
+                      {
+                        "group": "APIs",
+                        "pages": [
+                          "langsmith/smith-api-ref",
+                          "langsmith/server-api-ref",
+                          "langsmith/api-ref-control-plane",
+                          "langsmith/remote-graph"
+                        ]
+                      },
+                      "langsmith/cli",
+                      "langsmith/env-var",
+                      "langsmith/langgraph-cli"
+                    ]
+                  },
+                  {
+                    "group": "Scalability & resilience",
+                    "pages": [
+                      "langsmith/cloud-architecture-and-scalability",
+                      "langsmith/scalability-and-resilience"
+                    ]
+                  },
+                  {
+                    "group": "Data management",
+                    "pages": [
+                       "langsmith/data-storage-and-privacy",
+                      "langsmith/data-purging-compliance"
+                    ]
+                  },
+                  {
+                    "group": "Releases & changelogs",
+                    "pages": [
+                      "langsmith/langgraph-server-changelog",
+                      "langsmith/release-versions"
+                    ]
+                  },
+                  {
                     "group": "Additional resources",
                     "pages": [
                       "langsmith/faq",
-                      "langsmith/cloud-architecture-and-scalability",
                       "langsmith/regions-faq",
-                      "langsmith/authentication-methods",
-                      "langsmith/data-purging-compliance",
-                      "langsmith/release-versions"
+                      "langsmith/authentication-methods"
                     ]
                   }
                 ]
