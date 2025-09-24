@@ -2,7 +2,7 @@
 title: Data storage and privacy
 sidebarTitle: Data storage and privacy
 ---
-This document describes how data is processed in the LangGraph CLI and the LangGraph Server for both the in-memory server (`langgraph dev`) and the local Docker server (`langgraph up`). It also describes what data is tracked when interacting with the hosted LangGraph Studio frontend.
+This document describes how data is processed in the LangGraph CLI and the LangGraph Server for both the in-memory server (`langgraph dev`) and the local Docker server (`langgraph up`). It also describes what data is tracked when interacting with the hosted Studio frontend.
 
 ## CLI
 
@@ -37,7 +37,7 @@ If you've disabled [tracing](#langsmith-tracing), no user data is persisted exte
 
 ## Studio
 
-[LangGraph Studio](/langgraph-platform/langgraph-studio) is a graphical interface for interacting with your LangGraph server. It does not persist any private data (the data you send to your server is not sent to LangSmith). Though the studio interface is served at [smith.langchain.com](https://smith.langchain.com), it is run in your browser and connects directly to your local LangGraph server so that no data needs to be sent to LangSmith.
+[Studio](/langgraph-platform/langgraph-studio) is a graphical interface for interacting with your LangGraph server. It does not persist any private data (the data you send to your server is not sent to LangSmith). Though the studio interface is served at [smith.langchain.com](https://smith.langchain.com), it is run in your browser and connects directly to your local LangGraph server so that no data needs to be sent to LangSmith.
 
 If you are logged in, LangSmith does collect some usage analytics to help improve studio's user experience. This includes:
 

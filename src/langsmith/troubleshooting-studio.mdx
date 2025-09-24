@@ -1,5 +1,5 @@
 ---
-title: LangGraph Studio troubleshooting
+title: Studio troubleshooting
 sidebarTitle: Troubleshooting
 ---
 
@@ -44,7 +44,7 @@ Brave blocks plain-HTTP traffic on localhost when Brave Shields are enabled. Whe
 
 Disable Brave Shields for LangSmith using the Brave icon in the URL bar.
 
-![Brave Shields panel with Shields turned off for smith.langchain.com so LangGraph Studio can reach localhost.](/langgraph-platform/images/brave-shields.png)
+![Brave Shields panel with Shields turned off for smith.langchain.com so Studio can reach localhost.](/langgraph-platform/images/brave-shields.png)
 
 ### Solution 2: Use Cloudflare Tunnel
 
@@ -74,7 +74,7 @@ Use this URL in Brave to load Studio. Here, the `baseUrl` parameter specifies yo
 ## Graph Edge Issues
 
 Undefined conditional edges may show unexpected connections in your graph. This is
-because without proper definition, LangGraph Studio assumes the conditional edge could access all other nodes. To address this, explicitly define the routing paths using one of these methods:
+because without proper definition, Studio assumes the conditional edge could access all other nodes. To address this, explicitly define the routing paths using one of these methods:
 
 ### Solution 1: Path Map
 
