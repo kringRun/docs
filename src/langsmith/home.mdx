@@ -4,13 +4,11 @@ sidebarTitle: Overview
 mode: wide
 ---
 
-[LangSmith](https://www.langchain.com/langsmith) is a platform for building production-grade LLM applications. Monitor and evaluate your application, so you can ship quickly and with confidence.
+**LangSmith provides tools for developing, debugging, and deploying LLM applications.**
+It helps you trace requests, evaluate outputs, test prompts, and manage deployments in one place. LangSmith is framework agnostic, which means you can use it with or without LangChain's open-source frameworks [`langchain`](https://python.langchain.com) and [`langgraph`](https://langchain-ai.github.io/langgraph/). You can prototype locally and then move to production with integrated monitoring and evaluation to build more reliable AI systems.
 
-<Tip>
-LangSmith is framework agnostic — you can use it with or without LangChain's open source frameworks [`langchain`](https://python.langchain.com) and [`langgraph`](https://langchain-ai.github.io/langgraph/).
-</Tip>
+**NEW IMAGE NEEDED**
 
-<div style={{ textAlign: 'center' }}>
 <img
     className="block dark:hidden"
     src="/langsmith/images/overview-light.svg"
@@ -22,46 +20,66 @@ LangSmith is framework agnostic — you can use it with or without LangChain's 
     src="/langsmith/images/overview-dark.svg"
     alt="Dark mode overview"
 />
-</div>
 
-<Columns cols={2}>
-    <Card
-    title="Start tracing"
+<Columns cols={3}>
+  <Card
+    title="Observability"
     icon="magnifying-glass"
     href="/langsmith/observability-quickstart"
     arrow="true"
-    cta="Learn more"
->
-   Gain visibility into each step your application takes when handling a request to debug faster.
-    </Card>
+    cta="Start tracing"
+  >
+    Gain visibility into every step your application takes to debug faster and improve reliability.
+  </Card>
 
-    <Card
-    title="Evaluate your application"
-    icon="chart-simple"
+  <Card
+    title="Evaluation"
+    icon="chart-line"
     href="/langsmith/evaluation-quickstart"
     arrow="true"
-    cta="Learn more"
->
-   Measure quality of your applications over time to build more reliable AI applications.
-    </Card>
+    cta="Evaluate your app"
+  >
+    Measure and track quality over time to ensure your AI applications are consistent and trustworthy.
+  </Card>
 
-    <Card
-    title="Test your prompts"
-    icon="pencil"
+  <Card
+    title="Deployment"
+    icon="cloud-arrow-up"
+    iconType="solid"
+    href="/langsmith/deployment-quickstart"
+    arrow="true"
+    cta="Deploy your app"
+  >
+    Take your application from testing to production with LangSmith’s deployment tools.
+  </Card>
+
+  <Card
+    title="Prompt Testing"
+    icon="flask"
     href="/langsmith/prompt-engineering-quickstart"
     arrow="true"
-    cta="Learn more"
->
-Iterate on prompts, with automatic version control and collaboration features.
-    </Card>
+    cta="Test your prompts"
+  >
+    Iterate on prompts with built-in versioning and collaboration to ship improvements faster.
+  </Card>
 
-    <Card
-    title="Set up your workspace"
-    icon="user-tie"
-    href="/langsmith/administration-overview"
+  <Card
+    title="Local Development"
+    icon="laptop-code"
+    href="/langsmith/local-server"
     arrow="true"
-    cta="Learn more"
->
-Set up your workspace, configure admin settings, and invite your team to collaborate.
-    </Card>
+    cta="Develop locally"
+  >
+    Run LangSmith locally to prototype, test, and debug without leaving your dev environment.
+  </Card>
+
+  <Card
+    title="Studio"
+    icon="window"
+    href="/langsmith/quick-start-studio"
+    arrow="true"
+    cta="Build with Studio"
+  >
+    Use an intuitive visual interface to design, test, and refine applications end-to-end.
+  </Card>
 </Columns>

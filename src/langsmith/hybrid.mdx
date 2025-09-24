@@ -1,5 +1,6 @@
 ---
 title: Hybrid
+sidebarTitle: Overview
 ---
 
 <Info>
@@ -9,12 +10,19 @@ The Hybrid deployment option requires an [Enterprise](/langgraph-platform/plans)
 
 ## Requirements
 
-* You use `langgraph-cli` and/or [LangGraph Studio](/langgraph-platform/langgraph-studio) app to test graph locally.
+* You use `langgraph-cli` and/or [Studio](/langgraph-platform/langgraph-studio) app to test graph locally.
 * You use `langgraph build` command to build image.
 
-## Hybrid
+<Note>
+Supported Compute Platforms: [Kubernetes](https://kubernetes.io/)
+For a guide on deployment, refer to [How to deploy the Hybrid](/langgraph-platform/deploy-hybrid).
+</Note>
+
+## Overview
 
 The [Hybrid](/langgraph-platform/deploy-hybrid) deployment option lets you manage the [data plane](/langgraph-platform/data-plane) in your own cloud, while we handle the [control plane](/langgraph-platform/control-plane) in ours. When using the Hybrid version, you authenticate with a [LangSmith](https://smith.langchain.com/) API key.
+
+Build a Docker image using the [LangGraph CLI](/langgraph-platform/langgraph-cli) and deploy your LangGraph Server from the [control plane UI](/langgraph-platform/control-plane#control-plane-ui).
 
 |                   | [Control plane](/langgraph-platform/control-plane) | [Data plane](/langgraph-platform/data-plane) |
 |-------------------|-------------------|------------|
