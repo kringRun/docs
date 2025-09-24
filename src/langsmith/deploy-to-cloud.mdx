@@ -1,6 +1,8 @@
 ---
 title: How to deploy to cloud
-sidebarTitle: Cloud deployment
+sidebarTitle: Deployment guide
+icon: "cloud"
+iconType: "solid"
 ---
 Before deploying, review the [conceptual guide for the Cloud](/langgraph-platform/cloud) deployment option.
 
@@ -27,7 +29,7 @@ Starting from the <a href="https://smith.langchain.com/" target="_blank">LangSmi
     2. `Production` deployments can serve up to 500 requests/second and are provisioned with highly available storage with automatic backups.
   3. Determine if the deployment should be `Shareable through LangGraph Studio`.
     1. If unchecked, the deployment will only be accessible with a valid LangSmith API key for the workspace.
-    2. If checked, the deployment will be accessible through LangGraph Studio to any LangSmith user. A direct URL to LangGraph Studio for the deployment will be provided to share with other LangSmith users.
+    2. If checked, the deployment will be accessible through Studio to any LangSmith user. A direct URL to Studio for the deployment will be provided to share with other LangSmith users.
   4. Specify `Environment Variables` and secrets. See the [Environment Variables reference](/langgraph-platform/env-var) to configure additional variables for the deployment.
     1. Sensitive values such as API keys (e.g. `OPENAI_API_KEY`) should be specified as secrets.
     2. Additional non-secret environment variables can be specified as well.
@@ -45,9 +47,9 @@ Starting from the <a href="https://smith.langchain.com/" target="_blank">LangSmi
 3. In the `Deployment` view, in the top-right corner, select `+ New Revision`.
 4. In the `New Revision` modal, fill out the required fields.
   1. Specify the full path to the [LangGraph API config file](/langgraph-platform/cli#configuration-file) including the file name. For example, if the file `langgraph.json` is in the root of the repository, simply specify `langgraph.json`.
-  2. Determine if the deployment should be `Shareable through LangGraph Studio`.
+  2. Determine if the deployment should be `Shareable through Studio`.
     1. If unchecked, the deployment will only be accessible with a valid LangSmith API key for the workspace.
-    2. If checked, the deployment will be accessible through LangGraph Studio to any LangSmith user. A direct URL to LangGraph Studio for the deployment will be provided to share with other LangSmith users.
+    2. If checked, the deployment will be accessible through Studio to any LangSmith user. A direct URL to Studio for the deployment will be provided to share with other LangSmith users.
   3. Specify `Environment Variables` and secrets. Existing secrets and environment variables are prepopulated. See the [Environment Variables reference](/langgraph-platform/env-var) to configure additional variables for the revision.
     1. Add new secrets or environment variables.
     2. Remove existing secrets or environment variables.
