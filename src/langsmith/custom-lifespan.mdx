@@ -2,9 +2,9 @@
 title: How to add custom lifespan events
 sidebarTitle: Add custom lifespan events
 ---
-When deploying agents to LangGraph Platform, you often need to initialize resources like database connections when your server starts up, and ensure they're properly closed when it shuts down. Lifespan events let you hook into your server's startup and shutdown sequence to handle these critical setup and teardown tasks.
+When deploying agents to LangSmith Platform, you often need to initialize resources like database connections when your server starts up, and ensure they're properly closed when it shuts down. Lifespan events let you hook into your server's startup and shutdown sequence to handle these critical setup and teardown tasks.
 
-This works the same way as [adding custom routes](/langgraph-platform/custom-routes). You just need to provide your own [`Starlette`](https://www.starlette.io/applications/) app (including [`FastAPI`](https://fastapi.tiangolo.com/), [`FastHTML`](https://fastht.ml/) and other compatible apps).
+This works the same way as [adding custom routes](/langsmith/custom-routes). You just need to provide your own [`Starlette`](https://www.starlette.io/applications/) app (including [`FastAPI`](https://fastapi.tiangolo.com/), [`FastHTML`](https://fastht.ml/) and other compatible apps).
 
 Below is an example using FastAPI.
 
@@ -15,7 +15,7 @@ We currently only support custom lifespan events in Python deployments with `lan
 
 ## Create app
 
-Starting from an **existing** LangGraph Platform application, add the following lifespan code to your `webapp.py` file. If you are starting from scratch, you can create a new app from a template using the CLI.
+Starting from an **existing** LangSmith Platform application, add the following lifespan code to your `webapp.py` file. If you are starting from scratch, you can create a new app from a template using the CLI.
 
 ```bash
 langgraph new --template=new-langgraph-project-python my_new_project
@@ -77,8 +77,8 @@ You should see your startup message printed when the server starts, and your cle
 
 ## Deploying
 
-You can deploy your app as-is to LangGraph Platform or to your self-hosted platform.
+You can deploy your app as-is to cloud or to your self-hosted platform.
 
 ## Next steps
 
-Now that you've added lifespan events to your deployment, you can use similar techniques to add [custom routes](/langgraph-platform/custom-routes) or [custom middleware](/langgraph-platform/custom-middleware) to further customize your server's behavior.
+Now that you've added lifespan events to your deployment, you can use similar techniques to add [custom routes](/langsmith/custom-routes) or [custom middleware](/langsmith/custom-middleware) to further customize your server's behavior.

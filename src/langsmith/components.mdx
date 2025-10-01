@@ -1,16 +1,16 @@
 ---
-title: LangSmith components
-sidebarTitle: Platform components
+title: LangSmith Platform components
+sidebarTitle: Deployment components
 ---
 
-LangGraph Platform consists of several key components that work together to provide a complete solution for deploying and managing agentic applications:
+When running the self-hosted [LangSmith Platform with agent deployment](/langsmith/deploy-self-hosted-full-platform), your installation includes several key components. Together these tools and services provide a complete solution for building, deploying, and managing graphs (including agentic applications) in your own infrastructure:
 
-* [LangGraph Server](/langgraph-platform/langgraph-server): The server defines an opinionated API and architecture that incorporates best practices for deploying agentic applications, allowing you to focus on building your agent logic rather than developing server infrastructure.
-* [LangGraph CLI](/langgraph-platform/langgraph-cli): LangGraph CLI is a command-line interface that helps to interact with a local LangGraph.
-* [Studio](/langgraph-platform/langgraph-studio): Studio is a specialized IDE that can connect to a LangGraph Server to enable visualization, interaction, and debugging of the application locally.
-* [Python/JS SDK](/langgraph-platform/sdk): The Python/JS SDK provides a programmatic way to interact with deployed LangGraph Applications.
-* [Remote Graph](/langgraph-platform/use-remote-graph): A RemoteGraph allows you to interact with any deployed LangGraph application as though it were running locally.
-* [LangGraph Control Plane](/langgraph-platform/control-plane): The LangGraph Control Plane refers to the Control Plane UI where users create and update LangGraph Servers and the Control Plane APIs that support the UI experience.
-* [LangGraph Data Plane](/langgraph-platform/data-plane): The LangGraph Data Plane refers to LangGraph Servers, the corresponding infrastructure for each server, and the "listener" application that continuously polls for updates from the LangGraph Control Plane.
+- [LangGraph Server](/langsmith/langgraph-server): Defines an opinionated API and runtime for deploying graphs and agents. Handles execution, state management, and persistence so you can focus on building logic rather than server infrastructure.
+- [LangGraph CLI](/langsmith/langgraph-cli): A command-line interface to build, package, and interact with graphs locally and prepare them for deployment.
+- [Studio](/langsmith/langgraph-studio): A specialized IDE for visualization, interaction, and debugging. Connects to a local LangGraph Server for developing and testing your graph.
+- [Python/JS SDK](/langsmith/sdk): The Python/JS SDK provides a programmatic way to interact with deployed graphs and agents from your applications.
+- [Remote Graph](/langsmith/use-remote-graph): Allows you to interact with a deployed graph as though it were running locally.
+- [LangGraph Control Plane](/langsmith/control-plane): The UI and APIs for creating, updating, and managing LangGraph Server deployments.
+- [Data plane](/langsmith/data-plane): The runtime layer that executes your graphs, including LangGraph Servers, their backing services (PostgreSQL, Redis, etc.), and the listener that reconciles state from the control plane.
 
-![LangGraph components](/langgraph-platform/images/lg-platform.png)
+![LangGraph components](/langsmith/images/lg-platform.png)

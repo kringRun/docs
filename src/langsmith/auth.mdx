@@ -3,7 +3,7 @@ title: Authentication & access control
 sidebarTitle: Overview
 ---
 
-LangGraph Platform provides a flexible authentication and authorization system that can integrate with most authentication schemes.
+LangSmith Platform provides a flexible authentication and authorization system that can integrate with most authentication schemes.
 
 ## Core Concepts
 
@@ -14,13 +14,13 @@ While often used interchangeably, these terms represent distinct security concep
 * [**Authentication**](#authentication) ("AuthN") verifies _who_ you are. This runs as middleware for every request.
 * [**Authorization**](#authorization) ("AuthZ") determines _what you can do_. This validates the user's privileges and roles on a per-resource basis.
 
-In LangGraph Platform, authentication is handled by your [`@auth.authenticate`](/langgraph-platform/python-sdk#langgraph_sdk.auth.Auth.authenticate) handler, and authorization is handled by your [`@auth.on`](/langgraph-platform/python-sdk#langgraph_sdk.auth.Auth.on) handlers.
+In LangSmith Platform, authentication is handled by your [`@auth.authenticate`](/langsmith/python-sdk#langgraph_sdk.auth.Auth.authenticate) handler, and authorization is handled by your [`@auth.on`](/langsmith/python-sdk#langgraph_sdk.auth.Auth.on) handlers.
 
 ## Default Security Models
 
-LangGraph Platform provides different security defaults:
+LangSmith Platform provides different security defaults:
 
-### LangGraph Platform
+### LangSmith Platform
 
 * Uses LangSmith API keys by default
 * Requires valid API key in `x-api-key` header
@@ -28,7 +28,7 @@ LangGraph Platform provides different security defaults:
 
 <Note>
 **Custom auth**
-Custom auth **is supported** for all plans in LangGraph Platform.
+Custom auth **is supported** for all plans in LangSmith Platform.
 </Note>
 
 ### Self-Hosted
@@ -76,11 +76,11 @@ sequenceDiagram
     LG-->>Client: 8. Return resources
 ```
 
-Your [`@auth.authenticate`](/langgraph-platform/python-sdk#langgraph_sdk.auth.Auth.authenticate) handler in LangGraph handles steps 4-6, while your [`@auth.on`](/langgraph-platform/python-sdk#langgraph_sdk.auth.Auth.on) handlers implement step 7.
+Your [`@auth.authenticate`](/langsmith/python-sdk#langgraph_sdk.auth.Auth.authenticate) handler in LangGraph handles steps 4-6, while your [`@auth.on`](/langsmith/python-sdk#langgraph_sdk.auth.Auth.on) handlers implement step 7.
 
 ## Authentication
 
-Authentication in LangGraph runs as middleware on every request. Your [`@auth.authenticate`](/langgraph-platform/python-sdk#langgraph_sdk.auth.Auth.authenticate) handler receives request information and should:
+Authentication in LangGraph runs as middleware on every request. Your [`@auth.authenticate`](/langsmith/python-sdk#langgraph_sdk.auth.Auth.authenticate) handler receives request information and should:
 
 1. Validate the credentials
 2. Return [user info](https://langchain-ai.github.io/langgraph/cloud/reference/sdk/python_sdk_ref/#langgraph_sdk.auth.types.MinimalUserDict) containing the user's identity and user information if valid
@@ -175,9 +175,9 @@ sequenceDiagram
 After authentication, the platform creates a special configuration object that is passed to your graph and all nodes via the configurable context.
 This object contains information about the current user, including any custom fields you return from your [`@auth.authenticate`](https://langchain-ai.github.io/langgraph/cloud/reference/sdk/python_sdk_ref/#langgraph_sdk.auth.Auth.authenticate) handler.
 
-To enable an agent to act on behalf of the user, use [custom authentication middleware](/langgraph-platform/custom-auth). This will allow the agent to interact with external systems like MCP servers, external databases, and even other agents on behalf of the user.
+To enable an agent to act on behalf of the user, use [custom authentication middleware](/langsmith/custom-auth). This will allow the agent to interact with external systems like MCP servers, external databases, and even other agents on behalf of the user.
 
-For more information, see the [Use custom auth](/langgraph-platform/custom-auth#enable-agent-authentication) guide.
+For more information, see the [Use custom auth](/langsmith/custom-auth#enable-agent-authentication) guide.
 
 ### Agent authentication with MCP
 
@@ -486,5 +486,5 @@ There is a specific `create_run` handler for creating new runs because it had mo
 
 For implementation details:
 
-* Check out the introductory tutorial on [setting up authentication](/langgraph-platform/set-up-custom-auth)
-* See the how-to guide on implementing a [custom auth handlers](/langgraph-platform/custom-auth)
+* Check out the introductory tutorial on [setting up authentication](/langsmith/set-up-custom-auth)
+* See the how-to guide on implementing a [custom auth handlers](/langsmith/custom-auth)

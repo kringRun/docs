@@ -2,7 +2,7 @@
 title: Add custom authentication
 sidebarTitle: Add custom authentication
 ---
-This guide shows how to add custom authentication to your LangGraph Platform application. This guide applies to both LangGraph Platform and self-hosted deployments. It does not apply to isolated usage of the LangGraph open source library in your own custom server.
+This guide shows how to add custom authentication to your LangSmith Platform application. This guide applies to both cloud and self-hosted deployments. It does not apply to isolated usage of the LangGraph open source library in your own custom server.
 
 ## Add custom authentication to your deployment
 
@@ -114,7 +114,7 @@ To leverage custom authentication and access user-level metadata in your deploym
 
 ## Enable agent authentication
 
-After [authentication](#add-custom-authentication-to-your-deployment), the platform creates a special configuration object (`config`) that is passed to LangGraph Platform deployment. This object contains information about the current user, including any custom fields you return from your `@auth.authenticate` handler.
+After [authentication](#add-custom-authentication-to-your-deployment), the platform creates a special configuration object (`config`) that is passed to LangSmith Platform deployment. This object contains information about the current user, including any custom fields you return from your `@auth.authenticate` handler.
 
 To allow an agent to perform authenticated actions on behalf of the user, access this object in your graph with the `langgraph_auth_user` key:
 
@@ -158,10 +158,10 @@ async def add_owner(
     return filters
 ```
 
-Only use this if you want to permit developer access to a graph deployed on the managed LangGraph Platform SaaS.
+Only use this if you want to permit developer access to a graph deployed on the managed LangSmith Platform SaaS.
 
 ## Learn more
 
-* [Authentication & Access Control](/langgraph-platform/auth)
-* [LangGraph Platform](/langgraph-platform/index)
-* [Setting up custom authentication tutorial](/langgraph-platform/set-up-custom-auth)
+* [Authentication & Access Control](/langsmith/auth)
+* [LangSmith Platform](/langsmith/home)
+* [Setting up custom authentication tutorial](/langsmith/set-up-custom-auth)

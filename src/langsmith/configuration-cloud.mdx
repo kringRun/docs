@@ -2,7 +2,7 @@
 title: Manage assistants
 sidebarTitle: Manage assistants
 ---
-In this guide we will show how to create, configure, and manage an [assistant](/langgraph-platform/assistants).
+In this guide we will show how to create, configure, and manage an [assistant](/langsmith/assistants).
 
 First, as a brief refresher on the concept of context, consider the following simple `call_model` node and context schema.
 Observe that this node tries to read and use the `model_name` as defined by the `context` object's `model_name` field.
@@ -45,13 +45,13 @@ Observe that this node tries to read and use the `model_name` as defined by the 
     </Tab>
 </Tabs>
 
-For more information on configurations, [see here](/langgraph-platform/configuration-cloud#configuration).
+For more information on configurations, [see here](/langsmith/configuration-cloud#configuration).
 
 ## Create an assistant
 
 ### LangGraph SDK
 
-To create an assistant, use the [LangGraph SDK](/langgraph-platform/sdk) `create` method. See the [Python](/langgraph-platform/python-sdk#langgraph_sdk.client.AssistantsClient.create) and [JS](/langgraph-platform/js-ts-sdk#create) SDK reference docs for more information.
+To create an assistant, use the [LangGraph SDK](/langsmith/sdk) `create` method. See the [Python](/langsmith/python-sdk#langgraph_sdk.client.AssistantsClient.create) and [JS](/langsmith/js-ts-sdk#create) SDK reference docs for more information.
 
 This example uses the same context schema as above, and creates an assistant with `model_name` set to `openai`.
 
@@ -109,15 +109,15 @@ Output:
 }
 ```
 
-### LangGraph Platform UI
+### LangSmith Platform UI
 
-You can also create assistants from the LangGraph Platform UI.
+You can also create assistants from the LangSmith Platform UI.
 
 Inside your deployment, select the "Assistants" tab. This will load a table of all of the assistants in your deployment, across all graphs.
 
 To create a new assistant, select the "+ New assistant" button. This will open a form where you can specify the graph this assistant is for, as well as provide a name, description, and the desired configuration for the assistant based on the configuration schema for that graph.
 
-To confirm, click "Create assistant". This will take you to [Studio](/langgraph-platform/langgraph-studio) where you can test the assistant. If you go back to the "Assistants" tab in the deployment, you will see the newly created assistant in the table.
+To confirm, click "Create assistant". This will take you to [Studio](/langsmith/langgraph-studio) where you can test the assistant. If you go back to the "Assistants" tab in the deployment, you will see the newly created assistant in the table.
 
 ## Use an assistant
 
@@ -223,7 +223,7 @@ Receiving event of type: updates
 {'agent': {'messages': [{'content': 'I was created by OpenAI, a research organization focused on developing and advancing artificial intelligence technology.', 'additional_kwargs': {}, 'response_metadata': {'finish_reason': 'stop', 'model_name': 'gpt-4o-2024-05-13', 'system_fingerprint': 'fp_157b3831f5'}, 'type': 'ai', 'name': None, 'id': 'run-e1a6b25c-8416-41f2-9981-f9cfe043f414', 'example': False, 'tool_calls': [], 'invalid_tool_calls': [], 'usage_metadata': None}]}}
 ```
 
-### LangGraph Platform UI
+### LangSmith Platform UI
 
 Inside your deployment, select the "Assistants" tab. For the assistant you would like to use, click the "Studio" button. This will open Studio with the selected assistant. When you submit an input (either in Graph or Chat mode), the selected assistant and its configuration will be used.
 
@@ -231,7 +231,7 @@ Inside your deployment, select the "Assistants" tab. For the assistant you would
 
 ### LangGraph SDK
 
-To edit the assistant, use the `update` method. This will create a new version of the assistant with the provided edits. See the [Python](/langgraph-platform/python-sdk#langgraph_sdk.client.AssistantsClient.update) and [JS](/langgraph-platform/js-ts-sdk#update) SDK reference docs for more information.
+To edit the assistant, use the `update` method. This will create a new version of the assistant with the provided edits. See the [Python](/langsmith/python-sdk#langgraph_sdk.client.AssistantsClient.update) and [JS](/langsmith/js-ts-sdk#update) SDK reference docs for more information.
 
 <Note>
 **Note**
@@ -279,9 +279,9 @@ For example, to update your assistant's system prompt:
 
 This will create a new version of the assistant with the updated parameters and set this as the active version of your assistant. If you now run your graph and pass in this assistant id, it will use this latest version.
 
-### LangGraph Platform UI
+### LangSmith Platform UI
 
-You can also edit assistants from the LangGraph Platform UI.
+You can also edit assistants from the LangSmith Platform UI.
 
 Inside your deployment, select the "Assistants" tab. This will load a table of all of the assistants in your deployment, across all graphs.
 
@@ -322,7 +322,7 @@ In the example above, to rollback to the first version of the assistant:
 
 If you now run your graph and pass in this assistant id, it will use the first version of the assistant.
 
-### LangGraph Platform UI
+### LangSmith Platform UI
 
 If using Studio, to set the active version of your assistant, click the "Manage Assistants" button and locate the assistant you would like to use. Select the assistant and the version, and then click the "Active" toggle. This will update the assistant to make the selected version active.
 
