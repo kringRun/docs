@@ -109,11 +109,11 @@ LangGraph will not add any overhead to your code and is specifically designed wi
 
 Yes. LangGraph is an MIT-licensed open-source library and is free to use.
 
-### How are LangGraph and LangGraph Platform different?
+### How are LangGraph and LangSmith Platform different?
 
-LangGraph is a stateful, orchestration framework that brings added control to agent workflows. LangGraph Platform is a service for deploying and scaling LangGraph applications, with an opinionated API for building agent UXs, plus an integrated developer studio.
+LangGraph is a stateful, orchestration framework that brings added control to agent workflows. LangSmith Platform is a service for deploying and scaling LangGraph applications, with an opinionated API for building agent UXs, plus an integrated developer studio.
 
-| Features            | LangGraph (open source)                                   | LangGraph Platform                                                                                     |
+| Features            | LangGraph (open source)                                   | LangSmith Platform                                                                                     |
 |---------------------|-----------------------------------------------------------|--------------------------------------------------------------------------------------------------------|
 | Description         | Stateful orchestration framework for agentic applications | Scalable infrastructure for deploying LangGraph applications                                           |
 | SDKs                | Python and JavaScript                                     | Python and JavaScript                                                                                  |
@@ -129,13 +129,13 @@ LangGraph is a stateful, orchestration framework that brings added control to ag
 | Monitoring          | None                                                      | Integrated with LangSmith for observability                                                            |
 | IDE integration     | Studio                                          | Studio                                                                                       |
 
-### Is LangGraph Platform open source?
+### Is LangSmith Platform open source?
 
-No. LangGraph Platform is proprietary software.
+No. LangSmith Platform is proprietary software.
 
-There is a free, self-hosted version of LangGraph Platform with access to basic features. The Cloud deployment option and the Self-Hosted deployment options are paid services. [Contact our sales team](https://www.langchain.com/contact-sales) to learn more.
+There is a free, self-hosted version of LangSmith Platform with access to basic features. The Cloud deployment option and the Self-Hosted deployment options are paid services. [Contact our sales team](https://www.langchain.com/contact-sales) to learn more.
 
-For more information, see our [LangGraph Platform pricing page](https://www.langchain.com/pricing-langgraph-platform).
+For more information, see our [LangSmith Platform pricing page](https://www.langchain.com/pricing-langgraph-platform).
 
 ### Does LangGraph work with LLMs that don't support tool calling?
 
@@ -147,10 +147,10 @@ Yes! LangGraph is totally ambivalent to what LLMs are used under the hood. The m
 
 ### Can I use Studio without logging in to LangSmith
 
-Yes! You can use the [development version of LangGraph Server](/langgraph-platform/local-server) to run the backend locally.
+Yes! You can use the [development version of LangGraph Server](/langsmith/local-server) to run the backend locally.
 This will connect to the studio frontend hosted as part of LangSmith.
 If you set an environment variable of `LANGSMITH_TRACING=false`, then no traces will be sent to LangSmith.
 
-### What does "nodes executed" mean for LangGraph Platform usage?
+### What does "nodes executed" mean for LangSmith Platform usage?
 
 **Nodes Executed** is the aggregate number of nodes in a LangGraph application that are called and completed successfully during an invocation of the application. If a node in the graph is not called during execution or ends in an error state, these nodes will not be counted. If a node is called and completes successfully multiple times, each occurrence will be counted.

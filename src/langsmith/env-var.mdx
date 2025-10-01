@@ -44,7 +44,7 @@ For more details, refer to [Set a sampling rate for traces](/langsmith/sample-tr
 
 Type of authentication for the LangGraph Server deployment. Valid values: `langsmith`, `noop`.
 
-For deployments to LangGraph Platform, this environment variable is set automatically. For local development or deployments where authentication is handled externally (e.g. self-hosted), set this environment variable to `noop`.
+For deployments to LangSmith Platform, this environment variable is set automatically. For local development or deployments where authentication is handled externally (e.g. self-hosted), set this environment variable to `noop`.
 
 ## `LANGGRAPH_POSTGRES_POOL_MAX_SIZE`
 
@@ -88,7 +88,7 @@ Set `LOG_JSON` to `true` to render all log messages as JSON objects using the co
 
 <Info>
 **Only Allowed in Self-Hosted Deployments**
-The `MOUNT_PREFIX` environment variable is only allowed in Self-Hosted Deployment models, LangGraph Platform SaaS will not allow this environment variable.
+The `MOUNT_PREFIX` environment variable is only allowed in Self-Hosted Deployment models, LangSmith Platform SaaS will not allow this environment variable.
 </Info>
 
 Set `MOUNT_PREFIX` to serve the LangGraph Server under a specific path prefix. This is useful for deployments where the server is behind a reverse proxy or load balancer that requires a specific path prefix.
@@ -103,7 +103,7 @@ Number of jobs per worker for the LangGraph Server task queue. Defaults to `10`.
 
 <Info>
 **Only for Hybrid and Self-Hosted**
-Custom Postgres instances are only available for [Hybrid](/langgraph-platform/hybrid) and [Self-Hosted](/langgraph-platform/self-hosted) deployments.
+Custom Postgres instances are only available for [Hybrid](/langsmith/hybrid) and [Self-Hosted](/langsmith/self-hosted) deployments.
 </Info>
 
 Specify `POSTGRES_URI_CUSTOM` to use a custom Postgres instance. The value of `POSTGRES_URI_CUSTOM` must be a valid [Postgres connection URI](https://www.postgresql.org/docs/current/libpq-connect.html#LIBPQ-CONNSTRING-URIS).
@@ -131,7 +131,7 @@ This feature is in Alpha.
 </Warning>
 <Info>
 **Only Allowed in Self-Hosted Deployments**
-Redis Cluster mode is only available in Self-Hosted Deployment models, LangGraph Platform SaaS will provision a redis instance for you by default.
+Redis Cluster mode is only available in Self-Hosted Deployment models, LangSmith Platform SaaS will provision a redis instance for you by default.
 </Info>
 
 Set `REDIS_CLUSTER` to `True` to enable Redis Cluster mode. When enabled, the system will connect to Redis using cluster mode. This is useful when connecting to a Redis Cluster deployment.
@@ -153,7 +153,7 @@ Defaults to `''`.
 
 <Info>
 **Only for Hybrid and Self-Hosted**
-Custom Redis instances are only available for [Hybrid](/langgraph-platform/hybrid) and [Self-Hosted](/langgraph-platform/self-hosted) deployments.
+Custom Redis instances are only available for [Hybrid](/langsmith/hybrid) and [Self-Hosted](/langsmith/self-hosted) deployments.
 </Info>
 
 Specify `REDIS_URI_CUSTOM` to use a custom Redis instance. The value of `REDIS_URI_CUSTOM` must be a valid [Redis connection URI](https://redis-py.readthedocs.io/en/stable/connections.html#redis.Redis.from_url).
@@ -164,6 +164,6 @@ Time-to-live in seconds for resumable stream data in Redis.
 
 When a run is created and the output is streamed, the stream can be configured to be resumable (e.g. `stream_resumable=True`). If a stream is resumable, output from the stream is temporarily stored in Redis. The TTL for this data can be configured by setting `RESUMABLE_STREAM_TTL_SECONDS`.
 
-See the [Python](/langgraph-platform/python-sdk#langgraph_sdk.client.RunsClient.stream) and [JS/TS](https://langchain-ai.github.io/langgraphjs/reference/classes/sdk_client.RunsClient.html#stream) SDKs for more details on how to implement resumable streams.
+See the [Python](/langsmith/python-sdk#langgraph_sdk.client.RunsClient.stream) and [JS/TS](https://langchain-ai.github.io/langgraphjs/reference/classes/sdk_client.RunsClient.html#stream) SDKs for more details on how to implement resumable streams.
 
 Defaults to `120` seconds.
