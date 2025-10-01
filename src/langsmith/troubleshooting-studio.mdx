@@ -44,7 +44,7 @@ Brave blocks plain-HTTP traffic on localhost when Brave Shields are enabled. Whe
 
 Disable Brave Shields for LangSmith using the Brave icon in the URL bar.
 
-![Brave Shields panel with Shields turned off for smith.langchain.com so Studio can reach localhost.](/langgraph-platform/images/brave-shields.png)
+![Brave Shields panel with Shields turned off for smith.langchain.com so Studio can reach localhost.](/langsmith/images/brave-shields.png)
 
 ### Solution 2: Use Cloudflare Tunnel
 
@@ -112,7 +112,7 @@ def routing_function(state: GraphState) -> Literal["node_b","node_c"]:
 
 Check the following:
 
-- **Deployed application**: If your application is deployed on LangGraph Platform, you may need to create a new revision to enable this feature.
+- **Deployed application**: If your application is deployed on LangSmith Platform, you may need to create a new revision to enable this feature.
 - **Local development server**: If you are running your application locally, make sure you have upgraded to the latest version of the `langgraph-cli` (`pip install -U langgraph-cli`). Additionally, ensure you have tracing enabled by setting the `LANGSMITH_API_KEY` in your project's `.env` file.
 
 ### Evaluator results are missing

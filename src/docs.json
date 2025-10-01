@@ -442,9 +442,9 @@
             ]
           },
           {
-            "dropdown": "LangSmith",
+            "dropdown": "LangSmith Platform",
             "icon": "rocket",
-            "description": "Platform for deployment, LLM observability, and evaluation",
+            "description": "LLM observability, evaluation, and deployment",
             "tabs": [
               {
                 "tab": "Get started",
@@ -815,16 +815,7 @@
                   {
                     "group": "Overview",
                     "pages": [
-                      "langsmith/deployment-options",
-                      {
-                        "group": "Platform components",
-                        "pages": [
-                          "langsmith/components",
-                          "langsmith/langgraph-server",
-                          "langsmith/data-plane",
-                          "langsmith/control-plane"
-                        ]
-                      }
+                      "langsmith/deployment-options"
                     ]
                   },
                   {
@@ -846,126 +837,135 @@
                     "pages": [
                       "langsmith/self-hosted",
                       {
-                        "group": "Deployment guides",
+                        "group": "Setup guides",
                         "pages": [
+                          {
+                            "group": "LangSmith Platform",
+                            "icon": "server",
+                            "pages": [
+                              "langsmith/kubernetes",
+                              "langsmith/docker"
+                            ]
+                          },
                           "langsmith/deploy-self-hosted-full-platform",
-                          "langsmith/deploy-standalone-server"
+                          "langsmith/deploy-standalone-server",
+                          {
+                            "group": "Manage an installation",
+                            "pages": [
+                              "langsmith/self-host-usage",
+                              "langsmith/self-host-upgrades",
+                              "langsmith/self-host-egress",
+                              "langsmith/self-host-organization-charts",
+                              "langsmith/langsmith-managed-clickhouse",
+                              "langsmith/self-host-ingress",
+                              "langsmith/self-host-mirroring-images"
+                            ]
+                          }
                         ]
                       },
                       {
                         "group": "Configuration",
                         "pages": [
+                          "langsmith/self-host-scale",
+                          "langsmith/self-host-ttl",
                           "langsmith/custom-docker",
-                          "langsmith/egress-metrics-metadata"
+                          "langsmith/egress-metrics-metadata",
+                          "langsmith/self-host-playground-environment-settings",
+                          "langsmith/troubleshooting"
                         ]
                       },
                       {
-                        "group": "(Existing LS content to organize) Self-host",
+                        "group": "Connect external services",
                         "pages": [
-                          "langsmith/architectural-overview",
-                          {
-                            "group": "Setup",
-                            "pages": [
-                              "langsmith/kubernetes",
-                              "langsmith/docker",
-                              "langsmith/self-host-usage",
-                              "langsmith/self-host-upgrades",
-                              "langsmith/self-host-egress",
-                              "langsmith/self-host-organization-charts",
-                              "langsmith/langsmith-managed-clickhouse"
-                            ]
-                          },
-                          {
-                            "group": "Configuration",
-                            "pages": [
-                              "langsmith/self-host-scale",
-                              "langsmith/self-host-ttl",
-                              "langsmith/self-host-ingress",
-                              "langsmith/self-host-mirroring-images",
-                              "langsmith/self-host-playground-environment-settings",
-                              "langsmith/troubleshooting"
-                            ]
-                          },
-                          {
-                            "group": "Authentication & access control",
-                            "pages": [
-                              "langsmith/self-host-basic-auth",
-                              "langsmith/self-host-sso",
-                              "langsmith/self-host-user-management",
-                              "langsmith/self-host-custom-tls-certificates",
-                              "langsmith/self-host-using-an-existing-secret"
-                            ]
-                          },
-                          {
-                            "group": "Connect external services",
-                            "pages": [
-                              "langsmith/self-host-blob-storage",
-                              "langsmith/self-host-external-clickhouse",
-                              "langsmith/self-host-external-postgres",
-                              "langsmith/self-host-external-redis"
-                            ]
-                          },
-                          {
-                            "group": "Scripts",
-                            "pages": [
-                              "langsmith/script-delete-a-workspace",
-                              "langsmith/script-delete-an-organization",
-                              "langsmith/script-delete-traces",
-                              "langsmith/script-generate-clickhouse-stats",
-                              "langsmith/script-generate-query-stats",
-                              "langsmith/script-running-pg-support-queries",
-                              "langsmith/script-running-ch-support-queries"
-                            ]
-                          },
-                          {
-                            "group": "Observability",
-                            "pages": [
-                              "langsmith/export-backend",
-                              "langsmith/langsmith-collector",
-                              "langsmith/observability-stack"
-                            ]
-                          }
+                          "langsmith/self-host-blob-storage",
+                          "langsmith/self-host-external-clickhouse",
+                          "langsmith/self-host-external-postgres",
+                          "langsmith/self-host-external-redis"
+                        ]
+                      },
+                      {
+                        "group": "Platform components",
+                        "pages": [
+                          "langsmith/components",
+                          "langsmith/langgraph-server",
+                          "langsmith/data-plane",
+                          "langsmith/control-plane"
+                        ]
+                      },
+                      {
+                        "group": "Platform auth & access control",
+                        "pages": [
+                          "langsmith/self-host-basic-auth",
+                          "langsmith/self-host-sso",
+                          "langsmith/self-host-user-management",
+                          "langsmith/self-host-custom-tls-certificates",
+                          "langsmith/self-host-using-an-existing-secret"
+                        ]
+                      },
+                      {
+                        "group": "Self-hosted observability",
+                        "pages": [
+                          "langsmith/export-backend",
+                          "langsmith/langsmith-collector",
+                          "langsmith/observability-stack"
+                        ]
+                      },
+                      {
+                        "group": "Scripts for management tasks",
+                        "pages": [
+                          "langsmith/script-delete-a-workspace",
+                          "langsmith/script-delete-an-organization",
+                          "langsmith/script-delete-traces",
+                          "langsmith/script-generate-clickhouse-stats",
+                          "langsmith/script-generate-query-stats",
+                          "langsmith/script-running-pg-support-queries",
+                          "langsmith/script-running-ch-support-queries"
                         ]
                       }
                     ]
                   },
                   {
-                    "group": "Configure app for deployment",
+                    "group": "Agent deployment",
                     "pages": [
-                      "langsmith/application-structure",
                       {
-                        "group": "Setup",
+                        "group": "Configure for deployment",
                         "pages": [
-                          "langsmith/setup-app-requirements-txt",
-                          "langsmith/setup-pyproject",
-                          "langsmith/setup-javascript"
+                          "langsmith/application-structure",
+                          {
+                            "group": "Setup",
+                            "pages": [
+                              "langsmith/setup-app-requirements-txt",
+                              "langsmith/setup-pyproject",
+                              "langsmith/setup-javascript"
+                            ]
+                          },
+                          "langsmith/graph-rebuild",
+                          "langsmith/use-remote-graph",
+                          "langsmith/monorepo-support",
+                          "langsmith/semantic-search",
+                          "langsmith/configure-ttl"
                         ]
                       },
-                      "langsmith/graph-rebuild",
-                      "langsmith/use-remote-graph",
-                      "langsmith/monorepo-support",
-                      "langsmith/semantic-search",
-                      "langsmith/configure-ttl"
-                    ]
-                  },
-                  {
-                    "group": "Authentication & access control",
-                    "pages": [
-                      "langsmith/auth",
-                      "langsmith/custom-auth",
-                      "langsmith/set-up-custom-auth",
-                      "langsmith/resource-auth",
-                      "langsmith/add-auth-server",
-                      "langsmith/openapi-security",
-                      "langsmith/agent-auth"
-                    ]
-                  },
-                  {
-                    "group": "Server customization",
-                    "pages": [
-                       "langsmith/custom-lifespan",
-                       "langsmith/custom-middleware",
-                       "langsmith/custom-routes"
+                      {
+                        "group": "Auth & access control",
+                        "pages": [
+                          "langsmith/auth",
+                          "langsmith/custom-auth",
+                          "langsmith/set-up-custom-auth",
+                          "langsmith/resource-auth",
+                          "langsmith/add-auth-server",
+                          "langsmith/openapi-security",
+                          "langsmith/agent-auth"
+                        ]
+                      },
+                      {
+                        "group": "Server customization",
+                        "pages": [
+                           "langsmith/custom-lifespan",
+                           "langsmith/custom-middleware",
+                           "langsmith/custom-routes"
+                        ]
+                      }
                     ]
                   }
                 ]
