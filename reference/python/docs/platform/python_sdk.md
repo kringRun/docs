@@ -1,4 +1,4 @@
-# LangGraph Platform SDK Reference (Python)
+# LangSmith Platform SDK Reference (Python)
 
 ::: langgraph_sdk.client
     handler: python

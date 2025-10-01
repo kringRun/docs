@@ -1,10 +1,10 @@
 ---
-title: Deployment options
-sidebarTitle: Deployment options
+title: Run LangSmith Platform
+sidebarTitle: Run LangSmith Platform
 mode: "wide"
 ---
 
-LangSmith deployment options include:
+[LangSmith Platform](https://smith.langchain.com) supports three hosting options, depending on your scale, security, and infrastructure needs:
 
 <Columns cols={1}>
     <Card
@@ -12,18 +12,18 @@ LangSmith deployment options include:
     icon="cloud"
     iconType="solid"
     href="/langsmith/cloud"
-    cta="Learn more"
+    cta="Get started"
 >
-   Fully managed model for deployment running in LangChain's cloud. A simple way to deploy and manage your LangGraph Servers. Connect your GitHub repositories to the platform and deploy your LangGraph Servers from the [control plane UI](/langgraph-platform/control-plane#control-plane-ui). The build process (i.e. CI/CD) is managed internally by the platform.
+   Run all components fully managed in LangChain’s cloud.
     </Card>
 
     <Card
     title="Hybrid"
-    icon="server"
+    icon="cloud"
     href="/langsmith/hybrid"
-    cta="Learn more"
+    cta="Set up hybrid"
 >
-   (Enterprise) Manage the data plane in your own cloud, while LangChain manages the control plane. Build a Docker image using the LangGraph CLI and deploy your LangGraph Server from the control plane UI.
+   **(Enterprise)** Manage the data plane in your cloud while LangChain manages the control plane.
     </Card>
 
     <Card
@@ -31,9 +31,9 @@ LangSmith deployment options include:
     icon="server"
     iconType="solid"
     href="/langsmith/self-hosted"
-    cta="Learn more"
+    cta="Run self-hosted"
 >
-    (Enterprise) Run all components entirely within your own cloud environment. Deploy the full LangSmith platform or standalone instances of a LangGraph Server without the control plane UI.
+    **(Enterprise)** Run the full LangSmith platform or run standalone LangGraph Servers without the control plane UI.
     </Card>
 
 </Columns>
@@ -49,12 +49,12 @@ For comparison:
 | **[Pricing](https://www.langchain.com/pricing-langgraph-platform)** | Plus | Enterprise | Enterprise |
 
 <Tip>
-You can [run LangSmith locally for free](/langgraph-platform/local-server) for testing and development.
+You can [run a LangGraph Server locally for free](/langsmith/local-server) for testing and development.
 </Tip>
 
 ## Related
 
 For more information, refer to:
 
-- [Plans](/langgraph-platform/plans)
+- [Plans](/langsmith/plans)
 - [Pricing](https://www.langchain.com/langgraph-platform-pricing)

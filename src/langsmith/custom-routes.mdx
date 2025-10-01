@@ -2,9 +2,9 @@
 title: How to add custom routes
 sidebarTitle: Add custom routes
 ---
-When deploying agents to LangGraph platform, your server automatically exposes routes for creating runs and threads, interacting with the long-term memory store, managing configurable assistants, and other core functionality ([see all default API endpoints](/langgraph-platform/server-api-ref)).
+When deploying agents to LangGraph platform, your server automatically exposes routes for creating runs and threads, interacting with the long-term memory store, managing configurable assistants, and other core functionality ([see all default API endpoints](/langsmith/server-api-ref)).
 
-You can add custom routes by providing your own [`Starlette`](https://www.starlette.io/applications/) app (including [`FastAPI`](https://fastapi.tiangolo.com/), [`FastHTML`](https://fastht.ml/) and other compatible apps). You make LangGraph Platform aware of this by providing a path to the app in your `langgraph.json` configuration file.
+You can add custom routes by providing your own [`Starlette`](https://www.starlette.io/applications/) app (including [`FastAPI`](https://fastapi.tiangolo.com/), [`FastHTML`](https://fastht.ml/) and other compatible apps). You make LangSmith Platform aware of this by providing a path to the app in your `langgraph.json` configuration file.
 
 Defining a custom app object lets you add any routes you'd like, so you can do anything from adding a `/login` endpoint to writing an entire full-stack web-app, all deployed in a single LangGraph Server.
 
@@ -12,7 +12,7 @@ Below is an example using FastAPI.
 
 ## Create app
 
-Starting from an **existing** LangGraph Platform application, add the following custom route code to your `webapp.py` file. If you are starting from scratch, you can create a new app from a template using the CLI.
+Starting from an **existing** LangSmith Platform application, add the following custom route code to your `webapp.py` file. If you are starting from scratch, you can create a new app from a template using the CLI.
 
 ```bash
 langgraph new --template=new-langgraph-project-python my_new_project
@@ -68,8 +68,8 @@ The routes you create in the app are given priority over the system defaults, me
 
 ## Deploying
 
-You can deploy this app as-is to LangGraph Platform or to your self-hosted platform.
+You can deploy this app as-is to LangSmith Platform or to your self-hosted platform.
 
 ## Next steps
 
-Now that you've added a custom route to your deployment, you can use this same technique to further customize how your server behaves, such as defining custom [custom middleware](/langgraph-platform/custom-middleware) and [custom lifespan events](/langgraph-platform/custom-lifespan).
+Now that you've added a custom route to your deployment, you can use this same technique to further customize how your server behaves, such as defining custom [custom middleware](/langsmith/custom-middleware) and [custom lifespan events](/langsmith/custom-lifespan).

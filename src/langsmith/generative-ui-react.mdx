@@ -4,16 +4,16 @@ sidebarTitle: Implement generative user interfaces with LangGraph
 ---
 <Info>
 **Prerequisites**
-* [LangGraph Platform](/langgraph-platform/index)
-* [LangGraph Server](/langgraph-platform/langgraph-server)
-* [`useStream()` React Hook](/langgraph-platform/use-stream-react)
+* [LangSmith Platform](/langsmith/home)
+* [LangGraph Server](/langsmith/langgraph-server)
+* [`useStream()` React Hook](/langsmith/use-stream-react)
 </Info>
 
 Generative user interfaces (Generative UI) allows agents to go beyond text and generate rich user interfaces. This enables creating more interactive and context-aware applications where the UI adapts based on the conversation flow and AI responses.
 
-![Agent Chat showing a prompt about booking/lodging and a generated set of hotel listing cards (images, titles, prices, locations) rendered inline as UI components.](/langgraph-platform/images/generative-ui-sample.jpg)
+![Agent Chat showing a prompt about booking/lodging and a generated set of hotel listing cards (images, titles, prices, locations) rendered inline as UI components.](/langsmith/images/generative-ui-sample.jpg)
 
-LangGraph Platform supports colocating your React components with your graph code. This allows you to focus on building specific UI components for your graph while easily plugging into existing chat interfaces such as [Agent Chat](https://agentchat.vercel.app) and loading the code only when actually needed.
+LangSmith Platform supports colocating your React components with your graph code. This allows you to focus on building specific UI components for your graph while easily plugging into existing chat interfaces such as [Agent Chat](https://agentchat.vercel.app) and loading the code only when actually needed.
 
 ## Tutorial
 
@@ -47,7 +47,7 @@ Next, define your UI components in your `langgraph.json` configuration:
 
 The `ui` section points to the UI components that will be used by graphs. By default, we recommend using the same key as the graph name, but you can split out the components however you like, see [Customise the namespace of UI components](#customise-the-namespace-of-ui-components) for more details.
 
-LangGraph Platform will automatically bundle your UI components code and styles and serve them as external assets that can be loaded by the `LoadExternalComponent` component. Some dependencies such as `react` and `react-dom` will be automatically excluded from the bundle.
+LangSmith Platform will automatically bundle your UI components code and styles and serve them as external assets that can be loaded by the `LoadExternalComponent` component. Some dependencies such as `react` and `react-dom` will be automatically excluded from the bundle.
 
 CSS and Tailwind 4.x is also supported out of the box, so you can freely use Tailwind classes as well as `shadcn/ui` in your UI components.
 
@@ -208,13 +208,13 @@ export default function Page() {
 }
 ```
 
-Behind the scenes, `LoadExternalComponent` will fetch the JS and CSS for the UI components from LangGraph Platform and render them in a shadow DOM, thus ensuring style isolation from the rest of your application.
+Behind the scenes, `LoadExternalComponent` will fetch the JS and CSS for the UI components from LangSmith Platform and render them in a shadow DOM, thus ensuring style isolation from the rest of your application.
 
 ## How-to guides
 
 ### Provide custom components on the client side
 
-If you already have the components loaded in your client application, you can provide a map of such components to be rendered directly without fetching the UI code from LangGraph Platform.
+If you already have the components loaded in your client application, you can provide a map of such components to be rendered directly without fetching the UI code from LangSmith Platform.
 
 ```tsx
 const clientComponents = {

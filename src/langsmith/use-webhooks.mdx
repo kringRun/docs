@@ -3,11 +3,11 @@ title: Use webhooks
 sidebarTitle: Webhooks
 ---
 
-Webhooks enable event-driven communication from your LangGraph Platform application to external services. For example, you may want to issue an update to a separate service once an API call to LangGraph Platform has finished running.
+Webhooks enable event-driven communication from your LangSmith Platform application to external services. For example, you may want to issue an update to a separate service once an API call to LangSmith Platform has finished running.
 
-Many LangGraph Platform endpoints accept a `webhook` parameter. If this parameter is specified by an endpoint that can accept POST requests, LangGraph Platform will send a request at the completion of a run.
+Many LangSmith Platform endpoints accept a `webhook` parameter. If this parameter is specified by an endpoint that can accept POST requests, LangSmith Platform will send a request at the completion of a run.
 
-When working with LangGraph Platform, you may want to use webhooks to receive updates after an API call completes. Webhooks are useful for triggering actions in your service once a run has finished processing. To implement this, you need to expose an endpoint that can accept `POST` requests and pass this endpoint as a `webhook` parameter in your API request.
+When working with LangSmith Platform, you may want to use webhooks to receive updates after an API call completes. Webhooks are useful for triggering actions in your service once a run has finished processing. To implement this, you need to expose an endpoint that can accept `POST` requests and pass this endpoint as a `webhook` parameter in your API request.
 
 Currently, the SDK does not provide built-in support for defining webhook endpoints, but you can specify them manually using API requests.
 
@@ -82,7 +82,7 @@ Example response:
 
 ## Use a webhook with a graph run
 
-To use a webhook, specify the `webhook` parameter in your API request. When the run completes, LangGraph Platform sends a `POST` request to the specified webhook URL.
+To use a webhook, specify the `webhook` parameter in your API request. When the run completes, LangSmith Platform sends a `POST` request to the specified webhook URL.
 
 For example, if your server listens for webhook events at `https://my-server.app/my-webhook-endpoint`, include this in your request:
 
@@ -135,7 +135,7 @@ For example, if your server listens for webhook events at `https://my-server.app
 
 ## Webhook payload
 
-LangGraph Platform sends webhook notifications in the format of a [Run](/langgraph-platform/assistants#execution). See the [API Reference](https://langchain-ai.github.io/langgraph/cloud/reference/api/api_ref.html#tag/assistants) for details. The request payload includes run input, configuration, and other metadata in the `kwargs` field.
+LangSmith Platform sends webhook notifications in the format of a [Run](/langsmith/assistants#execution). See the [API Reference](https://langchain-ai.github.io/langgraph/cloud/reference/api/api_ref.html#tag/assistants) for details. The request payload includes run input, configuration, and other metadata in the `kwargs` field.
 
 ## Secure webhooks
 
@@ -161,7 +161,7 @@ As of `langgraph-api>=0.2.78`, developers can disable webhooks in the `langgraph
 
 This feature is primarily intended for self-hosted deployments, where platform administrators or developers may prefer to disable webhooks to simplify their security posture—especially if they are not configuring firewall rules or other network controls. Disabling webhooks helps prevent untrusted payloads from being sent to internal endpoints.
 
-For full configuration details, refer to the [configuration file reference](/langgraph-platform/cli?h=disable_webhooks#configuration-file).
+For full configuration details, refer to the [configuration file reference](/langsmith/cli?h=disable_webhooks#configuration-file).
 
 ## Test webhooks
 
@@ -170,4 +170,4 @@ You can test your webhook using online services like:
 * **[Beeceptor](https://beeceptor.com/)** – Quickly create a test endpoint and inspect incoming webhook payloads.
 * **[Webhook.site](https://webhook.site/)** – View, debug, and log incoming webhook requests in real time.
 
-These tools help you verify that LangGraph Platform is correctly triggering and sending webhooks to your service.
+These tools help you verify that LangSmith Platform is correctly triggering and sending webhooks to your service.

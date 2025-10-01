@@ -5,11 +5,11 @@ sidebarTitle: MCP endpoint in LangGraph Server
 
 The Model Context Protocol (MCP) is an open protocol for describing tools and data sources in a model-agnostic format, enabling LLMs to discover and use them via a structured API.
 
-[LangGraph Server](/langgraph-platform/langgraph-server) implements MCP using the [Streamable HTTP transport](https://spec.modelcontextprotocol.io/specification/2025-03-26/basic/transports/#streamable-http). This allows LangGraph **agents** to be exposed as **MCP tools**, making them usable with any MCP-compliant client supporting Streamable HTTP.
+[LangGraph Server](/langsmith/langgraph-server) implements MCP using the [Streamable HTTP transport](https://spec.modelcontextprotocol.io/specification/2025-03-26/basic/transports/#streamable-http). This allows LangGraph **agents** to be exposed as **MCP tools**, making them usable with any MCP-compliant client supporting Streamable HTTP.
 
-The MCP endpoint is available at `/mcp` on [LangGraph Server](/langgraph-platform/langgraph-server).
+The MCP endpoint is available at `/mcp` on [LangGraph Server](/langsmith/langgraph-server).
 
-You can set up [custom authentication middleware](/langgraph-platform/custom-auth) to authenticate a user with an MCP server to get access to user-scoped tools within your LangGraph Platform deployment.
+You can set up [custom authentication middleware](/langsmith/custom-auth) to authenticate a user with an MCP server to get access to user-scoped tools within your LangSmith Platform deployment.
 
 An example architecture for this flow:
 
@@ -70,7 +70,7 @@ uv add "langgraph-api>=0.2.3" "langgraph-sdk>=0.1.61"
 
 To enable MCP:
 
-* Upgrade to use langgraph-api>=0.2.3. If you are deploying LangGraph Platform, this will be done for you automatically if you create a new revision.
+* Upgrade to use langgraph-api>=0.2.3. If you are deploying LangSmith Platform, this will be done for you automatically if you create a new revision.
 * MCP tools (agents) will be automatically exposed.
 * Connect with any MCP-compliant client that supports Streamable HTTP.
 
@@ -240,10 +240,10 @@ For more details, see the [low-level concepts guide](/oss/langgraph/graph-api#st
 
 <Tip>
 **Prerequisites**
-You have added your own [custom auth middleware](/langgraph-platform/custom-auth) that populates the `langgraph_auth_user` object, making it accessible through configurable context for every node in your graph.
+You have added your own [custom auth middleware](/langsmith/custom-auth) that populates the `langgraph_auth_user` object, making it accessible through configurable context for every node in your graph.
 </Tip>
 
-To make user-scoped tools available to your LangGraph Platform deployment, start with implementing a snippet like the following:
+To make user-scoped tools available to your LangSmith Platform deployment, start with implementing a snippet like the following:
 
 ```python
 from langchain_mcp_adapters.client import MultiServerMCPClient
@@ -273,7 +273,7 @@ def mcp_tools_node(state, config):
 2. Your MCP server URL.
 3. Get available tools from your MCP server.
 
-_This can also be done by [rebuilding your graph at runtime](/langgraph-platform/graph-rebuild) to have a different configuration for a new run_
+_This can also be done by [rebuilding your graph at runtime](/langsmith/graph-rebuild) to have a different configuration for a new run_
 
 ## Session behavior
 
@@ -281,7 +281,7 @@ The current LangGraph MCP implementation does not support sessions. Each `/mcp` 
 
 ## Authentication
 
-The `/mcp` endpoint uses the same authentication as the rest of the LangGraph API. Refer to the [authentication guide](/langgraph-platform/auth) for setup details.
+The `/mcp` endpoint uses the same authentication as the rest of the LangGraph API. Refer to the [authentication guide](/langsmith/auth) for setup details.
 
 ## Disable MCP
 
