@@ -2,13 +2,13 @@
 title: How to integrate LangGraph with AutoGen, CrewAI, and other frameworks
 sidebarTitle: Integrate LangGraph with AutoGen, CrewAI, and other frameworks
 ---
-This guide shows how to integrate AutoGen agents with LangGraph to leverage features like persistence, streaming, and memory, and then deploy the integrated solution to LangGraph Platform for scalable production use. In this guide we show how to build a LangGraph chatbot that integrates with AutoGen, but you can follow the same approach with other frameworks.
+This guide shows how to integrate AutoGen agents with LangGraph to leverage features like persistence, streaming, and memory, and then deploy the integrated solution to LangSmith Platform for scalable production use. In this guide we show how to build a LangGraph chatbot that integrates with AutoGen, but you can follow the same approach with other frameworks.
 
 Integrating AutoGen with LangGraph provides several benefits:
 
-* Enhanced features: Add [persistence](/oss/langgraph/persistence), [streaming](/langgraph-platform/streaming), [short and long-term memory](/oss/concepts/memory) and more to your AutoGen agents.
+* Enhanced features: Add [persistence](/oss/langgraph/persistence), [streaming](/langsmith/streaming), [short and long-term memory](/oss/concepts/memory) and more to your AutoGen agents.
 * Multi-agent systems: Build [multi-agent systems](/oss/langchain/multi-agent) where individual agents are built with different frameworks.
-* Production deployment: Deploy your integrated solution to [LangGraph Platform](/langgraph-platform/index) for scalable production use.
+* Production deployment: Deploy your integrated solution to [LangSmith Platform](/langsmith/home) for scalable production use.
 
 ## Prerequisites
 
@@ -120,11 +120,11 @@ from IPython.display import display, Image
 display(Image(graph.get_graph().draw_mermaid_png()))
 ```
 
-![LangGraph chatbot with one step: START routes to autogen, where call_autogen_agent sends the latest user message (with prior context) to the AutoGen agent.](/langgraph-platform/images/autogen-output.png)
+![LangGraph chatbot with one step: START routes to autogen, where call_autogen_agent sends the latest user message (with prior context) to the AutoGen agent.](/langsmith/images/autogen-output.png)
 
 ## 3. Test the graph locally
 
-Before deploying to LangGraph Platform, you can test the graph locally:
+Before deploying to LangSmith Platform, you can test the graph locally:
 
 ```python {highlight={2,13}}
 # pass the thread ID to persist agent outputs for future interactions
@@ -213,7 +213,7 @@ TERMINATE
 
 ## 4. Prepare for deployment
 
-To deploy to LangGraph Platform, create a file structure like the following:
+To deploy to LangSmith Platform, create a file structure like the following:
 
 ```
 my-autogen-agent/
@@ -283,7 +283,7 @@ my-autogen-agent/
         builder.add_edge(START, "autogen")
         return builder.compile(checkpointer=checkpointer)
 
-    # Export the graph for LangGraph Platform
+    # Export the graph for LangSmith Platform
     graph = create_graph()
     ```
     </Tab>
@@ -308,9 +308,9 @@ my-autogen-agent/
     </Tab>
 </Tabs>
 
-## 5. Deploy to LangGraph Platform
+## 5. Deploy to LangSmith Platform
 
-Deploy the graph with the LangGraph Platform CLI:
+Deploy the graph with the LangSmith Platform CLI:
 
 <CodeGroup>
 ```bash pip

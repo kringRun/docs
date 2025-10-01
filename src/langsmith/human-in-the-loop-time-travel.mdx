@@ -7,7 +7,7 @@ LangGraph provides the [**time travel**](/oss/langgraph/use-time-travel) functio
 
 To time travel using the LangGraph Server API (via the LangGraph SDK):
 
-1. **Run the graph** with initial inputs using [LangGraph SDK](/langgraph-platform/python-sdk)'s @[client.runs.wait] or @[client.runs.stream] APIs.
+1. **Run the graph** with initial inputs using [LangGraph SDK](/langsmith/python-sdk)'s @[client.runs.wait] or @[client.runs.stream] APIs.
 2. **Identify a checkpoint in an existing thread**: Use @[client.threads.get_history] method to retrieve the execution history for a specific `thread_id` and locate the desired `checkpoint_id`.
   Alternatively, set a [breakpoint](/oss/langgraph/add-human-in-the-loop) before the node(s) where you want execution to pause. You can then find the most recent checkpoint recorded up to that breakpoint.
 3. **(Optional) modify the graph state**: Use the @[client.threads.update_state] method to modify the graph’s state at the checkpoint and resume execution from alternative state.

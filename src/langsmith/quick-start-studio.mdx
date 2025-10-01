@@ -3,7 +3,7 @@ title: Get started with Studio
 sidebarTitle: Use Studio
 ---
 
-[Studio](/langgraph-platform/langgraph-studio) supports connecting to two types of graphs:
+[Studio](/langsmith/langgraph-studio) supports connecting to two types of graphs:
 
 - Graphs deployed on [cloud or self-hosted](#deployed-graphs).
 - Graphs running locally with [LangGraph server](#local-development-server).
@@ -12,9 +12,9 @@ sidebarTitle: Use Studio
 
 Studio is accessed in the [LangSmith UI](https://smith.langchain.com) from **Deployments**.
 
-For applications that are [deployed](/langgraph-platform/deployment-quickstart), you can access Studio as part of that deployment. To do so, navigate to the deployment in the UI and select **Studio**.
+For applications that are [deployed](/langsmith/deployment-quickstart), you can access Studio as part of that deployment. To do so, navigate to the deployment in the UI and select **Studio**.
 
-This will load the Studio connected to your live deployment, allowing you to create, read, and update the [threads](/oss/langgraph/persistence#threads), [assistants](/langgraph-platform/assistants), and [memory](/oss/concepts/memory) in that deployment.
+This will load the Studio connected to your live deployment, allowing you to create, read, and update the [threads](/oss/langgraph/persistence#threads), [assistants](/langsmith/assistants), and [memory](/oss/concepts/memory) in that deployment.
 
 ## Local development server
 
@@ -22,12 +22,12 @@ This will load the Studio connected to your live deployment, allowing you to cre
 
 To test your application locally using Studio:
 
-- Follow the [local application quickstart](/langgraph-platform/local-server) first.
+- Follow the [local application quickstart](/langsmith/local-server) first.
 - If you don't want data [traced](/langsmith/observability-concepts#traces) to LangSmith, set `LANGSMITH_TRACING=false` in your application's `.env` file. With tracing disabled, no data leaves your local server.
 
 ### Setup
 
-1. Install the [LangGraph CLI](/langgraph-platform/langgraph-cli):
+1. Install the [LangGraph CLI](/langsmith/langgraph-cli):
 
     <CodeGroup>
     ```bash pip
@@ -50,7 +50,7 @@ To test your application locally using Studio:
     Safari blocks `localhost` connections to Studio. To work around this, run the command with `--tunnel` to access Studio via a secure tunnel.
     </Warning>
 
-    This will start the LangGraph Server locally, running in-memory. The server will run in watch mode, listening for and automatically restarting on code changes. Read this [reference](/langgraph-platform/cli#dev) to learn about all the options for starting the API server.
+    This will start the LangGraph Server locally, running in-memory. The server will run in watch mode, listening for and automatically restarting on code changes. Read this [reference](/langsmith/cli#dev) to learn about all the options for starting the API server.
 
     You will see the following logs:
 
@@ -120,7 +120,7 @@ Then attach your preferred debugger:
 </Tabs>
 
 <Tip>
-For issues getting started, refer to the [troubleshooting guide](/langgraph-platform/troubleshooting-studio).
+For issues getting started, refer to the [troubleshooting guide](/langsmith/troubleshooting-studio).
 </Tip>
 
 ## Next steps
