@@ -37,8 +37,8 @@ oss:
 langgraph-platform:
   - changed-files:
     - any-glob-to-any-file:
-      - src/langgraph-platform/**
-      - src/langgraph-platform/**/*
+      - src/langsmith/**
+      - src/langsmith/**/*
 
 # Label for Labs documentation changes
 labs:

@@ -3,15 +3,15 @@ title: Cloud
 sidebarTitle: Overview
 ---
 
-To deploy a [LangGraph Server](/langgraph-platform/langgraph-server), follow the how-to guide for [how to deploy to Cloud](/langgraph-platform/deploy-to-cloud).
 
-The [Cloud](/langgraph-platform/cloud) deployment option is a fully managed model for deployment where the [control plane](/langgraph-platform/control-plane) and [data plane](/langgraph-platform/data-plane) run in our cloud. This option provides a simple way to deploy and manage your LangGraph Servers.
 
-Connect your GitHub repositories to the platform and deploy your LangGraph Servers from the [control plane UI](/langgraph-platform/control-plane#control-plane-ui). The build process (i.e. CI/CD) is managed internally by the platform.
+The [Cloud](/langsmith/cloud) option is a fully managed model where the [_control plane_](/langsmith/control-plane) and [_data plane_](/langsmith/data-plane) run in LangChain’s cloud. This option provides a simple way to deploy and manage your application. To get started, follow the how-to guide for [Cloud](/langsmith/deploy-to-cloud).
 
-|                   | [Control plane](/langgraph-platform/control-plane) | [Data plane](/langgraph-platform/data-plane) |
+Connect your GitHub repositories to the platform and deploy your LangGraph Servers from the [control plane UI](/langsmith/control-plane#control-plane-ui). The build process (i.e. CI/CD) is managed automatically by the platform.
+
+|                   | [Control plane](/langsmith/control-plane) | [Data plane](/langsmith/data-plane) |
 |-------------------|---------------------------------------------------|-----------------------------------------------|
 | **Managed by**    | LangChain                                         | LangChain                                     |
 | **Infrastructure**| LangChain's cloud                                 | LangChain's cloud                             |
 
-![Cloud](/langgraph-platform/images/langgraph-cloud-architecture.png)
+![Cloud deployment: LangChain hosts and manages both the control plane (UI/APIs) and data plane (LangGraph Servers, backing services).](/langsmith/images/langgraph-cloud-architecture.png)

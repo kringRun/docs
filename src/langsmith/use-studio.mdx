@@ -23,7 +23,7 @@ This page describes the core workflows you’ll use in Studio. It explains how t
 
 #### Assistant
 
-To specify the [assistant](/langgraph-platform/assistants) that is used for the run:
+To specify the [assistant](/langsmith/assistants) that is used for the run:
 
 1. Click the **Settings** button in the bottom left corner. If an assistant is currently selected the button will also list the assistant name. If no assistant is selected it will say **Manage Assistants**.
 1. Select the assistant to run.
@@ -43,13 +43,13 @@ To run your graph with breakpoints:
 1. Select a node and whether to pause before or after that node has executed.
 1. Click **Continue** in the thread log to resume execution.
 
-For more information on breakpoints, refer to [Human-in-the-loop](/langgraph-platform/add-human-in-the-loop).
+For more information on breakpoints, refer to [Human-in-the-loop](/langsmith/add-human-in-the-loop).
 
 ### Submit run
 
 To submit the run with the specified input and run settings:
 
-1. Click the **Submit** button. This will add a [run](/langgraph-platform/assistants#execution) to the existing selected [thread](/oss/langgraph/persistence#threads). If no thread is currently selected, a new one will be created.
+1. Click the **Submit** button. This will add a [run](/langsmith/assistants#execution) to the existing selected [thread](/oss/langgraph/persistence#threads). If no thread is currently selected, a new one will be created.
 1. To cancel the ongoing run, click the **Cancel** button.
 
 </Tab>
@@ -71,7 +71,7 @@ To cancel the ongoing run:
 
 Studio lets you view, edit, and update your assistants, and allows you to run your graph using these assistant configurations.
 
-For more conceptual details, refer to the [Assistants overview](/langgraph-platform/assistants/).
+For more conceptual details, refer to the [Assistants overview](/langsmith/assistants/).
 
 <Tabs>
 <Tab title="Graph">
@@ -120,7 +120,7 @@ If you instead want to re-run the thread from a given checkpoint without editing
 
 1. View all threads in the right-hand pane of the page.
 1. Select the desired thread and the thread history will populate in the center panel.
-1. To create a new thread, click **+** and [submit a run](/langgraph-platform/use-studio#run-application#chat-mode).
+1. To create a new thread, click **+** and [submit a run](/langsmith/use-studio#run-application#chat-mode).
 
 To edit a human message in the thread:
 
