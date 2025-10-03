@@ -193,7 +193,7 @@ This example implements an **Agentic RAG system** to assist users in querying La
 import requests
 from langchain.chat_models import init_chat_model
 from langchain_core.tools import tool
-from langgraph.prebuilt import create_react_agent
+from langchain.agents import create_agent
 from markdownify import markdownify
 
 ALLOWED_DOMAINS = ["https://langchain-ai.github.io/"]
@@ -244,7 +244,7 @@ tools = [fetch_documentation]
 
 model = init_chat_model("claude-sonnet-4-0", max_tokens=32_000)
 
-agent = create_react_agent(
+agent = create_agent(
     model=model,
     tools=tools,  # [!code highlight]
     prompt=system_prompt,  # [!code highlight]
