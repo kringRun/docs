@@ -92,14 +92,10 @@ class DocumentationBuilder:
         logger.info("Building LangGraph JavaScript version...")
         self._build_langgraph_version("oss/javascript", "js")
 
-        # Build unversioned content (same content regardless of version)
-        logger.info("Building LangGraph Platform content...")
-        self._build_unversioned_content("langgraph-platform", "langgraph-platform")
-
         logger.info("Building LangChain Labs content...")
         self._build_unversioned_content("labs", "labs")
 
-        logger.info("Building LangSmith content...")
+        logger.info("Building LangSmith Platform content...")
         self._build_unversioned_content("langsmith", "langsmith")
 
         # Copy shared files (docs.json, images, etc.)

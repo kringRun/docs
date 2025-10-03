@@ -1,7 +1,7 @@
 # Configuration for GitHub Actions Labeler
 # https://github.com/actions/labeler
 
-# Label for LangSmith documentation changes
+# Label for LangSmith Platform documentation changes
 langsmith:
   - changed-files:
     - any-glob-to-any-file:
@@ -32,13 +32,6 @@ oss:
     - any-glob-to-any-file:
       - src/oss/**
       - src/oss/**/*
-
-# Label for LangGraph Platform documentation changes
-langgraph-platform:
-  - changed-files:
-    - any-glob-to-any-file:
-      - src/langsmith/**
-      - src/langsmith/**/*
 
 # Label for Labs documentation changes
 labs:
