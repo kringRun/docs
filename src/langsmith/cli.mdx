@@ -3,31 +3,52 @@ title: LangGraph CLI
 sidebarTitle: CLI
 ---
 
-The LangGraph command line interface includes commands to build and run a LangSmith Platform API server locally in [Docker](https://www.docker.com/). For development and testing, you can use the CLI to deploy a local API server.
+**LangGraph CLI** is a command-line tool for building and running the [LangGraph API server](/langsmith/langgraph-server) locally. The resulting server exposes all API endpoints for runs, threads, assistants, etc., and includes supporting services such as a managed database for checkpointing and storage.
 
 ## Installation
 
-1. Ensure that Docker is installed (e.g. `docker --version`).
-2. Install the CLI package:
-    <Tabs>
-        <Tab title="Python">
-      ```bash
-      pip install langgraph-cli
-      ```
-        </Tab>
-        <Tab title="JS">
-      ```bash
-      npx @langchain/langgraph-cli
+1. Ensure Docker is installed (e.g., `docker --version`).
+1. Install the CLI:
 
-      # Install globally, will be available as `langgraphjs`
-      npm install -g @langchain/langgraph-cli
-      ```
-        </Tab>
-    </Tabs>
-3. Run the command `langgraph --help` or `npx @langchain/langgraph-cli --help` to confirm that the CLI is working correctly.
+    <CodeGroup>
+    ```bash [Python (pip)]
+    pip install langgraph-cli
+    ```
+    ```bash Homebrew
+    brew install langgraph-cli
+    ```
+    ```bash JavaScript
+    # Use latest on demand
+    npx @langchain/langgraph-cli
 
-<a id="configuration-file"></a>
-## Configuration File
+    # Or install globally (available as `langgraphjs`)
+    npm install -g @langchain/langgraph-cli
+    ```
+    </CodeGroup>
+
+1. Verify the install
+
+    <CodeGroup>
+    ```bash [Python (pip)]
+    langgraph --help
+    ```
+    ```bash JavaScript
+    npx @langchain/langgraph-cli --help
+    ```
+    </CodeGroup>
+
+### Quick commands
+
+| Command | What it does |
+| --- | --- |
+| [`langgraph dev`](#dev) | Starts a lightweight local dev server (no Docker required), ideal for rapid testing. |
+| [`langgraph build`](#build) | Builds a Docker image of your LangGraph API server for deployment. |
+| [`langgraph dockerfile`](#dockerfile) | Emits a Dockerfile derived from your config for custom builds. |
+| [`langgraph up`](#up) | Starts the LangGraph API server locally in Docker. Requires Docker running; LangSmith API key for local dev; license for production. |
+
+For JS, use `npx @langchain/langgraph-cli <command>` (or `langgraphjs` if installed globally).
+
+## Configuration file
 
 The LangGraph CLI requires a JSON configuration file that follows this [schema](https://raw.githubusercontent.com/langchain-ai/langgraph/refs/heads/main/libs/cli/schemas/schema.json). It contains the following properties:
 
