@@ -2,7 +2,7 @@
  * Hide version picker on unversioned content pages.
  *
  * This CSS hides the Mintlify version picker when users are viewing
- * LangGraph Platform or LangChain Labs pages, since these sections
+ * LangSmith Platform or LangChain Labs pages, since these sections
  * have the same content regardless of Python/JavaScript version.
  *
  * Two-layer approach:
