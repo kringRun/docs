@@ -8,8 +8,8 @@ Before setting up standalone servers, review the [self-hosting overview page](/l
 
 ## Prerequisites
 
-1. Use the [LangGraph CLI](/langsmith/langgraph-cli) to [test your application locally](/langsmith/local-server).
-2. Use the [LangGraph CLI](/langsmith/langgraph-cli) to build a Docker image (i.e. `langgraph build`).
+1. Use the [LangGraph CLI](/langsmith/cli) to [test your application locally](/langsmith/local-server).
+2. Use the [LangGraph CLI](/langsmith/cli) to build a Docker image (i.e. `langgraph build`).
 3. The following environment variables are needed for a data plane deployment.
   1. `REDIS_URI`: Connection details to a Redis instance. Redis will be used as a pub-sub broker to enable streaming real time output from background runs. The value of `REDIS_URI` must be a valid [Redis connection URI](https://redis-py.readthedocs.io/en/stable/connections.html#redis.Redis.from_url).
         <Note>
@@ -27,7 +27,7 @@ Before setting up standalone servers, review the [self-hosting overview page](/l
         </Note>
   3. `LANGSMITH_API_KEY`: LangSmith API key.
   4. `LANGGRAPH_CLOUD_LICENSE_KEY`: LangSmith Platform license key. This will be used to authenticate ONCE at server start up.
-  5. `LANGSMITH_ENDPOINT`: To send traces to a [self-hosted LangSmith](/langsmith/architectural-overview) instance, set `LANGSMITH_ENDPOINT` to the hostname of the self-hosted LangSmith instance.
+  5. `LANGSMITH_ENDPOINT`: To send traces to a [self-hosted LangSmith](/langsmith/self-hosted) instance, set `LANGSMITH_ENDPOINT` to the hostname of the self-hosted LangSmith instance.
 4. Egress to `https://beacon.langchain.com` from your network. This is required for license verification and usage reporting if not running in air-gapped mode. See the [Egress documentation](/langsmith/egress-metrics-metadata) for more details.
 
 <a id="helm"></a>
