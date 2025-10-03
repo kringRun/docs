@@ -59,15 +59,14 @@ graph.invoke( # (1)!
     ```python {highlight={6,20}}
     from langchain_core.messages import AnyMessage
     from langgraph.runtime import get_runtime
-    from langgraph.prebuilt.chat_agent_executor import AgentState
-    from langgraph.prebuilt import create_react_agent
+    from langchain.agents import AgentState, create_agent
 
     def prompt(state: AgentState) -> list[AnyMessage]:
         runtime = get_runtime(ContextSchema)
         system_msg = f"You are a helpful assistant. Address the user as {runtime.context.user_name}."
         return [{"role": "system", "content": system_msg}] + state["messages"]
 
-    agent = create_react_agent(
+    agent = create_agent(
         model="anthropic:claude-3-7-sonnet-latest",
         tools=[get_weather],
         prompt=prompt,
@@ -154,8 +153,7 @@ await graph.invoke(
     ```python {highlight={6,10,19}}
     from langchain_core.messages import AnyMessage
     from langchain_core.runnables import RunnableConfig
-    from langgraph.prebuilt import create_react_agent
-    from langgraph.prebuilt.chat_agent_executor import AgentState
+    from langchain.agents import create_agent, AgentState
 
     class CustomState(AgentState): # (1)!
         user_name: str
@@ -167,7 +165,7 @@ await graph.invoke(
         system_msg = f"You are a helpful assistant. User's name is {user_name}"
         return [{"role": "system", "content": system_msg}] + state["messages"]
 
-    agent = create_react_agent(
+    agent = create_agent(
         model="anthropic:claude-3-7-sonnet-latest",
         tools=[...],
         state_schema=CustomState, # (2)!
