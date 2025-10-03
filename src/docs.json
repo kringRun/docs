@@ -974,7 +974,7 @@
                         ]
                       },
                       {
-                        "group": "Visual Debugger",
+                        "group": "Studio",
                         "pages": [
                           "langsmith/langgraph-studio",
                           "langsmith/use-studio",
@@ -1004,12 +1004,6 @@
                       }
                     ]
                   }
-                ]
-              },
-              {
-                "tab": "Agent builder",
-                "pages": [
-                  "langsmith/agent-builder-overview"
                 ]
               },
               {
