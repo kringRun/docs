@@ -1055,15 +1055,14 @@
                         ]
                       },
                       "langsmith/cli",
-                      "langsmith/env-var",
-                      "langsmith/langgraph-cli"
+                      "langsmith/env-var"
                     ]
                   },
                   {
                     "group": "Scalability & resilience",
                     "pages": [
-                      "langsmith/cloud-architecture-and-scalability",
-                      "langsmith/scalability-and-resilience"
+                      "langsmith/scalability-and-resilience",
+                      "langsmith/cloud-architecture-and-scalability"
                     ]
                   },
                   {
@@ -2115,15 +2114,14 @@
                         ]
                       },
                       "langsmith/cli",
-                      "langsmith/env-var",
-                      "langsmith/langgraph-cli"
+                      "langsmith/env-var"
                     ]
                   },
                   {
                     "group": "Scalability & resilience",
                     "pages": [
-                      "langsmith/cloud-architecture-and-scalability",
-                      "langsmith/scalability-and-resilience"
+                      "langsmith/scalability-and-resilience",
+                      "langsmith/cloud-architecture-and-scalability"
                     ]
                   },
                   {
