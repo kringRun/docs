@@ -1,10 +1,50 @@
 ---
-title: Overview
+title: App development
 sidebarTitle: Overview
+mode: wide
 ---
 
-**LangSmith** extends the [LangGraph](/oss/langgraph/overview) framework for building stateful, multi-agent applications as graphs, which allows you to define control flow, manage persistence, and coordinate interactions across components or agents. LangSmith is framework-agnostic, which means you can deploy and operate agents built with LangGraph or [another framework](/langsmith/autogen-integration).
+The **LangSmith Platform** builds on the open-source [LangGraph](/oss/langgraph/overview) framework for developing stateful, multi-agent applications.
+LangGraph provides the core abstractions and execution model, while LangSmith adds managed infrastructure, observability, deployment options, assistants, and concurrency controls — supporting the full lifecycle from development to production.
 
-To get acquainted with LangGraph's key concepts and features, complete the following [LangGraph quickstart](/oss/langgraph/quickstart).
+LangSmith is framework-agnostic: you can deploy agents built with LangGraph or [other frameworks](/langsmith/autogen-integration). To get started with LangGraph itself, refer to the [LangGraph quickstart](/oss/langgraph/quickstart).
 
-While the OSS framework introduces the core abstractions and execution model, LangSmith adds capabilities including managed infrastructure, [deployment models](/langsmith/deployment-options), [assistants](/langsmith/configuration-cloud), and [double-texting](/langsmith/double-texting) support. These platform-level features support the full lifecycle of LangGraph applications, from development to production at scale.
+<CardGroup>
+
+<Card
+  title="Assistants"
+  cta="Explore assistants"
+  href="/langsmith/assistants"
+  icon="user-gear"
+>
+Manage agent configurations, connect to threads, and build interactive assistants.
+</Card>
+
+<Card
+  title="Runs"
+  cta="Learn about runs"
+  href="/langsmith/background-run"
+  icon="play"
+>
+Execute background jobs, stateless runs, cron jobs, and manage configurable headers.
+</Card>
+
+<Card
+  title="Core capabilities"
+  cta="See core features"
+  href="/langsmith/streaming"
+  icon="gear"
+>
+Streaming, human-in-the-loop, webhooks, and concurrency controls like double-texting.
+</Card>
+
+<Card
+  title="Tutorials"
+  cta="View tutorials"
+  href="/langsmith/autogen-integration"
+  icon="graduation-cap"
+>
+Step-by-step examples: AutoGen integration, streaming UI, and generative UI in React.
+</Card>
+
+</CardGroup>
