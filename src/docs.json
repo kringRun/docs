@@ -118,8 +118,8 @@
     ],
     "primary": {
       "type": "button",
-      "label": "Forum",
-      "href": "https://forum.langchain.com/"
+      "label": "LangSmith Platform",
+      "href": "https://smith.langchain.com/"
     }
   },
   "navigation": {
@@ -938,7 +938,7 @@
                         ]
                       },
                       {
-                        "group": "Visual Debugger",
+                        "group": "Studio",
                         "pages": [
                           "langsmith/langgraph-studio",
                           "langsmith/use-studio",
@@ -968,12 +968,6 @@
                       }
                     ]
                   }
-                ]
-              },
-              {
-                "tab": "Agent builder",
-                "pages": [
-                  "langsmith/agent-builder-overview"
                 ]
               },
               {
