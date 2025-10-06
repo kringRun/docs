@@ -243,7 +243,7 @@ Let's walk through each step:
         :::
     </Step>
     <Step title="Configure your model">
-        Set up your [language model](/oss/langchain/models) with the right parameters for your use case:
+        Set up your [language model](/oss/langchain/models) with the right [parameters](/oss/langchain/models#parameters) for your use case:
 
         :::python
         ```python
@@ -251,7 +251,9 @@ Let's walk through each step:
 
         model = init_chat_model(
             "anthropic:claude-3-7-sonnet-latest",
-            temperature=0
+            temperature=0.5,
+            timeout=10,
+            max_tokens=1000
         )
         ```
         :::
@@ -262,7 +264,7 @@ Let's walk through each step:
 
         const model = await initChatModel(
           "anthropic:claude-3-7-sonnet-latest",
-          { temperature: 0 }
+          { temperature: 0.5, timeout: 10, maxTokens: 1000 }
         );
         ```
         :::
