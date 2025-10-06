@@ -179,7 +179,7 @@ const tickerTool = tool(async (query) => {
 
 ### Define agent
 
-Now that we have defined all of our tools, we can use LangGraph's [`create_react_agent`](https://langchain-ai.github.io/langgraph/reference/prebuilt/)/[`createReactAgent`](https://langchain-ai.github.io/langgraphjs/reference/functions/langgraph_prebuilt.createReactAgent.html) to create our agent.
+Now that we have defined all of our tools, we can use [`create_agent`](https://langchain-ai.github.io/langchain/reference/langchain/agents/create_agent.html)/[`createAgent`](https://langchain-ai.github.io/langgraphjs/reference/functions/langchain_agents.createAgent.html) to create our agent.
 
 <CodeGroup>
 
@@ -204,7 +204,7 @@ agent = create_agent(
 ```typescript TypeScript
 import { z } from "zod";
 import { ChatOpenAI } from "@langchain/openai";
-import { createReactAgent } from "@langchain/langgraph/prebuilt";
+import { createAgent } from "@langchain/agents";
 
 const AgentOutputFormatSchema = z.object({
   numeric_answer: z.number().optional().describe("The numeric answer, if the user asked for one"),
@@ -214,7 +214,7 @@ const AgentOutputFormatSchema = z.object({
 
 const tools = [codeTool, searchTool, tickerTool];
 
-const agent = createReactAgent({
+const agent = createAgent({
   llm: new ChatOpenAI({ model: "gpt-4o" }),
   tools: tools,
   responseFormat: AgentOutputFormatSchema,
@@ -775,7 +775,7 @@ Remember to also add the config files for [Vitest](#config-files-for-vitestjest)
 
   ```typescript TypeScript
   import { ChatOpenAI } from "@langchain/openai";
-  import { createReactAgent } from "@langchain/langgraph/prebuilt";
+  import { createAgent } from "@langchain/agents";
   import { TavilySearchResults } from "@langchain/community/tools/tavily_search";
   import { Sandbox } from '@e2b/code-interpreter'
   import { restClient } from '@polygon.io/client-js';
@@ -839,7 +839,7 @@ Remember to also add the config files for [Vitest](#config-files-for-vitestjest)
 
   const tools = [codeTool, searchTool, tickerTool];
 
-  const agent = createReactAgent({
+  const agent = createAgent({
     llm: new ChatOpenAI({ model: "gpt-4o" }),
     tools: tools,
     responseFormat: AgentOutputFormatSchema,

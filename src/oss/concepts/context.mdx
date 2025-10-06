@@ -185,7 +185,7 @@ await graph.invoke(
     :::js
     ```typescript {highlight={6,12,22}}
     import type { BaseMessage } from "@langchain/core/messages";
-    import { createReactAgent } from "@langchain/langgraph/prebuilt";
+    import { createAgent } from "@langchain/agents";
     import { MessagesZodMeta } from "@langchain/langgraph";
     import { registry } from "@langchain/langgraph/zod";
     import * as z from "zod";
@@ -205,7 +205,7 @@ await graph.invoke(
       return [{ role: "system", content: systemMsg }, ...state.messages];
     };
 
-    const agent = createReactAgent({
+    const agent = createAgent({
       llm: model,
       tools: [...],
       stateSchema: CustomState, // (2)!
