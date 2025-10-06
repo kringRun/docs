@@ -23,9 +23,19 @@ def _get_downloads(p: dict) -> int:
 
     Returns:
         Downloads count as int.
+
+    Raises:
+        requests.RequestException: If HTTP request fails.
     """
     url = f"https://pepy.tech/badge/{p['name']}/month"
-    svg = requests.get(url, timeout=10).text
+    try:
+        response = requests.get(url, timeout=10)
+        response.raise_for_status()
+        svg = response.text
+    except requests.RequestException as e:
+        msg = f"Failed to fetch downloads for {p['name']}: {e}"
+        raise requests.RequestException(msg) from e
+
     texts = re.findall(r"<text[^>]*>([^<]+)</text>", svg)
     latest = texts[-1].strip() if texts else "0"
 
@@ -35,7 +45,7 @@ def _get_downloads(p: dict) -> int:
         return int(float(latest[:-1]) * 1_000)
     if latest.endswith(("m", "M")):
         return int(float(latest[:-1]) * 1_000_000)
-    return int(float(latest) if "." in latest else int(latest))
+    return int(float(latest))
 
 
 current_datetime = datetime.now(UTC)
