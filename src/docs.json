@@ -454,17 +454,8 @@
                 "tab": "Get started",
                 "pages": [
                   "langsmith/home",
-                  {
-                    "group": "Quickstarts",
-                    "pages": [
-                      "langsmith/observability-quickstart",
-                      "langsmith/evaluation-quickstart",
-                      "langsmith/prompt-engineering-quickstart",
-                      "langsmith/local-server",
-                      "langsmith/deployment-quickstart",
-                      "langsmith/quick-start-studio"
-                    ]
-                  },
+                  "langsmith/pricing-plans",
+                  "langsmith/pricing-faq",
                   {
                     "group": "App development",
                     "pages": [
@@ -524,10 +515,62 @@
                     ]
                   },
                   {
-                    "group": "Pricing",
+                    "group": "Account administration",
                     "pages": [
-                      "langsmith/pricing-plans",
-                      "langsmith/pricing-faq"
+                      "langsmith/administration-overview",
+                      "langsmith/create-account-api-key",
+                      "langsmith/set-up-a-workspace",
+                      "langsmith/manage-organization-by-api",
+                      "langsmith/billing",
+                      "langsmith/set-up-resource-tags",
+                      "langsmith/user-management"
+                    ]
+                  },
+                  {
+                    "group": "Reference",
+                    "pages": [
+                      {
+                        "group": "SDKs",
+                        "pages": [
+                          "langsmith/smith-python-sdk",
+                          "langsmith/smith-js-ts-sdk",
+                          "langsmith/langgraph-python-sdk",
+                          "langsmith/langgraph-js-ts-sdk"
+                        ]
+                      },
+                      {
+                        "group": "APIs",
+                        "pages": [
+                          "langsmith/smith-api-ref",
+                          "langsmith/server-api-ref",
+                          "langsmith/api-ref-control-plane",
+                          "langsmith/remote-graph"
+                        ]
+                      },
+                      "langsmith/cli",
+                      "langsmith/env-var"
+                    ]
+                  },
+                  {
+                    "group": "Additional resources",
+                    "pages": [
+                      "langsmith/faq",
+                      "langsmith/regions-faq",
+                      "langsmith/authentication-methods",
+                      {
+                        "group": "Releases & changelogs",
+                        "pages": [
+                          "langsmith/langgraph-server-changelog",
+                          "langsmith/release-versions"
+                        ]
+                      },
+                      {
+                        "group": "Data management",
+                        "pages": [
+                           "langsmith/data-storage-and-privacy",
+                          "langsmith/data-purging-compliance"
+                        ]
+                      }
                     ]
                   }
                 ]
@@ -536,6 +579,7 @@
                 "tab": "Observability",
                 "pages": [
                   "langsmith/observability",
+                  "langsmith/observability-quickstart",
                   "langsmith/observability-concepts",
                   "langsmith/observability-llm-tutorial",
                   {
@@ -658,6 +702,7 @@
                 "tab": "Evaluation",
                 "pages": [
                   "langsmith/evaluation",
+                  "langsmith/evaluation-quickstart",
                   "langsmith/evaluation-concepts",
                   "langsmith/evaluation-approaches",
                   {
@@ -774,6 +819,7 @@
                 "tab": "Prompt engineering",
                 "pages": [
                   "langsmith/prompt-engineering",
+                  "langsmith/prompt-engineering-quickstart",
                   "langsmith/prompt-engineering-concepts",
                   {
                     "group": "Create and update prompts",
@@ -810,7 +856,8 @@
                   {
                     "group": "Overview",
                     "pages": [
-                      "langsmith/deployments"
+                      "langsmith/deployments",
+                      "langsmith/local-server"
                     ]
                   },
                   {
@@ -838,6 +885,7 @@
                       {
                         "group": "Studio",
                         "pages": [
+                          "langsmith/quick-start-studio",
                           "langsmith/langgraph-studio",
                           "langsmith/use-studio",
                           "langsmith/observability-studio",
@@ -870,7 +918,9 @@
                     "group": "Cloud",
                     "pages": [
                       "langsmith/cloud",
-                      "langsmith/deploy-to-cloud"
+                      "langsmith/deployment-quickstart",
+                      "langsmith/deploy-to-cloud",
+                      "langsmith/cloud-architecture-and-scalability"
                     ]
                   },
                   {
@@ -906,7 +956,8 @@
                               "langsmith/self-host-organization-charts",
                               "langsmith/langsmith-managed-clickhouse",
                               "langsmith/self-host-ingress",
-                              "langsmith/self-host-mirroring-images"
+                              "langsmith/self-host-mirroring-images",
+                              "langsmith/scalability-and-resilience"
                             ]
                           }
                         ]
@@ -970,83 +1021,6 @@
                           "langsmith/script-running-ch-support-queries"
                         ]
                       }
-                    ]
-                  }
-                ]
-              },
-              {
-                "tab": "Reference",
-                "pages": [
-                  {
-                    "group": "Overview",
-                    "pages": [
-                      "langsmith/reference-overview"
-                    ]
-                  },
-                  {
-                    "group": "Account administration",
-                    "pages": [
-                      "langsmith/administration-overview",
-                      "langsmith/create-account-api-key",
-                      "langsmith/set-up-a-workspace",
-                      "langsmith/manage-organization-by-api",
-                      "langsmith/billing",
-                      "langsmith/set-up-resource-tags",
-                      "langsmith/user-management"
-                    ]
-                  },
-                  {
-                    "group": "API & SDKs",
-                    "pages": [
-                      {
-                        "group": "SDKs",
-                        "pages": [
-                          "langsmith/smith-python-sdk",
-                          "langsmith/smith-js-ts-sdk",
-                          "langsmith/langgraph-python-sdk",
-                          "langsmith/langgraph-js-ts-sdk"
-                        ]
-                      },
-                      {
-                        "group": "APIs",
-                        "pages": [
-                          "langsmith/smith-api-ref",
-                          "langsmith/server-api-ref",
-                          "langsmith/api-ref-control-plane",
-                          "langsmith/remote-graph"
-                        ]
-                      },
-                      "langsmith/cli",
-                      "langsmith/env-var"
-                    ]
-                  },
-                  {
-                    "group": "Scalability & resilience",
-                    "pages": [
-                      "langsmith/scalability-and-resilience",
-                      "langsmith/cloud-architecture-and-scalability"
-                    ]
-                  },
-                  {
-                    "group": "Data management",
-                    "pages": [
-                       "langsmith/data-storage-and-privacy",
-                      "langsmith/data-purging-compliance"
-                    ]
-                  },
-                  {
-                    "group": "Releases & changelogs",
-                    "pages": [
-                      "langsmith/langgraph-server-changelog",
-                      "langsmith/release-versions"
-                    ]
-                  },
-                  {
-                    "group": "Additional resources",
-                    "pages": [
-                      "langsmith/faq",
-                      "langsmith/regions-faq",
-                      "langsmith/authentication-methods"
                     ]
                   }
                 ]
@@ -1503,17 +1477,8 @@
                 "tab": "Get started",
                 "pages": [
                   "langsmith/home",
-                  {
-                    "group": "Quickstarts",
-                    "pages": [
-                      "langsmith/observability-quickstart",
-                      "langsmith/evaluation-quickstart",
-                      "langsmith/prompt-engineering-quickstart",
-                      "langsmith/local-server",
-                      "langsmith/deployment-quickstart",
-                      "langsmith/quick-start-studio"
-                    ]
-                  },
+                  "langsmith/pricing-plans",
+                  "langsmith/pricing-faq",
                   {
                     "group": "App development",
                     "pages": [
@@ -1573,10 +1538,62 @@
                     ]
                   },
                   {
-                    "group": "Pricing",
+                    "group": "Account administration",
                     "pages": [
-                      "langsmith/pricing-plans",
-                      "langsmith/pricing-faq"
+                      "langsmith/administration-overview",
+                      "langsmith/create-account-api-key",
+                      "langsmith/set-up-a-workspace",
+                      "langsmith/manage-organization-by-api",
+                      "langsmith/billing",
+                      "langsmith/set-up-resource-tags",
+                      "langsmith/user-management"
+                    ]
+                  },
+                  {
+                    "group": "Reference",
+                    "pages": [
+                      {
+                        "group": "SDKs",
+                        "pages": [
+                          "langsmith/smith-python-sdk",
+                          "langsmith/smith-js-ts-sdk",
+                          "langsmith/langgraph-python-sdk",
+                          "langsmith/langgraph-js-ts-sdk"
+                        ]
+                      },
+                      {
+                        "group": "APIs",
+                        "pages": [
+                          "langsmith/smith-api-ref",
+                          "langsmith/server-api-ref",
+                          "langsmith/api-ref-control-plane",
+                          "langsmith/remote-graph"
+                        ]
+                      },
+                      "langsmith/cli",
+                      "langsmith/env-var"
+                    ]
+                  },
+                  {
+                    "group": "Additional resources",
+                    "pages": [
+                      "langsmith/faq",
+                      "langsmith/regions-faq",
+                      "langsmith/authentication-methods",
+                      {
+                        "group": "Releases & changelogs",
+                        "pages": [
+                          "langsmith/langgraph-server-changelog",
+                          "langsmith/release-versions"
+                        ]
+                      },
+                      {
+                        "group": "Data management",
+                        "pages": [
+                           "langsmith/data-storage-and-privacy",
+                          "langsmith/data-purging-compliance"
+                        ]
+                      }
                     ]
                   }
                 ]
@@ -1585,6 +1602,7 @@
                 "tab": "Observability",
                 "pages": [
                   "langsmith/observability",
+                  "langsmith/observability-quickstart",
                   "langsmith/observability-concepts",
                   "langsmith/observability-llm-tutorial",
                   {
@@ -1707,6 +1725,7 @@
                 "tab": "Evaluation",
                 "pages": [
                   "langsmith/evaluation",
+                  "langsmith/evaluation-quickstart",
                   "langsmith/evaluation-concepts",
                   "langsmith/evaluation-approaches",
                   {
@@ -1823,6 +1842,7 @@
                 "tab": "Prompt engineering",
                 "pages": [
                   "langsmith/prompt-engineering",
+                  "langsmith/prompt-engineering-quickstart",
                   "langsmith/prompt-engineering-concepts",
                   {
                     "group": "Create and update prompts",
@@ -1859,7 +1879,8 @@
                   {
                     "group": "Overview",
                     "pages": [
-                      "langsmith/deployments"
+                      "langsmith/deployments",
+                      "langsmith/local-server"
                     ]
                   },
                   {
@@ -1887,6 +1908,7 @@
                       {
                         "group": "Studio",
                         "pages": [
+                          "langsmith/quick-start-studio",
                           "langsmith/langgraph-studio",
                           "langsmith/use-studio",
                           "langsmith/observability-studio",
@@ -1919,7 +1941,9 @@
                     "group": "Cloud",
                     "pages": [
                       "langsmith/cloud",
-                      "langsmith/deploy-to-cloud"
+                      "langsmith/deployment-quickstart",
+                      "langsmith/deploy-to-cloud",
+                      "langsmith/cloud-architecture-and-scalability"
                     ]
                   },
                   {
@@ -1955,7 +1979,8 @@
                               "langsmith/self-host-organization-charts",
                               "langsmith/langsmith-managed-clickhouse",
                               "langsmith/self-host-ingress",
-                              "langsmith/self-host-mirroring-images"
+                              "langsmith/self-host-mirroring-images",
+                              "langsmith/scalability-and-resilience"
                             ]
                           }
                         ]
@@ -2019,83 +2044,6 @@
                           "langsmith/script-running-ch-support-queries"
                         ]
                       }
-                    ]
-                  }
-                ]
-              },
-              {
-                "tab": "Reference",
-                "pages": [
-                  {
-                    "group": "Overview",
-                    "pages": [
-                      "langsmith/reference-overview"
-                    ]
-                  },
-                  {
-                    "group": "Account administration",
-                    "pages": [
-                      "langsmith/administration-overview",
-                      "langsmith/create-account-api-key",
-                      "langsmith/set-up-a-workspace",
-                      "langsmith/manage-organization-by-api",
-                      "langsmith/billing",
-                      "langsmith/set-up-resource-tags",
-                      "langsmith/user-management"
-                    ]
-                  },
-                  {
-                    "group": "API & SDKs",
-                    "pages": [
-                      {
-                        "group": "SDKs",
-                        "pages": [
-                          "langsmith/smith-python-sdk",
-                          "langsmith/smith-js-ts-sdk",
-                          "langsmith/langgraph-python-sdk",
-                          "langsmith/langgraph-js-ts-sdk"
-                        ]
-                      },
-                      {
-                        "group": "APIs",
-                        "pages": [
-                          "langsmith/smith-api-ref",
-                          "langsmith/server-api-ref",
-                          "langsmith/api-ref-control-plane",
-                          "langsmith/remote-graph"
-                        ]
-                      },
-                      "langsmith/cli",
-                      "langsmith/env-var"
-                    ]
-                  },
-                  {
-                    "group": "Scalability & resilience",
-                    "pages": [
-                      "langsmith/scalability-and-resilience",
-                      "langsmith/cloud-architecture-and-scalability"
-                    ]
-                  },
-                  {
-                    "group": "Data management",
-                    "pages": [
-                       "langsmith/data-storage-and-privacy",
-                      "langsmith/data-purging-compliance"
-                    ]
-                  },
-                  {
-                    "group": "Releases & changelogs",
-                    "pages": [
-                      "langsmith/langgraph-server-changelog",
-                      "langsmith/release-versions"
-                    ]
-                  },
-                  {
-                    "group": "Additional resources",
-                    "pages": [
-                      "langsmith/faq",
-                      "langsmith/regions-faq",
-                      "langsmith/authentication-methods"
                     ]
                   }
                 ]
