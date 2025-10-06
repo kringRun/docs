@@ -178,7 +178,7 @@ system_prompt = """\
 Use fetch_url when you need to fetch information from a web-page; quote relevant snippets.
 """
 
-agent = create_react_agent(
+agent = create_agent(
     model=init_chat_model("claude-sonnet-4-0"),
     tools=[fetch_url], # A tool for retrieval [!code highlight]
     prompt=system_prompt,
