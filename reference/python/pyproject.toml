@@ -92,6 +92,9 @@ dependencies = [
 
 [tool.uv]
 package = false
+override-dependencies = [
+    "pytest-codspeed>=3.1.0,<4.0.0",
+]
 
 [tool.uv.sources]
 # Remote installs for prod
