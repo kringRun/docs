@@ -842,7 +842,60 @@
                   {
                     "group": "Overview",
                     "pages": [
-                      "langsmith/deployment-options"
+                      "langsmith/deployments"
+                    ]
+                  },
+                  {
+                    "group": "Agent deployment",
+                    "pages": [
+                      {
+                        "group": "Configure for deployment",
+                        "pages": [
+                          "langsmith/application-structure",
+                          {
+                            "group": "Setup",
+                            "pages": [
+                              "langsmith/setup-app-requirements-txt",
+                              "langsmith/setup-pyproject",
+                              "langsmith/setup-javascript"
+                            ]
+                          },
+                          "langsmith/graph-rebuild",
+                          "langsmith/use-remote-graph",
+                          "langsmith/monorepo-support",
+                          "langsmith/semantic-search",
+                          "langsmith/configure-ttl"
+                        ]
+                      },
+                      {
+                        "group": "Studio",
+                        "pages": [
+                          "langsmith/langgraph-studio",
+                          "langsmith/use-studio",
+                          "langsmith/observability-studio",
+                          "langsmith/troubleshooting-studio"
+                        ]
+                      },
+                      {
+                        "group": "Auth & access control",
+                        "pages": [
+                          "langsmith/auth",
+                          "langsmith/custom-auth",
+                          "langsmith/set-up-custom-auth",
+                          "langsmith/resource-auth",
+                          "langsmith/add-auth-server",
+                          "langsmith/openapi-security",
+                          "langsmith/agent-auth"
+                        ]
+                      },
+                      {
+                        "group": "Server customization",
+                        "pages": [
+                           "langsmith/custom-lifespan",
+                           "langsmith/custom-middleware",
+                           "langsmith/custom-routes"
+                        ]
+                      }
                     ]
                   },
                   {
@@ -947,59 +1000,6 @@
                           "langsmith/script-generate-query-stats",
                           "langsmith/script-running-pg-support-queries",
                           "langsmith/script-running-ch-support-queries"
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "group": "Agent deployment",
-                    "pages": [
-                      {
-                        "group": "Configure for deployment",
-                        "pages": [
-                          "langsmith/application-structure",
-                          {
-                            "group": "Setup",
-                            "pages": [
-                              "langsmith/setup-app-requirements-txt",
-                              "langsmith/setup-pyproject",
-                              "langsmith/setup-javascript"
-                            ]
-                          },
-                          "langsmith/graph-rebuild",
-                          "langsmith/use-remote-graph",
-                          "langsmith/monorepo-support",
-                          "langsmith/semantic-search",
-                          "langsmith/configure-ttl"
-                        ]
-                      },
-                      {
-                        "group": "Studio",
-                        "pages": [
-                          "langsmith/langgraph-studio",
-                          "langsmith/use-studio",
-                          "langsmith/observability-studio",
-                          "langsmith/troubleshooting-studio"
-                        ]
-                      },
-                      {
-                        "group": "Auth & access control",
-                        "pages": [
-                          "langsmith/auth",
-                          "langsmith/custom-auth",
-                          "langsmith/set-up-custom-auth",
-                          "langsmith/resource-auth",
-                          "langsmith/add-auth-server",
-                          "langsmith/openapi-security",
-                          "langsmith/agent-auth"
-                        ]
-                      },
-                      {
-                        "group": "Server customization",
-                        "pages": [
-                           "langsmith/custom-lifespan",
-                           "langsmith/custom-middleware",
-                           "langsmith/custom-routes"
                         ]
                       }
                     ]
@@ -1895,7 +1895,60 @@
                   {
                     "group": "Overview",
                     "pages": [
-                      "langsmith/deployment-options"
+                      "langsmith/deployments"
+                    ]
+                  },
+                  {
+                    "group": "Agent deployment",
+                    "pages": [
+                      {
+                        "group": "Configure for deployment",
+                        "pages": [
+                          "langsmith/application-structure",
+                          {
+                            "group": "Setup",
+                            "pages": [
+                              "langsmith/setup-app-requirements-txt",
+                              "langsmith/setup-pyproject",
+                              "langsmith/setup-javascript"
+                            ]
+                          },
+                          "langsmith/graph-rebuild",
+                          "langsmith/use-remote-graph",
+                          "langsmith/monorepo-support",
+                          "langsmith/semantic-search",
+                          "langsmith/configure-ttl"
+                        ]
+                      },
+                      {
+                        "group": "Studio",
+                        "pages": [
+                          "langsmith/langgraph-studio",
+                          "langsmith/use-studio",
+                          "langsmith/observability-studio",
+                          "langsmith/troubleshooting-studio"
+                        ]
+                      },
+                      {
+                        "group": "Auth & access control",
+                        "pages": [
+                          "langsmith/auth",
+                          "langsmith/custom-auth",
+                          "langsmith/set-up-custom-auth",
+                          "langsmith/resource-auth",
+                          "langsmith/add-auth-server",
+                          "langsmith/openapi-security",
+                          "langsmith/agent-auth"
+                        ]
+                      },
+                      {
+                        "group": "Server customization",
+                        "pages": [
+                           "langsmith/custom-lifespan",
+                           "langsmith/custom-middleware",
+                           "langsmith/custom-routes"
+                        ]
+                      }
                     ]
                   },
                   {
@@ -2003,66 +2056,7 @@
                         ]
                       }
                     ]
-                  },
-                  {
-                    "group": "Agent deployment",
-                    "pages": [
-                      {
-                        "group": "Configure for deployment",
-                        "pages": [
-                          "langsmith/application-structure",
-                          {
-                            "group": "Setup",
-                            "pages": [
-                              "langsmith/setup-app-requirements-txt",
-                              "langsmith/setup-pyproject",
-                              "langsmith/setup-javascript"
-                            ]
-                          },
-                          "langsmith/graph-rebuild",
-                          "langsmith/use-remote-graph",
-                          "langsmith/monorepo-support",
-                          "langsmith/semantic-search",
-                          "langsmith/configure-ttl"
-                        ]
-                      },
-                      {
-                        "group": "Visual Debugger",
-                        "pages": [
-                          "langsmith/langgraph-studio",
-                          "langsmith/use-studio",
-                          "langsmith/observability-studio",
-                          "langsmith/troubleshooting-studio"
-                        ]
-                      },
-                      {
-                        "group": "Auth & access control",
-                        "pages": [
-                          "langsmith/auth",
-                          "langsmith/custom-auth",
-                          "langsmith/set-up-custom-auth",
-                          "langsmith/resource-auth",
-                          "langsmith/add-auth-server",
-                          "langsmith/openapi-security",
-                          "langsmith/agent-auth"
-                        ]
-                      },
-                      {
-                        "group": "Server customization",
-                        "pages": [
-                           "langsmith/custom-lifespan",
-                           "langsmith/custom-middleware",
-                           "langsmith/custom-routes"
-                        ]
-                      }
-                    ]
                   }
-                ]
-              },
-              {
-                "tab": "Agent builder",
-                "pages": [
-                  "langsmith/agent-builder-overview"
                 ]
               },
               {
