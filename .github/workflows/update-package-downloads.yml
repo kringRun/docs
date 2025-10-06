@@ -8,12 +8,12 @@ on:
   workflow_dispatch:  # Allow manual triggering
 
 jobs:
-  update-downloads:
-    name: Update package download counts
+  generate-downloads:
+    name: Generate package download counts
     runs-on: ubuntu-latest
     timeout-minutes: 30
     permissions:
-      contents: write  # Required to push changes
+      contents: read
     steps:
       - uses: actions/checkout@v5
 
@@ -29,6 +29,28 @@ jobs:
       - name: Update download counts
         run: |
           uv run .github/scripts/packages_yml_get_downloads.py
+
+      - name: Upload updated packages.yml as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: packages-yml
+          path: reference/packages.yml
+          retention-days: 1
+
+  commit-downloads:
+    name: Commit updated download counts
+    needs: generate-downloads
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Download updated packages.yml
+        uses: actions/download-artifact@v4
+        with:
+          name: packages-yml
+          path: reference/
 
       - name: Commit and push changes
         run: |
