@@ -1,27 +1,29 @@
 ---
-title: Get started with LangSmith Platform
-sidebarTitle: Overview
+title: Welcome to LangSmith Platform
+sidebarTitle: Welcome
 mode: wide
 ---
 
 **LangSmith Platform provides tools for developing, debugging, and deploying LLM applications.**
-It helps you trace requests, evaluate outputs, test prompts, and manage deployments in one place. LangSmith is framework agnostic, which means you can use it with or without LangChain's open-source frameworks [`langchain`](https://python.langchain.com) and [`langgraph`](https://langchain-ai.github.io/langgraph/). You can prototype locally and then move to production with integrated monitoring and evaluation to build more reliable AI systems.
+It helps you trace requests, evaluate outputs, test prompts, and manage deployments in one place.
+LangSmith is framework-agnostic, so you can use it with or without LangChain’s open-source libraries
+[`langchain`](https://python.langchain.com) and [`langgraph`](https://langchain-ai.github.io/langgraph/).
+Prototype locally, then move to production with integrated monitoring and evaluation to build more reliable AI systems.
 
-<Tip>
-Get started with the LangSmith Platform at [smith.langchain.com](https://smith.langchain.com).
-</Tip>
+## Get started
 
-<img
-    className="block dark:hidden"
-    src="/langsmith/images/overview-light.svg"
-    alt="Light mode overview"
-/>
+<Steps>
+<Step title="Create an account" icon="user-plus">
+Sign up at [smith.langchain.com](https://smith.langchain.com) (no credit card required).
+You can log in with **Google**, **GitHub**, or **email**.
+</Step>
+<Step title="Create an API key" icon="key">
+Go to your [Settings page](https://smith.langchain.com/settings) → **API Keys** → **Create API Key**.
+Copy the key and save it securely.
+</Step>
+</Steps>
 
-<img
-    className="hidden dark:block"
-    src="/langsmith/images/overview-dark.svg"
-    alt="Dark mode overview"
-/>
+Once your account and API key are ready, choose a quickstart to begin building with LangSmith:
 
 <Columns cols={3}>
   <Card
@@ -48,11 +50,11 @@ Get started with the LangSmith Platform at [smith.langchain.com](https://smith.l
     title="Deployment"
     icon="cloud-arrow-up"
     iconType="solid"
-    href="/langsmith/deployment-quickstart"
+    href="/langsmith/deployments"
     arrow="true"
     cta="Deploy your app"
   >
-    Take your application from testing to production with LangSmith’s deployment tools.
+    Deploy agents and manage platform infrastructure through LangSmith’s flexible cloud, hybrid, or self-hosted options.
   </Card>
 
   <Card
@@ -85,3 +87,19 @@ Get started with the LangSmith Platform at [smith.langchain.com](https://smith.l
     Use an intuitive visual interface to design, test, and refine applications end-to-end.
   </Card>
 </Columns>
+
+## Workflow
+
+The LangSmith Platform combines observability, evaluation, and deployment in one integrated workflow.
+
+<img
+    className="block dark:hidden"
+    src="/langsmith/images/overview-light.svg"
+    alt="Light mode overview"
+/>
+
+<img
+    className="hidden dark:block"
+    src="/langsmith/images/overview-dark.svg"
+    alt="Dark mode overview"
+/>
