@@ -85,6 +85,10 @@ ignore = [
 
 [tool.ruff.lint.extend-per-file-ignores]
 
+".github/**/*.py" = [
+    # Not a package
+    "INP001",
+]
 "pipeline/preprocessors/link_map.py" = [
     # Just contains long links
     "E501",
