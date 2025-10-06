@@ -701,10 +701,10 @@ packages:
     path: libs/zeusdb
     downloads: 1
     downloads_updated_at: "2025-08-10T21:38:36.795416+00:00"
-  # - name: langchain-scraperapi
-  #   repo: scraperapi/langchain-scraperapi
-  #   downloads: 1
-  #   downloads_updated_at: "2025-08-10T21:38:36.795416+00:00"
+  - name: langchain-scraperapi
+    repo: scraperapi/langchain-scraperapi
+    downloads: 1
+    downloads_updated_at: "2025-08-10T21:38:36.795416+00:00"
   - name: langchain-localai
     repo: mkhludnev/langchain-localai
     path: libs/localai
