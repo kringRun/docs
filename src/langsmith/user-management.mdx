@@ -644,14 +644,8 @@ See [SAML SSO setup](#okta) for cloud or [OAuth2.0 setup](/langsmith/self-host-s
 
 **Step 2: Configure API Integration**
 
-1. In the Provisioning tab, select Configure API integration.
-1. Select Enable API integration.
-1. For Base URL (if present):
-
-- US: `https://api.smith.langchain.com/scim/v2`
-- EU: `https://eu.api.smith.langchain.com/scim/v2`
-- Self-hosted: `<langsmith_url>/scim/v2` (note there is no `/api/v1` path prefix) or if a subdomain is configured `<langsmith_url>/subdomain/scim/v2`
-
+1. In the Provisioning tab, select `Integration`.
+1. Select `Edit` then `Enable API integration`.
 1. For API Token, paste the SCIM token you [generated above](#step-3-generate-scim-bearer-token).
 1. Keep `Import Groups` checked.
 1. To verify the configuration, select Test API Credentials.
