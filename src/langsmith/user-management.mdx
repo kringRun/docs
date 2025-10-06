@@ -99,7 +99,7 @@ SAML SSO is available for organizations on the [Enterprise plan](https://www.lan
 - Your Identity Provider (IdP) must support the SAML 2.0 standard.
 - Only [`Organization Admins`](/langsmith/observability-concepts#organization-roles) can configure SAML SSO.
 
-For instructions on using SCIM along with SAML for user provisioning and deprovisioning, refer to the [SCIM setup](#user-management).
+For instructions on using SCIM along with SAML for user provisioning and deprovisioning, refer to the [SCIM setup](#set-up-scim-for-your-organization).
 
 ### Initial configuration
 
@@ -490,6 +490,7 @@ The NameID format must be `Persistent`, unless you are using a field, like email
 Before enabling SCIM, disable [Just-in-time (JIT) provisioning](/langsmith/user-management#just-in-time-jit-provisioning) to prevent conflicts between automatic and manual user provisioning.
 
 #### Disabling JIT for Cloud
+
 Use the `PATCH /orgs/current/info` [endpoint](https://api.smith.langchain.com/redoc#tag/orgs/operation/update_current_organization_info_api_v1_orgs_current_info_patch):
 
 ```bash
@@ -500,7 +501,9 @@ curl -X PATCH $LANGCHAIN_ENDPOINT/orgs/current/info \
 ```
 
 #### Disabling JIT for Self-Hosted
+
 As of LangSmith chart version **0.11.14**, you can disable JIT provisioning for your self-hosted organization using SSO. To disable, set the following values:
+
 ```yaml
 commonEnv:
   - name: SELF_HOSTED_JIT_PROVISIONING_ENABLED
@@ -518,7 +521,6 @@ Generate a SCIM Bearer Token for your organization. This token will be used by y
 ```bash
 curl -X POST $LANGCHAIN_ENDPOINT/v1/platform/orgs/current/scim/tokens \
   -H "X-Api-Key: $LANGCHAIN_API_KEY" \
-  -H "X-Organization-Id: $LANGCHAIN_ORGANIZATION_ID" \
   -H "Content-Type: application/json" \
   -d '{"description": "Your description here"}'
 ```
@@ -646,7 +648,7 @@ See [SAML SSO setup](#okta) for cloud or [OAuth2.0 setup](/langsmith/self-host-s
 
 1. In the Provisioning tab, select `Integration`.
 1. Select `Edit` then `Enable API integration`.
-1. For API Token, paste the SCIM token you [generated above](#step-3-generate-scim-bearer-token).
+1. For API Token, paste the SCIM token you [generated above](#step-3:-generate-scim-bearer-token).
 1. Keep `Import Groups` checked.
 1. To verify the configuration, select Test API Credentials.
 1. Select Save.
