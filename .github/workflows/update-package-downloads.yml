@@ -1,0 +1,48 @@
+---
+name: Update Package Downloads
+
+on:
+  schedule:
+    # Run every Sunday at 11:59 PM UTC
+    - cron: "59 23 * * 0"
+  workflow_dispatch:  # Allow manual triggering
+
+jobs:
+  update-downloads:
+    name: Update package download counts
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: write  # Required to push changes
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Set up Python 3.13 + uv
+        uses: "./.github/actions/uv_setup"
+        with:
+          python-version: "3.13"
+
+      - name: Install dependencies
+        run: |
+          uv sync --group test
+
+      - name: Update download counts
+        run: |
+          uv run .github/scripts/packages_yml_get_downloads.py
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add reference/packages.yml
+          # Only commit if there are changes
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "chore: update package download counts
+
+          🤖 Automated update of package download statistics from pepy.tech
+
+          Generated with GitHub Actions workflow update-package-downloads.yml"
+            git push
+          fi
