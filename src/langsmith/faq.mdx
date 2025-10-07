@@ -109,11 +109,11 @@ LangGraph will not add any overhead to your code and is specifically designed wi
 
 Yes. LangGraph is an MIT-licensed open-source library and is free to use.
 
-### How are LangGraph and LangSmith Platform different?
+### How are LangGraph and LangSmith different?
 
-LangGraph is a stateful, orchestration framework that brings added control to agent workflows. LangSmith Platform is a service for deploying and scaling agentic applications, with an opinionated API for building agent UXs, plus an integrated developer UI.
+LangGraph is a stateful, orchestration framework that brings added control to agent workflows. LangSmith is a service for deploying and scaling agentic applications, with an opinionated API for building agent UXs, plus an integrated developer UI.
 
-| Features            | LangGraph (open source)                                   | LangSmith Platform                                                                                     |
+| Features            | LangGraph (open source)                                   | LangSmith                                                                                     |
 |---------------------|-----------------------------------------------------------|--------------------------------------------------------------------------------------------------------|
 | Description         | Stateful orchestration framework for agentic applications | Scalable infrastructure for deploying LangGraph applications                                           |
 | SDKs                | Python and JavaScript                                     | Python and JavaScript                                                                                  |
@@ -129,13 +129,13 @@ LangGraph is a stateful, orchestration framework that brings added control to ag
 | Monitoring          | None                                                      | Integrated with LangSmith for observability                                                            |
 | IDE integration     | Debugger                                          | Debugger                                                                                       |
 
-### Is LangSmith Platform open source?
+### Is LangSmith open source?
 
-No. LangSmith Platform is proprietary software.
+No. LangSmith is proprietary software.
 
-There is a free, self-hosted version of LangSmith Platform with access to basic features. The Cloud deployment option and the Self-Hosted deployment options are paid services. [Contact our sales team](https://www.langchain.com/contact-sales) to learn more.
+There is a free, self-hosted version of LangSmith with access to basic features. The Cloud deployment option and the Self-Hosted deployment options are paid services. [Contact our sales team](https://www.langchain.com/contact-sales) to learn more.
 
-For more information, see our [LangSmith Platform pricing page](https://www.langchain.com/pricing).
+For more information, see our [LangSmith pricing page](https://www.langchain.com/pricing).
 
 ### Does LangGraph work with LLMs that don't support tool calling?
 
@@ -151,6 +151,6 @@ Yes! You can use the [development version of LangGraph Server](/langsmith/local-
 This will connect to the Debugger frontend hosted as part of LangSmith.
 If you set an environment variable of `LANGSMITH_TRACING=false`, then no traces will be sent to LangSmith.
 
-### What does "nodes executed" mean for LangSmith Platform usage?
+### What does "nodes executed" mean for LangSmith usage?
 
 **Nodes Executed** is the aggregate number of nodes in a LangGraph application that are called and completed successfully during an invocation of the application. If a node in the graph is not called during execution or ends in an error state, these nodes will not be counted. If a node is called and completes successfully multiple times, each occurrence will be counted.

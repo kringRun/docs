@@ -1,15 +1,17 @@
 ---
-title: Deployments
+title: LangSmith Deployment
 sidebarTitle: Deployments
 mode: wide
 ---
 
-The **Deployments** section covers two related but distinct concepts in the LangSmith platform:
+Welcome to LangSmith Deployment. This section covers how to deploy both your agent applications and LangSmith (control plane, data plane, and supporting services) that hosts and monitors them.
 
-- [**Agent deployment**](#agent-deployment): how to package, build, and deploy your **graphs and agents** to [LangGraph Server](/langsmith/langgraph-server).
-- [**Platform deployment**](#platform-deployment): how to host and manage the **LangSmith Platform** itself (the [control plane](/langsmith/control-plane), [data plane](/langsmith/data-plane), and backing services), which provides the management and [observability](/langsmith/observability) layer for your agents.
+This page describes two related but distinct concepts in LangSmith:
 
-These two layers work together: you deploy agents *on top of* a LangSmith Platform deployment.
+- [**Agent deployment**](#agent-deployment): how to package, build, and deploy your **graphs and agents**.
+- [**Platform deployment**](#platform-deployment): how to host and manage **LangSmith** itself (the [control plane](/langsmith/control-plane), [data plane](/langsmith/data-plane), and backing services), which provides the management and [observability](/langsmith/observability) layer for your agents.
+
+These two layers work together: you deploy agents *on top of* a LangSmith deployment.
 
 ## Agent deployment
 
@@ -37,10 +39,10 @@ You’ll learn how to:
 
 ## Platform deployment
 
-_Platform deployment_ covers how to host and manage the LangSmith Platform itself, including the [control plane](/langsmith/control-plane), [data plane](/langsmith/data-plane), and required services. You’ll choose between three hosting options: [Cloud](/langsmith/cloud), [Hybrid](/langsmith/hybrid), or [Self-hosted](/langsmith/self-hosted), depending on your scale, security, and infrastructure needs.
+_Platform deployment_ covers how to host and manage LangSmith itself, including the [control plane](/langsmith/control-plane), [data plane](/langsmith/data-plane), and required services. You’ll choose between three hosting options: [Cloud](/langsmith/cloud), [Hybrid](/langsmith/hybrid), or [Self-hosted](/langsmith/self-hosted), depending on your scale, security, and infrastructure needs.
 
 <Callout icon="building" color="#2563EB" iconType="regular">
-**Start here if you’re deploying or maintaining LangSmith Platform infrastructure.**
+**Start here if you’re deploying or maintaining LangSmith infrastructure.**
 </Callout>
 
 <Columns cols={3}>
@@ -70,7 +72,7 @@ _Platform deployment_ covers how to host and manage the LangSmith Platform itsel
     href="/langsmith/self-hosted"
     cta="Run self-hosted"
   >
-    **(Enterprise)** Run the full LangSmith platform or run standalone LangGraph Servers without the control plane UI.
+    **(Enterprise)** Run the full LangSmith or run standalone LangGraph Servers without the control plane UI.
   </Card>
 </Columns>
 

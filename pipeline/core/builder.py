@@ -95,7 +95,7 @@ class DocumentationBuilder:
         logger.info("Building LangChain Labs content...")
         self._build_unversioned_content("labs", "labs")
 
-        logger.info("Building LangSmith Platform content...")
+        logger.info("Building LangSmith content...")
         self._build_unversioned_content("langsmith", "langsmith")
 
         # Copy shared files (docs.json, images, etc.)
