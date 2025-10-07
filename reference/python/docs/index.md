@@ -11,4 +11,4 @@ Welcome to the [LangChain](https://langchain.com) reference documentation! These
     JavaScript/TypeScript reference documentation is available on the [JS/TS reference site](https://reference.langchain.com/javascript).
 
 !!! info "Looking for legacy docs?"
-    For the legacy docs and API reference for LangChain (pre v1.0), see the [legacy docs](https://python.langchain.com/v0.3).
+    For the legacy docs and API reference for LangChain (pre v1.0), see the [legacy docs](https://python.langchain.com/).
