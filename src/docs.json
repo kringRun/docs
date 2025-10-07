@@ -391,6 +391,7 @@
                 "groups": [
                   {
                     "group": "Contribute",
+                    "icon": "heart-circle-plus",
                     "pages": [
                       "oss/python/contributing/index",
                       "oss/python/contributing/documentation",
@@ -400,6 +401,7 @@
                   },
                   {
                     "group": "Integrations",
+                    "icon": "plug",
                     "pages": [
                       {
                         "group": "LangChain",
@@ -1425,6 +1427,7 @@
                 "groups": [
                   {
                     "group": "Contribute",
+                    "icon": "heart-circle-plus",
                     "pages": [
                       "oss/javascript/contributing/index",
                       "oss/javascript/contributing/documentation",
@@ -1434,6 +1437,7 @@
                   },
                   {
                     "group": "Integrations",
+                    "icon": "plug",
                     "pages": [
                       {
                         "group": "LangChain",
