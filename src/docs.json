@@ -14,8 +14,8 @@
     "href": "https://docs.langchain.com/oss/python"
   },
   "favicon": {
-    "light": "/images/brand/docs-favicon.png",
-    "dark": "/images/brand/docs-favicon.png"
+    "light": "/images/brand/docs-favicon.svg",
+    "dark": "/images/brand/docs-favicon.svg"
   },
   "fonts": {
     "heading": {
