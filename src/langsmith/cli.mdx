@@ -58,7 +58,7 @@ The LangGraph CLI requires a JSON configuration file that follows this [schema](
     <Tab title="Python">
     | Key                                                          | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
     | ------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-        | <span style={{ whiteSpace: "nowrap" }}>`dependencies`</span>     | **Required**. Array of dependencies for LangSmith Platform API server. Dependencies can be one of the following: <ul><li>A single period (`"."`), which will look for local Python packages.</li><li>The directory path where `pyproject.toml`, `setup.py` or `requirements.txt` is located.<br></br>For example, if `requirements.txt` is located in the root of the project directory, specify `"./"`. If it's located in a subdirectory called `local_package`, specify `"./local_package"`. Do not specify the string `"requirements.txt"` itself.</li><li>A Python package name.</li></ul> |
+        | <span style={{ whiteSpace: "nowrap" }}>`dependencies`</span>     | **Required**. Array of dependencies for LangSmith API server. Dependencies can be one of the following: <ul><li>A single period (`"."`), which will look for local Python packages.</li><li>The directory path where `pyproject.toml`, `setup.py` or `requirements.txt` is located.<br></br>For example, if `requirements.txt` is located in the root of the project directory, specify `"./"`. If it's located in a subdirectory called `local_package`, specify `"./local_package"`. Do not specify the string `"requirements.txt"` itself.</li><li>A Python package name.</li></ul> |
         | <span style={{ whiteSpace: "nowrap" }}>`graphs`</span>           | **Required**. Mapping from graph ID to path where the compiled graph or a function that makes a graph is defined. Example: <ul><li>`./your_package/your_file.py:variable`, where `variable` is an instance of `langgraph.graph.state.CompiledStateGraph`</li><li>`./your_package/your_file.py:make_graph`, where `make_graph` is a function that takes a config dictionary (`langchain_core.runnables.RunnableConfig`) and returns an instance of `langgraph.graph.state.StateGraph` or `langgraph.graph.state.CompiledStateGraph`. See [how to rebuild a graph at runtime](/langsmith/graph-rebuild) for more details.</li></ul>                                    |
         | <span style={{ whiteSpace: "nowrap" }}>`auth`</span>             | _(Added in v0.0.11)_ Auth configuration containing the path to your authentication handler. Example: `./your_package/auth.py:auth`, where `auth` is an instance of `langgraph_sdk.Auth`. See [authentication guide](/langsmith/auth) for details.                                                                                                                                                                                                                                                                                                                        |
         | <span style={{ whiteSpace: "nowrap" }}>`base_image`</span>       | Optional. Base image to use for the LangGraph API server. Defaults to `langchain/langgraph-api` or `langchain/langgraphjs-api`. Use this to pin your builds to a particular version of the langgraph API, such as `"langchain/langgraph-server:0.2"`. See https://hub.docker.com/r/langchain/langgraph-server/tags for more details. (added in `langgraph-cli==0.2.8`) |
@@ -424,7 +424,7 @@ The LangGraph CLI requires a JSON configuration file that follows this [schema](
 
 <Tabs>
     <Tab title="Python">
-    Build LangSmith Platform API server Docker image.
+    Build LangSmith API server Docker image.
 
     **Usage**
 
@@ -438,7 +438,7 @@ The LangGraph CLI requires a JSON configuration file that follows this [schema](
     | -------------------- | ---------------- | --------------------------------------------------------------------------------------------------------------- |
     | `--platform TEXT`    |                  | Target platform(s) to build the Docker image for. Example: `langgraph build --platform linux/amd64,linux/arm64`              |
     | `-t, --tag TEXT`     |                  | **Required**. Tag for the Docker image. Example: `langgraph build -t my-image`                                               |
-    | `--pull / --no-pull` | `--pull`         | Build with latest remote Docker image. Use `--no-pull` for running the LangSmith Platform API server with locally built images. |
+    | `--pull / --no-pull` | `--pull`         | Build with latest remote Docker image. Use `--no-pull` for running the LangSmith API server with locally built images. |
     | `-c, --config FILE`  | `langgraph.json` | Path to configuration file declaring dependencies, graphs and environment variables.                                         |
     | `--build-command TEXT`<sup>*</sup> |  | Build command to run. Runs from the directory where your `langgraph.json` file lives. Example: `langgraph build --build-command "yarn run turbo build"` |
     | `--install-command TEXT`<sup>*</sup> |  | Install command to run. Runs from the directory where you call `langgraph build` from. Example: `langgraph build --install-command "yarn install"` |
@@ -447,7 +447,7 @@ The LangGraph CLI requires a JSON configuration file that follows this [schema](
     <sup>*</sup>Only supported for JS deployments, will have no impact on Python deployments.
     </Tab>
     <Tab title="JS">
-    Build LangSmith Platform API server Docker image.
+    Build LangSmith API server Docker image.
 
     **Usage**
 
@@ -471,7 +471,7 @@ The LangGraph CLI requires a JSON configuration file that follows this [schema](
 
 <Tabs>
     <Tab title="Python">
-    Start LangGraph API server. For local testing, requires a LangSmith API key with access to LangSmith Platform. Requires a license key for production use.
+    Start LangGraph API server. For local testing, requires a LangSmith API key with access to LangSmith. Requires a license key for production use.
 
     **Usage**
 
@@ -499,7 +499,7 @@ The LangGraph CLI requires a JSON configuration file that follows this [schema](
     | `--help`                     |                           | Display command documentation.                                                                                          |
     </Tab>
     <Tab title="JS">
-    Start LangGraph API server. For local testing, requires a LangSmith API key with access to LangSmith Platform. Requires a license key for production use.
+    Start LangGraph API server. For local testing, requires a LangSmith API key with access to LangSmith. Requires a license key for production use.
 
     **Usage**
 
@@ -529,7 +529,7 @@ The LangGraph CLI requires a JSON configuration file that follows this [schema](
 
 <Tabs>
     <Tab title="Python">
-    Generate a Dockerfile for building a LangSmith Platform API server Docker image.
+    Generate a Dockerfile for building a LangSmith API server Docker image.
 
     **Usage**
 
@@ -578,7 +578,7 @@ The LangGraph CLI requires a JSON configuration file that follows this [schema](
 
     </Tab>
     <Tab title="JS">
-    Generate a Dockerfile for building a LangSmith Platform API server Docker image.
+    Generate a Dockerfile for building a LangSmith API server Docker image.
 
     **Usage**
 

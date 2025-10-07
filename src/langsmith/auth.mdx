@@ -3,7 +3,7 @@ title: Authentication & access control
 sidebarTitle: Overview
 ---
 
-LangSmith Platform provides a flexible authentication and authorization system that can integrate with most authentication schemes.
+LangSmith provides a flexible authentication and authorization system that can integrate with most authentication schemes.
 
 ## Core Concepts
 
@@ -14,13 +14,13 @@ While often used interchangeably, these terms represent distinct security concep
 * [**Authentication**](#authentication) ("AuthN") verifies _who_ you are. This runs as middleware for every request.
 * [**Authorization**](#authorization) ("AuthZ") determines _what you can do_. This validates the user's privileges and roles on a per-resource basis.
 
-In LangSmith Platform, authentication is handled by your [`@auth.authenticate`](/langsmith/python-sdk#langgraph_sdk.auth.Auth.authenticate) handler, and authorization is handled by your [`@auth.on`](/langsmith/python-sdk#langgraph_sdk.auth.Auth.on) handlers.
+In LangSmith, authentication is handled by your [`@auth.authenticate`](/langsmith/python-sdk#langgraph_sdk.auth.Auth.authenticate) handler, and authorization is handled by your [`@auth.on`](/langsmith/python-sdk#langgraph_sdk.auth.Auth.on) handlers.
 
 ## Default Security Models
 
-LangSmith Platform provides different security defaults:
+LangSmith provides different security defaults:
 
-### LangSmith Platform
+### LangSmith
 
 * Uses LangSmith API keys by default
 * Requires valid API key in `x-api-key` header
@@ -28,7 +28,7 @@ LangSmith Platform provides different security defaults:
 
 <Note>
 **Custom auth**
-Custom auth **is supported** for all plans in LangSmith Platform.
+Custom auth **is supported** for all plans in LangSmith.
 </Note>
 
 ### Self-Hosted

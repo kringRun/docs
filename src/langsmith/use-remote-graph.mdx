@@ -7,7 +7,7 @@ sidebarTitle: Interact with a deployment using RemoteGraph
 
 `RemoteGraph` is useful for the following:
 
-- Separation of development and deployment: Build and test a graph locally with `CompiledGraph`, deploy it to LangSmith Platform, and then [use `RemoteGraph`](#initialize-the-graph) to call it in production while working with the same API interface.
+- Separation of development and deployment: Build and test a graph locally with `CompiledGraph`, deploy it to LangSmith, and then [use `RemoteGraph`](#initialize-the-graph) to call it in production while working with the same API interface.
 - Thread-level persistence: [Persist and fetch the state](#persist-state-at-the-thread-level) of a conversation across calls with a thread ID.
 - Subgraph embedding: Compose modular graphs for a multi-agent workflow by embedding a `RemoteGraph` as a [subgraph](#use-as-a-subgraph) within another graph.
 - Reusable workflows: Use deployed graphs as nodes or [tools](https://langchain-ai.github.io/langgraph/reference/remote_graph/#langgraph.pregel.remote.RemoteGraph.as_tool), so that you can reuse and expose complex logic.
@@ -22,7 +22,7 @@ sidebarTitle: Interact with a deployment using RemoteGraph
 
 Before getting started with `RemoteGraph`, make sure you have:
 
-- Access to [LangSmith Platform](/langsmith/home), where your graphs are developed and managed.
+- Access to [LangSmith](/langsmith/home), where your graphs are developed and managed.
 - A running [LangGraph Server](/langsmith/langgraph-server), which hosts your deployed graphs for remote interaction.
 
 ## Initialize the graph
