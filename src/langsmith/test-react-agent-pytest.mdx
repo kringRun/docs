@@ -203,7 +203,7 @@ agent = create_agent(
 ```typescript TypeScript
 import { z } from "zod";
 import { ChatOpenAI } from "@langchain/openai";
-import { createAgent } from "@langchain/agents";
+import { createReactAgent } from "@langchain/langgraph/prebuilt";
 
 const AgentOutputFormatSchema = z.object({
   numeric_answer: z.number().optional().describe("The numeric answer, if the user asked for one"),
@@ -213,7 +213,7 @@ const AgentOutputFormatSchema = z.object({
 
 const tools = [codeTool, searchTool, tickerTool];
 
-const agent = createAgent({
+const agent = createReactAgent({
   llm: new ChatOpenAI({ model: "gpt-4o" }),
   tools: tools,
   responseFormat: AgentOutputFormatSchema,
@@ -773,7 +773,7 @@ Remember to also add the config files for [Vitest](#config-files-for-vitestjest)
 
   ```typescript TypeScript
   import { ChatOpenAI } from "@langchain/openai";
-  import { createAgent } from "@langchain/agents";
+  import { createReactAgent } from "@langchain/langgraph/prebuilt";
   import { TavilySearchResults } from "@langchain/community/tools/tavily_search";
   import { Sandbox } from '@e2b/code-interpreter'
   import { restClient } from '@polygon.io/client-js';
@@ -837,7 +837,7 @@ Remember to also add the config files for [Vitest](#config-files-for-vitestjest)
 
   const tools = [codeTool, searchTool, tickerTool];
 
-  const agent = createAgent({
+  const agent = createReactAgent({
     llm: new ChatOpenAI({ model: "gpt-4o" }),
     tools: tools,
     responseFormat: AgentOutputFormatSchema,
