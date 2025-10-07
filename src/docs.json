@@ -60,6 +60,10 @@
         "header": "Resources",
         "items": [
           {
+            "label": "Forum",
+            "href": "https://forum.langchain.com/"
+          },
+          {
             "label": "Changelog",
             "href": "https://changelog.langchain.com/"
           },
@@ -118,8 +122,8 @@
     ],
     "primary": {
       "type": "button",
-      "label": "Forum",
-      "href": "https://forum.langchain.com/"
+      "label": "Try LangSmith",
+      "href": "https://smith.langchain.com/"
     }
   },
   "navigation": {
