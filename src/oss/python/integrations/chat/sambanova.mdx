@@ -16,7 +16,7 @@ This will help you get started with SambaNovaCloud [chat models](/oss/langchain/
 
 ### Model features
 
-| [Tool calling](/oss/langchain/tools) | [Structured output](/oss/langchain/structured-output) | JSON mode | [Image input](//docs/how_to/multimodal_inputs/) | Audio input | Video input | [Token-level streaming](/oss/langchain/streaming/) | Native async | [Token usage](/oss/langchain/models#token-usage) | [Logprobs](/oss/langchain/models#log-probabilities) |
+| [Tool calling](/oss/langchain/tools) | [Structured output](/oss/langchain/structured-output) | JSON mode | [Image input](/oss/langchain/messages#multimodal) | Audio input | Video input | [Token-level streaming](/oss/langchain/streaming/) | Native async | [Token usage](/oss/langchain/models#token-usage) | [Logprobs](/oss/langchain/models#log-probabilities) |
 | :---: | :---: | :---: | :---: |  :---: | :---: | :---: | :---: | :---: | :---: |
 | ✅ | ✅ | ✅ | ✅ | ✅ | ❌ | ✅ | ✅ | ✅ | ❌ |
 
@@ -101,38 +101,6 @@ print(ai_msg.content)
 
 ```output
 J'adore la programmation.
-```
-
-## Chaining
-
-We can [chain](/oss/how-to/sequence/) our model with a prompt template like so:
-
-```python
-from langchain_core.prompts import ChatPromptTemplate
-
-prompt = ChatPromptTemplate(
-    [
-        (
-            "system",
-            "You are a helpful assistant that translates {input_language} "
-            "to {output_language}.",
-        ),
-        ("human", "{input}"),
-    ]
-)
-
-chain = prompt | llm
-chain.invoke(
-    {
-        "input_language": "English",
-        "output_language": "German",
-        "input": "I love programming.",
-    }
-)
-```
-
-```output
-AIMessage(content='Ich liebe das Programmieren.', additional_kwargs={}, response_metadata={'finish_reason': 'stop', 'usage': {'acceptance_rate': 2.3333333333333335, 'completion_tokens': 6, 'completion_tokens_after_first_per_sec': 106.06729752831038, 'completion_tokens_after_first_per_sec_first_ten': 204.92722183833433, 'completion_tokens_per_sec': 26.32497272023831, 'end_time': 1731535339.9997504, 'is_last_response': True, 'prompt_tokens': 50, 'start_time': 1731535339.7539687, 'time_to_first_token': 0.19864177703857422, 'total_latency': 0.22792046410696848, 'total_tokens': 56, 'total_tokens_per_sec': 245.6997453888909}, 'model_name': 'Meta-Llama-3.1-70B-Instruct', 'system_fingerprint': 'fastcoe', 'created': 1731535339}, id='dfe0bee6-b297-472e-ac9d-29906d162dcb')
 ```
 
 ## Streaming

@@ -118,53 +118,6 @@ I can help with that! The translation of "I love programming" in French is:
 "J'adore le programmation."
 ```
 
-## Chaining
-
-We can [chain](/oss/how-to/sequence/) our model with a prompt template like so:
-
-```typescript
-import { ChatPromptTemplate } from "@langchain/core/prompts"
-
-const prompt = ChatPromptTemplate.fromMessages(
-  [
-    [
-      "system",
-      "You are a helpful assistant that translates {input_language} to {output_language}.",
-    ],
-    ["human", "{input}"],
-  ]
-)
-
-const chain = prompt.pipe(llm);
-await chain.invoke(
-  {
-    input_language: "English",
-    output_language: "German",
-    input: "I love programming.",
-  }
-)
-```
-
-```output
-AIMessage {
-  lc_serializable: true,
-  lc_kwargs: {
-    content: "Das Programmieren ist für mich sehr Valent sein!",
-    tool_calls: [],
-    invalid_tool_calls: [],
-    additional_kwargs: {},
-    response_metadata: {}
-  },
-  lc_namespace: [ "langchain_core", "messages" ],
-  content: "Das Programmieren ist für mich sehr Valent sein!",
-  name: undefined,
-  additional_kwargs: {},
-  response_metadata: {},
-  tool_calls: [],
-  invalid_tool_calls: []
-}
-```
-
 ## API reference
 
 For detailed documentation of all `ChatCloudflareWorkersAI` features and configurations head to the [API reference](https://api.js.langchain.com/classes/langchain_cloudflare.ChatCloudflareWorkersAI.html).

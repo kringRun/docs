@@ -92,57 +92,6 @@ docs[0].metadata
  'Authors': 'Rohit Girdhar, Alaaeldin El-Nouby, Zhuang Liu, Mannat Singh, Kalyan Vasudev Alwala, Armand Joulin, Ishan Misra'}
 ```
 
-## Use within a chain
-
-Like other retrievers, `ArxivRetriever` can be incorporated into LLM applications via [chains](/oss/how-to/sequence/).
-
-We will need a LLM or chat model:
-
-<ChatModelTabs customVarName="llm" />
-
-```python
-# | output: false
-# | echo: false
-
-from langchain_openai import ChatOpenAI
-
-llm = ChatOpenAI(temperature=0)
-```
-
-```python
-from langchain_core.output_parsers import StrOutputParser
-from langchain_core.prompts import ChatPromptTemplate
-from langchain_core.runnables import RunnablePassthrough
-
-prompt = ChatPromptTemplate.from_template(
-    """Answer the question based only on the context provided.
-
-Context: {context}
-
-Question: {question}"""
-)
-
-
-def format_docs(docs):
-    return "\n\n".join(doc.page_content for doc in docs)
-
-
-chain = (
-    {"context": retriever | format_docs, "question": RunnablePassthrough()}
-    | prompt
-    | llm
-    | StrOutputParser()
-)
-```
-
-```python
-chain.invoke("What is the ImageBind model?")
-```
-
-```output
-'The ImageBind model is an approach to learn a joint embedding across six different modalities - images, text, audio, depth, thermal, and IMU data. It shows that only image-paired data is sufficient to bind the modalities together and can leverage large scale vision-language models for zero-shot capabilities and emergent applications such as cross-modal retrieval, composing modalities with arithmetic, cross-modal detection and generation.'
-```
-
 ## API reference
 
 For detailed documentation of all `ArxivRetriever` features and configurations head to the [API reference](https://python.langchain.com/api_reference/community/retrievers/langchain_community.retrievers.arxiv.ArxivRetriever.html).

@@ -195,57 +195,6 @@ console.log(aiMsg.content)
  J'adore la programmation.
 ```
 
-## Chaining
-
-We can [chain](/oss/how-to/sequence/) our model with a prompt template like so:
-
-```javascript
-import { ChatPromptTemplate } from "@langchain/core/prompts";
-
-const prompt = ChatPromptTemplate.fromMessages(
-  [
-    [
-      "system",
-      "You are a helpful assistant that translates {input_language} to {output_language}.",
-    ],
-    ["human", "{input}"],
-  ]
-)
-const chain = prompt.pipe(instance);
-await chain.invoke(
-    {
-      input_language: "English",
-      output_language: "German",
-      input: "I love programming.",
-    }
-  )
-```
-
-```output
-AIMessage {
-  "id": "chat-c5c2c08d3c984254acc48225c39c6a08",
-  "content": " Ich liebe Programmieren.",
-  "additional_kwargs": {
-    "tool_calls": []
-  },
-  "response_metadata": {
-    "tokenUsage": {
-      "completion_tokens": 8,
-      "prompt_tokens": 22,
-      "total_tokens": 30
-    },
-    "finish_reason": "stop"
-  },
-  "tool_calls": [],
-  "invalid_tool_calls": [],
-  "usage_metadata": {
-    "input_tokens": 22,
-    "output_tokens": 8,
-    "total_tokens": 30
-  }
-}
-```
-
 ## Streaming the Model output
 
 ```javascript

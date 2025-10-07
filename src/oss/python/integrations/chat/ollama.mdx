@@ -111,37 +111,6 @@ The translation of "I love programming" in French is:
 "J'adore le programmation."
 ```
 
-## Chaining
-
-We can [chain](/oss/how-to/sequence/) our model with a prompt template like so:
-
-```python
-from langchain_core.prompts import ChatPromptTemplate
-
-prompt = ChatPromptTemplate.from_messages(
-    [
-        (
-            "system",
-            "You are a helpful assistant that translates {input_language} to {output_language}.",
-        ),
-        ("human", "{input}"),
-    ]
-)
-
-chain = prompt | llm
-chain.invoke(
-    {
-        "input_language": "English",
-        "output_language": "German",
-        "input": "I love programming.",
-    }
-)
-```
-
-```output
-AIMessage(content='"Programmieren ist meine Leidenschaft."\n\n(I translated "programming" to the German word "Programmieren", and added "ist meine Leidenschaft" which means "is my passion")', additional_kwargs={}, response_metadata={'model': 'llama3.1', 'created_at': '2025-06-25T18:43:29.350032Z', 'done': True, 'done_reason': 'stop', 'total_duration': 1194744459, 'load_duration': 26982500, 'prompt_eval_count': 30, 'prompt_eval_duration': 117043458, 'eval_count': 41, 'eval_duration': 1049892167, 'model_name': 'llama3.1'}, id='run--efc6436e-2346-43d9-8118-3c20b3cdf0d0-0', usage_metadata={'input_tokens': 30, 'output_tokens': 41, 'total_tokens': 71})
-```
-
 ## Tool calling
 
 We can use [tool calling](/oss/langchain/tools/) with an LLM [that has been fine-tuned for tool use](https://ollama.com/search?&c=tools) such as `gpt-oss`:

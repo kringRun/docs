@@ -47,7 +47,7 @@ More recent Gemini models support image inputs:
 
 ```typescript
 const visionModel = new ChatGoogleGenerativeAI({
-  model: "gemini-2.0-flash",
+  model: "gemini-2.5-flash-lite-latest",
   maxOutputTokens: 2048,
 });
 const image = fs.readFileSync("./hotdog.jpg").toString("base64");
@@ -275,67 +275,4 @@ We can easily load this wrapper as a Tool (to use with an Agent). We can do this
 ```typescript
 const tools = [new GoogleCustomSearch({})];
 // Pass this variable into your agent.
-```
-
-## Chat history
-
-### Postgres Chat Message History
-
-The [PostgresChatMessageHistory](/oss/integrations/memory/google_cloudsql_pg) from
-the [`@langchain/google-cloud-sql-pg`](https://www.npmjs.com/package/@langchain/google-cloud-sql-pg) package provides a way to use the CloudSQL for PostgresSQL to store messages and provide conversation history.
-
-```bash
-$ yarn add @langchain/google-cloud-sql-pg
-```
-
-_Note:_ See the [Postgres Vector Store](#Postgres Vector Store) section on this page to learn
-how to install the package and initialize a DB connection.
-
-Initialize the chat history table:
-
-```typescript
-await engine.initChatHistoryTable("chat_message_table");
-```
-
-Create a chat message history instance:
-
-```typescript
-const historyInstance = await PostgresChatMessageHistory.initialize(
-  engine,
-  "test",
-  "chat_message_table"
-);
-```
-
-## Document Loaders
-
-### Postgres Loader
-
-The [PostgresLoader](/oss/integrations/memory/google_cloudsql_pg) from
-`@langchain/google-cloud-sql-pg` provides a way to use the CloudSQL for PostgresSQL to load data as LangChain `Document`s.
-
-_Note:_ See the [Postgres Vector Store](#Postgres Vector Store) section on this page to learn
-how to install the package and initialize a DB connection.
-
-Create a loader instance:
-
-```typescript
-const documentLoaderArgs: PostgresLoaderOptions = {
-  tableName: "test_table_custom",
-  contentColumns: ["fruit_name", "variety"],
-  metadataColumns: [
-    "fruit_id",
-    "quantity_in_stock",
-    "price_per_unit",
-    "organic",
-  ],
-  format: "text",
-};
-
-const documentLoaderInstance = await PostgresLoader.initialize(
-  PEInstance,
-  documentLoaderArgs
-);
-
-const documents = await documentLoaderInstance.load();
 ```

@@ -2,7 +2,7 @@
 title: ChatQwen
 ---
 
-This will help you get started with Qwen [chat models](../../concepts/chat_models). For detailed documentation of all ChatQwen features and configurations head to the [API reference](https://pypi.org/project/langchain-qwq/).
+This will help you get started with Qwen [chat models](/oss/langchain/models). For detailed documentation of all ChatQwen features and configurations head to the [API reference](https://pypi.org/project/langchain-qwq/).
 
 ## Overview
 
@@ -14,7 +14,7 @@ This will help you get started with Qwen [chat models](../../concepts/chat_model
 
 ### Model features
 
-| [Tool calling](../../how_to/tool_calling.ipynb) | [Structured output](../../how_to/structured_output.ipynb) | JSON mode | [Image input](../../how_to/multimodal_inputs.ipynb) | Audio input | Video input | [Token-level streaming](../../how_to/chat_streaming.ipynb) | Native async | [Token usage](../../how_to/chat_token_usage_tracking.ipynb) | [Logprobs](../../how_to/logprobs.ipynb) |
+| [Tool calling](/oss/langchain/tools) | [Structured output](/oss/langchain/structured-output) | JSON mode | [Image input](/oss/langchain/messages#multimodal) | Audio input | Video input | [Token-level streaming](/oss/langchain/streaming#llm-tokens) | Native async | [Token usage](/oss/langchain/models#token-usage) | [Logprobs](/oss/langchain/models#log-probabilities) |
 | :---: | :---: | :---: | :---: |  :---: | :---: | :---: | :---: | :---: | :---: |
 | ✅ | ✅ | ✅ |✅  | ❌ | ✅ | ✅ | ✅ | ✅ | ❌ |
 
@@ -75,38 +75,6 @@ ai_msg
 
 ```output
 AIMessage(content="J'adore la programmation.", additional_kwargs={}, response_metadata={'finish_reason': 'stop', 'model_name': 'qwen-flash'}, id='run--40f2e75b-7d28-4a71-8f5f-561509ac2010-0', usage_metadata={'input_tokens': 32, 'output_tokens': 8, 'total_tokens': 40, 'input_token_details': {}, 'output_token_details': {}})
-```
-
-## Chaining
-
-We can [chain](../../how_to/sequence.ipynb) our model with a prompt template like so:
-
-```python
-from langchain_core.prompts import ChatPromptTemplate
-
-prompt = ChatPromptTemplate(
-    [
-        (
-            "system",
-            "You are a helpful assistant that translates"
-            "{input_language} to {output_language}.",
-        ),
-        ("human", "{input}"),
-    ]
-)
-
-chain = prompt | llm
-chain.invoke(
-    {
-        "input_language": "English",
-        "output_language": "German",
-        "input": "I love programming.",
-    }
-)
-```
-
-```output
-AIMessage(content='Ich liebe Programmierung.', additional_kwargs={}, response_metadata={'finish_reason': 'stop', 'model_name': 'qwen-flash'}, id='run--ed052510-82f4-4dc5-a7f1-761a792c0dd4-0', usage_metadata={'input_tokens': 28, 'output_tokens': 5, 'total_tokens': 33, 'input_token_details': {}, 'output_token_details': {}})
 ```
 
 ## Tool Calling

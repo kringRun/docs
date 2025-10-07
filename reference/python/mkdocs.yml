@@ -1,0 +1,457 @@
+site_dir: ../dist/python
+
+site_name: "LangChain Reference"
+site_url: "https://reference.langchain.com/python/"
+site_description: "Unified reference documentation for LangChain and LangGraph"
+site_author: "LangChain"
+
+repo_url: "https://github.com/langchain-ai/docs"
+repo_name: "langchain-ai/docs"
+edit_uri: tree/main/reference/python/docs/
+
+# https://www.mkdocs.org/user-guide/configuration/#theme
+theme:
+  name: material
+
+  # https://mrkeo.github.io/customization/#extending-the-theme
+  # Any file in the overrides directory will replace the file with the same name
+  # which is part of the original theme
+  #
+  # Also used to add files
+  custom_dir: overrides
+
+  # Branding
+  logo_dark_mode: static/brand/reference-dark.svg
+  logo_light_mode: static/brand/reference-light.svg
+  favicon: static/brand/docs-favicon.png
+
+  icon:
+    # Used for annotations in code blocks
+    annotation: material/chevron-right-circle
+
+  features:
+    # --- Global features ---
+    - announce.dismiss
+
+    # --- Content features ---
+
+    # https://squidfunk.github.io/mkdocs-material/setup/adding-a-git-repository/#code-actions
+    # Add "Edit this page" and "View source" links to the top of each page
+    # Uses linked `repo_url` and `edit_uri` above
+    - content.action.edit
+    - content.action.view
+
+    # https://squidfunk.github.io/mkdocs-material/reference/code-blocks/#code-copy-button
+    # Render a button to copy code blocks to the clipboard
+    - content.code.copy
+
+    # https://squidfunk.github.io/mkdocs-material/reference/code-blocks/#code-selection-button
+    # Render a button to select code blocks
+    - content.code.select
+
+    # https://squidfunk.github.io/mkdocs-material/reference/annotations/
+    # Add annotations to code blocks
+    - content.code.annotate
+
+    # https://squidfunk.github.io/mkdocs-material/reference/content-tabs/#linked-content-tabs
+    # Link all content tabs with the same name across the site such that switching a tab on one
+    # page switches the tab on all other pages (e.g. for switching between languages)
+    - content.tabs.link
+
+    # https://squidfunk.github.io/mkdocs-material/reference/tooltips/#improved-tooltips
+    # Tooltips such that when hovering over a link to a header within the current page,
+    # text is shown.
+    - content.tooltips
+
+    # --- Navigation features ---
+    # https://mrkeo.github.io/setup/setting-up-navigation/
+
+    # https://mrkeo.github.io/setup/setting-up-navigation/#section-index-pages
+    - navigation.indexes
+
+    # https://mrkeo.github.io/setup/setting-up-navigation/#navigation-sections
+    - navigation.sections
+
+    # https://mrkeo.github.io/setup/setting-up-navigation/#instant-loading
+    # Clicks on all internal links will be intercepted and dispatched without fully reloading
+    - navigation.instant
+
+    # https://squidfunk.github.io/mkdocs-material/setup/setting-up-navigation/#instant-prefetching
+    # Start to prefetch pages when a user hovers over a link
+    - navigation.instant.prefetch
+
+    # https://squidfunk.github.io/mkdocs-material/setup/setting-up-navigation/#progress-indicator
+    # Show a progress bar at the top of the page when navigating to a new page
+    - navigation.instant.progress
+
+    # https://mrkeo.github.io/setup/setting-up-navigation/#navigation-tabs
+    - navigation.tabs
+
+    # https://squidfunk.github.io/mkdocs-material/setup/setting-up-navigation/#navigation-path
+    # TODO: investigate, not working?
+    # Breadcrumb nav rendered above the title of each page
+    - navigation.path
+
+    # https://squidfunk.github.io/mkdocs-material/setup/setting-up-navigation/#back-to-top-button
+    # Back to top button on the bottom right of each page
+    - navigation.top
+
+    # https://squidfunk.github.io/mkdocs-material/setup/setting-up-navigation/#navigation-pruning
+    # Only the visible navigation items are included in the rendered HTML
+    - navigation.prune
+
+    # URL in the address bar is automatically updated with the active anchor
+    - navigation.tracking
+
+    # --- Table of contents features ---
+
+    # https://squidfunk.github.io/mkdocs-material/setup/setting-up-navigation/#anchor-following
+    # Sidebar table of contents automatically highlights the current section when scrolling
+    - toc.follow
+
+    # --- Search features ---
+    # https://mrkeo.github.io/setup/setting-up-site-search/
+
+    # https://mrkeo.github.io/setup/setting-up-site-search/#search-suggestions
+    # TODO: check that this works? It's labeled as insiders-only
+    - search.suggest
+
+    # https://mrkeo.github.io/setup/setting-up-site-search/#search-highlighting
+    # TODO: check that this works? It's labeled as insiders-only
+    - search.highlight
+
+    # https://mrkeo.github.io/setup/setting-up-site-search/#search-sharing
+    # TODO: check that this works? It's labeled as insiders-only
+    - search.share
+
+  palette:
+    - scheme: default
+      primary: white
+      accent: gray
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: grey
+      accent: white
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  font:
+    text: "Inter"
+    code: "Roboto Mono"
+
+# https://www.mkdocs.org/user-guide/configuration/#plugins
+plugins:
+
+  # https://squidfunk.github.io/mkdocs-material/plugins/search/#configuration
+  # Site-wide search functionality
+  - search
+
+  # This exists as a plugin but need to investigate whether it plays well with
+  # the above `search` plugin. Currently, the best way to hide a page from search
+  # is to add `search.exclude: true` to the page's front matter (see link)
+  # - exclude-search:
+  #     exclude: []
+  #       # - additional-resources/index.md
+
+  # https://squidfunk.github.io/mkdocs-material/plugins/tags/#configuration
+  # Categorizing pages with the use of tags
+  # Search and tag indexes
+  - tags
+
+  # https://squidfunk.github.io/mkdocs-material/plugins/privacy/#configuration
+  - privacy
+
+  # https://squidfunk.github.io/mkdocs-material/setup/adding-a-git-repository/#document-authors
+  # TODO: revisit if we want this later on
+  # Shows document authors based on git history
+  # - git-authors
+
+  # https://squidfunk.github.io/mkdocs-material/plugins/optimize/#configuration
+  # TODO: need the sponsoring tier
+  # - optimize
+
+  # https://github.com/mondeja/mkdocs-include-markdown-plugin
+  # Include certain sections of external markdown files
+  # - include-markdown
+
+  # https://mkdocstrings.github.io/
+  # Generates API documentation from Python docstrings
+  - mkdocstrings:
+      # Directory containing Jinja2 templates to override default rendering
+      custom_templates: templates
+      handlers:
+        python:
+          import:
+            # Import external inventories for cross-referencing documentation
+            - https://docs.python.org/3/objects.inv
+          options:
+            preload_modules:
+              # Preload modules before collecting documentation to enable cross-references
+              # TODO: understand this better
+              - langchain
+              - langchain_core
+            # Generate objects.inv file for this site to enable cross-referencing from other sites
+            # (e.g. what the python langchain.com site does above)
+            enable_inventory: true
+            # Order members by their appearance in source code (vs alphabetical)
+            members_order: source
+            # Allow dynamic inspection of objects when static analysis fails
+            # TODO: understand the implications of this better
+            allow_inspection: true
+            # Heading level (h2) for the documented object's name
+            heading_level: 2
+            # Show base classes for documented classes
+            show_bases: true
+            # Hide source code in documentation (only show signatures and docstrings)
+            show_source: false
+            # Show one-line summaries in tables of contents
+            summary: true
+            # Include members inherited from base classes
+            inherited_members: true
+            selection:
+              # Parse docstrings using Google style
+              docstring_style: google
+            # Render docstring sections (Args, Returns, etc.) as tables
+            docstring_section_style: table
+            # Hide the top-level module/package entry from the table of contents
+            show_root_toc_entry: false
+            # Display function/method signatures
+            show_signature: true
+            # Show type annotations in signatures
+            show_signature_annotations: true
+            # Display signature on its own line separate from the heading
+            separate_signature: true
+            # Maximum line length for signatures before wrapping
+            line_length: 60
+            # Show type (function, class, method, etc.) in the heading
+            show_symbol_type_heading: true
+            # Show type (function, class, method, etc.) in table of contents
+            show_symbol_type_toc: true
+            # Make type annotations in signatures clickable cross-references
+            signature_crossrefs: true
+            extensions:
+            - griffe_warnings_deprecated:
+              # https://mkdocstrings.github.io/griffe-warnings-deprecated/
+              # Uses our custom `deprecated` admonition
+              # Title and label can be customized if desired
+              kind: deprecated
+            options:
+              # Additional options for filtering members
+              filters:
+                # Exclude members starting with underscore (private members)
+                - "!^_"
+
+# https://www.mkdocs.org/user-guide/configuration/#nav
+# All paths relative to `./docs`
+# - If not provided, lists all `.md` files recursively in alphabetical order
+# - If provided, only the listed files will be included, in the specified order
+# - If a directory is listed, all `.md` files in that directory will be included
+nav:
+  - Get started: index.md
+  - LangChain:
+    - langchain/index.md
+    - langchain:
+      - agents: langchain/agents.md
+      - middleware: langchain/middleware.md
+      - models: langchain/models.md
+      - messages: langchain/messages.md
+      - tools: langchain/tools.md
+      - documents: langchain/documents.md
+      - embeddings: langchain/embeddings.md
+      - storage: langchain/storage.md
+    - langchain_core: langchain_core/index.md
+  - LangGraph:
+    - langgraph/index.md
+    - LangGraph:
+      - Graphs: langgraph/graphs.md
+      - Functional API: langgraph/func.md
+      - Pregel: langgraph/pregel.md
+      - Checkpointing: langgraph/checkpoints.md
+      - Storage: langgraph/store.md
+      - Caching: langgraph/cache.md
+      - Types: langgraph/types.md
+      - Runtime: langgraph/runtime.md
+      - Config: langgraph/config.md
+      - Errors: langgraph/errors.md
+      - Constants: langgraph/constants.md
+      - Channels: langgraph/channels.md
+    - Prebuilt:
+      - Agents: langgraph/agents.md
+      - Supervisor: langgraph/supervisor.md
+      - Swarm: langgraph/swarm.md
+      - MCP Adapters: langgraph/mcp.md
+  - Integrations:
+    - Overview: integrations/index.md
+    - Standard Tests: integrations/langchain-tests.md
+    - OpenAI: integrations/langchain-openai.md
+    - Anthropic: integrations/langchain-anthropic.md
+    - AWS: integrations/langchain-aws.md
+    - Google: integrations/langchain-google.md
+  - Platform:
+    - SDK (Python): platform/python_sdk.md
+    - RemoteGraph: platform/remote_graph.md
+
+# https://www.mkdocs.org/user-guide/configuration/#markdown_extensions
+markdown_extensions:
+  # --- EXTENSIONS REQUIRED FOR ANNOTATIONS ---
+  # https://squidfunk.github.io/mkdocs-material/reference/annotations/
+
+  # https://squidfunk.github.io/mkdocs-material/setup/extensions/python-markdown/#attribute-lists
+  # Add HTML attributes and CSS classes to inline and block-level Markdown elements
+  - attr_list
+
+  # https://squidfunk.github.io/mkdocs-material/setup/extensions/python-markdown/#markdown-in-html
+  # Allows for writing Markdown inside of HTML
+  # (By default, Markdown ignores any content within a raw HTML block-level element)
+  - md_in_html
+  - pymdownx.superfences
+  # --- EXTENSIONS REQUIRED FOR ANNOTATIONS ---
+
+  # https://squidfunk.github.io/mkdocs-material/setup/extensions/python-markdown/#admonition
+  # https://squidfunk.github.io/mkdocs-material/reference/admonitions/#usage
+  - admonition
+
+  # https://squidfunk.github.io/mkdocs-material/setup/extensions/python-markdown/#definition-lists
+  # https://squidfunk.github.io/mkdocs-material/reference/lists/#using-definition-lists
+  # Definition lists
+  - def_list
+
+  # https://squidfunk.github.io/mkdocs-material/setup/extensions/python-markdown/#footnotes
+  # https://squidfunk.github.io/mkdocs-material/reference/footnotes/#adding-footnote-references
+  - footnotes
+
+  # https://squidfunk.github.io/mkdocs-material/setup/extensions/python-markdown/#table-of-contents
+  # Automatically generate a table of contents from a document - see link for config options
+  - toc:
+      permalink: true
+
+  # https://facelessuser.github.io/pymdown-extensions/extensions/details/
+  # Collapsible elements that hide their content
+  - pymdownx.details
+
+  # https://facelessuser.github.io/pymdown-extensions/extensions/tabbed/
+  # Add tabs for switching between content sections
+  - pymdownx.tabbed:
+      alternate_style: true
+      combine_header_slug: true
+
+  # https://facelessuser.github.io/pymdown-extensions/extensions/arithmatex/
+  # Preserve LaTeX math equations for downstream rendering by MathJax or KaTeX
+  - pymdownx.arithmatex:
+      generic: true
+
+  # https://facelessuser.github.io/pymdown-extensions/extensions/betterem/
+  # Improved emphasis handling
+  - pymdownx.betterem:
+      smart_enable: all
+
+  # https://facelessuser.github.io/pymdown-extensions/extensions/caret/
+  - pymdownx.caret
+
+  # https://facelessuser.github.io/pymdown-extensions/extensions/emoji/
+  # Inserting emoji via simple short names enclosed within colons
+  - pymdownx.emoji:
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+
+  # https://facelessuser.github.io/pymdown-extensions/extensions/magiclink/
+  # Auto-link, shorthand link, etc.
+  - pymdownx.magiclink:
+      normalize_issue_symbols: true
+      repo_url_shorthand: true
+      user: langchain-ai
+      repo: langchain
+
+  # https://facelessuser.github.io/pymdown-extensions/extensions/mark/
+  # Mark / highlight text
+  - pymdownx.mark
+
+  # https://facelessuser.github.io/pymdown-extensions/extensions/smartsymbols/
+  # Create special typographic characters for arrows and other symbols
+  - pymdownx.smartsymbols
+
+  # https://facelessuser.github.io/pymdown-extensions/extensions/tasklist/
+  # Task lists with checkboxes
+  - pymdownx.tasklist:
+      custom_checkbox: true
+
+  # --- Code highlighting ---
+  # https://mrkeo.github.io/reference/code-blocks/#highlight
+  # Code block syntax highlighting
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      use_pygments: true
+      pygments_lang_class: true
+  # https://facelessuser.github.io/pymdown-extensions/extensions/superfences/
+  # Nesting code blocks inside other code blocks
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  # https://mrkeo.github.io/reference/code-blocks/#inlinehilite
+  # Syntax highlighting of inline code blocks.
+  - pymdownx.inlinehilite
+  # --- Code highlighting ---
+
+  # https://mrkeo.github.io/reference/code-blocks/#keys
+  # Keyboard key icons
+  - pymdownx.keys
+
+  # https://mrkeo.github.io/reference/code-blocks/#snippets
+  # TODO: maybe add if needed?
+  # Allows inserting content from other files
+  # - pymdownx.snippets
+
+# https://www.mkdocs.org/user-guide/configuration/#validation
+# TODO: figure out what this is doing
+validation:
+  # We are still raising for omitted files because they determine the breadcrumbs
+  # for pages.
+  omitted_files: info
+  absolute_links: warn
+  unrecognized_links: warn
+  anchors: warn
+  # this is needed to handle headers with anchors for nav
+  not_found: info
+
+# https://www.mkdocs.org/user-guide/configuration/#extra_css
+extra_css:
+  - stylesheets/logos.css
+  - stylesheets/sticky_navigation.css
+  - stylesheets/version_admonitions.css
+
+# https://www.mkdocs.org/user-guide/configuration/#extra_javascript
+extra_javascript:
+  - javascripts/shortcuts.js
+
+# https://www.mkdocs.org/user-guide/configuration/#extra_templates
+# extra_templates:
+
+copyright: >
+  Copyright &copy; 2025
+
+# https://www.mkdocs.org/user-guide/configuration/#extra
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/langchain-ai/langchain
+      name: LangChain on GitHub
+    - icon: fontawesome/brands/slack
+      link: https://www.langchain.com/join-community
+      name: LangChain Community Slack
+    - icon: fontawesome/brands/x-twitter
+      link: https://twitter.com/LangChainAI
+      name: LangChain on Twitter / X
+    - icon: fontawesome/brands/linkedin
+      link: https://www.linkedin.com/company/langchain/
+      name: LangChain on LinkedIn
+    - icon: fontawesome/brands/youtube
+      link: https://www.youtube.com/@LangChain
+      name: LangChain on YouTube
+  # https://mrkeo.github.io/setup/setting-up-the-footer/#remove-generator
+  # TODO: check that this works? It's labeled as insiders-only
+  generator: false

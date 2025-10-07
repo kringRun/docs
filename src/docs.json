@@ -60,6 +60,10 @@
         "header": "Resources",
         "items": [
           {
+            "label": "Forum",
+            "href": "https://forum.langchain.com/"
+          },
+          {
             "label": "Changelog",
             "href": "https://changelog.langchain.com/"
           },
@@ -118,8 +122,8 @@
     ],
     "primary": {
       "type": "button",
-      "label": "Forum",
-      "href": "https://forum.langchain.com/"
+      "label": "Try LangSmith",
+      "href": "https://smith.langchain.com/"
     }
   },
   "navigation": {
@@ -538,13 +542,8 @@
                     "group": "LangGraph Studio",
                     "pages": [
                       "langgraph-platform/langgraph-studio",
-                      "langgraph-platform/invoke-studio",
-                      "langgraph-platform/manage-assistants-studio",
-                      "langgraph-platform/threads-studio",
-                      "langgraph-platform/iterate-graph-studio",
-                      "langgraph-platform/run-evals-studio",
-                      "langgraph-platform/clone-traces-studio",
-                      "langgraph-platform/datasets-studio",
+                      "langgraph-platform/use-studio",
+                      "langgraph-platform/observability-studio",
                       "langgraph-platform/troubleshooting-studio"
                     ]
                   }
@@ -699,6 +698,7 @@
                       {
                         "group": "Integrations",
                         "pages": [
+                          "langsmith/integrations",
                           "langsmith/trace-with-langchain",
                           "langsmith/trace-with-langgraph",
                           "langsmith/trace-anthropic",
@@ -1170,7 +1170,7 @@
                 "tab": "LangChain",
                 "pages": [
                   "oss/javascript/langchain/overview",
-                  "oss/python/releases/langchain-v1",
+                  "oss/javascript/releases/langchain-v1",
                   {
                     "group": "Get started",
                     "pages": [
@@ -1300,26 +1300,27 @@
                         "group": "Google",
                         "pages": [
                           "oss/javascript/integrations/providers/google",
-                          "/oss/integrations/chat/google_generative_ai",
-                          "/oss/integrations/text_embedding/google_generativeai"
+                          "/oss/javascript/integrations/chat/google_generative_ai",
+                          "/oss/javascript/integrations/text_embedding/google_generativeai"
                         ]
                       },
                       {
                         "group": "AWS",
                         "pages": [
                           "oss/javascript/integrations/providers/aws",
-                          "/oss/integrations/chat/bedrock",
-                          "/oss/integrations/text_embedding/bedrock"
+                          "/oss/javascript/integrations/chat/bedrock",
+                          "/oss/javascript/integrations/text_embedding/bedrock"
                         ]
                       },
                       {
                         "group": "Microsoft",
                         "pages": [
                           "oss/javascript/integrations/providers/microsoft",
-                          "/oss/integrations/chat/azure",
-                          "/oss/integrations/text_embedding/azure_openai"
+                          "/oss/javascript/integrations/chat/azure",
+                          "/oss/javascript/integrations/text_embedding/azure_openai"
                         ]
-                      }
+                      },
+                      "oss/javascript/integrations/providers/all_providers"
                     ]
                   },
                   {
@@ -1331,7 +1332,6 @@
                       "oss/javascript/integrations/stores/index",
                       "oss/javascript/integrations/document_transformers/index",
                       "oss/javascript/integrations/llm_caching/index",
-                      "oss/javascript/integrations/memory/index",
                       "oss/javascript/integrations/callbacks/index"
                     ]
                   },
@@ -1594,13 +1594,8 @@
                     "group": "LangGraph Studio",
                     "pages": [
                       "langgraph-platform/langgraph-studio",
-                      "langgraph-platform/invoke-studio",
-                      "langgraph-platform/manage-assistants-studio",
-                      "langgraph-platform/threads-studio",
-                      "langgraph-platform/iterate-graph-studio",
-                      "langgraph-platform/run-evals-studio",
-                      "langgraph-platform/clone-traces-studio",
-                      "langgraph-platform/datasets-studio",
+                      "langgraph-platform/use-studio",
+                      "langgraph-platform/observability-studio",
                       "langgraph-platform/troubleshooting-studio"
                     ]
                   }
@@ -1768,6 +1763,7 @@
                       {
                         "group": "Integrations",
                         "pages": [
+                          "langsmith/integrations",
                           "langsmith/trace-with-langchain",
                           "langsmith/trace-with-langgraph",
                           "langsmith/trace-anthropic",
@@ -2232,5 +2228,71 @@
   },
   "interaction": {
     "drilldown": true
+  },
+  "redirects": [
+  {
+    "source": "/oss/python/langchain-agents",
+    "destination": "/oss/python/langchain/agents"
+  },
+  {
+    "source": "/oss/javascript/langchain-agents",
+    "destination": "/oss/javascript/langchain/agents"
+  },
+  {
+    "source": "/oss/python/langchain-models",
+    "destination": "/oss/python/langchain/models"
+  },
+  {
+    "source": "/oss/javascript/langchain-models",
+    "destination": "/oss/javascript/langchain/models"
+  },
+  {
+    "source": "/oss/python/langchain-messages",
+    "destination": "/oss/python/langchain/messages"
+  },
+  {
+    "source": "/oss/javascript/langchain-messages",
+    "destination": "/oss/javascript/langchain/messages"
+  },
+  {
+    "source": "/oss/python/langchain-tools",
+    "destination": "/oss/python/langchain/tools"
+  },
+  {
+    "source": "/oss/javascript/langchain-tools",
+    "destination": "/oss/javascript/langchain/tools"
+  },
+  {
+    "source": "/oss/python/langchain-memory",
+    "destination": "/oss/python/langchain/short-term-memory"
+  },
+  {
+    "source": "/oss/javascript/langchain-memory",
+    "destination": "/oss/javascript/langchain/short-term-memory"
+  },
+  {
+    "source": "/oss/python/langchain-streaming",
+    "destination": "/oss/python/langchain/streaming"
+  },
+  {
+    "source": "/oss/javascript/langchain-streaming",
+    "destination": "/oss/javascript/langchain/streaming"
+  },
+  {
+    "source": "/oss/python/releases-v1",
+    "destination": "/oss/python/releases/langchain-v1"
+  },
+  {
+    "source": "/oss/javascript/releases-v1",
+    "destination": "/oss/javascript/releases/langchain-v1"
+  },
+  {
+    "source": "/oss/python/langgraph/human-in-the-loop",
+    "destination": "/oss/python/langgraph/add-human-in-the-loop"
+  },
+  {
+    "source": "/oss/javascript/langgraph/human-in-the-loop",
+    "destination": "/oss/javascript/langgraph/add-human-in-the-loop"
   }
+]
 }

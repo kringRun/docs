@@ -104,6 +104,13 @@ Service keys are similar to PATs, but are used to authenticate requests to the L
 
 Service keys are prefixed with `lsv2_sk_`
 
+<Warning>
+Use the `X-Tenant-Id` header to specify the target workspace.
+
+- **When using PATs**: If this header is omitted, requests will run against the default workspace associated with the key.
+- **When using organization-scoped service keys**: You must include the `X-Tenant-Id` header when accessing workspace-scoped resources. Without it, the request will fail with a `403 Forbidden` error.
+</Warning>
+
 <Note>
 To see how to create a service key or Personal Access Token, see the [setup guide](/langsmith/create-account-api-key)
 </Note>

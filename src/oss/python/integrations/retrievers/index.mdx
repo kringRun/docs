@@ -9,9 +9,8 @@ Retrievers can be created from vector stores, but are also broad enough to inclu
 
 Retrievers accept a string query as input and return a list of [Documents](https://python.langchain.com/api_reference/core/documents/langchain_core.documents.base.Document.html) as output.
 
-Note that all [vector stores](/oss/integrations/vectorstores) can be [cast to retrievers](/oss/how-to/vectorstore_retriever/).
-Refer to the vector store [integration docs](/oss/integrations/vectorstores/) for available vector stores.
-This page lists custom retrievers, implemented via subclassing [BaseRetriever](/oss/how-to/custom_retriever/).
+Note that all [vector stores](/oss/integrations/vectorstores) can be cast to retrievers. Refer to the vector store [integration docs](/oss/integrations/vectorstores/) for available vector stores.
+This page lists custom retrievers, implemented via subclassing BaseRetriever.
 
 ## Bring-your-own documents
 
@@ -93,7 +92,6 @@ The below retrievers will search over an external index (e.g., constructed from 
 <Card title="RePhraseQuery" icon="link" href="/oss/integrations/retrievers/re_phrase" arrow="true" cta="View guide" />
 <Card title="Rememberizer" icon="link" href="/oss/integrations/retrievers/rememberizer" arrow="true" cta="View guide" />
 <Card title="SEC filing" icon="link" href="/oss/integrations/retrievers/sec_filings" arrow="true" cta="View guide" />
-<Card title="Self-querying retrievers" icon="link" href="/oss/integrations/retrievers/self_query" arrow="true" cta="View guide" />
 <Card title="SVM" icon="link" href="/oss/integrations/retrievers/svm" arrow="true" cta="View guide" />
 <Card title="TavilySearchAPI" icon="link" href="/oss/integrations/retrievers/tavily" arrow="true" cta="View guide" />
 <Card title="TF-IDF" icon="link" href="/oss/integrations/retrievers/tf_idf" arrow="true" cta="View guide" />

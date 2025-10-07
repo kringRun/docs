@@ -101,37 +101,6 @@ print(ai_msg.content)
 J'adore la programmation.
 ```
 
-## Chaining
-
-We can [chain](/oss/how-to/sequence/) our model with a prompt template like so:
-
-```python
-from langchain_core.prompts import ChatPromptTemplate
-
-prompt = ChatPromptTemplate(
-    [
-        (
-            "system",
-            "You are a helpful assistant that translates {input_language} to {output_language}.",
-        ),
-        ("human", "{input}"),
-    ]
-)
-
-chain = prompt | llm
-await chain.ainvoke(
-    {
-        "input_language": "English",
-        "output_language": "German",
-        "input": "I love programming.",
-    }
-)
-```
-
-```output
-AIMessage(content='Ich liebe das Programmieren. How can I help you with programming today?', additional_kwargs={}, response_metadata={}, id='run-03d1a585-8234-46f1-a8df-bf9143fe3309-0', usage_metadata={'input_tokens': 46, 'output_tokens': 46, 'total_tokens': 92})
-```
-
 ## Goodfire-specific functionality
 
 To use Goodfire-specific functionality such as SAE features and variants, you can use the `goodfire` package directly.

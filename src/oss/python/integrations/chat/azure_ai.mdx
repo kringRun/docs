@@ -100,37 +100,6 @@ print(ai_msg.content)
 J'adore programmer.
 ```
 
-## Chaining
-
-We can [chain](/oss/how-to/sequence/) our model with a prompt template like so:
-
-```python
-from langchain_core.prompts import ChatPromptTemplate
-
-prompt = ChatPromptTemplate(
-    [
-        (
-            "system",
-            "You are a helpful assistant that translates {input_language} to {output_language}.",
-        ),
-        ("human", "{input}"),
-    ]
-)
-
-chain = prompt | llm
-chain.invoke(
-    {
-        "input_language": "English",
-        "output_language": "German",
-        "input": "I love programming.",
-    }
-)
-```
-
-```output
-AIMessage(content='Ich liebe Programmieren.', additional_kwargs={}, response_metadata={'model': 'gpt-4o-2024-05-13', 'token_usage': {'input_tokens': 26, 'output_tokens': 5, 'total_tokens': 31}, 'finish_reason': 'stop'}, id='run-01ba6587-6ff4-4554-8039-13204a7d95db-0', usage_metadata={'input_tokens': 26, 'output_tokens': 5, 'total_tokens': 31})
-```
-
 ## API reference
 
 For detailed documentation of all AzureAIChatCompletionsModel features and configurations, head to the API reference: [python.langchain.com/api_reference/azure_ai/chat_models/langchain_azure_ai.chat_models.AzureAIChatCompletionsModel.html](https://python.langchain.com/api_reference/azure_ai/chat_models/langchain_azure_ai.chat_models.AzureAIChatCompletionsModel.html)

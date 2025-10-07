@@ -2,7 +2,7 @@
 title: ChatQwQ
 ---
 
-This will help you get started with QwQ [chat models](../../concepts/chat_models). For detailed documentation of all ChatQwQ features and configurations head to the [API reference](https://pypi.org/project/langchain-qwq/).
+This will help you get started with QwQ [chat models](/oss/langchain/models). For detailed documentation of all ChatQwQ features and configurations head to the [API reference](https://pypi.org/project/langchain-qwq/).
 
 ## Overview
 
@@ -14,7 +14,7 @@ This will help you get started with QwQ [chat models](../../concepts/chat_models
 
 ### Model features
 
-| [Tool calling](../../how_to/tool_calling.ipynb) | [Structured output](../../how_to/structured_output.ipynb) | JSON mode | [Image input](../../how_to/multimodal_inputs.ipynb) | Audio input | Video input | [Token-level streaming](../../how_to/chat_streaming.ipynb) | Native async | [Token usage](../../how_to/chat_token_usage_tracking.ipynb) | [Logprobs](../../how_to/logprobs.ipynb) |
+| [Tool calling](/oss/langchain/tools) | [Structured output](/oss/langchain/structured-output) | JSON mode | [Image input](/oss/langchain/messages#multimodal) | Audio input | Video input | [Token-level streaming](/oss/langchain/streaming#llm-tokens) | Native async | [Token usage](/oss/langchain/models#token-usage) | [Logprobs](/oss/langchain/models#log-probabilities) |
 | :---: | :---: | :---: | :---: |  :---: | :---: | :---: | :---: | :---: | :---: |
 | ✅ | ✅ | ✅ |✅  | ❌ | ✅ | ✅ | ✅ | ✅ | ❌ |
 
@@ -75,38 +75,6 @@ ai_msg
 
 ```output
 AIMessage(content="J'aime la programmation.", additional_kwargs={'reasoning_content': 'Okay, the user wants me to translate "I love programming." into French. Let\'s start by breaking down the sentence. The subject is "I", which in French is "Je". The verb is "love", which in this context is present tense, so "aime". The object is "programming". Now, "programming" in French can be "la programmation". \n\nWait, should it be "programmation" or "programmation"? Let me confirm the spelling. Yes, "programmation" is correct. Now, putting it all together: "Je aime la programmation." Hmm, but in French, there\'s a tendency to contract "je" and "aime". Wait, actually, "je" followed by a vowel sound usually takes "j\'". So it should be "J\'aime la programmation." \n\nLet me double-check. "J\'aime" is the correct contraction for "I love". The definite article "la" is needed because "programmation" is a feminine noun. Yes, "programmation" is a feminine noun, so "la" is correct. \n\nIs there any other way to say it? Maybe "J\'adore la programmation" for "I love" in a stronger sense, but the user didn\'t specify the intensity. Since the original is straightforward, "J\'aime la programmation." is the direct translation. \n\nI think that\'s it. No mistakes there. So the final translation should be "J\'aime la programmation."'}, response_metadata={'model_name': 'qwq-plus'}, id='run-5045cd6a-edbd-4b2f-bf24-b7bdf3777fb9-0', usage_metadata={'input_tokens': 32, 'output_tokens': 326, 'total_tokens': 358, 'input_token_details': {}, 'output_token_details': {}})
-```
-
-## Chaining
-
-We can [chain](../../how_to/sequence.ipynb) our model with a prompt template like so:
-
-```python
-from langchain_core.prompts import ChatPromptTemplate
-
-prompt = ChatPromptTemplate(
-    [
-        (
-            "system",
-            "You are a helpful assistant that translates"
-            "{input_language} to {output_language}.",
-        ),
-        ("human", "{input}"),
-    ]
-)
-
-chain = prompt | llm
-chain.invoke(
-    {
-        "input_language": "English",
-        "output_language": "German",
-        "input": "I love programming.",
-    }
-)
-```
-
-```output
-AIMessage(content='Ich liebe das Programmieren.', additional_kwargs={'reasoning_content': 'Okay, the user wants me to translate "I love programming." into German. Let me think. The verb "love" is "lieben" or "mögen" in German, but "lieben" is more like love, while "mögen" is prefer. Since it\'s about programming, which is a strong affection, "lieben" is better. The subject is "I", which is "ich". Then "programming" is "Programmierung" or "Coding". But "Programmierung" is more formal. Alternatively, sometimes people say "ich liebe es zu programmieren" which is "I love to program". Hmm, maybe the direct translation would be "Ich liebe die Programmierung." But maybe the more natural way is "Ich liebe es zu programmieren." Let me check. Both are correct, but the second one might sound more natural in everyday speech. The user might prefer the concise version. Alternatively, maybe "Ich liebe die Programmierung." is better. Wait, the original is "programming" as a noun. So using the noun form would be appropriate. So "Ich liebe die Programmierung." But sometimes people also use "Coding" in German, like "Ich liebe das Coding." But that\'s more anglicism. Probably better to stick with "Programmierung". Alternatively, "Programmieren" as a noun. Oh right! "Programmieren" can be a noun when used in the accusative case. So "Ich liebe das Programmieren." That\'s correct and natural. Yes, that\'s the best translation. So the answer is "Ich liebe das Programmieren."'}, response_metadata={'model_name': 'qwq-plus'}, id='run-2c418451-51d8-4319-8269-2ce129363a1a-0', usage_metadata={'input_tokens': 28, 'output_tokens': 341, 'total_tokens': 369, 'input_token_details': {}, 'output_token_details': {}})
 ```
 
 ## Tool Calling

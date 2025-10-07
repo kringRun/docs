@@ -126,21 +126,8 @@ The vectorstore wrapper turns Redis into a low-latency [vector database](https:/
 from langchain_community.vectorstores import Redis
 ```
 
-For a more detailed walkthrough of the Redis vectorstore wrapper, see [this notebook](/oss/integrations/vectorstores/redis).
-
 ## Retriever
 
 The Redis vector store retriever wrapper generalizes the vectorstore class to perform
 low-latency document retrieval. To create the retriever, simply
 call `.as_retriever()` on the base vectorstore class.
-
-## Memory
-
-Redis can be used to persist LLM conversations.
-
-### Vector Store Retriever Memory
-
-For a more detailed walkthrough of the `VectorStoreRetrieverMemory` wrapper, see [this notebook](https://python.langchain.com/api_reference/langchain/memory/langchain.memory.vectorstore.VectorStoreRetrieverMemory.html).
-
-### Chat Message History Memory
-For a detailed example of Redis to cache conversation message history, see [this notebook](/oss/integrations/memory/redis_chat_message_history).

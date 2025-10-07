@@ -74,33 +74,6 @@ const aiMsg = await llm.invoke([
 console.log(aiMsg.content)
 ```
 
-## Chaining
-
-We can [chain](/oss/how-to/sequence) our model with a prompt template like so:
-
-```python
-import { ChatPromptTemplate } from "@langchain/core/prompts"
-
-const prompt = ChatPromptTemplate.fromMessages(
-  [
-    [
-      "system",
-      "You are a helpful assistant that translates {input_language} to {output_language}.",
-    ],
-    ["human", "{input}"],
-  ]
-)
-
-const chain = prompt.pipe(llm);
-await chain.invoke(
-  {
-    input_language: "English",
-    output_language: "German",
-    input: "I love programming.",
-  }
-)
-```
-
 ## API reference
 
 For detailed documentation of Novita AI LLM APIs, head to [Novita AI LLM API reference](https://novita.ai/docs/guides/llm-api?utm_source=github_langchain&utm_medium=github_readme&utm_campaign=link)

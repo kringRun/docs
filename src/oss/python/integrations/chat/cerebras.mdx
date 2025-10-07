@@ -104,43 +104,6 @@ ai_msg
 AIMessage(content='Je adore le programmation.', response_metadata={'token_usage': {'completion_tokens': 7, 'prompt_tokens': 35, 'total_tokens': 42}, 'model_name': 'llama3-8b-8192', 'system_fingerprint': 'fp_be27ec77ff', 'finish_reason': 'stop'}, id='run-e5d66faf-019c-4ac6-9265-71093b13202d-0', usage_metadata={'input_tokens': 35, 'output_tokens': 7, 'total_tokens': 42})
 ```
 
-## Chaining
-
-We can [chain](/oss/how-to/sequence/) our model with a prompt template like so:
-
-```python
-from langchain_cerebras import ChatCerebras
-from langchain_core.prompts import ChatPromptTemplate
-
-llm = ChatCerebras(
-    model="llama-3.3-70b",
-    # other params...
-)
-
-prompt = ChatPromptTemplate.from_messages(
-    [
-        (
-            "system",
-            "You are a helpful assistant that translates {input_language} to {output_language}.",
-        ),
-        ("human", "{input}"),
-    ]
-)
-
-chain = prompt | llm
-chain.invoke(
-    {
-        "input_language": "English",
-        "output_language": "German",
-        "input": "I love programming.",
-    }
-)
-```
-
-```output
-AIMessage(content='Ich liebe Programmieren!\n\n(Literally: I love programming!)', response_metadata={'token_usage': {'completion_tokens': 14, 'prompt_tokens': 30, 'total_tokens': 44}, 'model_name': 'llama3-8b-8192', 'system_fingerprint': 'fp_be27ec77ff', 'finish_reason': 'stop'}, id='run-e1d2ebb8-76d1-471b-9368-3b68d431f16a-0', usage_metadata={'input_tokens': 30, 'output_tokens': 14, 'total_tokens': 44})
-```
-
 ## Streaming
 
 ```python

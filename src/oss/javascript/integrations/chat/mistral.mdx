@@ -119,55 +119,6 @@ console.log(aiMsg.content)
 J'adore la programmation.
 ```
 
-## Chaining
-
-We can [chain](/oss/how-to/sequence/) our model with a prompt template like so:
-
-```typescript
-import { ChatPromptTemplate } from "@langchain/core/prompts"
-
-const prompt = ChatPromptTemplate.fromMessages(
-    [
-        [
-            "system",
-            "You are a helpful assistant that translates {input_language} to {output_language}.",
-        ],
-        ["human", "{input}"],
-    ]
-)
-
-const chain = prompt.pipe(llm);
-await chain.invoke(
-    {
-        input_language: "English",
-        output_language: "German",
-        input: "I love programming.",
-    }
-)
-```
-
-```output
-AIMessage {
-  "content": "Ich liebe Programmieren.",
-  "additional_kwargs": {},
-  "response_metadata": {
-    "tokenUsage": {
-      "completionTokens": 7,
-      "promptTokens": 21,
-      "totalTokens": 28
-    },
-    "finish_reason": "stop"
-  },
-  "tool_calls": [],
-  "invalid_tool_calls": [],
-  "usage_metadata": {
-    "input_tokens": 21,
-    "output_tokens": 7,
-    "total_tokens": 28
-  }
-}
-```
-
 ## Tool calling
 
 Mistral's API supports [tool calling](/oss/langchain/tools) for a subset of their models. You can see which models support tool calling [on this page](https://docs.mistral.ai/capabilities/function_calling/).

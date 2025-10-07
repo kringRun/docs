@@ -7,7 +7,7 @@ title: Bedrock
 ```{=mdx}
 
 <Warning>
-**You are currently on a page documenting the use of Amazon Bedrock models as [text completion models](/oss/concepts/text_llms). Many popular models available on Bedrock are [chat completion models](/oss/langchain/models).**
+**You are currently on a page documenting the use of Amazon Bedrock models as text completion models. Many popular models available on Bedrock are [chat completion models](/oss/langchain/models).**
 
 
 You may be looking for [this page instead](/oss/integrations/chat/bedrock/).
@@ -146,30 +146,6 @@ completion
 " Here are a few key points about Bedrock AI:\n" +
   "\n" +
   "- Bedrock was founded in 2021 and is based in San Fran"... 116 more characters
-```
-
-## Chaining
-
-We can [chain](/oss/how-to/sequence/) our completion model with a prompt template like so:
-
-```typescript
-import { PromptTemplate } from "@langchain/core/prompts"
-
-const prompt = PromptTemplate.fromTemplate("Human: How to say {input} in {output_language}:\nAssistant:")
-
-const chain = prompt.pipe(llm);
-await chain.invoke(
-  {
-    output_language: "German",
-    input: "I love programming.",
-  }
-)
-```
-
-```output
-' Here is how to say "I love programming" in German:\n' +
-  "\n" +
-  "Ich liebe das Programmieren."
 ```
 
 ## API reference

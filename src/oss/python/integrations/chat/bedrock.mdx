@@ -197,7 +197,7 @@ ai_msg.content_blocks
 
 ## Prompt caching
 
-Bedrock supports [caching](https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-caching.html) of elements of your prompts, including messages and tools. This allows you to re-use large documents, instructions, [few-shot documents](/oss/concepts/few_shot_prompting/), and other data to reduce latency and costs.
+Bedrock supports [caching](https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-caching.html) of elements of your prompts, including messages and tools. This allows you to re-use large documents, instructions, [few-shot documents](/langsmith/create-few-shot-evaluators), and other data to reduce latency and costs.
 
 <Note>
 **Not all models support prompt caching. See supported models [here](https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-caching.html#prompt-caching-models).**
@@ -329,37 +329,6 @@ response = llm.invoke(
 response.content_blocks
 ```
 </CodeGroup>
-
-## Chaining
-
-We can [chain](/oss/how-to/sequence/) our model with a prompt template like so:
-
-```python
-from langchain_core.prompts import ChatPromptTemplate
-
-prompt = ChatPromptTemplate.from_messages(
-    [
-        (
-            "system",
-            "You are a helpful assistant that translates {input_language} to {output_language}.",
-        ),
-        ("human", "{input}"),
-    ]
-)
-
-chain = prompt | llm
-chain.invoke(
-    {
-        "input_language": "English",
-        "output_language": "German",
-        "input": "I love programming.",
-    }
-)
-```
-
-```output
-AIMessage(content="Here's the German translation:\n\nIch liebe das Programmieren.", additional_kwargs={}, response_metadata={'ResponseMetadata': {'RequestId': '1de3d7c0-8062-4f7e-bb8a-8f725b97a8b0', 'HTTPStatusCode': 200, 'HTTPHeaders': {'date': 'Wed, 16 Apr 2025 19:32:51 GMT', 'content-type': 'application/json', 'content-length': '243', 'connection': 'keep-alive', 'x-amzn-requestid': '1de3d7c0-8062-4f7e-bb8a-8f725b97a8b0'}, 'RetryAttempts': 0}, 'stopReason': 'end_turn', 'metrics': {'latencyMs': [719]}, 'model_name': 'anthropic.claude-3-5-sonnet-20240620-v1:0'}, id='run-7021fcd7-704e-496b-a92e-210139614402-0', usage_metadata={'input_tokens': 23, 'output_tokens': 19, 'total_tokens': 42, 'input_token_details': {'cache_creation': 0, 'cache_read': 0}})
-```
 
 ## API reference
 

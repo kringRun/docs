@@ -262,15 +262,10 @@ async def reject_unhandled_requests(ctx: Auth.types.AuthContext, value: Any) -> 
 # Since this is **more specific** than the generic @auth.on handler, it will take precedence
 # over the generic handler for all actions on the "threads" resource
 @auth.on.threads
-async def on_thread_create(
+async def on_thread(
     ctx: Auth.types.AuthContext,
     value: Auth.types.threads.create.value
 ):
-    if "write" not in ctx.permissions:
-        raise Auth.exceptions.HTTPException(
-            status_code=403,
-            detail="User lacks the required permissions."
-        )
     # Setting metadata on the thread being created
     # will ensure that the resource contains an "owner" field
     # Then any time a user tries to access this thread or runs within the thread,
@@ -278,6 +273,7 @@ async def on_thread_create(
     metadata = value.setdefault("metadata", {})
     metadata["owner"] = ctx.user.identity
     return {"owner": ctx.user.identity}
+
 
 # Thread creation. This will match only on thread create actions
 # Since this is **more specific** than both the generic @auth.on handler and the @auth.on.threads handler,
@@ -287,6 +283,12 @@ async def on_thread_create(
     ctx: Auth.types.AuthContext,
     value: Auth.types.threads.create.value
 ):
+    # Reject if the user does not have write access
+    if "write" not in ctx.permissions:
+        raise Auth.exceptions.HTTPException(
+            status_code=403,
+            detail="User lacks the required permissions."
+        )
     # Setting metadata on the thread being created
     # will ensure that the resource contains an "owner" field
     # Then any time a user tries to access this thread or runs within the thread,

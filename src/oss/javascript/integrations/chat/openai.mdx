@@ -118,57 +118,6 @@ console.log(aiMsg.content)
 J'adore la programmation.
 ```
 
-## Chaining
-
-We can [chain](/oss/how-to/sequence/) our model with a prompt template like so:
-
-```typescript
-import { ChatPromptTemplate } from "@langchain/core/prompts"
-
-const prompt = ChatPromptTemplate.fromMessages(
-  [
-    [
-      "system",
-      "You are a helpful assistant that translates {input_language} to {output_language}.",
-    ],
-    ["human", "{input}"],
-  ]
-)
-
-const chain = prompt.pipe(llm);
-await chain.invoke(
-  {
-    input_language: "English",
-    output_language: "German",
-    input: "I love programming.",
-  }
-)
-```
-
-```output
-AIMessage {
-  "id": "chatcmpl-ADItFaWFNqkSjSmlxeGk6HxcBHzVN",
-  "content": "Ich liebe Programmieren.",
-  "additional_kwargs": {},
-  "response_metadata": {
-    "tokenUsage": {
-      "completionTokens": 5,
-      "promptTokens": 26,
-      "totalTokens": 31
-    },
-    "finish_reason": "stop",
-    "system_fingerprint": "fp_5796ac6771"
-  },
-  "tool_calls": [],
-  "invalid_tool_calls": [],
-  "usage_metadata": {
-    "input_tokens": 26,
-    "output_tokens": 5,
-    "total_tokens": 31
-  }
-}
-```
-
 ## Custom URLs
 
 You can customize the base URL the SDK sends requests to by passing a `configuration` parameter like this:
@@ -335,15 +284,7 @@ console.dir(responseMessageWithLogprobs.response_metadata.logprobs, { depth: nul
 }
 ```
 
-## Tool calling
-
-Tool calling with OpenAI models works in a similar to [other models](/oss/langchain/tools). Additionally, the following guides have some information especially relevant to OpenAI:
-
-- [How to: disable parallel tool calling](/oss/langchain/tools_parallel/)
-- [How to: force a tool call](/oss/how-to/tool_choice/)
-- [How to: bind model-specific tool formats to a model](/oss/langchain/tools#binding-model-specific-formats-advanced).
-
-### Custom Tools
+## Custom Tools
 
 [Custom tools](https://platform.openai.com/docs/guides/function-calling#custom-tools) support tools with arbitrary string inputs. They can be particularly useful when you expect your string arguments to be long or complex.
 
@@ -552,7 +493,7 @@ await structuredLlm.invoke([{
 <Warning>
 **Compatibility**
 
-The below points apply to `@langchain/openai>=0.4.5-rc.0`. Please see here for a [guide on upgrading](/oss/how-to/installation/#installing-integration-packages).
+The below points apply to `@langchain/openai>=0.4.5-rc.0`.
 
 </Warning>
 
@@ -816,7 +757,7 @@ const response = await llmWithImageGeneration.invoke(
 **Compatibility**
 
 
-The below points apply to `@langchain/openai>=0.4.0`. Please see here for a [guide on upgrading](/oss/how-to/installation/#installing-integration-packages).
+The below points apply to `@langchain/openai>=0.4.0`.
 
 </Warning>
 ```

@@ -133,71 +133,6 @@ Voici la traduction en français :
 J'adore la programmation.
 ```
 
-## Chaining
-
-We can [chain](/oss/how-to/sequence/) our model with a prompt template like so:
-
-```typescript
-import { ChatPromptTemplate } from "@langchain/core/prompts"
-
-const prompt = ChatPromptTemplate.fromMessages(
-    [
-        [
-            "system",
-            "You are a helpful assistant that translates {input_language} to {output_language}.",
-        ],
-        ["human", "{input}"],
-    ]
-)
-
-const chain = prompt.pipe(llm);
-await chain.invoke(
-    {
-        input_language: "English",
-        output_language: "German",
-        input: "I love programming.",
-    }
-)
-```
-
-```output
-AIMessage {
-  "id": "msg_01Ca52fpd1mcGRhH4spzAWr4",
-  "content": "Ich liebe das Programmieren.",
-  "additional_kwargs": {
-    "id": "msg_01Ca52fpd1mcGRhH4spzAWr4",
-    "type": "message",
-    "role": "assistant",
-    "model": "claude-3-haiku-20240307",
-    "stop_reason": "end_turn",
-    "stop_sequence": null,
-    "usage": {
-      "input_tokens": 23,
-      "output_tokens": 11
-    }
-  },
-  "response_metadata": {
-    "id": "msg_01Ca52fpd1mcGRhH4spzAWr4",
-    "model": "claude-3-haiku-20240307",
-    "stop_reason": "end_turn",
-    "stop_sequence": null,
-    "usage": {
-      "input_tokens": 23,
-      "output_tokens": 11
-    },
-    "type": "message",
-    "role": "assistant"
-  },
-  "tool_calls": [],
-  "invalid_tool_calls": [],
-  "usage_metadata": {
-    "input_tokens": 23,
-    "output_tokens": 11,
-    "total_tokens": 34
-  }
-}
-```
-
 ## Content blocks
 
 One key difference to note between Anthropic models and most others is that the contents of a single Anthropic AI message can either be a single string or a **list of content blocks**. For example when an Anthropic model [calls a tool](/oss/langchain/tools), the tool invocation is part of the message content (as well as being exposed in the standardized `AIMessage.tool_calls` field):
@@ -990,7 +925,7 @@ Learn more about tool calling [here](https://js.langchain.com/docs/how_to/tool_c
 
 ### Using with text splitters
 
-Anthropic also lets you specify your own splits using [custom document](https://docs.anthropic.com/en/docs/build-with-claude/citations#custom-content-documents) types. LangChain [text splitters](/oss/concepts/text_splitters/) can be used to generate meaningful splits for this purpose. See the below example, where we split the LangChain.js README (a markdown document) and pass it to Claude as context:
+Anthropic also lets you specify your own splits using [custom document](https://docs.anthropic.com/en/docs/build-with-claude/citations#custom-content-documents) types. LangChain text splitters can be used to generate meaningful splits for this purpose. See the below example, where we split the LangChain.js README (a markdown document) and pass it to Claude as context:
 
 ```typescript
 import { ChatAnthropic } from "@langchain/anthropic";
@@ -1060,6 +995,32 @@ console.log(JSON.stringify(resWithSplits.content, null, 2));
     ]
   }
 ]
+```
+
+## Context management
+
+Anthropic supports a context editing feature that will automatically manage the model's context window (e.g., by clearing tool results).
+
+See [Anthropic documentation](https://docs.claude.com/en/docs/build-with-claude/context-editing) for details and configuration options.
+
+<Info>
+    **Context management is supported since `@langchain/anthropic@0.3.29`**
+</Info>
+
+```typescript
+import { ChatAnthropic } from "@langchain/anthropic";
+
+const llm = new ChatAnthropic({
+  model: "claude-sonnet-4-5-20250929",
+  clientOptions: {
+    defaultHeaders: {
+      "anthropic-beta": "context-management-2025-06-27",
+    },
+  },
+  contextManagement: { edits: [{ type: "clear_tool_uses_20250919" }] },
+)
+const llmWithTools = llm.bindTools([{ type: "web_search_20250305", name: "web_search" }]);
+const response = await llmWithTools.invoke("Search for recent developments in AI");
 ```
 
 ## API reference

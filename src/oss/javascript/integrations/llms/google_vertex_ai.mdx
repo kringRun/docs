@@ -5,7 +5,7 @@ title: Google Vertex AI
 ```{=mdx}
 
 <Warning>
-**You are currently on a page documenting the use of Google Vertex models as [text completion models](/oss/concepts/text_llms). Many popular models available on Google Vertex are [chat completion models](/oss/langchain/models).**
+**You are currently on a page documenting the use of Google Vertex models as text completion models. Many popular models available on Google Vertex are [chat completion models](/oss/langchain/models).**
 
 
 You may be looking for [this page instead](/oss/integrations/chat/google_vertex_ai/).
@@ -128,43 +128,6 @@ completion
 
 ```txt
 offers a wide range of cloud computing services and artificial intelligence solutions to businesses and developers worldwide.
-```
-
-## Chaining
-
-We can [chain](/oss/how-to/sequence/) our completion model with a prompt template like so:
-
-```typescript
-import { PromptTemplate } from "@langchain/core/prompts"
-
-const prompt = PromptTemplate.fromTemplate("How to say {input} in {output_language}:\n")
-
-const chain = prompt.pipe(llm);
-await chain.invoke(
-  {
-    output_language: "German",
-    input: "I love programming.",
-  }
-)
-```
-
-```txt
-"Ich liebe Programmieren."
-Pronunciation guide:
-
-Ich: [ɪç] (similar to "ikh" with a soft "ch" sound)
-liebe: [ˈliːbə] (LEE-buh)
-Programmieren: [pʁoɡʁaˈmiːʁən] (pro-gra-MEE-ren)
-
-You could also say:
-"Ich liebe es zu programmieren."
-Which translates more literally to "I love to program." This version is a bit more formal or precise.
-Pronunciation:
-
-es: [ɛs] (like the letter "S")
-zu: [tsuː] (tsoo)
-
-Both versions are correct and commonly used.
 ```
 
 ## API reference

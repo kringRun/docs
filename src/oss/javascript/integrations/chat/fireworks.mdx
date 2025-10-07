@@ -117,61 +117,6 @@ console.log(aiMsg.content)
 J'adore la programmation.
 ```
 
-## Chaining
-
-We can [chain](/oss/how-to/sequence/) our model with a prompt template like so:
-
-```typescript
-import { ChatPromptTemplate } from "@langchain/core/prompts"
-
-const prompt = ChatPromptTemplate.fromMessages(
-    [
-        [
-            "system",
-            "You are a helpful assistant that translates {input_language} to {output_language}.",
-        ],
-        ["human", "{input}"],
-    ]
-)
-
-const chain = prompt.pipe(llm);
-await chain.invoke(
-    {
-        input_language: "English",
-        output_language: "German",
-        input: "I love programming.",
-    }
-)
-```
-
-```output
-AIMessage {
-  "id": "chatcmpl-9rBYM3KSIhHOuTXpBvA5oFyk8RSaN",
-  "content": "Ich liebe das Programmieren.",
-  "additional_kwargs": {},
-  "response_metadata": {
-    "tokenUsage": {
-      "completionTokens": 6,
-      "promptTokens": 26,
-      "totalTokens": 32
-    },
-    "finish_reason": "stop"
-  },
-  "tool_calls": [],
-  "invalid_tool_calls": [],
-  "usage_metadata": {
-    "input_tokens": 26,
-    "output_tokens": 6,
-    "total_tokens": 32
-  }
-}
-```
-
-Behind the scenes, Fireworks AI uses the OpenAI SDK and OpenAI compatible API, with some caveats:
-
-- Certain properties are not supported by the Fireworks API, see [here](https://readme.fireworks.ai/docs/openai-compatibility#api-compatibility).
-- Generation using multiple prompts is not supported.
-
 ## API reference
 
 For detailed documentation of all ChatFireworks features and configurations head to the [API reference](https://api.js.langchain.com/classes/langchain_community_chat_models_fireworks.ChatFireworks.html).

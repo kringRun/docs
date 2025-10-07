@@ -23,7 +23,7 @@ The Hybrid deployment option requires an [Enterprise](/langgraph-platform/plans)
       helm repo add kedacore https://kedacore.github.io/charts
       helm install keda kedacore/keda --namespace keda --create-namespace
     ```
-2. A valid `Ingress` controller is installed on your cluster.
+2. A valid `Ingress` controller is installed on your cluster. For more information about configuring ingress for your deployment, refer to [Create an ingress for installations](/langsmith/self-host-ingress).
 3. You have slack space in your cluster for multiple deployments. `Cluster-Autoscaler` is recommended to automatically provision new nodes.
 4. You will need to enable egress to two control plane URLs. The listener polls these endpoints for deployments:
     - https://api.host.langchain.com

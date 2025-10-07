@@ -41,7 +41,7 @@ AIMessage(content='', additional_kwargs={'tool_calls': [{'function': {'name': 'P
 
 ## Structured Output
 
-`ChatAnthropicTools` also implements the [`with_structured_output` spec](/oss/how-to/structured_output) for extracting values. Note: this may not be as stable as with models that explicitly offer tool calling.
+`ChatAnthropicTools` also implements the [`with_structured_output` spec](/oss/langchain/structured-output) for extracting values. Note: this may not be as stable as with models that explicitly offer tool calling.
 
 ```python
 chain = ChatAnthropicTools(model="claude-3-opus-20240229").with_structured_output(

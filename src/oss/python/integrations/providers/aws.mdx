@@ -340,29 +340,6 @@ uv add boto3
 
 See a [usage example](/oss/integrations/tools/awslambda).
 
-## Memory
-
-### AWS DynamoDB
-
->[AWS DynamoDB](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/dynamodb/index.html)
-> is a fully managed `NoSQL` database service that provides fast and predictable performance with seamless scalability.
-
-We have to configure the [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html).
-
-We need to install the `boto3` library.
-
-<CodeGroup>
-```bash pip
-pip install boto3
-```
-
-```bash uv
-uv add boto3
-```
-</CodeGroup>
-
-See a [usage example](/oss/integrations/memory/aws_dynamodb).
-
 ```python
 from langchain_community.chat_message_histories import DynamoDBChatMessageHistory
 ```
@@ -398,7 +375,6 @@ from langchain_aws.chains import create_neptune_opencypher_qa_chain
 
 ### Amazon Neptune with SPARQL
 
-See a [usage example](/oss/integrations/graphs/amazon_neptune_sparql).
 
 ```python
 from langchain_aws.graphs import NeptuneRdfGraph

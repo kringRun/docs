@@ -94,27 +94,6 @@ human_message = "I love programming."
 llm.invoke([HumanMessage(content=human_message), SystemMessage(content=system_message)])
 ```
 
-## Chaining
-
-We can [chain](/oss/how-to/sequence/) our model with a prompt template like so:
-
-```python
-from langchain.prompts import PromptTemplate
-from langchain_xinference.chat_models import ChatXinference
-
-prompt = PromptTemplate(
-    input=["country"], template="Q: where can we visit in the capital of {country}? A:"
-)
-
-llm = ChatXinference(
-    server_url="your_server_url", model_uid="7167b2b0-2a04-11ee-83f0-d29396a3f064"
-)
-
-chain = prompt | llm
-chain.invoke(input={"country": "France"})
-chain.stream(input={"country": "France"})
-```
-
 ## API reference
 
 For detailed documentation of all ChatXinference features and configurations head to the API reference: [github.com/TheSongg/langchain-xinference](https://github.com/TheSongg/langchain-xinference)

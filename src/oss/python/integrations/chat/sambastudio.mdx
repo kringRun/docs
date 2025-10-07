@@ -108,38 +108,6 @@ print(ai_msg.content)
 J'adore la programmation.
 ```
 
-## Chaining
-
-We can [chain](/oss/how-to/sequence/) our model with a prompt template like so:
-
-```python
-from langchain_core.prompts import ChatPromptTemplate
-
-prompt = ChatPromptTemplate(
-    [
-        (
-            "system",
-            "You are a helpful assistant that translates {input_language} "
-            "to {output_language}.",
-        ),
-        ("human", "{input}"),
-    ]
-)
-
-chain = prompt | llm
-chain.invoke(
-    {
-        "input_language": "English",
-        "output_language": "German",
-        "input": "I love programming.",
-    }
-)
-```
-
-```output
-AIMessage(content='Ich liebe das Programmieren.', response_metadata={'id': 'item0', 'partial': False, 'value': {'completion': 'Ich liebe das Programmieren.', 'logprobs': {'text_offset': [], 'top_logprobs': []}, 'prompt': '<|start_header_id|>system<|end_header_id|>\n\nYou are a helpful assistant that translates English to German.<|eot_id|><|start_header_id|>user<|end_header_id|>\n\nI love programming.<|eot_id|><|start_header_id|>assistant<|end_header_id|>\n\n', 'stop_reason': 'end_of_text', 'tokens': ['Ich', ' liebe', ' das', ' Programm', 'ieren', '.'], 'total_tokens_count': 36}, 'params': {}, 'status': None}, id='item0')
-```
-
 ## Streaming
 
 ```python

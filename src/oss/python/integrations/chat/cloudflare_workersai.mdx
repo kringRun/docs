@@ -99,37 +99,6 @@ print(ai_msg.content)
 J'adore la programmation.
 ```
 
-## Chaining
-
-We can [chain](/oss/how-to/sequence/) our model with a prompt template like so:
-
-```python
-from langchain_core.prompts import ChatPromptTemplate
-
-prompt = ChatPromptTemplate(
-    [
-        (
-            "system",
-            "You are a helpful assistant that translates {input_language} to {output_language}.",
-        ),
-        ("human", "{input}"),
-    ]
-)
-
-chain = prompt | llm
-chain.invoke(
-    {
-        "input_language": "English",
-        "output_language": "German",
-        "input": "I love programming.",
-    }
-)
-```
-
-```output
-AIMessage(content='Ich liebe das Programmieren.', additional_kwargs={}, response_metadata={'token_usage': {'prompt_tokens': 32, 'completion_tokens': 7, 'total_tokens': 39}, 'model_name': '@cf/meta/llama-3.3-70b-instruct-fp8-fast'}, id='run-d1b677bc-194e-4473-90f1-aa65e8e46d50-0', usage_metadata={'input_tokens': 32, 'output_tokens': 7, 'total_tokens': 39})
-```
-
 ## Structured Outputs
 
 ```python

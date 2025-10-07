@@ -1,4 +1,4 @@
-.PHONY: dev build format lint test install clean lint_md lint_md_fix mint-broken-links mint-broken-links-all build-references preview-references format-check
+.PHONY: dev build format lint test install clean lint_md lint_md_fix broken-links build-references preview-references format-check
 
 dev:
 	@echo "Starting development mode..."
@@ -64,19 +64,15 @@ clean:
 
 # Mintlify commands (run from build directory where final docs are generated)
 # Note: mint must be installed globally via npm
-mint-broken-links: build
-	@echo "Checking for broken links (excluding integrations directories)..."
+broken-links: build
+	@echo "Checking for broken links..."
 	@command -v mint >/dev/null 2>&1 || { echo "Error: mint is not installed. Run 'npm install -g mint@4.2.126'"; exit 1; }
-	@cd build && mint broken-links 2>&1 | python3 ../scripts/filter_broken_links.py --exclude-integrations
-
-mint-broken-links-all: build
-	@echo "Checking for broken links (including all directories)..."
-	@command -v mint >/dev/null 2>&1 || { echo "Error: mint is not installed. Run 'npm install -g mint@4.2.126'"; exit 1; }
-	@cd build && mint broken-links 2>&1 | python3 ../scripts/filter_broken_links.py
+	@cd build && mint broken-links
 
 check-pnpm:
 	@command -v pnpm >/dev/null 2>&1 || { echo >&2 "pnpm is not installed. Please install pnpm to proceed (https://pnpm.io/installation)"; exit 1; }
 
+# Reference docs commands (in reference/ subdirectory)
 build-references: check-pnpm
 	@echo "Building references..."
 	cd reference && pnpm i && pnpm build
@@ -87,17 +83,16 @@ preview-references: check-pnpm
 
 help:
 	@echo "Available commands:"
-	@echo "  make dev             - Start development mode with file watching and mint dev"
-	@echo "  make build           - Build documentation to ./build directory"
-	@echo "  make mint-broken-links - Check for broken links in built documentation (excludes integrations)"
-	@echo "  make mint-broken-links-all - Check for broken links in built documentation (includes all directories)"
-	@echo "  make build-references  - Build reference docs"
+	@echo "  make dev                - Start development mode with file watching and mint dev"
+	@echo "  make build              - Build documentation to ./build directory"
+	@echo "  make broken-links       - Check for broken links in built documentation"
+	@echo "  make build-references   - Build reference docs"
 	@echo "  make preview-references - Preview reference docs"
-	@echo "  make format          - Format code"
-	@echo "  make lint            - Lint code"
-	@echo "  make lint_md         - Lint markdown files"
-	@echo "  make lint_md_fix     - Lint and fix markdown files"
-	@echo "  make test            - Run tests"
-	@echo "  make install         - Install dependencies"
-	@echo "  make clean           - Clean build artifacts"
-	@echo "  make help            - Show this help message"
+	@echo "  make format             - Format code"
+	@echo "  make lint               - Lint code"
+	@echo "  make lint_md            - Lint markdown files"
+	@echo "  make lint_md_fix        - Lint and fix markdown files"
+	@echo "  make test               - Run tests"
+	@echo "  make install            - Install dependencies"
+	@echo "  make clean              - Clean build artifacts"
+	@echo "  make help               - Show this help message"

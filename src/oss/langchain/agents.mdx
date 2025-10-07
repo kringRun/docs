@@ -473,16 +473,17 @@ Dynamic system prompt is especially useful for personalizing prompts based on us
 
 :::python
 ```python wrap
-from langchain.agents import create_agent, AgentState
-from langchain.agents.middleware.types import modify_model_request
-from langgraph.runtime import Runtime
 from typing import TypedDict
+
+from langchain.agents import create_agent
+from langchain.agents.middleware.types import modify_model_request, AgentState, ModelRequest
+from langgraph.runtime import Runtime
 
 class Context(TypedDict):
     user_role: str
 
 @modify_model_request
-def dynamic_system_prompt(state: AgentState, request: ModelRequest, runtime: Runtime[Context]) -> ModelRequest:
+def dynamic_system_prompt(request: ModelRequest, state: AgentState, runtime: Runtime[Context]) -> ModelRequest:
     user_role = runtime.context.get("user_role", "user")
     base_prompt = "You are a helpful assistant."
 
@@ -498,14 +499,15 @@ def dynamic_system_prompt(state: AgentState, request: ModelRequest, runtime: Run
 
 agent = create_agent(
     model="openai:gpt-4o",
-    tools=tools,
+    tools=[web_search],
     middleware=[dynamic_system_prompt],
+    context_schema=Context
 )
 
 # The system prompt will be set dynamically based on context
 result = agent.invoke(
     {"messages": [{"role": "user", "content": "Explain machine learning"}]},
-    {"context": {"user_role": "expert"}}
+    context={"user_role": "expert"}
 )
 ```
 :::
@@ -734,7 +736,7 @@ const agent = createAgent({
     model: "openai:gpt-4o",
     preModelHook: (state) => {
         return {
-        messages: [RemoveMessage({ id: REMOVE_ALL_MESSAGES }), ...state.messages],
+            messages: [RemoveMessage({ id: REMOVE_ALL_MESSAGES }), ...state.messages],
         };
     },
 });
@@ -776,6 +778,8 @@ agent = create_agent(
 :::js
 ```ts wrap
 import { createAgent, type AgentState } from "langchain";
+import { REMOVE_ALL_MESSAGES } from "@langchain/langgraph";
+import { RemoveMessage } from "@langchain/core/messages";
 
 const trimMessages = (state: AgentState) => {
     const messages = state.messages;
@@ -790,7 +794,13 @@ const trimMessages = (state: AgentState) => {
         : messages.slice(-4);
 
     const newMessages = [firstMsg, ...recentMessages];
-    return { messages: newMessages };
+
+    return {
+        messages: [
+            new RemoveMessage({ id: REMOVE_ALL_MESSAGES }),
+            ...newMessages
+        ]
+    };
 };
 
 const agent = createAgent({
@@ -811,7 +821,7 @@ If you are returning `messages` in the pre-model hook, you should OVERWRITE the 
 :::python
 ```python wrap
 {
-"messages": [RemoveMessage(id=REMOVE_ALL_MESSAGES), *new_messages]
+    "messages": [RemoveMessage(id=REMOVE_ALL_MESSAGES), *new_messages]
 ...
 }
 ```
@@ -826,10 +836,10 @@ const agent = createAgent({
     preModelHook: (state) => {
         // ...
         return {
-        messages: [
-            RemoveMessage({ id: REMOVE_ALL_MESSAGES }),
-            ...state.messages
-        ],
+            messages: [
+                RemoveMessage({ id: REMOVE_ALL_MESSAGES }),
+                ...state.messages
+            ],
         };
     };
 });

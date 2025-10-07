@@ -102,37 +102,6 @@ J'aime programmer.
 Note that "Je suis amoureux" typically implies romantic love, whereas "J'aime" is a more casual way to express affection or enjoyment for an activity, in this case, programming.
 ```
 
-## Chaining
-
-We can [chain](/oss/how-to/sequence/) our model with a prompt template like so:
-
-```python
-from langchain_core.prompts import ChatPromptTemplate
-
-prompt = ChatPromptTemplate(
-    [
-        (
-            "system",
-            "You are a helpful assistant that translates {input_language} to {output_language}.",
-        ),
-        ("human", "{input}"),
-    ]
-)
-
-chain = prompt | llm
-chain.invoke(
-    {
-        "input_language": "English",
-        "output_language": "German",
-        "input": "I love programming.",
-    }
-)
-```
-
-```output
-AIMessage(content="Das ist schön! Du liebst Programmieren! (That's great! You love programming!)\n\nWould you like to know the German translation of a specific programming-related term or phrase, or would you like me to help you with something else?", additional_kwargs={}, response_metadata={}, id='run-8a4b7d56-23d9-43a7-8fb2-e05f556d94bd-0')
-```
-
 ## API reference
 
 For detailed documentation of all ChatPipeshift features and configurations head to the API reference: [dashboard.pipeshift.com/docs](https://dashboard.pipeshift.com/docs)
