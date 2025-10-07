@@ -147,7 +147,7 @@ LINK_MAPS: list[LinkMap] = [
             "Document": "core/documents/langchain_core.documents.base.Document.html",
             "init_chat_model": "langchain/chat_models/langchain.chat_models.base.init_chat_model.html",
             "RunnableConfig": "core/runnables/langchain_core.runnables.config.RunnableConfig.html",
-            "@tool": "core/tools/langchain_core.tools.base.tool.html#langchain_core.tools.convert.tool.html",
+            "@tool": "core/tools/langchain_core.tools.convert.tool.html",
             "Embeddings": "core/embeddings/langchain_core.embeddings.embeddings.Embeddings.html",
         },
     },
