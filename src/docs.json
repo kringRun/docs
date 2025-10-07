@@ -140,7 +140,6 @@
                 "tab": "LangChain",
                 "pages": [
                   "oss/python/langchain/overview",
-                  "oss/python/releases/langchain-v1",
                   {
                     "group": "Get started",
                     "pages": [
@@ -346,7 +345,8 @@
               },
               {
                 "tab": "Reference",
-                "groups": [
+                "pages": [
+                  "oss/python/reference/overview",
                   {
                     "group": "LangChain",
                     "pages": [
@@ -363,12 +363,17 @@
                     "group": "Error troubleshooting",
                     "pages": [
                       "oss/python/langgraph/common-errors",
-                      "oss/python/langgraph/GRAPH_RECURSION_LIMIT",
-                      "oss/python/langgraph/INVALID_CHAT_HISTORY",
-                      "oss/python/langgraph/INVALID_CONCURRENT_GRAPH_UPDATE",
-                      "oss/python/langgraph/INVALID_GRAPH_NODE_RETURN_VALUE",
-                      "oss/python/langgraph/MULTIPLE_SUBGRAPHS",
-                      "oss/python/langgraph/MISSING_CHECKPOINTER"
+                      {
+                        "group": "Errors",
+                        "pages": [
+                          "oss/python/langgraph/GRAPH_RECURSION_LIMIT",
+                          "oss/python/langgraph/INVALID_CHAT_HISTORY",
+                          "oss/python/langgraph/INVALID_CONCURRENT_GRAPH_UPDATE",
+                          "oss/python/langgraph/INVALID_GRAPH_NODE_RETURN_VALUE",
+                          "oss/python/langgraph/MULTIPLE_SUBGRAPHS",
+                          "oss/python/langgraph/MISSING_CHECKPOINTER"
+                        ]
+                      }
                     ]
                   },
                   {
@@ -1153,7 +1158,6 @@
                 "tab": "LangChain",
                 "pages": [
                   "oss/javascript/langchain/overview",
-                  "oss/javascript/releases/langchain-v1",
                   {
                     "group": "Get started",
                     "pages": [
@@ -1382,7 +1386,8 @@
               },
               {
                 "tab": "Reference",
-                "groups": [
+                "pages": [
+                  "oss/python/reference/overview",
                   {
                     "group": "LangChain ",
                     "pages": [
@@ -1399,12 +1404,17 @@
                     "group": "Error troubleshooting",
                     "pages": [
                       "oss/javascript/langgraph/common-errors",
-                      "oss/javascript/langgraph/GRAPH_RECURSION_LIMIT",
-                      "oss/javascript/langgraph/INVALID_CHAT_HISTORY",
-                      "oss/javascript/langgraph/INVALID_CONCURRENT_GRAPH_UPDATE",
-                      "oss/javascript/langgraph/INVALID_GRAPH_NODE_RETURN_VALUE",
-                      "oss/javascript/langgraph/MULTIPLE_SUBGRAPHS",
-                      "oss/javascript/langgraph/MISSING_CHECKPOINTER"
+                      {
+                        "group": "Errors",
+                        "pages": [
+                          "oss/javascript/langgraph/GRAPH_RECURSION_LIMIT",
+                          "oss/javascript/langgraph/INVALID_CHAT_HISTORY",
+                          "oss/javascript/langgraph/INVALID_CONCURRENT_GRAPH_UPDATE",
+                          "oss/javascript/langgraph/INVALID_GRAPH_NODE_RETURN_VALUE",
+                          "oss/javascript/langgraph/MULTIPLE_SUBGRAPHS",
+                          "oss/javascript/langgraph/MISSING_CHECKPOINTER"
+                        ]
+                      }
                     ]
                   },
                   {
