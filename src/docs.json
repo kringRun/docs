@@ -348,19 +348,6 @@
                 "tab": "Reference",
                 "groups": [
                   {
-                    "group": "Release versions",
-                    "pages": [
-                      "oss/python/versioning",
-                      "oss/python/release-policy",
-                      {
-                        "group": "Releases",
-                        "pages": [
-                          "oss/python/releases/langchain-v1"
-                        ]
-                      }
-                    ]
-                  },
-                  {
                     "group": "LangChain",
                     "pages": [
                       "oss/python/reference/langchain-python"
@@ -382,6 +369,19 @@
                       "oss/python/langgraph/INVALID_GRAPH_NODE_RETURN_VALUE",
                       "oss/python/langgraph/MULTIPLE_SUBGRAPHS",
                       "oss/python/langgraph/MISSING_CHECKPOINTER"
+                    ]
+                  },
+                  {
+                    "group": "Release versions",
+                    "pages": [
+                      "oss/python/versioning",
+                      "oss/python/release-policy",
+                      {
+                        "group": "Releases",
+                        "pages": [
+                          "oss/python/releases/langchain-v1"
+                        ]
+                      }
                     ]
                   }
                 ]
@@ -1384,19 +1384,6 @@
                 "tab": "Reference",
                 "groups": [
                   {
-                    "group": "Release versions",
-                    "pages": [
-                      "oss/javascript/versioning",
-                      "oss/javascript/release-policy",
-                      {
-                        "group": "Releases",
-                        "pages": [
-                          "oss/javascript/releases/langchain-v1"
-                        ]
-                      }
-                    ]
-                  },
-                  {
                     "group": "LangChain ",
                     "pages": [
                       "oss/javascript/reference/langchain-javascript"
@@ -1418,6 +1405,19 @@
                       "oss/javascript/langgraph/INVALID_GRAPH_NODE_RETURN_VALUE",
                       "oss/javascript/langgraph/MULTIPLE_SUBGRAPHS",
                       "oss/javascript/langgraph/MISSING_CHECKPOINTER"
+                    ]
+                  },
+                  {
+                    "group": "Release versions",
+                    "pages": [
+                      "oss/javascript/versioning",
+                      "oss/javascript/release-policy",
+                      {
+                        "group": "Releases",
+                        "pages": [
+                          "oss/javascript/releases/langchain-v1"
+                        ]
+                      }
                     ]
                   }
                 ]
