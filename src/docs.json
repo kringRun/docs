@@ -109,7 +109,7 @@
     "/hide-version-picker.css"
   ],
   "banner": {
-    "content": "Our new LangChain Academy course on Deep Agents is now live! [Enroll for free](https://academy.langchain.com/courses/deep-agents-with-langgraph/?utm_medium=internal&utm_source=docs&utm_campaign=q3-2025_deep-agents-course_co).",
+    "content": "LangGraph Platform is now part of LangSmith Platform. Check out the [LangSmith Platform docs](/langsmith/home) for more information.",
     "dismissible": true
   },
   "navbar": {
@@ -649,7 +649,7 @@
                       "langsmith/export-traces",
                       "langsmith/compare-traces",
                       "langsmith/share-trace",
-                      "langsmith/langgraph-platform-logs",
+                      "langsmith/platform-logs",
                       "langsmith/data-export"
                     ]
                   },
@@ -871,13 +871,13 @@
                         ]
                       },
                       {
-                        "group": "Studio",
+                        "group": "Debugger",
                         "pages": [
-                          "langsmith/quick-start-studio",
-                          "langsmith/langgraph-studio",
-                          "langsmith/use-studio",
-                          "langsmith/observability-studio",
-                          "langsmith/troubleshooting-studio"
+                          "langsmith/debugger",
+                          "langsmith/quick-start-debugger",
+                          "langsmith/use-debugger",
+                          "langsmith/observability-debugger",
+                          "langsmith/troubleshooting-debugger"
                         ]
                       },
                       {
@@ -1661,7 +1661,7 @@
                       "langsmith/export-traces",
                       "langsmith/compare-traces",
                       "langsmith/share-trace",
-                      "langsmith/langgraph-platform-logs",
+                      "langsmith/platform-logs",
                       "langsmith/data-export"
                     ]
                   },
@@ -1872,24 +1872,24 @@
                             "pages": [
                               "langsmith/setup-app-requirements-txt",
                               "langsmith/setup-pyproject",
-                              "langsmith/setup-javascript"
+                              "langsmith/setup-javascript",
+                              "langsmith/monorepo-support"
                             ]
                           },
                           "langsmith/graph-rebuild",
                           "langsmith/use-remote-graph",
-                          "langsmith/monorepo-support",
                           "langsmith/semantic-search",
                           "langsmith/configure-ttl"
                         ]
                       },
                       {
-                        "group": "Studio",
+                        "group": "Debugger",
                         "pages": [
-                          "langsmith/quick-start-studio",
-                          "langsmith/langgraph-studio",
-                          "langsmith/use-studio",
-                          "langsmith/observability-studio",
-                          "langsmith/troubleshooting-studio"
+                          "langsmith/debugger",
+                          "langsmith/quick-start-debugger",
+                          "langsmith/use-debugger",
+                          "langsmith/observability-debugger",
+                          "langsmith/troubleshooting-debugger"
                         ]
                       },
                       {

@@ -654,10 +654,10 @@ The agent correctly wrote a query, checked the query, and ran it to inform its f
 </Note>
 :::
 
-#### (Optional) Use Studio
+#### (Optional) Use the Debugger
 
-[Studio](/langsmith/langgraph-studio) provides a "client side" loop as well as memory so you can run this as a chat interface and query the database. You can ask questions like "Tell me the scheme of the database" or "Show me the invoices for the 5 top customers". You will see the SQL command that is generated and the resulting output. The details of how to get that started are below.
-<Accordion title="Run your agent in Studio">
+The [Debugger](/langsmith/debugger) provides a "client side" loop as well as memory so you can run this as a chat interface and query the database. You can ask questions like "Tell me the scheme of the database" or "Show me the invoices for the 5 top customers". You will see the SQL command that is generated and the resulting output. The details of how to get that started are below.
+<Accordion title="Run your agent in the Debugger">
 
 In addition to the previously mentioned packages, you will need to:
 
@@ -703,7 +703,7 @@ In directory you will run in, you will need a `langgraph.json` file with the fol
 Create a file `sql_agent.py` and insert this:
 
 ```python
-#sql_agent.py for studio
+#sql_agent.py for debugger
 from langchain.agents import create_agent
 from langchain_core.messages import SystemMessage
 
