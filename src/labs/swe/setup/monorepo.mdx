@@ -125,7 +125,7 @@ The `apps/open-swe` package includes a critical `postinstall` hook:
 ```
 
 <Note>
-  This postinstall hook is **required** for LangSmith Platform deployment. Since
+  This postinstall hook is **required** for LangSmith deployment. Since
   Open SWE is a monorepo and the agent requires access to built files from the
   shared package, we must run the build process before starting the LangGraph
   server.
@@ -133,7 +133,7 @@ The `apps/open-swe` package includes a critical `postinstall` hook:
 
 ### Why This Matters
 
-1. **Deployment Compatibility**: The LangSmith Platform needs all dependencies built and available
+1. **Deployment Compatibility**: LangSmith needs all dependencies built and available
 2. **Shared Package Access**: The agent imports utilities from `@openswe/shared` which must be compiled
 3. **Build Order**: Ensures the shared package is built before the agent attempts to use it
 

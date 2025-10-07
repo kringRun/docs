@@ -5,7 +5,7 @@ sidebarTitle: With pyproject.toml
 
 import FrameworkAgnostic from '/snippets/langsmith/framework-agnostic.mdx';
 
-An application must be configured with a [configuration file](/langsmith/cli#configuration-file) in order to be deployed to LangSmith Platform (or to be self-hosted). This how-to guide discusses the basic steps to set up an application for deployment using `pyproject.toml` to define your package's dependencies.
+An application must be configured with a [configuration file](/langsmith/cli#configuration-file) in order to be deployed to LangSmith (or to be self-hosted). This how-to guide discusses the basic steps to set up an application for deployment using `pyproject.toml` to define your package's dependencies.
 
 This example is based on [this repository](https://github.com/langchain-ai/langgraph-example-pyproject), which uses the LangGraph framework.
 
@@ -31,7 +31,7 @@ my-app/
 
 You can also set up with:
 
-- `requirements.txt`: for dependency management, check out [this how-to guide](/langsmith/setup-app-requirements-txt) on using `requirements.txt` for LangSmith Platform.
+- `requirements.txt`: for dependency management, check out [this how-to guide](/langsmith/setup-app-requirements-txt) on using `requirements.txt` for LangSmith.
 - a monorepo: To deploy a graph located inside a monorepo, take a look at [this repository](https://github.com/langchain-ai/langgraph-example-monorepo) for an example of how to do so.
 
 After each step, an example file directory is provided to demonstrate how code can be organized.
@@ -70,7 +70,7 @@ build-backend = "hatchling.build"
 [project]
 name = "my-agent"
 version = "0.0.1"
-description = "An excellent agent build for LangSmith Platform."
+description = "An excellent agent build for LangSmith."
 authors = [
     {name = "Polly the parrot", email = "1223+polly@users.noreply.github.com"}
 ]

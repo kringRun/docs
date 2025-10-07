@@ -5,7 +5,7 @@ sidebarTitle: With requirements.txt
 
 import FrameworkAgnostic from '/snippets/langsmith/framework-agnostic.mdx';
 
-An application must be configured with a [configuration file](/langsmith/cli#configuration-file) in order to be deployed to LangSmith Platform (or to be self-hosted). This how-to guide discusses the basic steps to set up an application for deployment using `requirements.txt` to specify project dependencies.
+An application must be configured with a [configuration file](/langsmith/cli#configuration-file) in order to be deployed to LangSmith (or to be self-hosted). This how-to guide discusses the basic steps to set up an application for deployment using `requirements.txt` to specify project dependencies.
 
 This example is based on [this repository](https://github.com/langchain-ai/langgraph-example), which uses the LangGraph framework.
 
@@ -32,7 +32,7 @@ my-app/
 
 You can also set up with:
 
-- `pyproject.toml`: If you prefer using poetry for dependency management, check out [this how-to guide](/langsmith/setup-app-requirements-txt) on using `pyproject.toml` for LangSmith Platform.
+- `pyproject.toml`: If you prefer using poetry for dependency management, check out [this how-to guide](/langsmith/setup-app-requirements-txt) on using `pyproject.toml` for LangSmith.
 - a monorepo: If you are interested in deploying a graph located inside a monorepo, take a look at [this repository](https://github.com/langchain-ai/langgraph-example-monorepo) for an example of how to do so.
 
 After each step, an example file directory is provided to demonstrate how code can be organized.
