@@ -237,6 +237,7 @@
                 "groups": [
                   {
                     "group": "Providers",
+                    "icon": "user-group",
                     "pages": [
                       "oss/python/integrations/providers/index",
                       {
@@ -294,6 +295,7 @@
                   },
                   {
                     "group": "Integrations by component",
+                    "icon": "plug",
                     "pages": [
                       "oss/python/integrations/chat/index",
                       "oss/python/integrations/tools/index",
@@ -367,28 +369,7 @@
                   {
                     "group": "LangGraph",
                     "pages": [
-                      "oss/python/reference/overview",
-                      "oss/python/reference/graphs",
-                      "oss/python/reference/functional-api",
-                      "oss/python/reference/pregel",
-                      "oss/python/reference/checkpointers",
-                      "oss/python/reference/storage",
-                      "oss/python/reference/caching",
-                      "oss/python/reference/types",
-                      "oss/python/reference/runtime",
-                      "oss/python/reference/config",
-                      "oss/python/reference/errors",
-                      "oss/python/reference/constants",
-                      "oss/python/reference/channels"
-                    ]
-                  },
-                  {
-                    "group": "Prebuilt",
-                    "pages": [
-                      "oss/python/reference/agents",
-                      "oss/python/reference/supervisor",
-                      "oss/python/reference/swarm",
-                      "oss/python/reference/mcp"
+                      "oss/python/reference/langgraph-python"
                     ]
                   },
                   {
@@ -1279,6 +1260,7 @@
                 "groups": [
                   {
                     "group": "Providers",
+                    "icon": "user-group",
                     "pages": [
                       "oss/javascript/integrations/providers/index",
                       {
@@ -1325,6 +1307,7 @@
                   },
                   {
                     "group": "General integrations",
+                    "icon": "plug",
                     "pages": [
                       "oss/javascript/integrations/chat/index",
                       "oss/javascript/integrations/tools/index",
@@ -1337,6 +1320,7 @@
                   },
                   {
                     "group": "RAG integrations",
+                    "icon": "database",
                     "pages": [
                       "oss/javascript/integrations/retrievers/index",
                       "oss/javascript/integrations/text_embedding/index",
@@ -1419,28 +1403,7 @@
                   {
                     "group": "LangGraph",
                     "pages": [
-                      "oss/javascript/reference/overview",
-                      "oss/javascript/reference/graphs",
-                      "oss/javascript/reference/functional-api",
-                      "oss/javascript/reference/pregel",
-                      "oss/javascript/reference/checkpointers",
-                      "oss/javascript/reference/storage",
-                      "oss/javascript/reference/caching",
-                      "oss/javascript/reference/types",
-                      "oss/javascript/reference/runtime",
-                      "oss/javascript/reference/config",
-                      "oss/javascript/reference/errors",
-                      "oss/javascript/reference/constants",
-                      "oss/javascript/reference/channels"
-                    ]
-                  },
-                  {
-                    "group": "Prebuilt",
-                    "pages": [
-                      "oss/javascript/reference/agents",
-                      "oss/javascript/reference/supervisor",
-                      "oss/javascript/reference/swarm",
-                      "oss/javascript/reference/mcp"
+                      "oss/javascript/reference/langgraph-javascript"
                     ]
                   },
                   {
