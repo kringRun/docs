@@ -1,0 +1,94 @@
+---
+title: Deployments
+sidebarTitle: Deployments
+mode: wide
+---
+
+The **Deployments** section covers two related but distinct concepts in the LangSmith platform:
+
+- [**Agent deployment**](#agent-deployment): how to package, build, and deploy your **graphs and agents** to [LangGraph Server](/langsmith/langgraph-server).
+- [**Platform deployment**](#platform-deployment): how to host and manage the **LangSmith Platform** itself (the [control plane](/langsmith/control-plane), [data plane](/langsmith/data-plane), and backing services), which provides the management and [observability](/langsmith/observability) layer for your agents.
+
+These two layers work together: you deploy agents *on top of* a LangSmith Platform deployment.
+
+## Agent deployment
+
+_Agent deployment_ focuses on how to build and deploy your graphs (or agentic workflows) as [LangGraph Servers](/langsmith/langgraph-server).
+
+You’ll learn how to:
+- Build and containerize your application.
+- Deploy agents via the LangSmith control plane (Cloud, Hybrid, or Self-hosted).
+- Manage revisions, configuration, and scaling for each agent deployment.
+
+<Callout icon="rocket" color="#4F46E5" iconType="regular">
+**Start here if you’re building or operating agent applications on LangSmith.**
+</Callout>
+
+<Columns cols={1}>
+  <Card
+    title="Agent deployment"
+    icon="robot"
+    href="/langsmith/application-structure"
+    cta="Get started"
+  >
+    Package, build, and deploy your agents and graphs to LangGraph Server.
+  </Card>
+</Columns>
+
+## Platform deployment
+
+_Platform deployment_ covers how to host and manage the LangSmith Platform itself, including the [control plane](/langsmith/control-plane), [data plane](/langsmith/data-plane), and required services. You’ll choose between three hosting options: [Cloud](/langsmith/cloud), [Hybrid](/langsmith/hybrid), or [Self-hosted](/langsmith/self-hosted), depending on your scale, security, and infrastructure needs.
+
+<Callout icon="building" color="#2563EB" iconType="regular">
+**Start here if you’re deploying or maintaining LangSmith Platform infrastructure.**
+</Callout>
+
+<Columns cols={3}>
+  <Card
+    title="Cloud"
+    icon="cloud"
+    iconType="solid"
+    href="/langsmith/cloud"
+    cta="Get started"
+  >
+    Run all components fully managed in LangChain’s cloud.
+  </Card>
+
+  <Card
+    title="Hybrid"
+    icon="cloud"
+    href="/langsmith/hybrid"
+    cta="Set up Hybrid"
+  >
+    **(Enterprise)** Manage the data plane in your cloud while LangChain manages the control plane.
+  </Card>
+
+  <Card
+    title="Self-hosted"
+    icon="server"
+    iconType="solid"
+    href="/langsmith/self-hosted"
+    cta="Run self-hosted"
+  >
+    **(Enterprise)** Run the full LangSmith platform or run standalone LangGraph Servers without the control plane UI.
+  </Card>
+</Columns>
+
+### Comparison
+
+| | **Cloud** | **Hybrid** | **Self-Hosted** |
+|--|--|--|--|
+| **Description** | All components run in LangChain's cloud | Control plane runs in LangChain's cloud; data plane in your cloud | All components run in your cloud |
+| **CI/CD** | Managed by LangChain | Data plane CI/CD managed by you | All CI/CD managed by you |
+| **Data/compute residency** | LangChain's cloud | Your cloud | Your cloud |
+| **LangSmith compatibility** | Includes LangSmith SaaS [observability](/langsmith/observability) | Traces to LangSmith SaaS | Traces to your self-hosted LangSmith instance |
+| **[Pricing](https://www.langchain.com/plans)** | Plus | Enterprise | Enterprise |
+
+<Tip>
+You can [run a LangGraph Server locally for free](/langsmith/local-server) for testing and development.
+</Tip>
+
+### Related
+
+- [Plans](/langsmith/plans)
+- [Pricing](https://www.langchain.com/plans)
