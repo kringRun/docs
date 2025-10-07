@@ -15,7 +15,7 @@
         body.classList.remove('hide-version-picker');
 
         // Add appropriate class based on URL
-        if (currentPath.includes('/langsmith/') || currentPath.includes('/langgraph-platform')) {
+        if (currentPath.includes('/langsmith/')) {
             body.classList.add('hide-version-picker');
         } else if (currentPath.match(/\/labs(?:\/|$)/)) {
             body.classList.add('hide-version-picker');
