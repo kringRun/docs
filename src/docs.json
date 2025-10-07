@@ -2229,6 +2229,13 @@
   "interaction": {
     "drilldown": true
   },
+  "errors": {
+    "404": {
+      "redirect": false,
+      "title": "Page not found",
+      "description": "We couldn't find the page you were looking for."
+    }
+  },
   "redirects": [
   {
     "source": "/oss/python/langchain-agents",
