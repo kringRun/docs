@@ -41,11 +41,13 @@ Before you begin, make sure you have:
 LangSmith's [Prompt Playground](/langsmith/observability-concepts#prompt-playground) makes it possible to run evaluations over different prompts, new models, or test different model configurations.
 
 1. In the [LangSmith UI](https://smith.langchain.com), navigate to the **Playground** under **Prompt Engineering**.
-1. Under the **Prompts** panel. Modify the **SYSTEM** prompt to:
+1. Under the **Prompts** panel, modify the **system** prompt to:
 
     ```
     Answer the following question accurately:
     ```
+
+    Leave the **Human** message as is: `{question}`.
 
 ## 3. Create a dataset
 
@@ -82,7 +84,7 @@ LangSmith's [Prompt Playground](/langsmith/observability-concepts#prompt-playgro
 
 ## 5. Run your evaluation
 
-1. Select <Icon icon="circle-play" /> **Start** on the top right to run your evaluation. This will create an experiment that you can view in full by clicking the experiment name.
+1. Select <Icon icon="circle-play" /> **Start** on the top right to run your evaluation. This will create an [_experiment_](/langsmith/evaluation-concepts#experiment) with a preview in the **New Experiment** table. You can view in full by clicking the experiment name.
 
     <div style={{ textAlign: 'center' }}>
     <img
@@ -157,12 +159,13 @@ export LANGSMITH_API_KEY="<your-langsmith-api-key>"
 export OPENAI_API_KEY="<your-openai-api-key>"
 export LANGSMITH_WORKSPACE_ID="<your-workspace-id>"
 ```
-
+<Note>
 If you're using Anthropic, use the [Anthropic wrapper](/langsmith/annotate-code#wrap-the-anthropic-client-python-only) to trace your calls. For other providers, use [the traceable wrapper](/langsmith/annotate-code#use-%40traceable-%2F-traceable).
+</Note>
 
 ## 3. Create a dataset
 
-1. Create a `dataset` file and add the following code, which will:
+1. Create a file and add the following code, which will:
 
     - Import the `Client` to connect to LangSmith.
     - Create a dataset.
@@ -284,7 +287,7 @@ openai_client = wrappers.wrap_openai(OpenAI())
 # The SDK will automatically send the inputs from the dataset to your target function
 def target(inputs: dict) -> dict:
     response = openai_client.chat.completions.create(
-        model="gpt-4o-mini",
+        model="gpt-5-mini",
         messages=[
             {"role": "system", "content": "Answer the following question accurately"},
             {"role": "user", "content": inputs["question"]},
@@ -304,7 +307,7 @@ const openaiClient = wrapOpenAI(new OpenAI());
 async function target(inputs: Record<string, any>): Promise<Record<string, any>> {
   const question = String(inputs.question ?? "");
   const resp = await openaiClient.chat.completions.create({
-    model: "gpt-4o-mini",
+    model: "gpt-5-mini",
     messages: [
       { role: "system", content: "Answer the following question accurately" },
       { role: "user", content: question },
@@ -350,7 +353,7 @@ openai_client = wrappers.wrap_openai(OpenAI())
 # The SDK will automatically send the inputs from the dataset to your target function
 def target(inputs: dict) -> dict:
     response = openai_client.chat.completions.create(
-        model="gpt-4o-mini",
+        model="gpt-5-mini",
         messages=[
             {"role": "system", "content": "Answer the following question accurately"},
             {"role": "user", "content": inputs["question"]},
@@ -382,7 +385,7 @@ const openaiClient = wrapOpenAI(new OpenAI());
 async function target(inputs: Record<string, any>): Promise<Record<string, any>> {
   const question = String(inputs.question ?? "");
   const resp = await openaiClient.chat.completions.create({
-    model: "gpt-4o-mini",
+    model: "gpt-5-mini",
     messages: [
       { role: "system", content: "Answer the following question accurately" },
       { role: "user", content: question },
@@ -440,7 +443,7 @@ To run the evaluation experiment, you'll call `evaluate(...)`, which:
     # The SDK will automatically send the inputs from the dataset to your target function
     def target(inputs: dict) -> dict:
         response = openai_client.chat.completions.create(
-            model="gpt-4o-mini",
+            model="gpt-5-mini",
             messages=[
                 {"role": "system", "content": "Answer the following question accurately"},
                 {"role": "user", "content": inputs["question"]},
@@ -490,7 +493,7 @@ To run the evaluation experiment, you'll call `evaluate(...)`, which:
     async function target(inputs: Record<string, any>): Promise<Record<string, any>> {
     const question = String(inputs.question ?? "");
     const resp = await openaiClient.chat.completions.create({
-        model: "gpt-4o-mini",
+        model: "gpt-5-mini",
         messages: [
         { role: "system", content: "Answer the following question accurately" },
         { role: "user", content: question },
