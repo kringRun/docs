@@ -904,12 +904,12 @@
                             "pages": [
                               "langsmith/setup-app-requirements-txt",
                               "langsmith/setup-pyproject",
-                              "langsmith/setup-javascript"
+                              "langsmith/setup-javascript",
+                              "langsmith/monorepo-support"
                             ]
                           },
                           "langsmith/graph-rebuild",
                           "langsmith/use-remote-graph",
-                          "langsmith/monorepo-support",
                           "langsmith/semantic-search",
                           "langsmith/configure-ttl"
                         ]
