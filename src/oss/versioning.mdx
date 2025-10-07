@@ -16,9 +16,9 @@ Each LangChain and LangGraph version number follows the format: `MAJOR.MINOR.PAT
 
 LangChain and LangGraph follow [Semantic Versioning](https://semver.org/) principles:
 
-- **1.0.0**: First stable release with production-ready APIs
-- **1.1.0**: New features added in a backward-compatible manner
-- **1.0.1**: Backward-compatible bug fixes
+- `1.0.0`: First stable release with production-ready APIs
+- `1.1.0`: New features added in a backward-compatible manner
+- `1.0.1`: Backward-compatible bug fixes
 
 ## API stability
 
@@ -54,37 +54,39 @@ Certain APIs are explicitly marked as "internal" in a couple of ways:
 
 ## Release cycles
 
-### Major releases
+<AccordionGroup>
+    <Accordion title="Major releases">
+        Major releases (e.g., `1.0.0` → `2.0.0`) may include:
 
-Major releases (e.g., 1.0.0 → 2.0.0) may include:
+        - Breaking API changes
+        - Removal of deprecated features
+        - Significant architectural improvements
 
-- Breaking API changes
-- Removal of deprecated features
-- Significant architectural improvements
+        We provide:
 
-We provide:
+        - Detailed migration guides
+        - Automated migration tools when possible
+        - Extended support period for the previous major version
+    </Accordion>
 
-- Detailed migration guides
-- Automated migration tools when possible
-- Extended support period for the previous major version
+    <Accordion title="Minor releases">
+        Minor releases (e.g., `1.0.0` → `1.1.0`) include:
 
-### Minor releases
+        - New features and capabilities
+        - Performance improvements
+        - New optional parameters
+        - Backward-compatible enhancements
+    </Accordion>
 
-Minor releases (e.g., 1.0.0 → 1.1.0) include:
+    <Accordion title="Patch releases">
+        Patch releases (e.g., `1.0.0` → `1.0.1`) include:
 
-- New features and capabilities
-- Performance improvements
-- New optional parameters
-- Backward-compatible enhancements
-
-### Patch releases
-
-Patch releases (e.g., 1.0.0 → 1.0.1) include:
-
-- Bug fixes
-- Security updates
-- Documentation improvements
-- Performance optimizations without API changes
+        - Bug fixes
+        - Security updates
+        - Documentation improvements
+        - Performance optimizations without API changes
+    </Accordion>
+</AccordionGroup>
 
 ## Version support policy
 
@@ -175,9 +177,9 @@ npm install @langchain/langgraph@1.0.0
 
 We occasionally release alpha and beta versions for early testing:
 
-- **Alpha** (e.g., 1.0.0a1): Early preview, significant changes expected
-- **Beta** (e.g., 1.0.0b1): Feature-complete, minor changes possible
-- **Release Candidate** (e.g., 1.0.0rc1): Final testing before stable release
+- **Alpha** (e.g., `1.0.0a1`): Early preview, significant changes expected
+- **Beta** (e.g., `1.0.0b1`): Feature-complete, minor changes possible
+- **Release Candidate** (e.g., `1.0.0rc1`): Final testing before stable release
 
 To install pre-release versions:
 
