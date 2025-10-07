@@ -151,7 +151,7 @@ Let's walk through each step:
     <Step title="Create tools">
         :::python
         [Tools](/oss/langchain/tools) let a model interact with external systems by calling functions you define.
-        Tools can depend on [runtime context](/oss/langchain/runtime) and also interact with [agent memory](/oss/langchain/memory).
+        Tools can depend on [runtime context](/oss/langchain/runtime) and also interact with [agent memory](/oss/langchain/short-term-memory).
 
         Notice below how the `get_user_location` tool uses runtime context:
 
@@ -177,7 +177,7 @@ Let's walk through each step:
 
         <Tip>
             Tools should be well-documented: their name, description, and argument names become part of the model's prompt.
-            We've defined them here as plain Python functions, but LangChain's @[@tool] decorator is often used to add extra metadata.
+            We've defined them here as plain Python functions, but LangChain's [@tool](https://python.langchain.com/api_reference/core/tools/langchain_core.tools.convert.tool.html) decorator is often used to add extra metadata.
         </Tip>
         :::
 
@@ -322,7 +322,7 @@ Let's walk through each step:
 
         <Info>
             In production, use a persistent checkpointer that saves to a database.
-            See [add and manage memory](/oss/python/langgraph/add-memory) for more details.
+            See [add and manage memory](/oss/python/langchain/short-term-memory#in-production) for more details.
         </Info>
     </Step>
     <Step title="Create and run the agent">
