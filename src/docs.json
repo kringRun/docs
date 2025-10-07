@@ -2,7 +2,7 @@
   "$schema": "https://mintlify.com/docs.json",
   "theme": "willow",
   "name": "Docs by LangChain",
-  "description": "Documentation for LangChain, LangGraph, LangSmith Platform, and more.",
+  "description": "Documentation for LangChain, LangGraph, LangSmith, and more.",
   "colors": {
     "primary": "#2F6868",
     "light": "#84C4C0",
@@ -109,7 +109,7 @@
     "/hide-version-picker.css"
   ],
   "banner": {
-    "content": "LangGraph Platform is now part of LangSmith Platform. Check out the [LangSmith Platform docs](/langsmith/home) for more information.",
+    "content": "LangGraph Platform is now part of LangSmith. Check out the [LangSmith docs](/langsmith/home) for more information.",
     "dismissible": true
   },
   "navbar": {
@@ -177,7 +177,7 @@
                   {
                     "group": "Use in production",
                     "pages": [
-                      "oss/python/langchain/studio",
+                      "oss/python/langchain/debugger",
                       "oss/python/langchain/test",
                       "oss/python/langchain/deploy",
                       "oss/python/langchain/ui",
@@ -215,7 +215,7 @@
                     "group": "Production",
                     "pages": [
                       "oss/python/langgraph/application-structure",
-                      "oss/python/langgraph/studio",
+                      "oss/python/langgraph/debugger",
                       "oss/python/langgraph/test",
                       "oss/python/langgraph/deploy",
                       "oss/python/langgraph/ui",
@@ -446,7 +446,7 @@
             ]
           },
           {
-            "dropdown": "LangSmith Platform",
+            "dropdown": "LangSmith",
             "icon": "rocket",
             "description": "LLM observability, evaluation, and deployment",
             "tabs": [
@@ -938,7 +938,7 @@
                         "group": "Setup guides",
                         "pages": [
                           {
-                            "group": "LangSmith Platform",
+                            "group": "LangSmith",
                             "icon": "server",
                             "pages": [
                               "langsmith/kubernetes",
@@ -1178,7 +1178,7 @@
                   {
                     "group": "Use in production",
                     "pages": [
-                      "oss/javascript/langchain/studio",
+                      "oss/javascript/langchain/debugger",
                       "oss/javascript/langchain/test",
                       "oss/javascript/langchain/deploy",
                       "oss/javascript/langchain/ui",
@@ -1216,7 +1216,7 @@
                     "group": "Production",
                     "pages": [
                       "oss/javascript/langgraph/application-structure",
-                      "oss/javascript/langgraph/studio",
+                      "oss/javascript/langgraph/debugger",
                       "oss/javascript/langgraph/test",
                       "oss/javascript/langgraph/deploy",
                       "oss/javascript/langgraph/ui",
@@ -1469,7 +1469,7 @@
             ]
           },
           {
-            "dropdown": "LangSmith Platform",
+            "dropdown": "LangSmith",
             "icon": "rocket",
             "description": "LLM observability, evaluation, and deployment",
             "tabs": [
@@ -1961,7 +1961,7 @@
                         "group": "Setup guides",
                         "pages": [
                           {
-                            "group": "LangSmith Platform",
+                            "group": "LangSmith",
                             "icon": "server",
                             "pages": [
                               "langsmith/kubernetes",

@@ -1,5 +1,5 @@
 ---
-title: LangSmith Platform on Cloud
+title: LangSmith on Cloud
 sidebarTitle: Setup guide
 icon: "cloud"
 iconType: "solid"
@@ -9,8 +9,8 @@ Before setting up, review the [Cloud overview page](/langsmith/cloud).
 
 ## Prerequisites
 
-1. LangSmith Platform applications are deployed from GitHub repositories. Configure and upload a LangSmith Platform application to a GitHub repository in order to deploy it to LangSmith Platform.
-2. [Verify that the LangGraph API runs locally](/langsmith/local-server). If the API does not run successfully (i.e. `langgraph dev`), deploying to LangSmith Platform will fail as well.
+1. LangSmith applications are deployed from GitHub repositories. Configure and upload a LangSmith application to a GitHub repository in order to deploy it to LangSmith.
+2. [Verify that the LangGraph API runs locally](/langsmith/local-server). If the API does not run successfully (i.e. `langgraph dev`), deploying to LangSmith will fail as well.
 
 ## Create New Deployment
 
@@ -120,7 +120,7 @@ After installing and authorizing LangChain's `hosted-langserve` GitHub app, repo
 
 ## Allowlisting IP Addresses
 
-All traffic from LangSmith Platform deployments created after January 6th 2025 will come through a NAT gateway.
+All traffic from LangSmith deployments created after January 6th 2025 will come through a NAT gateway.
 This NAT gateway will have several static ip addresses depending on the region you are deploying in. Refer to the table below for the list of IP addresses to allowlist:
 
 | US             | EU              |

@@ -13,9 +13,9 @@ For instance, a user may send one message and before the graph has finished runn
 More generally, users may invoke the graph a second time before the first run has finished.
 We call this "double texting".
 
-Currently, LangGraph only addresses this as part of [LangSmith Platform](/langsmith/home), not in the open source.
-The reason for this is that in order to handle this we need to know how the graph is deployed, and since LangSmith Platform deals with deployment the logic needs to live there.
-If you do not want to use LangSmith Platform, we describe the options we have implemented in detail below.
+Currently, LangGraph only addresses this as part of [LangSmith](/langsmith/home), not in the open source.
+The reason for this is that in order to handle this we need to know how the graph is deployed, and since LangSmith deals with deployment the logic needs to live there.
+If you do not want to use LangSmith, we describe the options we have implemented in detail below.
 
 ![Double-text strategies across first vs. second run: Reject keeps only the first; Enqueue runs the second afterward; Interrupt halts the first to run the second; Rollback reverts the first and reruns with the second.](/langsmith/images/double-texting.png)
 
