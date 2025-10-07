@@ -1,14 +1,15 @@
 ---
-title: How to add semantic search to your LangGraph deployment
-sidebarTitle: Add semantic search to your LangGraph deployment
+title: How to add semantic search to your agent deployment
+sidebarTitle: Add semantic search to your agent deployment
 ---
-This guide explains how to add semantic search to your LangGraph deployment's cross-thread [store](/oss/langgraph/persistence#memory-store), so that your agent can search for memories and other documents by semantic similarity.
+
+This guide explains how to add semantic search to your deployment's cross-thread [store](/oss/langgraph/persistence#memory-store), so that your agent can search for memories and other documents by semantic similarity.
 
 ## Prerequisites
 
-* A LangGraph deployment (see [how to deploy](/langsmith/setup-app-requirements-txt))
-* API keys for your embedding provider (in this case, OpenAI)
-* `langchain >= 0.3.8` (if you specify using the string format below)
+* A deployment (refer to [how to set up an application for deployment](/langsmith/setup-app-requirements-txt)) and details on [platform deployment types](/langsmith/deployments).
+* API keys for your embedding provider (in this case, OpenAI).
+* `langchain >= 0.3.8` (if you specify using the string format below).
 
 ## Steps
 
@@ -43,7 +44,7 @@ dependencies = [
 ]
 ```
 
-Or if using requirements.txt:
+Or if using [requirements.txt](/langsmith/setup-app-requirements-txt):
 
 ```
 langchain>=0.3.8
@@ -51,7 +52,7 @@ langchain>=0.3.8
 
 ## Usage
 
-Once configured, you can use semantic search in your LangGraph nodes. The store requires a namespace tuple to organize memories:
+Once configured, you can use semantic search in your [nodes](/oss/langgraph/graph-api#nodes). The store requires a namespace tuple to organize memories:
 
 ```python
 def search_memory(state: State, *, store: BaseStore):
