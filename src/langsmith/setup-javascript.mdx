@@ -1,10 +1,13 @@
 ---
-title: How to set up a LangGraph.js application
-sidebarTitle: Set up a LangGraph.js application
+title: How to set up a JavaScript application
+sidebarTitle: Set up a JavaScript application
 ---
-A LangGraph.js application must be configured with a [LangGraph configuration file](/langsmith/cli#configuration-file) in order to be deployed to LangSmith Platform (or to be self-hosted). This how-to guide discusses the basic steps to setup a LangGraph.js application for deployment using `package.json` to specify project dependencies.
 
-This walkthrough is based on [this repository](https://github.com/langchain-ai/langgraphjs-studio-starter), which you can play around with to learn more about how to setup your LangGraph application for deployment.
+import FrameworkAgnostic from '/snippets/langsmith/framework-agnostic.mdx';
+
+An application must be configured with a [configuration file](/langsmith/cli#configuration-file) in order to be deployed to LangSmith Platform (or to be self-hosted). This how-to guide discusses the basic steps to set up a JavaScript application for deployment using `package.json` to specify project dependencies.
+
+This walkthrough is based on [this repository](https://github.com/langchain-ai/langgraphjs-studio-starter), which you can play around with to learn more about how to set up your application for deployment.
 
 The final repository structure will look something like this:
 
@@ -21,11 +24,15 @@ my-app/
 └── langgraph.json # configuration file for LangGraph
 ```
 
+<Tip>
+<FrameworkAgnostic/>
+</Tip>
+
 After each step, an example file directory is provided to demonstrate how code can be organized.
 
 ## Specify Dependencies
 
-Dependencies can be specified in a `package.json`. If none of these files is created, then dependencies can be specified later in the [LangGraph configuration file](#create-langgraph-api-config).
+Dependencies can be specified in a `package.json`. If none of these files is created, then dependencies can be specified later in the [configuration file](#create-the-api-config).
 
 Example `package.json` file:
 
@@ -80,7 +87,7 @@ my-app/
 
 ## Define Graphs
 
-Implement your graphs! Graphs can be defined in a single file or multiple files. Make note of the variable names of each compiled graph to be included in the LangGraph application. The variable names will be used later when creating the [LangGraph configuration file](/langsmith/cli#configuration-file).
+Implement your graphs. Graphs can be defined in a single file or multiple files. Make note of the variable names of each compiled graph to be included in the application. The variable names will be used later when creating the [configuration file](/langsmith/cli#configuration-file).
 
 Here is an example `agent.ts`:
 
@@ -172,9 +179,9 @@ my-app/
 └── langgraph.json # configuration file for LangGraph
 ```
 
-## Create LangGraph API Config
+## Create the API Config
 
-Create a [LangGraph configuration file](/langsmith/cli#configuration-file) called `langgraph.json`. See the [LangGraph configuration file reference](/langsmith/cli#configuration-file) for detailed explanations of each key in the JSON object of the configuration file.
+Create a [configuration file](/langsmith/cli#configuration-file) called `langgraph.json`. See the [configuration file reference](/langsmith/cli#configuration-file) for detailed explanations of each key in the JSON object of the configuration file.
 
 Example `langgraph.json` file:
 
@@ -194,7 +201,7 @@ Note that the variable name of the `CompiledGraph` appears at the end of the val
 
 <Info>
 **Configuration Location**
-The LangGraph configuration file must be placed in a directory that is at the same level or higher than the TypeScript files that contain compiled graphs and associated dependencies.
+The configuration file must be placed in a directory that is at the same level or higher than the TypeScript files that contain compiled graphs and associated dependencies.
 </Info>
 
 ## Next

@@ -1,17 +1,11 @@
 ---
-title: How to add TTLs to your LangGraph application
-sidebarTitle: Add TTLs to your LangGraph application
+title: How to add TTLs to your application
+sidebarTitle: Add TTLs to your application
 ---
 <Tip>
 **Prerequisites**
 This guide assumes familiarity with the [LangSmith Platform](/langsmith/home), [Persistence](/oss/langgraph/persistence), and [Cross-thread persistence](/oss/langgraph/persistence#memory-store) concepts.
 </Tip>
-
-<Note>
-"LangGraph platform only"
-
-TTLs are only supported for LangGraph platform deployments. This guide does not apply to LangGraph OSS.
-</Note>
 
 The LangSmith Platform persists both [checkpoints](/oss/langgraph/persistence#checkpoints) (thread state) and [cross-thread memories](/oss/langgraph/persistence#memory-store) (store items). Configure Time-to-Live (TTL) policies in `langgraph.json` to automatically manage the lifecycle of this data, preventing indefinite accumulation.
 
