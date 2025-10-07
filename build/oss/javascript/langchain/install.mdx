@@ -1,0 +1,71 @@
+---
+title: Install LangChain
+sidebarTitle: Install
+mode: wide
+---
+
+import AlphaCallout from '/snippets/alpha-lc-callout.mdx';
+
+<AlphaCallout />
+
+To install the core LangChain package:
+
+
+
+    <CodeGroup>
+    ```bash npm
+    npm install langchain
+    ```
+
+    ```bash pnpm
+    pnpm add langchain
+    ```
+
+    ```bash yarn
+    yarn add langchain
+    ```
+
+    ```bash bun
+    bun add langchain
+    ```
+    </CodeGroup>
+
+
+LangChain provides integrations to hundreds of LLMs and thousands of other integrations. To avoid package bloat, these live in independent provider packages. For example:
+
+
+
+<CodeGroup>
+    ```bash npm
+    # Installing the OpenAI integration
+    npm install @langchain/openai
+    # Installing the Anthropic integration
+    npm install @langchain/anthropic
+    ```
+
+    ```bash pnpm
+    # Installing the OpenAI integration
+    pnpm add @langchain/openai
+    # Installing the Anthropic integration
+    pnpm add @langchain/anthropic
+    ```
+
+    ```bash yarn
+    # Installing the OpenAI integration
+    yarn add @langchain/openai
+    # Installing the Anthropic integration
+    yarn add @langchain/anthropic
+    ```
+
+    ```bash bun
+    # Installing the OpenAI integration
+    bun add @langchain/openai
+    # Installing the Anthropic integration
+    bun add @langchain/anthropic
+    ```
+</CodeGroup>
+
+
+<Tip>
+See the [Integrations tab](/oss/javascript/integrations/providers) for a full list of available integrations.
+</Tip>
