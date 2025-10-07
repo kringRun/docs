@@ -883,13 +883,13 @@
                         ]
                       },
                       {
-                        "group": "Studio",
+                        "group": "Debugger",
                         "pages": [
-                          "langsmith/quick-start-studio",
-                          "langsmith/langgraph-studio",
-                          "langsmith/use-studio",
-                          "langsmith/observability-studio",
-                          "langsmith/troubleshooting-studio"
+                          "langsmith/debugger",
+                          "langsmith/quick-start-debugger",
+                          "langsmith/use-debugger",
+                          "langsmith/observability-debugger",
+                          "langsmith/troubleshooting-debugger"
                         ]
                       },
                       {

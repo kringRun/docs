@@ -1,11 +1,11 @@
 ---
-title: Studio troubleshooting
+title: Debugger troubleshooting
 sidebarTitle: Troubleshooting
 ---
 
 ## Safari Connection Issues
 
-Safari blocks plain-HTTP traffic on localhost. When running Studio with `langgraph dev`, you may see "Failed to load assistants" errors.
+Safari blocks plain-HTTP traffic on localhost. When running the Debugger with `langgraph dev`, you may see "Failed to load assistants" errors.
 
 ### Solution 1: Use Cloudflare Tunnel
 
@@ -30,7 +30,7 @@ The command outputs a URL in this format:
 https://smith.langchain.com/studio/?baseUrl=https://hamilton-praise-heart-costumes.trycloudflare.com
 ```
 
-Use this URL in Safari to load Studio. Here, the `baseUrl` parameter specifies your agent server endpoint.
+Use this URL in Safari to load the Debugger. Here, the `baseUrl` parameter specifies your agent server endpoint.
 
 ### Solution 2: Use Chromium Browser
 
@@ -38,13 +38,11 @@ Chrome and other Chromium browsers allow HTTP on localhost. Use `langgraph dev` 
 
 ## Brave Connection Issues
 
-Brave blocks plain-HTTP traffic on localhost when Brave Shields are enabled. When running Studio with `langgraph dev`, you may see "Failed to load assistants" errors.
+Brave blocks plain-HTTP traffic on localhost when Brave Shields are enabled. When running the Debugger with `langgraph dev`, you may see "Failed to load assistants" errors.
 
 ### Solution 1: Disable Brave Shields
 
 Disable Brave Shields for LangSmith using the Brave icon in the URL bar.
-
-![Brave Shields panel with Shields turned off for smith.langchain.com so Studio can reach localhost.](/langsmith/images/brave-shields.png)
 
 ### Solution 2: Use Cloudflare Tunnel
 
@@ -69,12 +67,12 @@ The command outputs a URL in this format:
 https://smith.langchain.com/studio/?baseUrl=https://hamilton-praise-heart-costumes.trycloudflare.com
 ```
 
-Use this URL in Brave to load Studio. Here, the `baseUrl` parameter specifies your agent server endpoint.
+Use this URL in Brave to load the Debugger. Here, the `baseUrl` parameter specifies your agent server endpoint.
 
 ## Graph Edge Issues
 
 Undefined conditional edges may show unexpected connections in your graph. This is
-because without proper definition, Studio assumes the conditional edge could access all other nodes. To address this, explicitly define the routing paths using one of these methods:
+because without proper definition, the Debugger assumes the conditional edge could access all other nodes. To address this, explicitly define the routing paths using one of these methods:
 
 ### Solution 1: Path Map
 
@@ -106,7 +104,7 @@ def routing_function(state: GraphState) -> Literal["node_b","node_c"]:
         return "node_c"
 ```
 
-## Experiment troubleshooting in Studio
+## Experiment troubleshooting in the Debugger
 
 ### **Run experiment** button is disabled
 

@@ -1,26 +1,26 @@
 ---
-title: Get started with Studio
-sidebarTitle: Use Studio
+title: Get started with the Debugger
+sidebarTitle: Quickstart
 ---
 
-[Studio](/langsmith/langgraph-studio) supports connecting to two types of graphs:
+The [Debugger](/langsmith/debugger) in the [LangSmith Deployments UI](https://smith.langchain.com) supports connecting to two types of graphs:
 
 - Graphs deployed on [cloud or self-hosted](#deployed-graphs).
 - Graphs running locally with [LangGraph server](#local-development-server).
 
 ## Deployed graphs
 
-Studio is accessed in the [LangSmith UI](https://smith.langchain.com) from **Deployments**.
+The Debugger is accessed in the [LangSmith UI](https://smith.langchain.com) from the **Deployments** navigation.
 
-For applications that are [deployed](/langsmith/deployment-quickstart), you can access Studio as part of that deployment. To do so, navigate to the deployment in the UI and select **Studio**.
+For applications that are [deployed](/langsmith/deployment-quickstart), you can access the Debugger as part of that deployment. To do so, navigate to the deployment in the UI and select **Debugger**.
 
-This will load the Studio connected to your live deployment, allowing you to create, read, and update the [threads](/oss/langgraph/persistence#threads), [assistants](/langsmith/assistants), and [memory](/oss/concepts/memory) in that deployment.
+This will load the Debugger connected to your live deployment, allowing you to create, read, and update the [threads](/oss/langgraph/persistence#threads), [assistants](/langsmith/assistants), and [memory](/oss/concepts/memory) in that deployment.
 
 ## Local development server
 
 ### Prerequisites
 
-To test your application locally using Studio:
+To test your application locally using the Debugger:
 
 - Follow the [local application quickstart](/langsmith/local-server) first.
 - If you don't want data [traced](/langsmith/observability-concepts#traces) to LangSmith, set `LANGSMITH_TRACING=false` in your application's `.env` file. With tracing disabled, no data leaves your local server.
@@ -47,7 +47,7 @@ To test your application locally using Studio:
 
     <Warning>
     **Browser Compatibility**
-    Safari blocks `localhost` connections to Studio. To work around this, run the command with `--tunnel` to access Studio via a secure tunnel.
+    Safari blocks `localhost` connections to the Debugger. To work around this, run the command with `--tunnel` to access the Debugger via a secure tunnel.
     </Warning>
 
     This will start the LangGraph Server locally, running in-memory. The server will run in watch mode, listening for and automatically restarting on code changes. Read this [reference](/langsmith/cli#dev) to learn about all the options for starting the API server.
@@ -64,11 +64,11 @@ To test your application locally using Studio:
     > - LangGraph Studio Web UI: https://smith.langchain.com/studio/?baseUrl=http://127.0.0.1:2024
     ```
 
-    Once running, you will automatically be directed to Studio.
+    Once running, you will automatically be directed to the Debugger.
 
-1. For a running server, access Studio with one of the following:
+1. For a running server, access the Dbugger with one of the following:
     1. Directly navigate to the following URL: `https://smith.langchain.com/studio/?baseUrl=http://127.0.0.1:2024`.
-    1. Navigate to **Deployments** in the UI, click the **Studio** button on a deployment, enter `http://127.0.0.1:2024` and click **Connect**.
+    1. Navigate to **Deployments** in the UI, click the **Debugger** button on a deployment, enter `http://127.0.0.1:2024` and click **Connect**.
 
     If running your server at a different host or port, update the `baseUrl` to match.
 
@@ -120,16 +120,16 @@ Then attach your preferred debugger:
 </Tabs>
 
 <Tip>
-For issues getting started, refer to the [troubleshooting guide](/langsmith/troubleshooting-studio).
+For issues getting started, refer to the [troubleshooting guide](/langsmith/troubleshooting-debugger).
 </Tip>
 
 ## Next steps
 
-For more information on how to run studio, refer to the following guides:
+For more information on how to run the Debugger, refer to the following guides:
 
-- [Run application](/langsmith/use-studio#run-application)
-- [Manage assistants](/langsmith/use-studio#manage-assistants)
-- [Manage threads](/langsmith/use-studio#manage-threads)
-- [Iterate on prompts](/langsmith/observability-studio)
-- [Debug LangSmith traces](/langsmith/observability-studio#debug-langsmith-traces)
-- [Add node to dataset](/langsmith/observability-studio#add-node-to-dataset)
+- [Run application](/langsmith/use-debugger#run-application)
+- [Manage assistants](/langsmith/use-debugger#manage-assistants)
+- [Manage threads](/langsmith/use-debugger#manage-threads)
+- [Iterate on prompts](/langsmith/observability-debugger)
+- [Debug LangSmith traces](/langsmith/observability-debugger#debug-langsmith-traces)
+- [Add node to dataset](/langsmith/observability-debugger#add-node-to-dataset)
