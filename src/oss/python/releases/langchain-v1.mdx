@@ -417,6 +417,9 @@ from langchain_classic.chains import ...
 | [Post-processing](#post-model-hooks) | `post_model_hook=fn` | `middleware` with `after_model` |
 | [Tool list](#toolnode-to-list) | `tools=ToolNode([...])` | `tools=[...]` |
 | [Custom state](#custom-state) | `state_schema=CustomState` | `middleware` with `state_schema` |
+| [State types](#state-type-restrictions) | Pydantic/dataclass/TypedDict | `TypedDict` only |
+| [Streaming node](#streaming-node-name-changes) | Node name: `"agent"` | Node name: `"model"` |
+| [Runtime context](#config-to-runtime-migration) | `config={"configurable": {...}}` | `context={...}` |
 
 #### Import changes
 
@@ -999,6 +1002,78 @@ agent = create_agent(
 Custom state is defined by creating a class that extends `AgentState` and assigning it to the middleware's `state_schema` attribute.
 </Note>
 
+#### State type restrictions
+
+LangGraph now only supports `TypedDict` for state schemas. Pydantic models and dataclasses are no longer supported for simplicity and consistency.
+
+<Tabs>
+  <Tab title="Before (V0)">
+```python
+from pydantic import BaseModel
+from langgraph.graph import StateGraph
+
+# Pydantic model (no longer supported)
+class AgentState(BaseModel):
+    messages: list
+    user_id: str
+    context: dict
+
+graph = StateGraph(AgentState)
+```
+  </Tab>
+  <Tab title="After (V1)">
+```python
+from typing import TypedDict
+from langgraph.graph import StateGraph
+
+# Use TypedDict instead
+class AgentState(TypedDict):
+    messages: list
+    user_id: str
+    context: dict
+
+graph = StateGraph(AgentState)
+```
+  </Tab>
+</Tabs>
+
+**Migration steps**:
+1. Convert Pydantic models to `TypedDict`
+2. Convert dataclasses to `TypedDict`
+3. Remove validators and default values (handle these in your node functions instead)
+
+<Tabs>
+  <Tab title="Before (V0) - Dataclass">
+```python
+from dataclasses import dataclass, field
+
+@dataclass
+class AgentState:
+    messages: list = field(default_factory=list)
+    user_id: str = ""
+    retry_count: int = 0
+```
+  </Tab>
+  <Tab title="After (V1) - TypedDict">
+```python
+from typing import TypedDict
+
+class AgentState(TypedDict, total=False):
+    messages: list
+    user_id: str
+    retry_count: int
+
+# Handle defaults in your initialization code
+def create_initial_state() -> AgentState:
+    return {
+        "messages": [],
+        "user_id": "",
+        "retry_count": 0
+    }
+```
+  </Tab>
+</Tabs>
+
 #### Prompted output removed
 
 **Prompted output** is no longer supported via the `response_format` argument. Use structured output with `ToolStrategy` or `ProviderStrategy` instead.
@@ -1036,6 +1111,120 @@ agent = create_agent("openai:gpt-4o-mini", tools=[some_tool])
 
 <Note>
 Dynamic model functions can return pre-bound models if structured output is *not* used.
+</Note>
+
+#### Streaming node name changes
+
+When streaming events from agents, the node name has changed from `"agent"` to `"model"` to better reflect the node's purpose.
+
+<Tabs>
+  <Tab title="Before (V0)">
+```python
+agent = create_react_agent(model, tools)
+
+for event in agent.stream({"messages": [{"role": "user", "content": "Hello"}]}):
+    # Node name was "agent"
+    if "agent" in event:
+        print(event["agent"])
+```
+  </Tab>
+  <Tab title="After (V1)">
+```python
+agent = create_agent(model, tools)
+
+for event in agent.stream({"messages": [{"role": "user", "content": "Hello"}]}):
+    # Node name is now "model"
+    if "model" in event:
+        print(event["model"])
+```
+  </Tab>
+</Tabs>
+
+**What changed**: The node responsible for LLM calls is now consistently named `"model"` across all agents, making it clearer that this node represents model invocations rather than the entire agent.
+
+#### Config to Runtime migration
+
+The way you pass runtime context has changed from using `config["configurable"]` to using the new `Runtime` API with a dedicated `context` parameter.
+
+<Tabs>
+  <Tab title="Before (V0)">
+```python
+from langgraph.prebuilt import create_react_agent
+
+agent = create_react_agent(model, tools)
+
+# Pass context via configurable
+result = agent.invoke(
+    {"messages": [{"role": "user", "content": "Hello"}]},
+    config={
+        "configurable": {
+            "user_id": "123",
+            "session_id": "abc"
+        }
+    }
+)
+```
+  </Tab>
+  <Tab title="After (V1)">
+```python
+from langchain.agents import create_agent
+
+agent = create_agent(model, tools)
+
+# Pass context via dedicated context parameter
+result = agent.invoke(
+    {"messages": [{"role": "user", "content": "Hello"}]},
+    context={
+        "user_id": "123",
+        "session_id": "abc"
+    }
+)
+```
+  </Tab>
+</Tabs>
+
+**Key changes**:
+
+1. **Static runtime context**: Pass context directly via the `context` parameter instead of nesting it under `config["configurable"]`
+2. **Runtime type safety**: Use `Runtime[ContextSchema]` type hints for better IDE support
+3. **Async compatibility**: The new Runtime API works better with Python 3.10+ async patterns
+4. **Tracing and callbacks**: These remain in `config` but runtime context moves to `context`
+
+<Tabs>
+  <Tab title="Before (V0) - With callbacks">
+```python
+from langchain_core.callbacks import StdOutCallbackHandler
+
+result = agent.invoke(
+    {"messages": [{"role": "user", "content": "Hello"}]},
+    config={
+        "callbacks": [StdOutCallbackHandler()],
+        "configurable": {
+            "user_id": "123"
+        }
+    }
+)
+```
+  </Tab>
+  <Tab title="After (V1) - Separate context">
+```python
+from langchain_core.callbacks import StdOutCallbackHandler
+
+result = agent.invoke(
+    {"messages": [{"role": "user", "content": "Hello"}]},
+    config={
+        "callbacks": [StdOutCallbackHandler()]
+    },
+    context={
+        "user_id": "123"
+    }
+)
+```
+  </Tab>
+</Tabs>
+
+<Note>
+The old `config["configurable"]` pattern still works for backward compatibility, but using the new `context` parameter is recommended for new code.
 </Note>
 
 ### General LangChain changes
