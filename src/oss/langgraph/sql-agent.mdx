@@ -37,22 +37,6 @@ We will cover the following concepts:
     ```
     </CodeGroup>
 
-    {/*
-    :::js
-    <CodeGroup>
-    ```bash npm
-    npm i langchain @langchain/core typeorm sqlite3 zod
-    ```
-    ```bash yarn
-    yarn add langchain @langchain/core typeorm sqlite3 zod
-    ```
-    ```bash pnpm
-    pnpm add langchain @langchain/core typeorm sqlite3 zod
-    ```
-    </CodeGroup>
-    :::
-    */}
-
 ### LangSmith
 Set up [LangSmith](https://smith.langchain.com) to inspect what is happening inside your chain or agent. Then set the following environment variables:
 
@@ -66,13 +50,6 @@ Set up [LangSmith](https://smith.langchain.com) to inspect what is happening ins
 Select a model that supports [tool-calling](/oss/integrations/providers):
 
 <ChatModelTabsPy />
-{/*
-:::js
-
-Select a model that supports [tool-calling](/oss/integrations/providers):
-<ChatModelTabsJS />
-:::
-*/}
 
 The output shown in the examples below used OpenAI.
 
@@ -98,28 +75,6 @@ else:
     else:
         print(f"Failed to download the file. Status code: {response.status_code}")
 ```
-{/*
-:::js
-```js
-import fs from "node:fs/promises";
-import path from "node:path";
-
-const url = "https://storage.googleapis.com/benchmarks-artifacts/chinook/Chinook.db";
-const localPath = path.resolve("Chinook.db");
-
-async function resolveDbPath() {
-  if (await fs.exists(localPath)) {
-    return localPath;
-  }
-  const resp = await fetch(url);
-  if (!resp.ok) throw new Error(`Failed to download DB. Status code: ${resp.status}`);
-  const buf = Buffer.from(await resp.arrayBuffer());
-  await fs.writeFile(localPath, buf);
-  return localPath;
-}
-```
-:::
-*/}
 
 We will use a handy SQL database wrapper available in the `langchain_community` package to interact with the database. The wrapper provides a simple interface to execute SQL queries and fetch results:
 
@@ -161,26 +116,6 @@ sql_db_list_tables: Input is an empty string, output is a comma-separated list o
 
 sql_db_query_checker: Use this tool to double check if your query is correct before executing it. Always use this tool before executing a query with sql_db_query!
 ```
-
-{/*
-:::js
-Use the `SqlToolkit` wrapper available in the `langchain_community` package to interact with the database. The wrapper provides a simple interface to execute SQL queries and fetch results:
-```typescript
-import { SqlToolkit } from "langchain/agents/toolkits/sql";
-
-const toolkit = new SqlToolkit(db, llm);
-
-const tools = toolkit.getTools();
-
-console.log(
-  tools.map((tool) => ({
-    name: tool.name,
-    description: tool.description,
-  }))
-);
-```
-:::
-*/}
 
 ## 4. Define application steps
 
