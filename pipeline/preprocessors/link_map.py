@@ -170,6 +170,15 @@ LINK_MAPS: list[LinkMap] = [
         },
     },
     {
+        "host": "https://reference.langchain.com/python/",
+        "scope": "python",
+        "links": {
+            "langchain-openai": "integrations/langchain_openai",
+            "ChatOpenAI": "integrations/langchain_openai/#langchain_openai.ChatOpenAI",
+            "AzureChatOpenAI": "integrations/langchain_openai/#langchain_openai.AzureChatOpenAI",
+        },
+    },
+    {
         "host": "https://reference.langchain.com/javascript/",
         "scope": "js",
         "links": {

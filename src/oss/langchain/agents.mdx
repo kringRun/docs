@@ -424,7 +424,7 @@ def dynamic_prompt(state):
         else "Provide simple, clear explanations."
     )
     return [system_msg] + state["messages"]
-agent = create_agent(model, tools, prompt=dynamic_prompt)
+agent = create_agent(model, tools, system_prompt=dynamic_prompt)
 ```
 </CodeGroup>
 :::
