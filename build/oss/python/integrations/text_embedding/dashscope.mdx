@@ -1,0 +1,40 @@
+---
+title: DashScope
+---
+
+Let's load the DashScope Embedding class.
+
+```python
+from langchain_community.embeddings import DashScopeEmbeddings
+```
+
+```python
+embeddings = DashScopeEmbeddings(
+    model="text-embedding-v1", dashscope_api_key="your-dashscope-api-key"
+)
+```
+
+```python
+text = "This is a test document."
+```
+
+```python
+query_result = embeddings.embed_query(text)
+print(query_result)
+```
+
+```python
+doc_results = embeddings.embed_documents(["foo"])
+print(doc_results)
+```
+
+---
+
+<CardGroup cols={2}>
+  <Card title="View Source" icon="eye" href="https://github.com/langchain-ai/docs/blob/main/src/oss/python/integrations/text_embedding/dashscope.mdx">
+    See the source of this page on GitHub
+  </Card>
+  <Card title="Edit Source" icon="pen-to-square" href="https://github.com/langchain-ai/docs/edit/main/src/oss/python/integrations/text_embedding/dashscope.mdx">
+    Edit the source of this page on GitHub
+  </Card>
+</CardGroup>

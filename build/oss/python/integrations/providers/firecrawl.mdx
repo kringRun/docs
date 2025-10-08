@@ -1,0 +1,41 @@
+---
+title: FireCrawl
+---
+
+>[FireCrawl](https://firecrawl.dev/?ref=langchain) crawls and converts any website into LLM-ready data.
+> It crawls all accessible subpages and give you clean markdown
+> and metadata for each. No sitemap required.
+
+
+## Installation and Setup
+
+Install the python SDK:
+
+<CodeGroup>
+```bash pip
+pip install firecrawl-py==0.0.20
+```
+
+```bash uv
+uv add "firecrawl-py==0.0.20"
+```
+</CodeGroup>
+
+## Document loader
+
+See a [usage example](/oss/python/integrations/document_loaders/firecrawl).
+
+```python
+from langchain_community.document_loaders import FireCrawlLoader
+```
+
+---
+
+<CardGroup cols={2}>
+  <Card title="View Source" icon="eye" href="https://github.com/langchain-ai/docs/blob/main/src/oss/python/integrations/providers/firecrawl.mdx">
+    See the source of this page on GitHub
+  </Card>
+  <Card title="Edit Source" icon="pen-to-square" href="https://github.com/langchain-ai/docs/edit/main/src/oss/python/integrations/providers/firecrawl.mdx">
+    Edit the source of this page on GitHub
+  </Card>
+</CardGroup>

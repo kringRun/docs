@@ -1,0 +1,32 @@
+---
+title: Fake Embeddings
+---
+
+LangChain also provides a fake embedding class. You can use this to test your pipelines.
+
+```python
+from langchain_community.embeddings import FakeEmbeddings
+```
+
+```python
+embeddings = FakeEmbeddings(size=1352)
+```
+
+```python
+query_result = embeddings.embed_query("foo")
+```
+
+```python
+doc_results = embeddings.embed_documents(["foo"])
+```
+
+---
+
+<CardGroup cols={2}>
+  <Card title="View Source" icon="eye" href="https://github.com/langchain-ai/docs/blob/main/src/oss/python/integrations/text_embedding/fake.mdx">
+    See the source of this page on GitHub
+  </Card>
+  <Card title="Edit Source" icon="pen-to-square" href="https://github.com/langchain-ai/docs/edit/main/src/oss/python/integrations/text_embedding/fake.mdx">
+    Edit the source of this page on GitHub
+  </Card>
+</CardGroup>

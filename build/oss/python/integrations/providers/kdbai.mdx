@@ -1,0 +1,41 @@
+---
+title: KDB.AI
+---
+
+>[KDB.AI](https://kdb.ai) is a powerful knowledge-based vector database and search engine that allows you to build scalable, reliable AI applications, using real-time data, by providing advanced search, recommendation and personalization.
+
+
+## Installation and Setup
+
+Install the Python SDK:
+
+<CodeGroup>
+```bash pip
+pip install kdbai-client
+```
+
+```bash uv
+uv add kdbai-client
+```
+</CodeGroup>
+
+
+## Vector store
+
+There exists a wrapper around KDB.AI indexes, allowing you to use it as a vectorstore,
+whether for semantic search or example selection.
+
+```python
+from langchain_community.vectorstores import KDBAI
+```
+
+---
+
+<CardGroup cols={2}>
+  <Card title="View Source" icon="eye" href="https://github.com/langchain-ai/docs/blob/main/src/oss/python/integrations/providers/kdbai.mdx">
+    See the source of this page on GitHub
+  </Card>
+  <Card title="Edit Source" icon="pen-to-square" href="https://github.com/langchain-ai/docs/edit/main/src/oss/python/integrations/providers/kdbai.mdx">
+    Edit the source of this page on GitHub
+  </Card>
+</CardGroup>

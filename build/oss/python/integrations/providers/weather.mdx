@@ -1,0 +1,40 @@
+---
+title: Weather
+---
+
+>[OpenWeatherMap](https://openweathermap.org/) is an open-source weather service provider.
+
+
+
+## Installation and Setup
+
+<CodeGroup>
+```bash pip
+pip install pyowm
+```
+
+```bash uv
+uv add pyowm
+```
+</CodeGroup>
+
+We must set up the `OpenWeatherMap API token`.
+
+## Document Loader
+
+See a [usage example](/oss/python/integrations/document_loaders/weather).
+
+```python
+from langchain_community.document_loaders import WeatherDataLoader
+```
+
+---
+
+<CardGroup cols={2}>
+  <Card title="View Source" icon="eye" href="https://github.com/langchain-ai/docs/blob/main/src/oss/python/integrations/providers/weather.mdx">
+    See the source of this page on GitHub
+  </Card>
+  <Card title="Edit Source" icon="pen-to-square" href="https://github.com/langchain-ai/docs/edit/main/src/oss/python/integrations/providers/weather.mdx">
+    Edit the source of this page on GitHub
+  </Card>
+</CardGroup>

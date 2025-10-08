@@ -1,0 +1,39 @@
+---
+title: UpTrain
+---
+
+>[UpTrain](https://uptrain.ai/) is an open-source unified platform to evaluate and
+>improve Generative AI applications. It provides grades for 20+ preconfigured evaluations
+>(covering language, code, embedding use cases), performs root cause analysis on failure
+>cases and gives insights on how to resolve them.
+
+## Installation and Setup
+
+<CodeGroup>
+```bash pip
+pip install uptrain
+```
+
+```bash uv
+uv add uptrain
+```
+</CodeGroup>
+
+## Callbacks
+
+```python
+from langchain_community.callbacks.uptrain_callback import UpTrainCallbackHandler
+```
+
+See an [example](/oss/python/integrations/callbacks/uptrain).
+
+---
+
+<CardGroup cols={2}>
+  <Card title="View Source" icon="eye" href="https://github.com/langchain-ai/docs/blob/main/src/oss/python/integrations/providers/uptrain.mdx">
+    See the source of this page on GitHub
+  </Card>
+  <Card title="Edit Source" icon="pen-to-square" href="https://github.com/langchain-ai/docs/edit/main/src/oss/python/integrations/providers/uptrain.mdx">
+    Edit the source of this page on GitHub
+  </Card>
+</CardGroup>

@@ -1,0 +1,36 @@
+---
+title: LanceDB
+---
+
+This page covers how to use [LanceDB](https://github.com/lancedb/lancedb) within LangChain.
+It is broken into two parts: installation and setup, and then references to specific LanceDB wrappers.
+
+## Installation and Setup
+
+- Install the Python SDK with `pip install lancedb`
+
+## Wrappers
+
+### VectorStore
+
+There exists a wrapper around LanceDB databases, allowing you to use it as a vectorstore,
+whether for semantic search or example selection.
+
+To import this vectorstore:
+
+```python
+from langchain_community.vectorstores import LanceDB
+```
+
+For a more detailed walkthrough of the LanceDB wrapper, see [this notebook](/oss/python/integrations/vectorstores/lancedb)
+
+---
+
+<CardGroup cols={2}>
+  <Card title="View Source" icon="eye" href="https://github.com/langchain-ai/docs/blob/main/src/oss/python/integrations/providers/lancedb.mdx">
+    See the source of this page on GitHub
+  </Card>
+  <Card title="Edit Source" icon="pen-to-square" href="https://github.com/langchain-ai/docs/edit/main/src/oss/python/integrations/providers/lancedb.mdx">
+    Edit the source of this page on GitHub
+  </Card>
+</CardGroup>

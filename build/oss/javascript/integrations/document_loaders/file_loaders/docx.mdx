@@ -1,0 +1,69 @@
+---
+title: Docx files
+---
+
+The `DocxLoader` allows you to extract text data from Microsoft Word documents. It supports both the modern `.docx` format and the legacy `.doc` format. Depending on the file type, additional dependencies are required.
+
+---
+
+## Setup
+
+To use `DocxLoader`, you'll need the `@langchain/community` integration along with either `mammoth` or `word-extractor` package:
+
+- **`mammoth`**: For processing `.docx` files.
+- **`word-extractor`**: For handling `.doc` files.
+
+### Installation
+
+#### For `.docx` Files
+
+```bash npm
+npm install @langchain/community @langchain/core mammoth
+```
+#### For `.doc` Files
+
+```bash npm
+npm install @langchain/community @langchain/core word-extractor
+```
+## Usage
+
+### Loading `.docx` Files
+
+For `.docx` files, there is no need to explicitly specify any parameters when initializing the loader:
+
+```javascript
+import { DocxLoader } from "@langchain/community/document_loaders/fs/docx";
+
+const loader = new DocxLoader(
+  "src/document_loaders/tests/example_data/attention.docx"
+);
+
+const docs = await loader.load();
+```
+### Loading `.doc` Files
+
+For `.doc` files, you must explicitly specify the `type` as `doc` when initializing the loader:
+
+```javascript
+import { DocxLoader } from "@langchain/community/document_loaders/fs/docx";
+
+const loader = new DocxLoader(
+  "src/document_loaders/tests/example_data/attention.doc",
+  {
+    type: "doc",
+  }
+);
+
+const docs = await loader.load();
+```
+
+---
+
+<CardGroup cols={2}>
+  <Card title="View Source" icon="eye" href="https://github.com/langchain-ai/docs/blob/main/src/oss/javascript/integrations/document_loaders/file_loaders/docx.mdx">
+    See the source of this page on GitHub
+  </Card>
+  <Card title="Edit Source" icon="pen-to-square" href="https://github.com/langchain-ai/docs/edit/main/src/oss/javascript/integrations/document_loaders/file_loaders/docx.mdx">
+    Edit the source of this page on GitHub
+  </Card>
+</CardGroup>

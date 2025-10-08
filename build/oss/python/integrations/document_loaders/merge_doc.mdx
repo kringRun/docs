@@ -1,0 +1,48 @@
+---
+title: Merge Documents Loader
+---
+
+Merge the documents returned from a set of specified data loaders.
+
+```python
+from langchain_community.document_loaders import WebBaseLoader
+
+loader_web = WebBaseLoader(
+    "https://github.com/basecamp/handbook/blob/master/37signals-is-you.md"
+)
+```
+
+```python
+from langchain_community.document_loaders import PyPDFLoader
+
+loader_pdf = PyPDFLoader("../MachineLearning-Lecture01.pdf")
+```
+
+```python
+from langchain_community.document_loaders.merge import MergedDataLoader
+
+loader_all = MergedDataLoader(loaders=[loader_web, loader_pdf])
+```
+
+```python
+docs_all = loader_all.load()
+```
+
+```python
+len(docs_all)
+```
+
+```output
+23
+```
+
+---
+
+<CardGroup cols={2}>
+  <Card title="View Source" icon="eye" href="https://github.com/langchain-ai/docs/blob/main/src/oss/python/integrations/document_loaders/merge_doc.mdx">
+    See the source of this page on GitHub
+  </Card>
+  <Card title="Edit Source" icon="pen-to-square" href="https://github.com/langchain-ai/docs/edit/main/src/oss/python/integrations/document_loaders/merge_doc.mdx">
+    Edit the source of this page on GitHub
+  </Card>
+</CardGroup>

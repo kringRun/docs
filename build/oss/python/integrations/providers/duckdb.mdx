@@ -1,0 +1,36 @@
+---
+title: DuckDB
+---
+
+>[DuckDB](https://duckdb.org/) is an in-process SQL OLAP database management system.
+
+## Installation and Setup
+
+First, you need to install `duckdb` python package.
+
+<CodeGroup>
+```bash pip
+pip install duckdb
+```
+
+```bash uv
+uv add duckdb
+```
+</CodeGroup>
+
+## Document Loader
+
+```python
+from langchain_community.document_loaders import DuckDBLoader
+```
+
+---
+
+<CardGroup cols={2}>
+  <Card title="View Source" icon="eye" href="https://github.com/langchain-ai/docs/blob/main/src/oss/python/integrations/providers/duckdb.mdx">
+    See the source of this page on GitHub
+  </Card>
+  <Card title="Edit Source" icon="pen-to-square" href="https://github.com/langchain-ai/docs/edit/main/src/oss/python/integrations/providers/duckdb.mdx">
+    Edit the source of this page on GitHub
+  </Card>
+</CardGroup>

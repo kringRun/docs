@@ -1,0 +1,48 @@
+---
+title: Meilisearch
+---
+
+> [Meilisearch](https://meilisearch.com) is an open-source, lightning-fast, and hyper
+> relevant search engine.
+> It comes with great defaults to help developers build snappy search experiences.
+>
+> You can [self-host Meilisearch](https://www.meilisearch.com/docs/learn/getting_started/installation#local-installation)
+> or run on [Meilisearch Cloud](https://www.meilisearch.com/pricing).
+>
+>`Meilisearch v1.3` supports vector search.
+
+## Installation and Setup
+
+See a [usage example](/oss/python/integrations/vectorstores/meilisearch) for detail configuration instructions.
+
+
+We need to install `meilisearch` python package.
+
+<CodeGroup>
+```bash pip
+pip install meilisearch
+```
+
+```bash uv
+uv add meilisearch
+```
+</CodeGroup>
+
+## Vector Store
+
+See a [usage example](/oss/python/integrations/vectorstores/meilisearch).
+
+```python
+from langchain_community.vectorstores import Meilisearch
+```
+
+---
+
+<CardGroup cols={2}>
+  <Card title="View Source" icon="eye" href="https://github.com/langchain-ai/docs/blob/main/src/oss/python/integrations/providers/meilisearch.mdx">
+    See the source of this page on GitHub
+  </Card>
+  <Card title="Edit Source" icon="pen-to-square" href="https://github.com/langchain-ai/docs/edit/main/src/oss/python/integrations/providers/meilisearch.mdx">
+    Edit the source of this page on GitHub
+  </Card>
+</CardGroup>

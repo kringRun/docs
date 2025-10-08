@@ -1,0 +1,40 @@
+---
+title: MariTalk
+---
+
+>[MariTalk](https://www.maritaca.ai/en) is an LLM-based chatbot trained to meet the needs of Brazil.
+
+## Installation and Setup
+
+You have to get the MariTalk API key.
+
+You also need to install the `httpx` Python package.
+
+<CodeGroup>
+```bash pip
+pip install httpx
+```
+
+```bash uv
+uv add httpx
+```
+</CodeGroup>
+
+## Chat models
+
+See a [usage example](/oss/python/integrations/chat/maritalk).
+
+```python
+from langchain_community.chat_models import ChatMaritalk
+```
+
+---
+
+<CardGroup cols={2}>
+  <Card title="View Source" icon="eye" href="https://github.com/langchain-ai/docs/blob/main/src/oss/python/integrations/providers/maritalk.mdx">
+    See the source of this page on GitHub
+  </Card>
+  <Card title="Edit Source" icon="pen-to-square" href="https://github.com/langchain-ai/docs/edit/main/src/oss/python/integrations/providers/maritalk.mdx">
+    Edit the source of this page on GitHub
+  </Card>
+</CardGroup>

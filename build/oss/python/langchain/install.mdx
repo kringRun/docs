@@ -1,0 +1,62 @@
+---
+title: Install LangChain
+sidebarTitle: Install
+mode: wide
+---
+
+import AlphaCallout from '/snippets/alpha-lc-callout.mdx';
+
+<AlphaCallout />
+
+To install the core LangChain package:
+
+<CodeGroup>
+    ```bash pip
+    pip install --pre -U langchain
+    ```
+
+    ```bash uv
+    uv add --prerelease=allow langchain
+    ```
+</CodeGroup>
+
+
+
+
+LangChain provides integrations to hundreds of LLMs and thousands of other integrations. These live in independent provider packages. For example:
+
+<CodeGroup>
+    ```bash pip
+    # Installing the OpenAI integration
+    pip install -U langchain-openai
+
+    # Installing the Anthropic integration
+    pip install -U langchain-anthropic
+    ```
+    ```bash uv
+    # Installing the OpenAI integration
+    uv add langchain-openai
+
+    # Installing the Anthropic integration
+    uv add langchain-anthropic
+    ```
+</CodeGroup>
+
+
+
+
+
+<Tip>
+See the [Integrations tab](/oss/python/integrations/providers) for a full list of available integrations.
+</Tip>
+
+---
+
+<CardGroup cols={2}>
+  <Card title="View Source" icon="eye" href="https://github.com/langchain-ai/docs/blob/main/src/oss/langchain/install.mdx">
+    See the source of this page on GitHub
+  </Card>
+  <Card title="Edit Source" icon="pen-to-square" href="https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/install.mdx">
+    Edit the source of this page on GitHub
+  </Card>
+</CardGroup>

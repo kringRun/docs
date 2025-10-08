@@ -1,0 +1,41 @@
+---
+title: Reddit
+---
+
+>[Reddit](https://www.reddit.com) is an American social news aggregation, content rating, and discussion website.
+
+## Installation and Setup
+
+First, you need to install a python package.
+
+<CodeGroup>
+```bash pip
+pip install praw
+```
+
+```bash uv
+uv add praw
+```
+</CodeGroup>
+
+Make a [Reddit Application](https://www.reddit.com/prefs/apps/) and initialize the loader with your Reddit API credentials.
+
+## Document Loader
+
+See a [usage example](/oss/python/integrations/document_loaders/reddit).
+
+
+```python
+from langchain_community.document_loaders import RedditPostsLoader
+```
+
+---
+
+<CardGroup cols={2}>
+  <Card title="View Source" icon="eye" href="https://github.com/langchain-ai/docs/blob/main/src/oss/python/integrations/providers/reddit.mdx">
+    See the source of this page on GitHub
+  </Card>
+  <Card title="Edit Source" icon="pen-to-square" href="https://github.com/langchain-ai/docs/edit/main/src/oss/python/integrations/providers/reddit.mdx">
+    Edit the source of this page on GitHub
+  </Card>
+</CardGroup>

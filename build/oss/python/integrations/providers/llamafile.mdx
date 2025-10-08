@@ -1,0 +1,43 @@
+---
+title: Llamafile
+---
+
+>[llamafile](https://github.com/Mozilla-Ocho/llamafile) lets you distribute and run LLMs
+> with a single file.
+
+>`llamafile` makes open LLMs much more accessible to both developers and end users.
+> `llamafile` is doing that by combining [llama.cpp](https://github.com/ggerganov/llama.cpp) with
+> [Cosmopolitan Libc](https://github.com/jart/cosmopolitan) into one framework that collapses
+> all the complexity of LLMs down to a single-file executable (called a "llamafile")
+> that runs locally on most computers, with no installation.
+
+
+## Installation and Setup
+
+See the [installation instructions](https://github.com/Mozilla-Ocho/llamafile?tab=readme-ov-file#quickstart).
+
+## LLMs
+
+See a [usage example](/oss/python/integrations/llms/llamafile).
+
+```python
+from langchain_community.llms.llamafile import Llamafile
+```
+
+## Embedding models
+
+
+```python
+from langchain_community.embeddings import LlamafileEmbeddings
+```
+
+---
+
+<CardGroup cols={2}>
+  <Card title="View Source" icon="eye" href="https://github.com/langchain-ai/docs/blob/main/src/oss/python/integrations/providers/llamafile.mdx">
+    See the source of this page on GitHub
+  </Card>
+  <Card title="Edit Source" icon="pen-to-square" href="https://github.com/langchain-ai/docs/edit/main/src/oss/python/integrations/providers/llamafile.mdx">
+    Edit the source of this page on GitHub
+  </Card>
+</CardGroup>

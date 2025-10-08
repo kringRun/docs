@@ -1,0 +1,40 @@
+---
+title: Bookend AI
+---
+
+Let's load the Bookend AI Embeddings class.
+
+```python
+from langchain_community.embeddings import BookendEmbeddings
+```
+
+```python
+embeddings = BookendEmbeddings(
+    domain="your_domain",
+    api_token="your_api_token",
+    model_id="your_embeddings_model_id",
+)
+```
+
+```python
+text = "This is a test document."
+```
+
+```python
+query_result = embeddings.embed_query(text)
+```
+
+```python
+doc_result = embeddings.embed_documents([text])
+```
+
+---
+
+<CardGroup cols={2}>
+  <Card title="View Source" icon="eye" href="https://github.com/langchain-ai/docs/blob/main/src/oss/python/integrations/text_embedding/bookend.mdx">
+    See the source of this page on GitHub
+  </Card>
+  <Card title="Edit Source" icon="pen-to-square" href="https://github.com/langchain-ai/docs/edit/main/src/oss/python/integrations/text_embedding/bookend.mdx">
+    Edit the source of this page on GitHub
+  </Card>
+</CardGroup>

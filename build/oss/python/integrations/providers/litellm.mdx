@@ -1,0 +1,40 @@
+---
+title: LiteLLM
+---
+
+>[LiteLLM](https://github.com/BerriAI/litellm) is a library that simplifies calling Anthropic, Azure, Huggingface, Replicate, etc.
+
+## Installation and setup
+
+<CodeGroup>
+```bash pip
+pip install langchain-litellm
+```
+
+```bash uv
+uv add langchain-litellm
+```
+</CodeGroup>
+
+## Chat Models
+```python
+from langchain_litellm import ChatLiteLLM
+```
+```python
+from langchain_litellm import ChatLiteLLMRouter
+```
+See more detail in the guide [here](/oss/python/integrations/chat/litellm).
+
+## API reference
+For detailed documentation of all `ChatLiteLLM` and `ChatLiteLLMRouter` features and configurations head to the API reference: https://github.com/Akshay-Dongare/langchain-litellm
+
+---
+
+<CardGroup cols={2}>
+  <Card title="View Source" icon="eye" href="https://github.com/langchain-ai/docs/blob/main/src/oss/python/integrations/providers/litellm.mdx">
+    See the source of this page on GitHub
+  </Card>
+  <Card title="Edit Source" icon="pen-to-square" href="https://github.com/langchain-ai/docs/edit/main/src/oss/python/integrations/providers/litellm.mdx">
+    Edit the source of this page on GitHub
+  </Card>
+</CardGroup>

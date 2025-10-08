@@ -1,0 +1,40 @@
+---
+title: EverNote
+---
+
+>[EverNote](https://evernote.com/) is intended for archiving and creating notes in which photos, audio and saved web content can be embedded. Notes are stored in virtual "notebooks" and can be tagged, annotated, edited, searched, and exported.
+
+## Installation and Setup
+
+First, you need to install `lxml` and `html2text` python packages.
+
+<CodeGroup>
+```bash pip
+pip install lxml
+pip install html2text
+```
+
+```bash uv
+uv add lxml
+uv add html2text
+```
+</CodeGroup>
+
+## Document Loader
+
+See a [usage example](/oss/python/integrations/document_loaders/evernote).
+
+```python
+from langchain_community.document_loaders import EverNoteLoader
+```
+
+---
+
+<CardGroup cols={2}>
+  <Card title="View Source" icon="eye" href="https://github.com/langchain-ai/docs/blob/main/src/oss/python/integrations/providers/evernote.mdx">
+    See the source of this page on GitHub
+  </Card>
+  <Card title="Edit Source" icon="pen-to-square" href="https://github.com/langchain-ai/docs/edit/main/src/oss/python/integrations/providers/evernote.mdx">
+    Edit the source of this page on GitHub
+  </Card>
+</CardGroup>

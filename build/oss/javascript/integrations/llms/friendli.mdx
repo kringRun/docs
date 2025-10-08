@@ -1,0 +1,46 @@
+---
+title: Friendli
+---
+
+> [Friendli](https://friendli.ai/) enhances AI application performance and optimizes cost savings with scalable, efficient deployment options, tailored for high-demand AI workloads.
+
+This tutorial guides you through integrating `Friendli` with LangChain.
+
+## Setup
+
+Ensure the `@langchain/community` is installed.
+
+import IntegrationInstallTooltip from '/snippets/javascript-integrations/integration-install-tooltip.mdx';
+
+<IntegrationInstallTooltip/>
+
+```bash npm
+npm install @langchain/community @langchain/core
+```
+
+Sign in to [Friendli Suite](https://suite.friendli.ai/) to create a Personal Access Token, and set it as the `FRIENDLI_TOKEN` environment.
+You can set team id as `FRIENDLI_TEAM` environment.
+
+You can initialize a Friendli chat model with selecting the model you want to use. The default model is `mixtral-8x7b-instruct-v0-1`. You can check the available models at [docs.friendli.ai](https://docs.friendli.ai/guides/serverless_endpoints/pricing#text-generation-models).
+
+## Usage
+
+import Friendli from "/snippets/javascript-integrations/examples/models/llm/friendli.mdx";
+
+<Friendli />
+
+## Related
+
+
+- [Models guide](/oss/javascript/langchain/models)
+
+---
+
+<CardGroup cols={2}>
+  <Card title="View Source" icon="eye" href="https://github.com/langchain-ai/docs/blob/main/src/oss/javascript/integrations/llms/friendli.mdx">
+    See the source of this page on GitHub
+  </Card>
+  <Card title="Edit Source" icon="pen-to-square" href="https://github.com/langchain-ai/docs/edit/main/src/oss/javascript/integrations/llms/friendli.mdx">
+    Edit the source of this page on GitHub
+  </Card>
+</CardGroup>
