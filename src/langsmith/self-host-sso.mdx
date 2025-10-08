@@ -95,7 +95,7 @@ ISSUER_SUB_CLAIM_OVERRIDES='{"https://idp.yourdomain.com": "customClaim"}'
 If unset, the default value for this configuration uses the `oid` claim when Azure Entra ID is used as the identity provider:
 
 ```
-ISSUER_SUB_CLAIM_OVERRIDES='{"https://login.microsoftonline.com/": "oid", "https://sts.windows.net/": "oid"}'
+ISSUER_SUB_CLAIM_OVERRIDES='{"https://login.microsoftonline.com/": "oid", "https://sts.windows.net/": "oid", "https://login.microsoftonline.us/": "oid", "https://login.partner.microsoftonline.cn/": "oid"}'
 ```
 
 ### Google Workspace IdP setup
