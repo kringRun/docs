@@ -23,7 +23,7 @@ import AlphaCallout from '/snippets/alpha-lc-callout.mdx';
 
 **LangChain 1.0 is a focused, production-ready foundation for building agentic applications.** We've streamlined the framework around three core improvements:
 
-### 1. New agent abstraction: `create_agent`
+### 1. Build agents with `create_agent`
 
 The new `create_agent` function is the standard way to build agents in LangChain 1.0. It replaces `langgraph.prebuilt.create_react_agent` with a cleaner, more powerful API:
 
@@ -43,7 +43,7 @@ result = agent.invoke({
 
 **Built on LangGraph for production features.** Because `create_agent` is implemented on top of LangGraph, you automatically get enterprise-grade capabilities like persistence, streaming, human-in-the-loop, and time travel—without needing to learn graph workflows.
 
-**Middleware makes agents extensible.** The defining feature of `create_agent` is [middleware](#middleware-context-engineering-at-scale): a unified abstraction that lets you customize prompts, tools, validation, and state management without hitting framework limitations. Previously, sophisticated behaviors required forking the framework or dropping to raw LangGraph. Now, middleware scales from simple prompt tweaks to complex multi-agent orchestration.
+**Middleware makes agents extensible.** The defining feature of `create_agent` is [middleware](#middleware): a unified abstraction that lets you customize prompts, tools, validation, and state management without hitting framework limitations. Previously, sophisticated behaviors required forking the framework or dropping to raw LangGraph. Now, middleware scales from simple prompt tweaks to complex multi-agent orchestration.
 
 **Improved structured output.** Structured output is now generated in the main agent loop instead of requiring an additional LLM call, eliminating extra costs and latency. Models can choose between calling tools or generating structured output directly.
 
@@ -51,7 +51,7 @@ result = agent.invoke({
   Read the full create_agent documentation
 </Card>
 
-### 2. Standard content blocks across all providers
+### 2. Standard content blocks
 
 The new `.content_blocks` property standardizes how you work with modern LLM features—reasoning traces, citations, server-side tool calls, and more—across every provider:
 
@@ -75,7 +75,7 @@ for block in response.content_blocks:
   Read the full content blocks documentation
 </Card>
 
-### 3. Legacy code moved to `langchain-classic`
+### 3. `langchain-classic` package
 
 LangChain 1.0 has a streamlined focus: standard interfaces (`init_chat_model`, `init_embeddings`) and production-ready agents built on LangGraph.
 
@@ -119,11 +119,11 @@ result = agent.invoke({
 
 **Simple for beginners, powerful for experts.** Start with basic configuration, then extend with middleware as your needs grow.
 
-### Middleware: Context engineering at scale
+### Middleware
 
 **Middleware is the defining feature of LangChain 1.0.** It solves the critical problem that plagued earlier agent frameworks: developers had to "graduate off" frameworks when they needed sophisticated control over agent behavior. Middleware eliminates this limitation.
 
-#### Context engineering is the key to agent performance
+#### Why context engineering matters
 
 The difference between a mediocre agent and an exceptional one often comes down to **context engineering**: getting the right information to the model at the right time. This includes:
 
@@ -135,7 +135,7 @@ The difference between a mediocre agent and an exceptional one often comes down 
 
 Previously, these capabilities were scattered across different APIs with different interfaces and limitations. Many were simply impossible without forking the framework or dropping down to LangGraph directly.
 
-#### Middleware: One abstraction, many possibilities
+#### One abstraction, many uses
 
 Middleware provides a single, composable abstraction for all context engineering needs. It gives you **granular control** over what happens at every stage of the agent's execution:
 
@@ -163,7 +163,7 @@ Middleware intercepts the agent's execution flow at key points, allowing you to 
 
 Each middleware method receives the full agent state and can return updates or routing decisions. Middleware executes in the order you define, allowing you to build sophisticated behaviors by stacking simple components.
 
-#### Example: Multi-stage agent with context-aware behavior
+#### Example: Multi-stage agent
 
 Here's a real-world example: an agent that adapts its behavior based on whether it's in research mode or execution mode, automatically managing conversation length and requiring approval for sensitive actions.
 
@@ -240,7 +240,7 @@ This agent automatically shifts between research and execution modes based on co
   See the complete middleware guide
 </Card>
 
-### Production features from LangGraph
+### Production features
 
 Because `create_agent` is built on LangGraph, you automatically get enterprise-grade capabilities:
 
@@ -261,7 +261,7 @@ Because `create_agent` is built on LangGraph, you automatically get enterprise-g
 
 You don't need to learn LangGraph to use these features—they work out of the box. But when you need custom graph structures, you can drop down to LangGraph directly.
 
-### Improved structured output
+### Structured output
 
 `create_agent` has improved structured output generation:
 
@@ -300,7 +300,7 @@ print(repr(result["structured_response"]))
 - **Parsing errors**: Model generates data that doesn't match desired structure
 - **Multiple tool calls**: Model generates 2+ tool calls for structured output schemas
 
-### Built-in agent patterns
+### Built-in patterns
 
 Common patterns like summarization, human-in-the-loop, and guardrails are offered as built-in middleware:
 
@@ -401,7 +401,7 @@ from langchain_classic.chains import ...
 
 ## <Icon icon="route" /> Migration guide
 
-### Migrating from `create_react_agent` to `create_agent`
+### Migrating to create_agent
 
 #### Quick reference
 
@@ -581,7 +581,7 @@ agent = create_agent(
 The `@modify_model_request` decorator is shorthand for creating middleware that modifies model requests. This is the simplest way to implement dynamic context engineering—adjusting what the model sees based on the current state.
 </Note>
 
-##### Dynamic prompts with context
+##### Dynamic prompts (with context)
 
 <Tabs>
   <Tab title="Before (V0)">
@@ -1019,7 +1019,7 @@ agent = create_agent(
 )
 ```
 
-#### Pre-bound models no longer supported
+#### Pre-bound models removed
 
 To better support structured output, `create_agent` no longer accepts pre-bound models with tools or configuration:
 
