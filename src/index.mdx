@@ -1,62 +1,68 @@
 ---
 title: LangChain docs home
 sidebarTitle: Home
-description: "The platform for reliable agents"
-mode: "wide"
+description: "The agent engineering platform for developers building reliable agents"
+mode: "custom"
 ---
 
+[NEED COPY FOR HERE]
 
-# Frameworks
+
+# Open-source frameworks
 
 <CardGroup cols={2}>
     <Card
-        title="LangChain - Python"
-        href="https://python.langchain.com/docs/introduction/"
+        title="LangChain"
+        href="/oss/python/langchain/overview"
+        icon="link"
     >
-  Open-source framework for developing applications powered by large language models (LLMs).
-    </Card>
-
-    <Card
-        title="LangChain - JavaScript"
-        href="https://js.langchain.com/docs/introduction/"
-    >
-  Open-source framework for developing applications powered by large language models (LLMs).
+    Open-source framework for developing applications powered by large language models (LLMs). Available in Python and JavaScript.
     </Card>
 
     <Card
         title="LangGraph"
-        href="/oss/python"
+        href="/oss/python/langgraph/overview"
+        icon="circle-nodes"
     >
-  Low-level orchestration framework for building, managing, and deploying long-running, stateful agents.
+    Low-level orchestration framework for building, managing, and deploying long-running, stateful agents. Available in Python and JavaScript.
     </Card>
 
 </CardGroup>
 
-# Platforms
+# LangSmith offerings
 
 <CardGroup cols={2}>
     <Card
-        title="LangGraph Platform"
-        href="/langgraph-platform/"
+        title="Observability"
+        href="/langsmith/observability"
+        icon="magnifying-glass"
     >
-    Commercial platform for developing, deploying, and scaling long-running agents and worflows.
+    Debug faster with visibility into each step your application takes when handling a request.
     </Card>
 
     <Card
-        title="LangSmith"
-        href="https://docs.smith.langchain.com/"
+        title="Evaluation"
+        href="/langsmith/evaluation"
+        icon="chart-simple"
     >
-    Observability and evals platform for debugging, testing, and monitoring any AI application.
+    Measure quality of your applications over time to build more reliable AI applications.
     </Card>
-</CardGroup>
 
-# Experimental
-
-<CardGroup cols={2}>
     <Card
-        title="LangChain Labs"
-        href="/labs"
+        title="Prompt Engineering"
+        href="/langsmith/prompt-engineering"
+        icon="terminal"
     >
-    A collection of agents and experimental AI products.
+    Iterate on prompts with automatic version contol and collaboration features.
     </Card>
+
+    <Card
+        title="Deployment"
+        href="/langsmith"
+        icon="rocket-launch"
+    >
+    Deploy and manage long-running, stateful agent workflows in production.
+    </Card>
+
 </CardGroup>
+
