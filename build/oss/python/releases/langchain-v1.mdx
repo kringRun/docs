@@ -1,0 +1,450 @@
+---
+title: LangChain v1
+sidebarTitle: Release notes
+---
+
+import AlphaCallout from '/snippets/alpha-lc-callout.mdx';
+
+<AlphaCallout />
+
+<Note>
+    1.0 Alpha releases are available for most packages. Only the following currently support new content blocks:
+
+    - `langchain`
+    - `langchain-core`
+    - `langchain-anthropic`
+    - `langchain-aws`
+    - `langchain-openai`
+    - `langchain-google-genai`
+    - `langchain-ollama`
+
+    Broader support for content blocks will be rolled out during the alpha period and following stable release.
+</Note>
+
+## What's new
+
+**LangChain 1.0 is a focused, production-ready foundation for building agentic applications.** We've streamlined the framework around three core improvements:
+
+<Steps>
+    <Step title="Build agents with `create_agent`">
+        The new `create_agent` function is now the standard way to build agents in LangChain, replacing `langgraph.prebuilt.create_react_agent` with a cleaner, more powerful API:
+
+        ```python
+        from langchain.agents import create_agent
+
+        agent = create_agent(
+            model="anthropic:claude-4-5-sonnet",
+            tools=[search_web, analyze_data, send_email],
+            system_prompt="You are a helpful research assistant."
+        )
+
+        result = agent.invoke({
+            "messages": [{"role": "user", "content": "Research AI safety trends"}]
+        })
+        ```
+
+        **Built on LangGraph for production features.** Because `create_agent` is implemented on top of LangGraph, you automatically get enterprise-grade capabilities like persistence, streaming, human-in-the-loop, and time travel—without needing to learn graph workflows.
+
+        **Middleware makes agents extensible.** The defining feature of `create_agent` is [middleware](#middleware): a unified abstraction that lets you customize prompts, tools, validation, and state management without hitting framework limitations. Previously, sophisticated behaviors required forking the framework or dropping to raw LangGraph. Now, middleware scales from simple prompt tweaks to complex multi-agent orchestration.
+
+        **Improved structured output.** Structured output is now generated in the main agent loop instead of requiring an additional LLM call, eliminating extra costs and latency. Models can choose between calling tools or generating structured output directly.
+
+        <Card title="Learn More" icon="book" href="#the-new-create_agent-api" arrow>
+            Read the full `create_agent` documentation
+        </Card>
+    </Step>
+    <Step title="Standard content blocks">
+        The new `.content_blocks` property standardizes how you work with modern LLM features—reasoning traces, citations, server-side tool calls, and more—across every provider. Switch between OpenAI, Anthropic, Google, or any provider without rewriting content parsing logic.
+
+        <Card title="Learn More" icon="book" href="#standard-content-blocks" arrow>
+            Read the full content blocks documentation
+        </Card>
+    </Step>
+    <Step title="`langchain-classic` package">
+        LangChain 1.0 has a streamlined focus: standard interfaces (`init_chat_model`, `init_embeddings`) and production-ready agents built on LangGraph.
+
+        Everything else—including legacy chains, the indexing API, and `langchain-community` exports—has moved to the `langchain-classic` package. This keeps the core package lean while maintaining backward compatibility.
+
+        <Card title="Learn More" icon="book" href="#langchain-classic" arrow>
+            Read the full `langchain-classic` documentation
+        </Card>
+    </Step>
+</Steps>
+
+---
+
+### `create_agent` API
+
+`create_agent` is the standard way to build agents in LangChain 1.0. It provides a simpler interface than `langgraph.prebuilt.create_react_agent` while offering more extensibility through middleware.
+
+```python
+from langchain.agents import create_agent
+
+agent = create_agent(
+    model="anthropic:claude-4-5-sonnet",
+    tools=[search_web, analyze_data, send_email],
+    system_prompt="You are a helpful research assistant."
+)
+
+result = agent.invoke({
+    "messages": [{"role": "user", "content": "Research AI safety trends"}]
+})
+```
+
+**Simple for beginners, powerful for experts.** Start with basic configuration, then extend with middleware as your needs grow.
+
+#### Middleware
+
+**Middleware is the defining feature of LangChain 1.0.** It solves the critical problem that plagued earlier agent frameworks: developers had to "graduate off" frameworks when they needed sophisticated control over agent behavior. Middleware eliminates this limitation.
+
+##### Why context engineering matters
+
+The difference between a mediocre agent and an exceptional one often comes down to **context engineering**: getting the right information to the model at the right time. This includes:
+
+- **Dynamic prompts** that adapt based on conversation state, user expertise, or task complexity
+- **Selective tool access** that only exposes relevant tools based on the current context
+- **Conversation management** that summarizes history when it gets too long
+- **State management** that tracks custom information across turns
+- **Guardrails and validation** that ensure responses meet your requirements
+
+Previously, these capabilities were scattered across different APIs with different interfaces and limitations. Many were simply impossible without forking the framework or dropping down to LangGraph directly.
+
+##### One abstraction, many uses
+
+Middleware provides a single, composable abstraction for all context engineering needs. It gives you **granular control** over what happens at every stage of the agent's execution:
+
+<CardGroup cols={3}>
+    <Card title="No Framework Ceiling" icon="rocket">
+        Build sophisticated agent behaviors without hitting framework limitations. Never need to "graduate  off" LangChain.
+    </Card>
+    <Card title="Composable" icon="plug">
+        Stack multiple middleware to build complex behaviors from simple, reusable components.
+    </Card>
+    <Card title="Standard Interface" icon="shapes">
+        One consistent API for all agent customization, from simple prompt tweaks to complex multi-agent orchestration.
+    </Card>
+</CardGroup>
+
+##### How middleware works
+
+Middleware intercepts the agent's execution flow at key points, allowing you to inspect and modify state, requests, and responses:
+
+| Method | Purpose | What you can do |
+|--------|---------|-----------------|
+| `before_model` | Runs before calling the LLM | Update state, trim messages, redirect to different nodes |
+| `modify_model_request` | Modifies the LLM request | Change prompts, switch models, adjust tools—without permanent state changes |
+| `after_model` | Runs after the LLM responds | Validate responses, apply guardrails, update state, redirect flow |
+
+Each middleware method receives the full agent state and can return updates or routing decisions. Middleware executes in the order you define, allowing you to build sophisticated behaviors by stacking simple components.
+
+##### Example: Multi-stage agent
+
+Here's a real-world example: an agent that adapts its behavior based on whether it's in research mode or execution mode, automatically managing conversation length and requiring approval for sensitive actions.
+
+```python
+from langchain.agents import create_agent
+from langchain.agents.middleware import (
+    AgentMiddleware,
+    SummarizationMiddleware,
+    HumanInTheLoopMiddleware
+)
+
+class ModeBasedBehavior(AgentMiddleware):
+    """Adapt agent behavior based on conversation mode."""
+
+    def modify_model_request(self, request, state, runtime):
+        # Check if we have tool results indicating research phase
+        recent_messages = state["messages"][-5:]
+        has_search_results = any(
+            msg.type == "tool" and "search" in msg.name.lower()
+            for msg in recent_messages
+            if hasattr(msg, "name")
+        )
+
+        if has_search_results:
+            # Research mode: focus on analysis
+            request.system_prompt = (
+                "You are in research mode. Synthesize information from search results. "
+                "Be thorough and cite sources. Don't execute actions yet."
+            )
+            request.tools = [search_web, analyze_data]
+        else:
+            # Execution mode: focus on taking action
+            request.system_prompt = (
+                "You are in execution mode. Based on your research, "
+                "take concrete actions to help the user."
+            )
+            request.tools = [search_web, analyze_data, send_email, create_calendar_event]
+
+        return request
+
+# Compose multiple middleware for sophisticated behavior
+agent = create_agent(
+    model="anthropic:claude-4-5-sonnet",
+    tools=[search_web, analyze_data, send_email, create_calendar_event],
+    middleware=[
+        ModeBasedBehavior(),                    # Context-aware behavior
+        SummarizationMiddleware(                # Manage conversation length
+            model=model,
+            max_tokens_before_summary=500
+        ),
+        HumanInTheLoopMiddleware(               # Require approval for sensitive actions
+            interrupt_on={
+                "send_email": {
+                    "allow_accept": True,
+                    "allow_edit": True
+                },
+                "create_calendar_event": {
+                    "allow_accept": True,
+                    "allow_edit": True
+                }
+            }
+        ),
+    ]
+)
+```
+
+This agent automatically shifts between research and execution modes based on conversation state—something that would have required framework modifications in earlier versions.
+
+<Card title="Deep Dive" icon="compass" href="https://blog.langchain.com/agent-middleware/">
+    Read the Agent Middleware blog post
+</Card>
+
+<Card title="Full Documentation" icon="book" href="/oss/python/python/langchain/middleware">
+    See the complete middleware guide
+</Card>
+
+#### Production features
+
+Because `create_agent` is built on LangGraph, you automatically get enterprise-grade capabilities:
+
+<CardGroup cols={2}>
+    <Card title="Persistence" icon="database">
+        Conversations automatically persist across sessions with built-in checkpointing
+    </Card>
+    <Card title="Streaming" icon="water">
+        Stream tokens, tool calls, and reasoning traces in real-time
+    </Card>
+    <Card title="Human-in-the-loop" icon="hand">
+        Pause agent execution for human approval before sensitive actions
+    </Card>
+    <Card title="Time travel" icon="clock-rotate-left">
+        Rewind conversations to any point and explore alternate paths
+    </Card>
+</CardGroup>
+
+You don't need to learn LangGraph to use these features—they work out of the box. But when you need custom graph structures, you can drop down to LangGraph directly.
+
+#### Structured output
+
+`create_agent` has improved structured output generation:
+
+- **Main loop integration**: Structured output is now generated in the main loop instead of requiring an additional LLM call
+- **Tool/output choice**: Models can choose between calling tools or using provider-side structured output generation
+- **Cost reduction**: Eliminates extra expense from additional LLM calls
+
+```python
+from langchain.agents import create_agent
+from langchain.agents.structured_output import ToolStrategy
+from pydantic import BaseModel
+
+class Weather(BaseModel):
+    temperature: float
+    condition: str
+
+def weather_tool(city: str) -> str:
+    """Get the weather for a city."""
+    return f"it's sunny and 70 degrees in {city}"
+
+agent = create_agent(
+    "openai:gpt-4o-mini",
+    tools=[weather_tool],
+    response_format=ToolStrategy(Weather)
+)
+
+result = agent.invoke({
+    "messages": [{"role": "user", "content": "What's the weather in SF?"}]
+})
+
+print(repr(result["structured_response"]))
+#> Weather(temperature=70.0, condition='sunny')
+```
+
+**Error handling**: Control error handling via the `handle_errors` parameter to `ToolStrategy`:
+- **Parsing errors**: Model generates data that doesn't match desired structure
+- **Multiple tool calls**: Model generates 2+ tool calls for structured output schemas
+
+#### Built-in patterns
+
+Common patterns like summarization, human-in-the-loop, and guardrails are offered as built-in middleware:
+
+```python
+from langchain.agents import create_agent
+from langchain.agents.middleware import (
+    SummarizationMiddleware,
+    HumanInTheLoopMiddleware,
+)
+
+agent = create_agent(
+    model="anthropic:claude-4-5-sonnet",
+    tools=tools,
+    middleware=[
+        SummarizationMiddleware(
+            model=model,
+            max_tokens_before_summary=500
+        ),
+        HumanInTheLoopMiddleware(
+            interrupt_on={
+                "send_email": {
+                    "allow_accept": True,
+                    "allow_respond": True,
+                    "allow_edit": True
+                }
+            }
+        ),
+    ]
+)
+```
+
+<Card title="Learn More" icon="book" href="https://blog.langchain.com/langchain-langchain-1-0-alpha-releases/">
+    Read the LangChain 1.0 announcement
+</Card>
+
+### Standard content blocks
+
+The new `.content_blocks` property provides unified access to modern LLM features across all providers:
+
+```python
+from langchain_anthropic import ChatAnthropic
+
+model = ChatAnthropic(model="claude-4-5-sonnet")
+response = model.invoke("What's the capital of France?")
+
+# Unified access to content blocks
+for block in response.content_blocks:
+    if block.type == "thinking":
+        print(f"Model reasoning: {block.thinking}")
+    elif block.type == "text":
+        print(f"Response: {block.text}")
+    elif block.type == "tool_use":
+        print(f"Tool call: {block.name}({block.input})")
+```
+
+#### Benefits
+
+- **Provider agnostic**: Access reasoning traces, citations, tool calls, and other features using the same API regardless of provider
+- **Future proof**: New LLM capabilities are automatically available through content blocks
+- **Type safe**: Full type hints for all content block types
+
+<Card title="Content Blocks Documentation" icon="message" href="/oss/python/langchain/messages#content">
+    Learn about the new content blocks API
+</Card>
+
+### LangChain Classic
+
+LangChain 1.0 focuses on standard interfaces and production-ready agents. Legacy functionality has moved to `langchain-classic` to keep the core package lean.
+
+#### What moved to langchain-classic
+
+- Legacy chains and chain implementations
+- The indexing API
+- `langchain-community` exports
+- Other deprecated functionality
+
+#### Migration
+
+If you use any of this functionality, install `langchain-classic`:
+
+```bash
+pip install langchain-classic
+```
+
+Then update your imports:
+
+```python
+# Before
+from langchain import ...
+from langchain.chains import ...
+
+# After
+from langchain_classic import ...
+from langchain_classic.chains import ...
+```
+
+---
+
+## Breaking changes
+
+- **Dropped Python 3.9 support**: All LangChain packages now require **Python 3.10 or higher**. Python 3.9 reaches [end of life](https://devguide.python.org/versions/) in October 2025.
+
+- **Updated return type for chat models**: The return type signature for chat model invocation has been fixed from `BaseMessage` to `AIMessage`. Custom chat models implementing `bind_tools` should update their return signature:
+
+    ```python
+    # Before
+    Runnable[LanguageModelInput, BaseMessage]:
+
+    # After
+    Runnable[LanguageModelInput, AIMessage]:
+    ```
+
+- **Default message format for OpenAI Responses API**: When interacting with the Responses API, `langchain-openai` now defaults to storing response items in message `content`. To restore previous behavior, set the `LC_OUTPUT_VERSION` environment variable to `v0`, or specify `output_version="v0"` when instantiating `ChatOpenAI`.
+
+- **Default `max_tokens` in `langchain-anthropic`**: The `max_tokens` parameter will now default to higher values based on the model chosen, rather than the previous default of `1024`. If you relied on the old default, explicitly set `max_tokens=1024`.
+
+- **Legacy code moved to `langchain-classic`**: Existing functionality outside the focus of standard interfaces and agents, such as the indexing API and exports of `langchain-community` features, have been moved to the `langchain-classic` package. Install `langchain-classic` and update imports from `langchain` to `langchain_classic`.
+
+- **Removal of deprecated objects**: Methods, functions, and other objects that were already deprecated and slated for removal in 1.0 have been deleted. Check the [deprecation notices](https://python.langchain.com/docs/versions/migrating_chains) from previous versions for replacement APIs.
+
+## Deprecations
+
+- **`.text()` is now a property**: Use of the `.text()` method on message objects should drop the parentheses:
+
+    ```python
+    # Before
+    text = response.text()  # Method call
+
+    # After
+    text = response.text    # Property access
+    ```
+
+    Existing usage patterns (i.e., `.text()`) will continue to function but now emit a warning.
+
+---
+
+## Reporting issues
+
+Please report any issues discovered with 1.0 on [GitHub](https://github.com/langchain-ai/langchain/issues) using the [`'v1'` label](https://github.com/langchain-ai/langchain/issues?q=state%3Aopen%20label%3Av1).
+
+## Additional resources
+
+<CardGroup cols={3}>
+    <Card title="LangChain 1.0" icon="rocket" href="https://blog.langchain.com/langchain-langchain-1-0-alpha-releases/">
+        Read the announcement
+    </Card>
+    <Card title="Middleware Guide" icon="puzzle-piece" href="https://blog.langchain.com/agent-middleware/">
+        Deep dive into middleware
+    </Card>
+    <Card title="Agents Documentation" icon="book" href="/oss/python/langchain/agents" arrow>
+        Full agent documentation
+    </Card>
+    <Card title="Message Content" icon="message" href="/oss/python/langchain/messages#content" arrow>
+        New content blocks API
+    </Card>
+    <Card title="LangChain Discord" icon="discord" href="https://discord.gg/langchain">
+        Join the community
+    </Card>
+    <Card title="GitHub" icon="github" href="https://github.com/langchain-ai/langchain">
+        Report issues or contribute
+    </Card>
+</CardGroup>
+
+## See also
+
+- [Versioning](/oss/python/versioning) - Understanding version numbers
+- [Release policy](/oss/python/release-policy) - Detailed release policies
+
+---
+
+<Callout icon="pen-to-square" iconType="regular">
+  [Edit the source of this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/python/releases/langchain-v1.mdx)
+</Callout>
