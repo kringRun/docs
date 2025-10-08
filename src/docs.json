@@ -233,12 +233,12 @@
               },
               {
                 "tab": "Integrations",
-                "groups": [
+                "pages": [
+                  "oss/python/integrations/providers/overview",
                   {
                     "group": "Providers",
                     "icon": "user-group",
                     "pages": [
-                      "oss/python/integrations/providers/index",
                       {
                         "group": "OpenAI",
                         "pages": [
@@ -393,12 +393,12 @@
               },
               {
                 "tab": "Contributing",
-                "groups": [
+                "pages": [
+                  "oss/python/contributing/overview",
                   {
                     "group": "Contribute",
                     "icon": "heart-circle-plus",
                     "pages": [
-                      "oss/python/contributing/index",
                       "oss/python/contributing/documentation",
                       "oss/python/contributing/code",
                       "oss/python/contributing/review"
@@ -1263,12 +1263,12 @@
               },
               {
                 "tab": "Integrations",
-                "groups": [
+                "pages": [
+                  "oss/javascript/integrations/providers/overview",
                   {
                     "group": "Providers",
                     "icon": "user-group",
                     "pages": [
-                      "oss/javascript/integrations/providers/index",
                       {
                         "group": "OpenAI",
                         "pages": [
@@ -1434,12 +1434,12 @@
               },
               {
                 "tab": "Contributing",
-                "groups": [
+                "pages": [
+                  "oss/javascript/contributing/overview",
                   {
                     "group": "Contribute",
                     "icon": "heart-circle-plus",
                     "pages": [
-                      "oss/javascript/contributing/index",
                       "oss/javascript/contributing/documentation",
                       "oss/javascript/contributing/code",
                       "oss/javascript/contributing/review"
