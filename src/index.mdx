@@ -1,22 +1,8 @@
 ---
 title:
-sidebarTitle: Home
-description:
+sidebarTitle: All products
 mode: "center"
 ---
-
-<img
-    className="block dark:hidden"
-    src="/images/brand/langchain-docs-teal.svg"
-    alt="Light mode LangChain docs"
-/>
-
-<img
-    className="hidden dark:block"
-    src="/images/brand/langchain-docs-lilac.svg"
-    alt="Dark mode LangChain Docs"
-/>
-
 
 # The agent engineering platform for developers building reliable agents
 
@@ -24,13 +10,16 @@ mode: "center"
 
 ## Open-source frameworks
 
+<Tabs>
+<Tab title="Python" icon="python">
+
 <CardGroup cols={2}>
     <Card
         title="LangChain"
         href="/oss/python/langchain/overview"
         icon="link"
     >
-    Open-source framework for developing applications powered by large language models (LLMs). Available in Python and JavaScript.
+    Open-source framework for developing applications powered by large language models (LLMs).
     </Card>
 
     <Card
@@ -38,10 +27,33 @@ mode: "center"
         href="/oss/python/langgraph/overview"
         icon="circle-nodes"
     >
+    Low-level orchestration framework for building, managing, and deploying long-running, stateful agents.
+    </Card>
+
+</CardGroup>
+
+</Tab>
+<Tab title="JavaScript" icon="js">
+<CardGroup cols={2}>
+    <Card
+        title="LangChain"
+        href="/oss/javascript/langchain/overview"
+        icon="link"
+    >
+    Open-source framework for developing applications powered by large language models (LLMs). Available in Python and JavaScript.
+    </Card>
+
+    <Card
+        title="LangGraph"
+        href="/oss/javascript/langgraph/overview"
+        icon="circle-nodes"
+    >
     Low-level orchestration framework for building, managing, and deploying long-running, stateful agents. Available in Python and JavaScript.
     </Card>
 
 </CardGroup>
+</Tab>
+</Tabs>
 
 ## LangSmith offerings
 
