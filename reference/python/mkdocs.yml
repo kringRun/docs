@@ -191,61 +191,101 @@ plugins:
             # Import external inventories for cross-referencing documentation
             - https://docs.python.org/3/objects.inv
           options:
+            # # https://mkdocstrings.github.io/python/usage/#load_external_modules
+            # load_external_modules: true
+
             preload_modules:
+              # https://mkdocstrings.github.io/python/usage/configuration/general/#preload_modules
               # Preload modules before collecting documentation to enable cross-references
-              # TODO: understand this better
               - langchain
               - langchain_core
+
             # Generate objects.inv file for this site to enable cross-referencing from other sites
             # (e.g. what the python langchain.com site does above)
             enable_inventory: true
-            # Order members by their appearance in source code (vs alphabetical)
+
+            # https://mkdocstrings.github.io/python/usage/configuration/members/#inherited_members
+            # Include members inherited from base classes
+            # This should probably be disabled at the global scope - each module should decide for itself
+            inherited_members: true
+
+            # https://mkdocstrings.github.io/python/usage/configuration/members/#members_order
+            # Order members by their appearance in source code
+            # Members will still be grouped by category according to the group_by_category option (defaults to true)
             members_order: source
-            # Allow dynamic inspection of objects when static analysis fails
-            # TODO: understand the implications of this better
-            allow_inspection: true
-            # Heading level (h2) for the documented object's name
-            heading_level: 2
+
+            # https://mkdocstrings.github.io/python/usage/configuration/headings/#parameter_headings
+            # TODO: verify this works as expected, since it is labeled as insiders-only
+            parameter_headings: true
+
+            # https://mkdocstrings.github.io/python/usage/configuration/general/#show_bases
             # Show base classes for documented classes
             show_bases: true
-            # Hide source code in documentation (only show signatures and docstrings)
-            show_source: false
-            # Show one-line summaries in tables of contents
-            summary: true
-            # Include members inherited from base classes
-            inherited_members: true
-            selection:
-              # Parse docstrings using Google style
-              docstring_style: google
-            # Render docstring sections (Args, Returns, etc.) as tables
-            docstring_section_style: table
+
+            # https://mkdocstrings.github.io/python/usage/configuration/general/#show_source
+            # Whether to show a dropdown with the source code for documented items
+            show_source: true
+
+            summary:
+              # https://mkdocstrings.github.io/python/usage/configuration/members/#summary
+              # Show one-line summaries for methods/functions and modules at top of page
+              functions: true
+
+            # https://mkdocstrings.github.io/python/usage/configuration/docstrings/#docstring_style
+            # Parse docstrings using Google style
+            docstring_style: google
+
+            # https://mkdocstrings.github.io/python/usage/configuration/docstrings/#docstring_section_style
+            # The style used to render docstring sections.
+            docstring_section_style: spacy
+
+            # https://mkdocstrings.github.io/python/usage/configuration/docstrings/#merge_init_into_class
+            # Merges init method with class signature & docstring
+            merge_init_into_class: true
+
             # Hide the top-level module/package entry from the table of contents
+            # (Not needed since each module is documented on its own page with its own title)
             show_root_toc_entry: false
-            # Display function/method signatures
-            show_signature: true
+
+            # https://mkdocstrings.github.io/python/usage/configuration/headings/#show_category_heading
+            show_category_heading: true
+
+            # https://mkdocstrings.github.io/python/usage/configuration/signatures/#show_signature_annotations
             # Show type annotations in signatures
             show_signature_annotations: true
+
+            # https://mkdocstrings.github.io/python/usage/configuration/signatures/#show_signature_type_parameters
+            show_signature_type_parameters: true
+
+            # https://mkdocstrings.github.io/python/usage/configuration/signatures/#separate_signature
             # Display signature on its own line separate from the heading
             separate_signature: true
-            # Maximum line length for signatures before wrapping
-            line_length: 60
+
+            # https://mkdocstrings.github.io/python/usage/configuration/signatures/#signature_crossrefs
+            # Make type annotations in signatures clickable cross-references
+            # TODO: verify this works as expected, since it is labeled as insiders-only
+            # I don't think it is? Maybe?
+            signature_crossrefs: true
+
+            # https://mkdocstrings.github.io/python/usage/configuration/headings/#show_symbol_type_heading
             # Show type (function, class, method, etc.) in the heading
             show_symbol_type_heading: true
+
+            # https://mkdocstrings.github.io/python/usage/configuration/headings/#show_symbol_type_toc
             # Show type (function, class, method, etc.) in table of contents
             show_symbol_type_toc: true
-            # Make type annotations in signatures clickable cross-references
-            signature_crossrefs: true
+
+            # https://mkdocstrings.github.io/python/usage/configuration/headings/#type_parameter_headings
+            type_parameter_headings: true
+
             extensions:
             - griffe_warnings_deprecated:
               # https://mkdocstrings.github.io/griffe-warnings-deprecated/
               # Uses our custom `deprecated` admonition
               # Title and label can be customized if desired
               kind: deprecated
-            options:
-              # Additional options for filtering members
-              filters:
-                # Exclude members starting with underscore (private members)
-                - "!^_"
+
+
 
 # https://www.mkdocs.org/user-guide/configuration/#nav
 # All paths relative to `./docs`
@@ -289,7 +329,9 @@ nav:
   - Integrations:
     - Overview: integrations/index.md
     - Popular:
-      - OpenAI: integrations/langchain_openai.md
+      - OpenAI:
+        - integrations/langchain_openai/index.md
+        - ChatOpenAI: integrations/langchain_openai/ChatOpenAI.md
       - Anthropic: integrations/langchain_anthropic.md
       - Google (GenAI): integrations/langchain_google_genai.md
       - Google (VertexAI): integrations/langchain_google_vertexai.md
@@ -323,6 +365,8 @@ nav:
       - Neo4J: integrations/langchain_neo4j.md
       - Nomic: integrations/langchain_nomic.md
       - Nvidia AI Endpoints: integrations/langchain_nvidia_ai_endpoints.md
+      - Ollama: integrations/langchain_ollama.md
+      # - OpenAI: integrations/langchain_openai/index.md
       - Perplexity: integrations/langchain_perplexity.md
       - Pinecone: integrations/langchain_pinecone.md
       - Postgres: integrations/langchain_postgres.md
