@@ -141,6 +141,13 @@
                 "pages": [
                   "oss/python/langchain/overview",
                   {
+                    "group": "LangChain v1.0",
+                    "pages": [
+                      "oss/python/releases/langchain-v1",
+                      "oss/python/migrate/langchain-v1"
+                    ]
+                  },
+                  {
                     "group": "Get started",
                     "pages": [
                       "oss/python/langchain/install",
@@ -385,6 +392,12 @@
                         "group": "Releases",
                         "pages": [
                           "oss/python/releases/langchain-v1"
+                        ]
+                      },
+                      {
+                        "group": "Migration guides",
+                        "pages": [
+                          "oss/python/migrate/langchain-v1"
                         ]
                       }
                     ]
@@ -1159,6 +1172,13 @@
                 "pages": [
                   "oss/javascript/langchain/overview",
                   {
+                    "group": "LangChain v1.0",
+                    "pages": [
+                      "oss/javascript/releases/langchain-v1",
+                      "oss/javascript/migrate/langchain-v1"
+                    ]
+                  },
+                  {
                     "group": "Get started",
                     "pages": [
                       "oss/javascript/langchain/install",
@@ -1426,6 +1446,12 @@
                         "group": "Releases",
                         "pages": [
                           "oss/javascript/releases/langchain-v1"
+                        ]
+                      },
+                      {
+                        "group": "Migration guides",
+                        "pages": [
+                          "oss/javascript/migrate/langchain-v1"
                         ]
                       }
                     ]
