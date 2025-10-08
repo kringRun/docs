@@ -264,7 +264,7 @@ class DocumentationBuilder:
                 content, input_path, target_language
             )
 
-            # Add "Suggested Edits" link for files in src/ directory
+            # Add "Edit Source" link for files in src/ directory
             processed_content = self._add_suggested_edits_link(
                 processed_content, input_path
             )
