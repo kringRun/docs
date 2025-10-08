@@ -487,6 +487,7 @@
                 "pages": [
                   "langsmith/home",
                   "langsmith/pricing-plans",
+                  "langsmith/pricing-faq",
                   {
                     "group": "App development",
                     "pages": [
@@ -586,7 +587,6 @@
                     "group": "Additional resources",
                     "pages": [
                       "langsmith/faq",
-                      "langsmith/pricing-faq",
                       "langsmith/regions-faq",
                       "langsmith/authentication-methods",
                       {
@@ -893,57 +893,63 @@
                     ]
                   },
                   {
-                    "group": "Agent deployment",
+                    "group": "Configure for deployment",
                     "pages": [
+                      "langsmith/application-structure",
                       {
-                        "group": "Configure for deployment",
+                        "group": "Setup",
                         "pages": [
-                          "langsmith/application-structure",
-                          {
-                            "group": "Setup",
-                            "pages": [
-                              "langsmith/setup-app-requirements-txt",
-                              "langsmith/setup-pyproject",
-                              "langsmith/setup-javascript",
-                              "langsmith/monorepo-support"
-                            ]
-                          },
-                          "langsmith/graph-rebuild",
-                          "langsmith/use-remote-graph",
-                          "langsmith/semantic-search",
-                          "langsmith/configure-ttl"
+                          "langsmith/setup-app-requirements-txt",
+                          "langsmith/setup-pyproject",
+                          "langsmith/setup-javascript",
+                          "langsmith/monorepo-support"
                         ]
                       },
-                      {
-                        "group": "Debugger",
-                        "pages": [
-                          "langsmith/debugger",
-                          "langsmith/quick-start-debugger",
-                          "langsmith/use-debugger",
-                          "langsmith/observability-debugger",
-                          "langsmith/troubleshooting-debugger"
-                        ]
-                      },
-                      {
-                        "group": "Auth & access control",
-                        "pages": [
-                          "langsmith/auth",
-                          "langsmith/custom-auth",
-                          "langsmith/set-up-custom-auth",
-                          "langsmith/resource-auth",
-                          "langsmith/add-auth-server",
-                          "langsmith/openapi-security",
-                          "langsmith/agent-auth"
-                        ]
-                      },
-                      {
-                        "group": "Server customization",
-                        "pages": [
-                           "langsmith/custom-lifespan",
-                           "langsmith/custom-middleware",
-                           "langsmith/custom-routes"
-                        ]
-                      }
+                      "langsmith/graph-rebuild",
+                      "langsmith/use-remote-graph",
+                      "langsmith/semantic-search",
+                      "langsmith/configure-ttl"
+                    ]
+                  },
+                  {
+                    "group": "Debugger",
+                    "pages": [
+                      "langsmith/debugger",
+                      "langsmith/quick-start-debugger",
+                      "langsmith/use-debugger",
+                      "langsmith/observability-debugger",
+                      "langsmith/troubleshooting-debugger"
+                    ]
+                  },
+                  {
+                    "group": "Auth & access control",
+                    "pages": [
+                      "langsmith/auth",
+                      "langsmith/custom-auth",
+                      "langsmith/set-up-custom-auth",
+                      "langsmith/resource-auth",
+                      "langsmith/add-auth-server",
+                      "langsmith/openapi-security",
+                      "langsmith/agent-auth"
+                    ]
+                  },
+                  {
+                    "group": "Server customization",
+                    "pages": [
+                        "langsmith/custom-lifespan",
+                        "langsmith/custom-middleware",
+                        "langsmith/custom-routes"
+                    ]
+                  }
+                ]
+              },
+              {
+                "tab": "Hosting",
+                "groups": [
+                  {
+                    "group": "Overview",
+                    "pages": [
+                      "langsmith/hosting"
                     ]
                   },
                   {
@@ -1820,57 +1826,63 @@
                     ]
                   },
                   {
-                    "group": "Agent deployment",
+                    "group": "Configure for deployment",
                     "pages": [
+                      "langsmith/application-structure",
                       {
-                        "group": "Configure for deployment",
+                        "group": "Setup",
                         "pages": [
-                          "langsmith/application-structure",
-                          {
-                            "group": "Setup",
-                            "pages": [
-                              "langsmith/setup-app-requirements-txt",
-                              "langsmith/setup-pyproject",
-                              "langsmith/setup-javascript",
-                              "langsmith/monorepo-support"
-                            ]
-                          },
-                          "langsmith/graph-rebuild",
-                          "langsmith/use-remote-graph",
-                          "langsmith/semantic-search",
-                          "langsmith/configure-ttl"
+                          "langsmith/setup-app-requirements-txt",
+                          "langsmith/setup-pyproject",
+                          "langsmith/setup-javascript",
+                          "langsmith/monorepo-support"
                         ]
                       },
-                      {
-                        "group": "Debugger",
-                        "pages": [
-                          "langsmith/debugger",
-                          "langsmith/quick-start-debugger",
-                          "langsmith/use-debugger",
-                          "langsmith/observability-debugger",
-                          "langsmith/troubleshooting-debugger"
-                        ]
-                      },
-                      {
-                        "group": "Auth & access control",
-                        "pages": [
-                          "langsmith/auth",
-                          "langsmith/custom-auth",
-                          "langsmith/set-up-custom-auth",
-                          "langsmith/resource-auth",
-                          "langsmith/add-auth-server",
-                          "langsmith/openapi-security",
-                          "langsmith/agent-auth"
-                        ]
-                      },
-                      {
-                        "group": "Server customization",
-                        "pages": [
-                           "langsmith/custom-lifespan",
-                           "langsmith/custom-middleware",
-                           "langsmith/custom-routes"
-                        ]
-                      }
+                      "langsmith/graph-rebuild",
+                      "langsmith/use-remote-graph",
+                      "langsmith/semantic-search",
+                      "langsmith/configure-ttl"
+                    ]
+                  },
+                  {
+                    "group": "Debugger",
+                    "pages": [
+                      "langsmith/debugger",
+                      "langsmith/quick-start-debugger",
+                      "langsmith/use-debugger",
+                      "langsmith/observability-debugger",
+                      "langsmith/troubleshooting-debugger"
+                    ]
+                  },
+                  {
+                    "group": "Auth & access control",
+                    "pages": [
+                      "langsmith/auth",
+                      "langsmith/custom-auth",
+                      "langsmith/set-up-custom-auth",
+                      "langsmith/resource-auth",
+                      "langsmith/add-auth-server",
+                      "langsmith/openapi-security",
+                      "langsmith/agent-auth"
+                    ]
+                  },
+                  {
+                    "group": "Server customization",
+                    "pages": [
+                        "langsmith/custom-lifespan",
+                        "langsmith/custom-middleware",
+                        "langsmith/custom-routes"
+                    ]
+                  }
+                ]
+              },
+              {
+                "tab": "Hosting",
+                "groups": [
+                  {
+                    "group": "Overview",
+                    "pages": [
+                      "langsmith/hosting"
                     ]
                   },
                   {
