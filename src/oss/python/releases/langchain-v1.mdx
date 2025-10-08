@@ -1,6 +1,7 @@
 ---
 title: LangChain Python v1.0
 sidebarTitle: v1.0
+description: New features, middleware-first architecture, and comprehensive migration guide for LangChain 1.0
 ---
 
 import AlphaCallout from '/snippets/alpha-lc-callout.mdx';
@@ -19,112 +20,166 @@ import AlphaCallout from '/snippets/alpha-lc-callout.mdx';
     Broader support will be rolled out during the alpha period.
 </Note>
 
-## <Icon icon="sparkles" /> New features
+## <Icon icon="sparkles" /> What's new in 1.0
 
-LangChain 1.0 introduces new features:
+**LangChain 1.0 is a focused, production-ready foundation for building agentic applications.** We've streamlined the framework around five core improvements:
 
-- A new `.content_blocks` property on message objects. This property provides a fully typed view of message content and standardizes modern LLM features across providers, including reasoning, citations, server-side tool calls, and more. There are no breaking changes associated with the new message content. Refer to the [message content](/oss/langchain/messages#content) docs for more info.
+### 1. Standard content blocks across all providers
 
-- New prebuilt `langgraph` chains and agents in `langchain`. The surface area of the `langchain` package has been reduced to focus on popular and essential abstractions. A new `langchain-classic` package is available for backward compatibility. Refer to the new [agents docs](/oss/langchain/agents) and to the [release notes](https://github.com/langchain-ai/langchain/releases/tag/langchain%3D%3D1.0.0a1) for more detail.
+The new `.content_blocks` property standardizes how you work with modern LLM features—reasoning traces, citations, server-side tool calls, and more—across every provider. No more provider-specific parsing logic.
 
-## <Icon icon="ban" /> Breaking changes
+```python
+from langchain_anthropic import ChatAnthropic
 
-<Accordion title="Dropped Python 3.9 support" icon="python">
-    Python 3.9 is [end of life](https://devguide.python.org/versions/) in October 2025. Consequently, all LangChain packages now require Python 3.10 or higher.
-</Accordion>
+model = ChatAnthropic(model="claude-3-7-sonnet-latest")
+response = model.invoke("What's the capital of France?")
 
-<Accordion title="Some legacy code moved to langchain-classic">
-    The new `langchain` package features a reduced surface area that focuses on standard interfaces for LangChain components (e.g., `init_chat_model` and `init_embeddings`) as well as pre-built chains and agents backed by the `langgraph` runtime.
+# Unified access to content blocks
+for block in response.content_blocks:
+    if block.type == "thinking":
+        print(f"Model reasoning: {block.thinking}")
+    elif block.type == "text":
+        print(f"Response: {block.text}")
+```
 
-    Existing functionality outside this focus, such as the indexing API and exports of `langchain-community` features, have been moved to the `langchain-classic` package.
+**The payoff**: Write once, work everywhere. Switch between OpenAI, Anthropic, Google, or any provider without rewriting content parsing logic.
 
-    To restore the previous behavior, update package installs of `langchain` to `langchain-classic`, and replace imports:
+<Card title="Content Blocks Documentation" icon="message" href="/oss/langchain/messages#content">
+  Learn about the new content blocks API
+</Card>
 
-    Before:
-    ```python
-    from langchain import ...
-    ```
+### 2. New agent abstraction: `create_agent`
 
-    After:
-    ```python
-    from langchain_classic import ...
-    ```
-</Accordion>
-
-<Accordion title="Updated return type for chat models">
-    The return type signature for chat model invocation has been fixed from `BaseMessage` to `AIMessage`. Custom chat models implementing `bind_tools` should update their return signature to avoid type checker errors:
-
-    Before:
-    ```python
-    Runnable[LanguageModelInput, BaseMessage]:
-    ```
-
-    After:
-    ```python
-    Runnable[LanguageModelInput, AIMessage]:
-    ```
-</Accordion>
-
-<Accordion title="Default message format for OpenAI Responses API">
-    When interacting with the Responses API, `langchain-openai` now defaults to storing response items in message `content`. This behavior was previously opt-in by specifying `output_version="responses/v1"` when instantiating `ChatOpenAI`. This was done to resolve `BadRequestError` that can arise in some multi-turn contexts.
-
-    **To restore previous behavior**, set the `LC_OUTPUT_VERSION` environment variable to `v0`, or specify `output_version="v0"` when instantiating `ChatOpenAI`:
-
-    ```python
-    os.environ["LC_OUTPUT_VERSION"] = "v0"
-
-    # or
-
-    from langchain_openai import ChatOpenAI
-
-    llm = ChatOpenAI(model="...", output_version="v0")
-    ```
-</Accordion>
-
-<Accordion title="Default `max_tokens` in `langchain-anthropic`">
-    The `max_tokens` parameter in `ChatAnthropic` will now default to new values that are higher than the previous default of `1024`. The new default will vary based on the model chosen.
-</Accordion>
-
-<Accordion title="Removal of deprecated objects">
-
-Methods, functions, and other objects that were already deprecated and slated for removal in 1.0 have been deleted.
-
-{/* TODO full list? */}
-
-</Accordion>
-
-## <Icon icon="box-archive" /> Deprecations
-
-<Accordion title="`.text()` is now a property">
-    Use of the `.text()` method on message objects should be updated to drop the parentheses:
-
-    ```python
-    # Before
-    text = response.text()  # Method call
-
-    # After
-    text = response.text    # Property access
-    ```
-
-    Existing usage patterns (i.e., `.text()`) will continue to function but now emit a warning.
-</Accordion>
-
-
-## <Icon icon="robot" /> Prebuilt agents
-
-The **`langchain`** release focuses on reducing LangChain's surface area and narrowing in on popular and essential abstractions.
-
-### ReAct agent migration
-
-**`create_react_agent` has moved from `langgraph.prebuilt` to `langchain.agents`** with significant enhancements:
-
-**Enhanced structured output**
-
-`create_agent` has improved coercion of outputs to structured data types:
+The new `create_agent` function replaces `langgraph.prebuilt.create_react_agent` as the standard way to build agents. It's a cleaner, more powerful API designed for production use:
 
 ```python
 from langchain.agents import create_agent
-from langchain_core.messages import HumanMessage
+
+agent = create_agent(
+    model="anthropic:claude-3-7-sonnet-latest",
+    tools=[search_web, analyze_data, send_email],
+    system_prompt="You are a helpful research assistant."
+)
+
+result = agent.invoke({
+    "messages": [{"role": "user", "content": "Research AI safety trends"}]
+})
+```
+
+**Simple for beginners, powerful for experts.** Start with basic configuration, then extend with middleware as your needs grow.
+
+### 3. Built on LangGraph for production features
+
+`create_agent` is implemented on top of LangGraph, which means you automatically get enterprise-grade capabilities:
+
+<CardGroup cols={2}>
+  <Card title="Persistence" icon="database">
+    Conversations automatically persist across sessions with built-in checkpointing
+  </Card>
+  <Card title="Streaming" icon="water">
+    Stream tokens, tool calls, and reasoning traces in real-time
+  </Card>
+  <Card title="Human-in-the-loop" icon="hand">
+    Pause agent execution for human approval before sensitive actions
+  </Card>
+  <Card title="Time travel" icon="clock-rotate-left">
+    Rewind conversations to any point and explore alternate paths
+  </Card>
+</CardGroup>
+
+You don't need to learn LangGraph to use these features—they're available out of the box with `create_agent`. But when you need custom graph structures, you can drop down to LangGraph directly.
+
+### 4. Middleware makes agents infinitely extensible
+
+The defining feature of LangChain 1.0 is **middleware**: a unified abstraction that eliminates the framework ceiling that plagued earlier versions.
+
+Previously, sophisticated agent behaviors required forking the framework or dropping to raw LangGraph. Now, middleware lets you customize everything—prompts, tools, validation, state management—through a single, composable API:
+
+```python
+from langchain.agents import create_agent
+from langchain.agents.middleware import (
+    AgentMiddleware,
+    SummarizationMiddleware,
+    HumanInTheLoopMiddleware
+)
+
+class ExpertiseBasedTools(AgentMiddleware):
+    """Dynamically adjust tools based on user expertise."""
+
+    def modify_model_request(self, request, state, runtime):
+        expertise = runtime.context.get("expertise_level", "beginner")
+
+        if expertise == "expert":
+            request.tools = [advanced_tools]
+            request.system_prompt = "Be concise and technical."
+        else:
+            request.tools = [basic_tools]
+            request.system_prompt = "Explain clearly, avoid jargon."
+
+        return request
+
+agent = create_agent(
+    model="anthropic:claude-3-7-sonnet-latest",
+    tools=[search_web, analyze_data, execute_query],
+    middleware=[
+        ExpertiseBasedTools(),           # Custom logic
+        SummarizationMiddleware(...),    # Built-in patterns
+        HumanInTheLoopMiddleware(...)    # Production guardrails
+    ]
+)
+```
+
+**No more graduating off the framework.** Middleware scales from simple prompt tweaks to complex multi-agent orchestration.
+
+<Card title="Learn More" icon="book" href="https://blog.langchain.com/langchain-langchain-1-0-alpha-releases/">
+  Read the LangChain 1.0 announcement
+</Card>
+
+### 5. Legacy code moved to `langchain-classic`
+
+LangChain 1.0 has a streamlined focus: standard interfaces (`init_chat_model`, `init_embeddings`) and production-ready agents built on LangGraph.
+
+Everything else—including legacy chains, the indexing API, and `langchain-community` exports—has moved to the `langchain-classic` package. This keeps the core package lean while maintaining backward compatibility.
+
+**Migration**: If you use legacy functionality, install `langchain-classic` and update imports:
+
+```python
+# Before
+from langchain import ...
+
+# After
+from langchain_classic import ...
+```
+
+<Card title="Full Migration Guide" icon="route" href="#migration-guide">
+  Jump to detailed migration instructions
+</Card>
+
+---
+
+## Why these changes matter
+
+These aren't just API changes—they're a fundamental rethinking of what an agent framework should be:
+
+**Standard content blocks** mean you can switch providers without rewriting parsing logic. Build once, deploy anywhere.
+
+**`create_agent` on LangGraph** gives you production features (persistence, streaming, human-in-the-loop) without the complexity of building graph workflows from scratch.
+
+**Middleware** eliminates the framework ceiling. You never need to "graduate off" LangChain—it scales from prototypes to production without changing paradigms.
+
+**Streamlined package** reduces bloat and makes the framework easier to learn, maintain, and extend.
+
+The result: **A framework that grows with you**, from simple chatbots to complex multi-agent systems.
+
+`create_agent` has dramatically improved structured output generation:
+
+- **Main loop integration**: Structured output is now generated in the main loop instead of requiring an additional LLM call
+- **Tool/output choice**: Models can choose between artificially calling tools or provider side structured output generation
+- **Cost reduction**: Eliminates extra expense from additional LLM calls
+
+```python
+from langchain.agents import create_agent
+from langchain.agents.structured_output import ToolStrategy
 from pydantic import BaseModel
 
 class Weather(BaseModel):
@@ -138,57 +193,841 @@ def weather_tool(city: str) -> str:
 agent = create_agent(
     "openai:gpt-4o-mini",
     tools=[weather_tool],
-    response_format=Weather
+    response_format=ToolStrategy(Weather)
 )
-result = agent.invoke({"messages": [HumanMessage("What's the weather in SF?")]})
+
+result = agent.invoke({
+    "messages": [{"role": "user", "content": "What's the weather in SF?"}]
+})
+
 print(repr(result["structured_response"]))
 #> Weather(temperature=70.0, condition='sunny')
 ```
 
-**Structural improvements**
-
-- **Main loop integration**: Structured output is now generated in the main loop instead of requiring an additional LLM call
-- **Tool/output choice**: Models can choose between calling tools, generating structured output, or both
-- **Cost reduction**: Eliminates extra expense from additional LLM calls
-
-**Advanced configuration**
-
-Two strategies for structured output generation:
-
-1. **Artificial tool calling** (default for most models)
-    - LangChain generates tools matching your response format schema
-    - Model calls these tools, LangChain coerces args to desired format
-    - Configure with `ToolStrategy` hint
-
-2. **Provider implementations**
-    - Uses native structured output support when available
-    - Configure with `ProviderStrategy` hint
-
-<Warning>
-    **Prompted output** is no longer supported via the `response_format` argument.
-</Warning>
-
-### Error handling
-
-**Structured output errors**
-
-Control error handling via the `handle_errors` arg to `ToolStrategy`:
-
+**Error handling**: Control error handling via the `handle_errors` parameter to `ToolStrategy`:
 - **Parsing errors**: Model generates data that doesn't match desired structure
 - **Multiple tool calls**: Model generates 2+ tool calls for structured output schemas
 
-**Tool calling errors**
+### Built-in agent patterns
 
-Updated error handling for tool failures:
+Common patterns like summarization, human-in-the-loop, and PII redaction guardrails are now offered as built-in middleware.
 
-- **Invocation failure**: Agent returns artificial `ToolMessage` asking model to retry (unchanged)
-- **Execution failure**: Agent now raises `ToolException` by default instead of retrying (prevents infinite loops)
+```python
+from langchain.agents import create_agent
+from langchain.agents.middleware import (
+    SummarizationMiddleware,
+    HumanInTheLoopMiddleware,
+)
 
-Configure behavior via `handle_tool_errors` arg to `ToolNode`.
+agent = create_agent(
+    model="anthropic:claude-3-7-sonnet-latest",
+    tools=tools,
+    middleware=[
+        SummarizationMiddleware(
+            model=model,
+            max_tokens_before_summary=500
+        ),
+        HumanInTheLoopMiddleware(
+            interrupt_on={
+                "send_email": {
+                    "allow_accept": True,
+                    "allow_respond": True,
+                    "allow_edit": True
+                }
+            }
+        ),
+    ]
+)
+```
 
-### Breaking changes
+## <Icon icon="layer-group" /> Middleware: Context engineering at scale
 
-**Pre-bound models**
+**Middleware is the defining feature of LangChain 1.0.** It solves the critical problem that has plagued agent frameworks: developers used to have to "graduate off" frameworks when they needed sophisticated control over agent behavior. Middleware eliminates this ceiling.
+
+### Context engineering is the key to agent performance
+
+The difference between a mediocre agent and an exceptional one often comes down to **context engineering**: getting the right information to the model at the right time. This includes:
+
+- **Dynamic prompts** that adapt based on conversation state, user expertise, or task complexity
+- **Selective tool access** that only exposes relevant tools based on the current context
+- **Conversation management** that summarizes history when it gets too long
+- **State management** that tracks custom information across turns
+- **Guardrails and validation** that ensure responses meet your requirements
+
+Previously, these capabilities were scattered across different APIs with different interfaces and limitations. Many were simply impossible without forking the framework or dropping down to LangGraph directly.
+
+### Middleware: One abstraction, infinite possibilities
+
+Middleware provides a single, composable abstraction for all context engineering needs. It gives you **granular control** over what happens at every stage of the agent's execution:
+
+<CardGroup cols={3}>
+  <Card title="High Ceiling" icon="rocket">
+    Build sophisticated agent behaviors without hitting framework limitations. No need to "graduate off" LangChain.
+  </Card>
+  <Card title="Extensible" icon="plug">
+    Compose multiple middleware to build complex behaviors from simple, reusable components.
+  </Card>
+  <Card title="Standard Interface" icon="shapes">
+    One consistent API for all agent customization, from simple prompt tweaks to complex multi-agent orchestration.
+  </Card>
+</CardGroup>
+
+### How middleware works
+
+Middleware intercepts the agent's execution flow at key points, allowing you to inspect and modify state, requests, and responses:
+
+| Method | Purpose | What you can do |
+|--------|---------|-----------------|
+| `before_model` | Runs before calling the LLM | Update state, trim messages, redirect to different nodes |
+| `modify_model_request` | Modifies the LLM request | Change prompts, switch models, adjust tools—without permanent state changes |
+| `after_model` | Runs after the LLM responds | Validate responses, apply guardrails, update state, redirect flow |
+
+Each middleware method receives the full agent state and can return updates or routing decisions. Middleware executes in the order you define, allowing you to build sophisticated behaviors by stacking simple components.
+
+### Example: Sophisticated context engineering
+
+```python
+from langchain.agents import create_agent
+from langchain.agents.middleware import (
+    AgentMiddleware,
+    SummarizationMiddleware,
+    HumanInTheLoopMiddleware
+)
+
+class ExpertiseBasedToolSelection(AgentMiddleware):
+    """Only expose advanced tools to expert users."""
+
+    def modify_model_request(self, request, state, runtime):
+        user_expertise = runtime.context.get("expertise_level", "beginner")
+
+        if user_expertise == "expert":
+            # Expert users get all tools
+            request.tools = [search_web, analyze_data, execute_query, send_email]
+        else:
+            # Beginners get safer, simpler tools
+            request.tools = [search_web, send_email]
+
+        # Adjust system prompt based on expertise
+        if user_expertise == "expert":
+            request.system_prompt = "You are an expert assistant. Be concise and technical."
+        else:
+            request.system_prompt = "You are a helpful assistant. Explain concepts clearly."
+
+        return request
+
+# Compose multiple middleware for sophisticated behavior
+agent = create_agent(
+    model="anthropic:claude-3-7-sonnet-latest",
+    tools=[search_web, analyze_data, execute_query, send_email],
+    middleware=[
+        ExpertiseBasedToolSelection(),          # Context-aware tool selection
+        SummarizationMiddleware(                # Manage conversation length
+            model=model,
+            max_tokens_before_summary=500
+        ),
+        HumanInTheLoopMiddleware(               # Require approval for sensitive actions
+            interrupt_on={
+                "send_email": {
+                    "allow_accept": True,
+                    "allow_edit": True
+                }
+            }
+        ),
+    ],
+    context_schema={"expertise_level": str}
+)
+
+# Use with different contexts
+agent.invoke(
+    {"messages": [{"role": "user", "content": "Analyze our Q4 sales data"}]},
+    context={"expertise_level": "expert"}
+)
+```
+
+This agent dynamically adapts its behavior based on user expertise—something that would have required framework modifications in earlier versions.
+
+<Card title="Deep Dive" icon="compass" href="https://blog.langchain.com/agent-middleware/">
+  Read the Agent Middleware blog post
+</Card>
+
+<Card title="Full Documentation" icon="book" href="/oss/python/langchain/middleware">
+  See the complete middleware guide
+</Card>
+
+## <Icon icon="route" /> Migration guide
+
+### Quick migration reference
+
+The table below maps old patterns to new approaches. Click each row to jump to detailed migration instructions.
+
+| Pattern | V0 (`create_react_agent`) | V1 (`create_agent`) |
+|---------|---------------------------|---------------------|
+| [Import path](#import-changes) | `langgraph.prebuilt` | `langchain.agents` |
+| [Static prompt](#static-prompt-rename) | `prompt="..."` | `system_prompt="..."` |
+| [Dynamic prompt](#dynamic-prompts) | `prompt=callable` | `middleware=[@modify_model_request]` |
+| [Dynamic model](#dynamic-model-selection) | `model=callable` | `middleware=[CustomMiddleware]` |
+| [Pre-processing](#pre-model-hooks) | `pre_model_hook=fn` | `middleware` with `before_model` |
+| [Post-processing](#post-model-hooks) | `post_model_hook=fn` | `middleware` with `after_model` |
+| [Tool list](#toolnode-to-list) | `tools=ToolNode([...])` | `tools=[...]` |
+| [Custom state](#custom-state) | `state_schema=CustomState` | `middleware` with `state_schema` |
+
+### Import changes
+
+<Tabs>
+  <Tab title="Before (V0)">
+```python
+from langgraph.prebuilt import create_react_agent
+```
+  </Tab>
+  <Tab title="After (V1)">
+```python
+from langchain.agents import create_agent
+```
+  </Tab>
+</Tabs>
+
+### Basic migrations
+
+#### Static prompt rename
+
+The most common migration is a simple parameter rename:
+
+<Tabs>
+  <Tab title="Before (V0)">
+```python
+from langgraph.prebuilt import create_react_agent
+
+agent = create_react_agent(
+    model="anthropic:claude-3-7-sonnet-latest",
+    tools=[check_weather],
+    prompt="You are a helpful assistant"
+)
+```
+  </Tab>
+  <Tab title="After (V1)">
+```python
+from langchain.agents import create_agent
+
+agent = create_agent(
+    model="anthropic:claude-3-7-sonnet-latest",
+    tools=[check_weather],
+    system_prompt="You are a helpful assistant"  # Renamed!
+)
+```
+  </Tab>
+</Tabs>
+
+#### SystemMessage to string
+
+If using `SystemMessage` objects, extract the string content:
+
+<Tabs>
+  <Tab title="Before (V0)">
+```python
+from langchain_core.messages import SystemMessage
+from langgraph.prebuilt import create_react_agent
+
+agent = create_react_agent(
+    model="anthropic:claude-3-7-sonnet-latest",
+    tools=[check_weather],
+    prompt=SystemMessage(content="You are a helpful assistant")
+)
+```
+  </Tab>
+  <Tab title="After (V1)">
+```python
+from langchain.agents import create_agent
+
+agent = create_agent(
+    model="anthropic:claude-3-7-sonnet-latest",
+    tools=[check_weather],
+    system_prompt="You are a helpful assistant"  # Just a string
+)
+```
+  </Tab>
+</Tabs>
+
+#### ToolNode to list
+
+Convert `ToolNode` instances to simple lists:
+
+<Tabs>
+  <Tab title="Before (V0)">
+```python
+from langgraph.prebuilt import create_react_agent, ToolNode
+
+tool_node = ToolNode([check_weather, search_web])
+agent = create_react_agent(
+    model="anthropic:claude-3-7-sonnet-latest",
+    tools=tool_node
+)
+```
+  </Tab>
+  <Tab title="After (V1)">
+```python
+from langchain.agents import create_agent
+
+agent = create_agent(
+    model="anthropic:claude-3-7-sonnet-latest",
+    tools=[check_weather, search_web]  # Just pass the list
+)
+```
+  </Tab>
+</Tabs>
+
+### Dynamic prompts
+
+Dynamic prompts are a core context engineering pattern—adapting what you tell the model based on the current conversation state. The `@modify_model_request` decorator makes this simple:
+
+<Tabs>
+  <Tab title="Before (V0)">
+```python
+from langgraph.prebuilt import create_react_agent
+from langgraph.prebuilt.chat_agent_executor import AgentState
+
+def dynamic_prompt(state: AgentState) -> str:
+    message_count = len(state["messages"])
+    if message_count > 10:
+        return "You are in an extended conversation. Be more concise."
+    return "You are a helpful assistant."
+
+agent = create_react_agent(
+    model="openai:gpt-4o",
+    tools=tools,
+    prompt=dynamic_prompt
+)
+```
+  </Tab>
+  <Tab title="After (V1)">
+```python
+from langchain.agents import create_agent
+from langchain.agents.middleware import (
+    modify_model_request,
+    ModelRequest,
+    AgentState
+)
+
+@modify_model_request
+def dynamic_prompt(
+    request: ModelRequest,
+    state: AgentState
+) -> ModelRequest:
+    message_count = len(state["messages"])
+
+    if message_count > 10:
+        request.system_prompt = (
+            "You are in an extended conversation. Be more concise."
+        )
+    else:
+        request.system_prompt = "You are a helpful assistant."
+
+    return request
+
+agent = create_agent(
+    model="openai:gpt-4o",
+    tools=tools,
+    middleware=[dynamic_prompt]
+)
+```
+  </Tab>
+</Tabs>
+
+<Note>
+The `@modify_model_request` decorator is shorthand for creating middleware that modifies model requests. This is the simplest way to implement dynamic context engineering—adjusting what the model sees based on the current state.
+</Note>
+
+#### Dynamic prompts with context
+
+<Tabs>
+  <Tab title="Before (V0)">
+```python
+from langgraph.prebuilt import create_react_agent
+from langgraph.prebuilt.chat_agent_executor import AgentState
+from langgraph.config import get_runtime
+from typing import TypedDict
+
+class Context(TypedDict):
+    user_role: str
+
+def dynamic_prompt(state: AgentState) -> str:
+    runtime = get_runtime(Context)
+    user_role = runtime.context.get("user_role", "user")
+    base_prompt = "You are a helpful assistant."
+
+    if user_role == "expert":
+        return f"{base_prompt} Provide detailed technical responses."
+    elif user_role == "beginner":
+        return f"{base_prompt} Explain concepts simply and avoid jargon."
+    return base_prompt
+
+agent = create_react_agent(
+    model="openai:gpt-4o",
+    tools=tools,
+    prompt=dynamic_prompt,
+    context_schema=Context
+)
+
+# Use with context
+agent.invoke(
+    {"messages": [{"role": "user", "content": "Explain async programming"}]},
+    context={"user_role": "expert"}
+)
+```
+  </Tab>
+  <Tab title="After (V1)">
+```python
+from typing import TypedDict
+from langchain.agents import create_agent
+from langchain.agents.middleware import (
+    modify_model_request,
+    ModelRequest,
+    AgentState
+)
+from langgraph.runtime import Runtime
+
+class Context(TypedDict):
+    user_role: str
+
+@modify_model_request
+def dynamic_prompt(
+    request: ModelRequest,
+    state: AgentState,
+    runtime: Runtime[Context]
+) -> ModelRequest:
+    user_role = runtime.context.get("user_role", "user")
+    base_prompt = "You are a helpful assistant."
+
+    if user_role == "expert":
+        request.system_prompt = (
+            f"{base_prompt} Provide detailed technical responses."
+        )
+    elif user_role == "beginner":
+        request.system_prompt = (
+            f"{base_prompt} Explain concepts simply and avoid jargon."
+        )
+    else:
+        request.system_prompt = base_prompt
+
+    return request
+
+agent = create_agent(
+    model="openai:gpt-4o",
+    tools=tools,
+    middleware=[dynamic_prompt],
+    context_schema=Context
+)
+
+# Use with context
+agent.invoke(
+    {"messages": [{"role": "user", "content": "Explain async programming"}]},
+    context={"user_role": "expert"}
+)
+```
+  </Tab>
+</Tabs>
+
+### Dynamic model selection
+
+Another context engineering pattern: selecting different models based on runtime context (e.g., task complexity, cost constraints, or user preferences).
+
+<Tabs>
+  <Tab title="Before (V0)">
+```python
+from dataclasses import dataclass
+from langgraph.prebuilt import create_react_agent
+from langchain_openai import ChatOpenAI
+
+@dataclass
+class ModelContext:
+    model_name: str = "gpt-3.5-turbo"
+
+# Instantiate models globally
+gpt4_model = ChatOpenAI(model="gpt-4")
+gpt35_model = ChatOpenAI(model="gpt-3.5-turbo")
+
+def select_model(state, runtime):
+    model_name = runtime.context.model_name
+    model = gpt4_model if model_name == "gpt-4" else gpt35_model
+    return model.bind_tools(tools)
+
+agent = create_react_agent(
+    model=select_model,
+    tools=tools,
+    context_schema=ModelContext
+)
+```
+  </Tab>
+  <Tab title="After (V1)">
+```python
+from dataclasses import dataclass
+from langchain.agents import create_agent
+from langchain.agents.middleware import AgentMiddleware
+from langchain_openai import ChatOpenAI
+
+@dataclass
+class ModelContext:
+    model_name: str = "gpt-3.5-turbo"
+
+class ModelSelectionMiddleware(AgentMiddleware):
+    def __init__(self):
+        self.gpt4_model = ChatOpenAI(model="gpt-4")
+        self.gpt35_model = ChatOpenAI(model="gpt-3.5-turbo")
+
+    def modify_model_request(self, request, state, runtime):
+        model_name = runtime.context.model_name
+        selected_model = (
+            self.gpt4_model if model_name == "gpt-4"
+            else self.gpt35_model
+        )
+        request.model = selected_model
+        return request
+
+agent = create_agent(
+    model="gpt-3.5-turbo",  # Default model
+    tools=tools,
+    middleware=[ModelSelectionMiddleware()],
+    context_schema=ModelContext
+)
+```
+  </Tab>
+</Tabs>
+
+### Pre-model hooks
+
+Pre-model hooks are now middleware with the `before_model` method. This is where you perform context engineering on the conversation history—trimming, filtering, or reorganizing messages before they reach the model.
+
+#### Message trimming
+
+<Tabs>
+  <Tab title="Before (V0)">
+```python
+from langgraph.prebuilt import create_react_agent
+from langgraph.prebuilt.chat_agent_executor import AgentState
+from langchain_core.messages import RemoveMessage, REMOVE_ALL_MESSAGES
+
+def trim_messages(state: AgentState):
+    messages = state["messages"]
+    # Keep only last 10 messages
+    if len(messages) > 10:
+        return {
+            "messages": [
+                RemoveMessage(id=REMOVE_ALL_MESSAGES),
+                *messages[-10:]
+            ]
+        }
+    return {}
+
+agent = create_react_agent(
+    model="anthropic:claude-3-7-sonnet-latest",
+    tools=tools,
+    pre_model_hook=trim_messages
+)
+```
+  </Tab>
+  <Tab title="After (V1)">
+```python
+from langchain.agents import create_agent
+from langchain.agents.middleware import AgentMiddleware, AgentState
+
+class MessageTrimmingMiddleware(AgentMiddleware):
+    def __init__(self, max_messages: int = 10):
+        self.max_messages = max_messages
+
+    def before_model(self, state: AgentState) -> dict | None:
+        messages = state["messages"]
+        if len(messages) > self.max_messages:
+            # Return trimmed messages
+            return {"messages": messages[-self.max_messages:]}
+        return None  # Return None to not modify state
+
+agent = create_agent(
+    model="anthropic:claude-3-7-sonnet-latest",
+    tools=tools,
+    middleware=[MessageTrimmingMiddleware(max_messages=10)]
+)
+```
+  </Tab>
+</Tabs>
+
+#### Logging and inspection
+
+<Tabs>
+  <Tab title="Before (V0)">
+```python
+from langgraph.prebuilt import create_react_agent
+from langgraph.prebuilt.chat_agent_executor import AgentState
+
+def pre_hook(state: AgentState) -> AgentState:
+    print(f"About to call model with {len(state['messages'])} messages")
+    return state
+
+agent = create_react_agent(
+    model="openai:gpt-4o",
+    tools=tools,
+    pre_model_hook=pre_hook
+)
+```
+  </Tab>
+  <Tab title="After (V1)">
+```python
+from langchain.agents import create_agent
+from langchain.agents.middleware import AgentMiddleware, AgentState
+
+class LoggingMiddleware(AgentMiddleware):
+    def before_model(self, state: AgentState) -> dict | None:
+        print(f"About to call model with {len(state['messages'])} messages")
+        return None  # Return None to not modify state
+
+agent = create_agent(
+    model="openai:gpt-4o",
+    tools=tools,
+    middleware=[LoggingMiddleware()]
+)
+```
+  </Tab>
+</Tabs>
+
+### Post-model hooks
+
+Post-model hooks are now middleware with the `after_model` method. Use this to validate, filter, or enhance model responses—ensuring the output meets your quality and safety requirements.
+
+#### Response validation
+
+<Tabs>
+  <Tab title="Before (V0)">
+```python
+from langgraph.prebuilt import create_react_agent
+from langgraph.prebuilt.chat_agent_executor import AgentState
+from langchain_core.messages import AIMessage
+
+def validate_response(state: AgentState):
+    last_message = state["messages"][-1]
+    if "harmful_content" in last_message.content.lower():
+        return {
+            "messages": [
+                AIMessage(content="I cannot provide that information.")
+            ]
+        }
+    return {}
+
+agent = create_react_agent(
+    model="anthropic:claude-3-7-sonnet-latest",
+    tools=tools,
+    post_model_hook=validate_response,
+    version="v2"  # Required for post_model_hook
+)
+```
+  </Tab>
+  <Tab title="After (V1)">
+```python
+from langchain.agents import create_agent
+from langchain.agents.middleware import AgentMiddleware, AgentState
+from langchain_core.messages import AIMessage
+
+class ValidationMiddleware(AgentMiddleware):
+    def after_model(self, state: AgentState) -> dict | None:
+        last_message = state["messages"][-1]
+        if "harmful_content" in last_message.content.lower():
+            # Replace the response
+            return {
+                "messages": [
+                    AIMessage(content="I cannot provide that information.")
+                ]
+            }
+        return None
+
+agent = create_agent(
+    model="anthropic:claude-3-7-sonnet-latest",
+    tools=tools,
+    middleware=[ValidationMiddleware()]
+)
+```
+  </Tab>
+</Tabs>
+
+### Custom state
+
+Custom state is now defined in middleware using the `state_schema` attribute:
+
+<Tabs>
+  <Tab title="Before (V0)">
+```python
+from typing import Annotated
+from langchain_core.tools import InjectedToolCallId
+from langchain_core.runnables import RunnableConfig
+from langchain_core.messages import ToolMessage
+from langgraph.prebuilt import InjectedState, create_react_agent
+from langgraph.prebuilt.chat_agent_executor import AgentState
+from langgraph.types import Command
+
+class CustomState(AgentState):
+    user_name: str
+
+def update_user_info(
+    tool_call_id: Annotated[str, InjectedToolCallId],
+    config: RunnableConfig
+) -> Command:
+    """Look up and update user info."""
+    user_id = config["configurable"].get("user_id")
+    name = "John Smith" if user_id == "user_123" else "Unknown user"
+    return Command(update={
+        "user_name": name,
+        "messages": [
+            ToolMessage(
+                "Successfully looked up user information",
+                tool_call_id=tool_call_id
+            )
+        ]
+    })
+
+def greet(
+    state: Annotated[CustomState, InjectedState]
+) -> str:
+    """Use this to greet the user once you found their info."""
+    user_name = state["user_name"]
+    return f"Hello {user_name}!"
+
+agent = create_react_agent(
+    model="anthropic:claude-3-7-sonnet-latest",
+    tools=[update_user_info, greet],
+    state_schema=CustomState
+)
+```
+  </Tab>
+  <Tab title="After (V1)">
+```python
+from typing import Annotated
+from langchain_core.tools import InjectedToolCallId, tool
+from langchain_core.runnables import RunnableConfig
+from langchain_core.messages import ToolMessage
+from langchain.agents import create_agent
+from langchain.agents.middleware import AgentMiddleware, AgentState
+from langgraph.prebuilt import InjectedState
+from langgraph.types import Command
+
+# Define custom state extending AgentState
+class CustomState(AgentState):
+    user_name: str
+
+# Create middleware that manages custom state
+class UserStateMiddleware(AgentMiddleware[CustomState]):
+    state_schema = CustomState
+
+@tool
+def update_user_info(
+    tool_call_id: Annotated[str, InjectedToolCallId],
+    config: RunnableConfig
+) -> Command:
+    """Look up and update user info."""
+    user_id = config["configurable"].get("user_id")
+    name = "John Smith" if user_id == "user_123" else "Unknown user"
+    return Command(update={
+        "user_name": name,
+        "messages": [
+            ToolMessage(
+                "Successfully looked up user information",
+                tool_call_id=tool_call_id
+            )
+        ]
+    })
+
+@tool
+def greet(
+    state: Annotated[CustomState, InjectedState]
+) -> str:
+    """Use this to greet the user once you found their info."""
+    user_name = state.get("user_name", "Unknown")
+    return f"Hello {user_name}!"
+
+agent = create_agent(
+    model="anthropic:claude-3-7-sonnet-latest",
+    tools=[update_user_info, greet],
+    middleware=[UserStateMiddleware()]
+)
+```
+  </Tab>
+</Tabs>
+
+<Note>
+Custom state is defined by creating a class that extends `AgentState` and assigning it to the middleware's `state_schema` attribute.
+</Note>
+
+## <Icon icon="ban" /> Breaking changes
+
+### Dropped Python 3.9 support
+
+Python 3.9 is [end of life](https://devguide.python.org/versions/) in October 2025. Consequently, all LangChain packages now require **Python 3.10 or higher**.
+
+**Migration**: Upgrade to Python 3.10 or later before installing LangChain 1.0.
+
+### Some legacy code moved to langchain-classic
+
+The new `langchain` package features a reduced surface area that focuses on standard interfaces for LangChain components (e.g., `init_chat_model` and `init_embeddings`) as well as pre-built chains and agents backed by the `langgraph` runtime.
+
+Existing functionality outside this focus, such as the indexing API and exports of `langchain-community` features, have been moved to the `langchain-classic` package.
+
+**Migration**: Update package installs of `langchain` to `langchain-classic`, and replace imports:
+
+<Tabs>
+  <Tab title="Before">
+```python
+from langchain import ...
+```
+  </Tab>
+  <Tab title="After">
+```python
+from langchain_classic import ...
+```
+  </Tab>
+</Tabs>
+
+### Updated return type for chat models
+
+The return type signature for chat model invocation has been fixed from `BaseMessage` to `AIMessage`. Custom chat models implementing `bind_tools` should update their return signature to avoid type checker errors:
+
+<Tabs>
+  <Tab title="Before">
+```python
+Runnable[LanguageModelInput, BaseMessage]:
+```
+  </Tab>
+  <Tab title="After">
+```python
+Runnable[LanguageModelInput, AIMessage]:
+```
+  </Tab>
+</Tabs>
+
+### Default message format for OpenAI Responses API
+
+When interacting with the Responses API, `langchain-openai` now defaults to storing response items in message `content`. This behavior was previously opt-in by specifying `output_version="responses/v1"` when instantiating `ChatOpenAI`. This was done to resolve `BadRequestError` that can arise in some multi-turn contexts.
+
+**To restore previous behavior**, set the `LC_OUTPUT_VERSION` environment variable to `v0`, or specify `output_version="v0"` when instantiating `ChatOpenAI`:
+
+```python
+import os
+os.environ["LC_OUTPUT_VERSION"] = "v0"
+
+# or
+
+from langchain_openai import ChatOpenAI
+
+llm = ChatOpenAI(model="gpt-4o", output_version="v0")
+```
+
+### Default `max_tokens` in `langchain-anthropic`
+
+The `max_tokens` parameter in `ChatAnthropic` will now default to new values that are higher than the previous default of `1024`. The new default will vary based on the model chosen.
+
+**Migration**: If you relied on the old default, explicitly set `max_tokens=1024`:
+
+```python
+from langchain_anthropic import ChatAnthropic
+
+llm = ChatAnthropic(model="claude-3-7-sonnet-latest", max_tokens=1024)
+```
+
+### Pre-bound models no longer supported
 
 To better support structured output, `create_agent` no longer supports pre-bound models with tools or configuration:
 
@@ -202,22 +1041,84 @@ agent = create_agent("openai:gpt-4o-mini", tools=[some_tool])
 ```
 
 <Note>
-    Dynamic model functions can return pre-bound models if structured output is *not* used.
+Dynamic model functions can return pre-bound models if structured output is *not* used.
 </Note>
 
-**Import changes**
+### Removal of deprecated objects
+
+Methods, functions, and other objects that were already deprecated and slated for removal in 1.0 have been deleted.
+
+**Migration**: If you encounter import errors or attribute errors, check the [deprecation notices](https://python.langchain.com/docs/versions/migrating_chains) from previous versions for replacement APIs.
+
+## <Icon icon="box-archive" /> Deprecations
+
+### `.text()` is now a property
+
+Use of the `.text()` method on message objects should be updated to drop the parentheses:
+
+<Tabs>
+  <Tab title="Before">
+```python
+text = response.text()  # Method call
+```
+  </Tab>
+  <Tab title="After">
+```python
+text = response.text    # Property access
+```
+  </Tab>
+</Tabs>
+
+Existing usage patterns (i.e., `.text()`) will continue to function but now emit a warning.
+
+### Prompted output no longer supported
+
+**Prompted output** is no longer supported via the `response_format` argument. Use structured output with `ToolStrategy` or `ProviderStrategy` instead.
+
+**Migration example**:
 
 ```python
-# Before
-from langgraph.prebuilt import create_react_agent, ToolNode, AgentState
+from langchain.agents import create_agent
+from langchain.agents.structured_output import ToolStrategy
+from pydantic import BaseModel
 
-# After
-from langchain.agents import create_agent, ToolNode, AgentState
+class OutputSchema(BaseModel):
+    summary: str
+    sentiment: str
+
+agent = create_agent(
+    model="openai:gpt-4o-mini",
+    tools=tools,
+    response_format=ToolStrategy(OutputSchema)
+)
 ```
 
 ## <Icon icon="bullhorn" /> Reporting issues
 
 Please report any issues discovered with 1.0 on [GitHub](https://github.com/langchain-ai/langchain/issues) using the [`'v1'` label](https://github.com/langchain-ai/langchain/issues?q=state%3Aopen%20label%3Av1).
+
+## <Icon icon="book-open" /> Additional resources
+
+<CardGroup cols={3}>
+  <Card title="LangChain 1.0" icon="rocket" href="https://blog.langchain.com/langchain-langchain-1-0-alpha-releases/">
+    Read the announcement
+  </Card>
+  <Card title="Middleware Guide" icon="puzzle-piece" href="https://blog.langchain.com/agent-middleware/">
+    Deep dive into middleware
+  </Card>
+  <Card title="Agents Documentation" icon="book" href="/oss/langchain/agents">
+    Full agent documentation
+  </Card>
+  <Card title="Message Content" icon="message" href="/oss/langchain/messages#content">
+    New content blocks API
+  </Card>
+  <Card title="LangChain Discord" icon="discord" href="https://discord.gg/langchain">
+    Join the community
+  </Card>
+  <Card title="GitHub" icon="github" href="https://github.com/langchain-ai/langchain">
+    Report issues or contribute
+  </Card>
+</CardGroup>
 
 ## See also
 
