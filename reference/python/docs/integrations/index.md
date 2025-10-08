@@ -16,7 +16,7 @@ Welcome to the LangChain's integrations home. This is a reference for all `langc
 
     [:octicons-arrow-right-24: Reference](./langchain_openai.md)
 
-- :simple-anthropic:{ .lg .middle } __`langchain-anthropic`__
+- :simple-claude:{ .lg .middle } __`langchain-anthropic`__
 
     ---
 

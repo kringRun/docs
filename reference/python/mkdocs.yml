@@ -339,7 +339,7 @@ nav:
       - Weaviate: integrations/langchain_weaviate.md
       - xAI: integrations/langchain_xai.md
   - Platform:
-    - SDK (Python): platform/python_sdk.md
+    - SDK: platform/python_sdk.md
     - RemoteGraph: platform/remote_graph.md
 
 # https://www.mkdocs.org/user-guide/configuration/#markdown_extensions
