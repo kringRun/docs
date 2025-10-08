@@ -16,9 +16,17 @@
 
       // Determine destination based on current path
       if (currentPath.includes('/oss/python/')) {
-        destination = '/oss/python/langchain/overview';
+        if (currentPath.includes('langgraph') {
+          destination = '/oss/python/langgraph/overview';
+        } else {
+          destination = '/oss/python/langchain/overview';
+        }
       } else if (currentPath.includes('/oss/javascript/')) {
-        destination = '/oss/javascript/langchain/overview';
+        if (currentPath.includes('langgraph') {
+          destination = '/oss/javascript/langgraph/overview';
+        } else {
+          destination = '/oss/javascript/langchain/overview';
+        }
       } else if (currentPath.includes('/langgraph-platform/')) {
         destination = '/langgraph-platform/index';
       } else if (currentPath.includes('/langsmith/')) {
