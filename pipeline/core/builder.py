@@ -188,13 +188,15 @@ class DocumentationBuilder:
             relative_path = input_path.absolute().relative_to(self.src_dir.absolute())
 
             # Construct the GitHub URLs
-            edit_url = f"https://github.com/langchain-ai/docs/edit/main/src/{relative_path}"
+            edit_url = (
+                f"https://github.com/langchain-ai/docs/edit/main/src/{relative_path}"
+            )
 
             # Create the callout section with Mintlify Callout component
             source_links_section = (
                 "\n\n---\n\n"
                 f'<Callout icon="pen-to-square" iconType="regular">\n'
-                f'  [Edit the source of this page on GitHub]({edit_url})\n'
+                f"  [Edit the source of this page on GitHub]({edit_url})\n"
                 "</Callout>\n"
             )
 
@@ -205,9 +207,7 @@ class DocumentationBuilder:
             # File is not within src_dir, return content unchanged
             return content
         except Exception:
-            logger.exception(
-                "Failed to add source links for %s", input_path
-            )
+            logger.exception("Failed to add source links for %s", input_path)
             # Return original content if there's an error
             return content
 
