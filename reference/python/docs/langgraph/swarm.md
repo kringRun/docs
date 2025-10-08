@@ -1,5 +1,7 @@
 # LangGraph Swarm
 
+Swarm has not been upgraded to LangChain v1 yet. See [existing docs](https://langchain-ai.github.io/langgraph/reference/swarm/).
+
 <!-- ::: langgraph_swarm.swarm
     options:
       members:

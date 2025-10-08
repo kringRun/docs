@@ -269,8 +269,6 @@ Have a user with access sign in via the unique login URL from the **SSO Configur
 - SP-initiated SSO
 - Just-In-Time provisioning
 - Enforce SSO only
-- Import Users
-- Import Groups
 
 #### Configuration steps
 
@@ -635,6 +633,8 @@ You must use the [Okta Lifecycle Management](https://www.okta.com/products/lifec
 - Update user attributes
 - Deactivate users
 - Group push
+- Import users
+- Import groups
 
 <div id="add-application-okta-oin">
     <b>Step 1: Add application from Okta Integration Network</b>
@@ -648,6 +648,7 @@ See [SAML SSO setup](#okta) for cloud or [OAuth2.0 setup](/langsmith/self-host-s
 
 **Step 2: Configure API Integration**
 
+1. In the General tab, ensure the `LangSmithUrl` is filled in according to the instructions from [Step 1](#add-application-okta-oin)
 1. In the Provisioning tab, select `Integration`.
 1. Select `Edit` then `Enable API integration`.
 1. For API Token, paste the SCIM token you [generated above](#step-3-generate-scim-bearer-token).
