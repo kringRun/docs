@@ -225,8 +225,20 @@
                   {
                     "group": "LangGraph APIs",
                     "pages": [
-                        "oss/python/langgraph/use-graph-api",
-                        "oss/python/langgraph/use-functional-api",
+                        {
+                          "group": "Graph API",
+                          "pages": [
+                            "oss/python/langgraph/graph-api",
+                            "oss/python/langgraph/use-graph-api"
+                          ]
+                        },
+                        {
+                        "group": "Functional API",
+                        "pages": [
+                          "oss/python/langgraph/functional-api",
+                          "oss/python/langgraph/use-functional-api"
+                        ]
+                      },
                         "oss/python/langgraph/pregel"
                         ]
                   }
@@ -1258,7 +1270,7 @@
                       {
                         "group": "Graph API",
                         "pages": [
-
+                          "oss/javascript/langgraph/graph-api",
                           "oss/javascript/langgraph/use-graph-api"
                         ]
                       },
