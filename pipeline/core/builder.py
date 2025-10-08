@@ -191,17 +191,12 @@ class DocumentationBuilder:
             view_url = f"https://github.com/langchain-ai/docs/blob/main/src/{relative_path}"
             edit_url = f"https://github.com/langchain-ai/docs/edit/main/src/{relative_path}"
 
-            # Create the card section with Mintlify Card components
+            # Create the callout section with Mintlify Callout component
             source_links_section = (
                 "\n\n---\n\n"
-                "<CardGroup cols={2}>\n"
-                f'  <Card title="View Source" icon="eye" href="{view_url}">\n'
-                "    See the source of this page on GitHub\n"
-                "  </Card>\n"
-                f'  <Card title="Edit Source" icon="pen-to-square" href="{edit_url}">\n'
-                "    Edit the source of this page on GitHub\n"
-                "  </Card>\n"
-                "</CardGroup>\n"
+                f'<Callout icon="pen-to-square" iconType="regular">\n'
+                f'  [Edit the source of this page on GitHub]({edit_url})\n'
+                "</Callout>\n"
             )
 
             # Append to content
