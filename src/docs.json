@@ -102,8 +102,7 @@
     }
   },
   "scripts": [
-    "/hide-version-picker.js",
-    "/smart-logo-navigation.js"
+    "/hide-version-picker.js"
   ],
   "styles": [
     "/hide-version-picker.css"
