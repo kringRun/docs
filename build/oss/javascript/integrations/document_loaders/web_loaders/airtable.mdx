@@ -1,0 +1,28 @@
+---
+title: AirtableLoader
+---
+
+The `AirtableLoader` class provides functionality to load documents from Airtable tables. It supports two main methods:
+
+1. `load()`: Retrieves all records at once, ideal for small to moderate datasets.
+2. `loadLazy()`: Fetches records one by one, which is more memory-efficient for large datasets.
+
+## Prerequisites
+
+Ensure that your Airtable API token is available as an environment variable:
+
+```typescript
+process.env.AIRTABLE_API_TOKEN = "YOUR_AIRTABLE_API_TOKEN";
+```
+
+## Usage
+
+import AirtableLoader from "/snippets/javascript-integrations/examples/document_loaders/airtable_load.mdx";
+
+<AirtableLoader />
+
+---
+
+<Callout icon="pen-to-square" iconType="regular">
+  [Edit the source of this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/javascript/integrations/document_loaders/web_loaders/airtable.mdx)
+</Callout>
