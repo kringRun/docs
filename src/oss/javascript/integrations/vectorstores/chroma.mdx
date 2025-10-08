@@ -123,9 +123,14 @@ import { Chroma } from "@langchain/community/vectorstores/chroma";
 
 const vectorStore = new Chroma(embeddings, {
   collectionName: "a-test-collection",
-  tenant: process.env.CHROMA_TENANT,
-  database: process.env.CHROMA_DATABASE,
-  chromaCloudAPIKey: process.env.CHROMA_API_KEY
+  chromaCloudAPIKey: process.env.CHROMA_API_KEY,
+  clientParams: {
+    host: "api.trychroma.com",
+    port: 8000,
+    ssl: true,
+    tenant: process.env.CHROMA_TENANT,
+    database: process.env.CHROMA_DATABASE,
+  },
 });
 ```
 

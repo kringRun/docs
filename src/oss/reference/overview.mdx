@@ -1,51 +1,48 @@
 ---
-title: Reference
+title: OSS Reference Documentation
 sidebarTitle: Overview
+mode: wide
 ---
 
-These pages detail the core interfaces you will use when building with LangGraph. Each section covers a different part of the ecosystem.
+Comprehensive API reference documentation for LangChain and LangGraph Python and JavaScript libraries.
 
-## LangGraph
+## References
 
-The core APIs for the LangGraph open source library.
+<CardGroup cols={2}>
+    :::python
+    <Card
+        title="LangChain Python"
+        icon="link"
+        href="https://reference.langchain.com/python/langchain/"
+    >
+        Complete API reference for LangChain Python, including chat models, tools, agents, and more.
+    </Card>
 
-:::python
-- [Graphs](https://reference.langchain.com/python/langgraph/graphs/): Main graph abstraction and usage.
-- [Functional API](https://reference.langchain.com/python/langgraph/func/): Functional programming interface for graphs.
-- [Pregel](https://reference.langchain.com/python/langgraph/pregel/): Pregel-inspired computation model.
-- [Checkpointers](https://reference.langchain.com/python/langgraph/checkpoints/): Saving and restoring graph state.
-- [Storage](https://reference.langchain.com/python/langgraph/store/): Storage backends and options.
-- [Caching](https://reference.langchain.com/python/langgraph/cache/): Caching mechanisms for performance.
-- [Types](https://reference.langchain.com/python/langgraph/types/): Type definitions for graph components.
-- [Config](https://reference.langchain.com/python/langgraph/config/): Configuration options.
-- [Errors](https://reference.langchain.com/python/langgraph/errors/): Error types and handling.
-- [Constants](https://reference.langchain.com/python/langgraph/constants/): Global constants.
-- [Channels](https://reference.langchain.com/python/langgraph/channels/): Message passing and channels.
-:::
+    <Card
+        title="LangGraph Python"
+        icon="diagram-project"
+        href="https://reference.langchain.com/python/langgraph/"
+    >
+        Complete API reference for LangGraph Python, including graph APIs, state management, checkpointing, and more.
+    </Card>
+    :::
 
-:::js
-- [Graphs](https://reference.langchain.com/javascript/classes/_langchain_langgraph.index.StateGraph.html): Main graph abstraction and usage.
-- [Functional API](https://reference.langchain.com/javascript/functions/_langchain_langgraph.index.entrypoint.html): Functional programming interface for graphs.
-- [Pregel](https://reference.langchain.com/javascript/classes/_langchain_langgraph.pregel.Pregel.html): Pregel-inspired computation model.
-- [Checkpointers](https://reference.langchain.com/javascript/modules/_langchain_langgraph-checkpoint.html): Saving and restoring graph state.
-- [MemorySaver](https://reference.langchain.com/javascript/classes/_langchain_langgraph-checkpoint.MemorySaver.html): Storage backends and options.
-- [Errors](https://reference.langchain.com/javascript/variables/_langchain_langgraph-checkpoint.ERROR.html): Error types and handling.
-- [Channels](https://reference.langchain.com/javascript/classes/_langchain_langgraph.pregel.Channel.html): Message passing and channels.
-:::
+    :::js
+    <Card
+        title="LangChain JavaScript"
+        icon="link"
+        href="https://reference.langchain.com/javascript/modules/langchain.html"
+    >
+        Complete API reference for LangChain JavaScript/TypeScript, including chat models, tools, agents, and more.
+    </Card>
 
-## Prebuilt components
+    <Card
+        title="LangGraph JavaScript"
+        icon="diagram-project"
+        href="https://reference.langchain.com/javascript/modules/_langchain_langgraph.html"
+    >
+        Complete API reference for LangGraph JavaScript/TypeScript, including graph APIs, state management, checkpointing, and more.
+    </Card>
+    :::
+</CardGroup>
 
-Higher-level abstractions for common workflows, agents, and other patterns.
-
-:::python
-- [Agents](https://reference.langchain.com/python/langgraph/agents/): Built-in agent patterns.
-- [Supervisor](https://reference.langchain.com/python/langgraph/supervisor/): Orchestration and delegation.
-- [Swarm](https://reference.langchain.com/python/langgraph/swarm/): Multi-agent collaboration.
-- [MCP adapters](https://reference.langchain.com/python/langgraph/mcp/): Integrations with external systems.
-:::
-
-:::js
-- [Agents](https://langchain-ai.github.io/langchainjs/reference/functions/langchain_agents.createAgent.html): Built-in agent patterns.
-- [Supervisor](https://langchain-ai.github.io/langgraphjs/reference/modules/langgraph_supervisor.html): Orchestration and delegation.
-- [Swarm](https://langchain-ai.github.io/langgraphjs/reference/modules/langgraph_swarm.html): Multi-agent collaboration.
-:::
