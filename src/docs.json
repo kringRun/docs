@@ -195,6 +195,7 @@
                       "oss/python/langgraph/install",
                       "oss/python/langgraph/quickstart",
                       "oss/python/langgraph/local-server",
+                      "oss/langgraph/thinking-in-langgraph",
                       "oss/python/langgraph/workflows-agents"
                     ]
                   },
