@@ -188,7 +188,6 @@ class DocumentationBuilder:
             relative_path = input_path.absolute().relative_to(self.src_dir.absolute())
 
             # Construct the GitHub URLs
-            view_url = f"https://github.com/langchain-ai/docs/blob/main/src/{relative_path}"
             edit_url = f"https://github.com/langchain-ai/docs/edit/main/src/{relative_path}"
 
             # Create the callout section with Mintlify Callout component
