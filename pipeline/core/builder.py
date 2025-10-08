@@ -171,7 +171,7 @@ class DocumentationBuilder:
         return re.sub(pattern, rewrite_link, content)
 
     def _add_suggested_edits_link(self, content: str, input_path: Path) -> str:
-        """Add 'View Source' and 'Edit Source' links to the end of markdown content.
+        """Add 'Edit Source' link to the end of markdown content.
 
         This method appends GitHub links with icons pointing to the source file,
         but only for files that are within the src/ directory.
