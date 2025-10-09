@@ -32,13 +32,14 @@ import AlphaCallout from '/snippets/alpha-lc-callout.mdx';
         A new `.content_blocks` property that provides unified access to modern LLM features across all providers.
     </Card>
     <Card title="LangChain Classic" icon="box-archive" href="#langchain-classic">
-        Legacy functionality has moved to `langchain-classic` to keep the core package lean.
+        Legacy functionality has moved to `langchain-classic` to keep the core package focused on the most important agent building blocks.
     </Card>
 </CardGroup>
 
+
 ### `create_agent`
 
-`create_agent` is the standard way to build agents in LangChain 1.0. It provides a simpler interface than `langgraph.prebuilt.create_react_agent` while offering more extensibility through middleware.
+`create_agent` is the standard way to build agents in LangChain 1.0. It provides a simpler interface than `langgraph.prebuilt.create_react_agent` while offering greater customization potential through middleware.
 
 ```python
 from langchain.agents import create_agent
@@ -54,130 +55,92 @@ result = agent.invoke({
 })
 ```
 
-**Simple for beginners, powerful for experts.** Start with basic configuration, then extend with middleware as your needs grow.
-
 #### Middleware
 
-**Middleware is the defining feature of LangChain 1.0.** It solves the critical problem that plagued earlier agent frameworks: developers had to "graduate off" frameworks when they needed sophisticated control over agent behavior. Middleware eliminates this limitation.
+Middleware is the defining feature of `create_agent`. It makes `create_agent` highly customizable, raising the ceiling for what you can build.
 
-##### Why context engineering matters
+Great agents require **context engineering**: getting the right information to the model at the right time. Middleware helps you control dynamic prompts, conversation summarization, selective tool access, state management, and guardrails through a composable abstraction.
 
-The difference between a mediocre agent and an exceptional one often comes down to **context engineering**: getting the right information to the model at the right time. This includes:
+##### Prebuilt middleware
 
-- **Dynamic prompts** that adapt based on conversation state, user expertise, or task complexity
-- **Selective tool access** that only exposes relevant tools based on the current context
-- **Conversation management** that summarizes history when it gets too long
-- **State management** that tracks custom information across turns
-- **Guardrails and validation** that ensure responses meet your requirements
+LangChain provides a few prebuilt middlewares for common patterns, including:
 
-Previously, these capabilities were scattered across different APIs with different interfaces and limitations. Many were simply impossible without forking the framework or dropping down to LangGraph directly.
-
-##### One abstraction, many uses
-
-Middleware provides a single, composable abstraction for all context engineering needs. It gives you **granular control** over what happens at every stage of the agent's execution:
-
-<CardGroup cols={3}>
-    <Card title="No Framework Ceiling" icon="rocket">
-        Build sophisticated agent behaviors without hitting framework limitations. Never need to "graduate  off" LangChain.
-    </Card>
-    <Card title="Composable" icon="plug">
-        Stack multiple middleware to build complex behaviors from simple, reusable components.
-    </Card>
-    <Card title="Standard Interface" icon="shapes">
-        One consistent API for all agent customization, from simple prompt tweaks to complex multi-agent orchestration.
-    </Card>
-</CardGroup>
-
-##### How middleware works
-
-Middleware intercepts the agent's execution flow at key points, allowing you to inspect and modify state, requests, and responses:
-
-| Method | Purpose | What you can do |
-|--------|---------|-----------------|
-| `before_model` | Runs before calling the LLM | Update state, trim messages, redirect to different nodes |
-| `modify_model_request` | Modifies the LLM request | Change prompts, switch models, adjust tools—without permanent state changes |
-| `after_model` | Runs after the LLM responds | Validate responses, apply guardrails, update state, redirect flow |
-
-Each middleware method receives the full agent state and can return updates or routing decisions. Middleware executes in the order you define, allowing you to build sophisticated behaviors by stacking simple components.
-
-##### Example: Multi-stage agent
-
-Here's a real-world example: an agent that adapts its behavior based on whether it's in research mode or execution mode, automatically managing conversation length and requiring approval for sensitive actions.
+- **PIIRedactionMiddleware**: Redact sensitive information before sending to the model
+- **SummarizationMiddleware**: Condense conversation history when it gets too long
+- **HumanInTheLoopMiddleware**: Require approval for sensitive tool calls
 
 ```python
 from langchain.agents import create_agent
 from langchain.agents.middleware import (
-    AgentMiddleware,
+    PIIRedactionMiddleware,
     SummarizationMiddleware,
     HumanInTheLoopMiddleware
 )
 
-class ModeBasedBehavior(AgentMiddleware):
-    """Adapt agent behavior based on conversation mode."""
-
-    def modify_model_request(self, request, state, runtime):
-        # Check if we have tool results indicating research phase
-        recent_messages = state["messages"][-5:]
-        has_search_results = any(
-            msg.type == "tool" and "search" in msg.name.lower()
-            for msg in recent_messages
-            if hasattr(msg, "name")
-        )
-
-        if has_search_results:
-            # Research mode: focus on analysis
-            request.system_prompt = (
-                "You are in research mode. Synthesize information from search results. "
-                "Be thorough and cite sources. Don't execute actions yet."
-            )
-            request.tools = [search_web, analyze_data]
-        else:
-            # Execution mode: focus on taking action
-            request.system_prompt = (
-                "You are in execution mode. Based on your research, "
-                "take concrete actions to help the user."
-            )
-            request.tools = [search_web, analyze_data, send_email, create_calendar_event]
-
-        return request
-
-# Compose multiple middleware for sophisticated behavior
 agent = create_agent(
     model="anthropic:claude-4-5-sonnet",
-    tools=[search_web, analyze_data, send_email, create_calendar_event],
+    tools=[read_email, send_email],
     middleware=[
-        ModeBasedBehavior(),                    # Context-aware behavior
-        SummarizationMiddleware(                # Manage conversation length
-            model=model,
+        PIIRedactionMiddleware(patterns=["email", "phone", "ssn"]),
+        SummarizationMiddleware(
+            model="anthropic:claude-4-5-sonnet",
             max_tokens_before_summary=500
         ),
-        HumanInTheLoopMiddleware(               # Require approval for sensitive actions
-            interrupt_on={
-                "send_email": {
-                    "allow_accept": True,
-                    "allow_edit": True
-                },
-                "create_calendar_event": {
-                    "allow_accept": True,
-                    "allow_edit": True
-                }
-            }
+        HumanInTheLoopMiddleware(
+            interrupt_on={"send_email": {"allow_accept": True, "allow_edit": True}}
         ),
     ]
 )
 ```
 
-This agent automatically shifts between research and execution modes based on conversation state—something that would have required framework modifications in earlier versions.
+##### Custom middleware
 
-<Card title="Deep Dive" icon="compass" href="https://blog.langchain.com/agent-middleware/">
-    Read the Agent Middleware blog post
-</Card>
+You can also build custom middleware to fit your specific needs.
+
+Build custom middleware by implementing any of these hooks on a subclass of the `AgentMiddleware` class:
+
+| Hook | When it runs | Use cases |
+|------|--------------|-----------|
+| `before_agent` | Before calling the agent | Load memory, validate input |
+| `before_model` | Before each LLM call | Update prompts, trim messages |
+| `wrap_model_call` | Around each LLM call | Intercept and modify requests/responses |
+| `wrap_tool_call` | Around each tool call | Intercept and modify tool execution |
+| `after_model` | After each LLM response | Validate output, apply guardrails |
+| `after_agent` | After agent completes | Save results, cleanup |
+
+Example custom middleware:
+
+```python
+from langchain.agents.middleware import AgentMiddleware, ModelRequest, ModelRequestHandler
+from langchain_core.messages import AIMessage
+
+class ExpertiseBasedToolMiddleware(Middleware):
+    def wrap_model_call(self, request: ModelRequest, handler: ModelRequestHandler) -> AIMessage:
+        user_level = request.runtime.context.get("user_expertise", "beginner")
+
+        if user_level == "expert":
+            model = "openai:gpt-5"  # More powerful model
+            available_tools = [advanced_search, data_analysis, api_integration]
+        else:
+            model = "openai:gpt-5-nano"  # Less powerful model
+            available_tools = [simple_search, basic_calculator]
+
+        request.model = model
+        request.tools = available_tools
+        return handler(request)
+
+agent = create_agent(
+    model="anthropic:claude-4-5-sonnet",
+    tools=[simple_search, advanced_search, basic_calculator, data_analysis, api_integration],
+    middleware=[ExpertiseBasedToolMiddleware()]
+)
+```
 
 <Card title="Full Documentation" icon="book" href="/oss/python/langchain/middleware">
     See the complete middleware guide
 </Card>
 
-#### Production features
+#### Build reliable, long running agents
 
 Because `create_agent` is built on LangGraph, you automatically get enterprise-grade capabilities:
 
@@ -192,18 +155,18 @@ Because `create_agent` is built on LangGraph, you automatically get enterprise-g
         Pause agent execution for human approval before sensitive actions
     </Card>
     <Card title="Time travel" icon="clock-rotate-left">
-        Rewind conversations to any point and explore alternate paths
+        Rewind conversations to any point and explore alternate paths and prompts
     </Card>
 </CardGroup>
 
-You don't need to learn LangGraph to use these features—they work out of the box. But when you need custom graph structures, you can drop down to LangGraph directly.
+You don't need to learn LangGraph to use these features—they work out of the box.
 
 #### Structured output
 
 `create_agent` has improved structured output generation:
 
 - **Main loop integration**: Structured output is now generated in the main loop instead of requiring an additional LLM call
-- **Tool/output choice**: Models can choose between calling tools or using provider-side structured output generation
+- **Structured output strategy**: Models can choose between calling tools or using provider-side structured output generation
 - **Cost reduction**: Eliminates extra expense from additional LLM calls
 
 ```python
@@ -236,42 +199,6 @@ print(repr(result["structured_response"]))
 **Error handling**: Control error handling via the `handle_errors` parameter to `ToolStrategy`:
 - **Parsing errors**: Model generates data that doesn't match desired structure
 - **Multiple tool calls**: Model generates 2+ tool calls for structured output schemas
-
-#### Built-in patterns
-
-Common patterns like summarization, human-in-the-loop, and guardrails are offered as built-in middleware:
-
-```python
-from langchain.agents import create_agent
-from langchain.agents.middleware import (
-    SummarizationMiddleware,
-    HumanInTheLoopMiddleware,
-)
-
-agent = create_agent(
-    model="anthropic:claude-4-5-sonnet",
-    tools=tools,
-    middleware=[
-        SummarizationMiddleware(
-            model=model,
-            max_tokens_before_summary=500
-        ),
-        HumanInTheLoopMiddleware(
-            interrupt_on={
-                "send_email": {
-                    "allow_accept": True,
-                    "allow_respond": True,
-                    "allow_edit": True
-                }
-            }
-        ),
-    ]
-)
-```
-
-<Card title="Learn More" icon="book" href="https://blog.langchain.com/langchain-langchain-1-0-alpha-releases/">
-    Read the LangChain 1.0 announcement
-</Card>
 
 ### Standard content blocks
 
