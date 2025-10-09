@@ -1,5 +1,7 @@
 # LangGraph Supervisor
 
+Supervisor has not been upgraded to LangChain v1 yet. See [existing docs](https://langchain-ai.github.io/langgraph/reference/supervisor/).
+
 <!-- ::: langgraph_supervisor.supervisor
     options:
       members:

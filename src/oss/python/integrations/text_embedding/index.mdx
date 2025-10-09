@@ -38,11 +38,9 @@ similarity = cosine_similarity(query_embedding, document_embedding)
 print("Cosine Similarity:", similarity)
 ```
 
-## Embedding interface in LangChain
+## Interface
 
-LangChain provides a standard interface for text embedding models (e.g., OpenAI, Cohere, Hugging Face) via the [Embeddings](
-https://python.langchain.com/api_reference/core/embeddings/langchain_core.embeddings.embeddings.Embeddings.html#langchain_core.embeddings.embeddings.Embeddings
-) interface.
+LangChain provides a standard interface for text embedding models (e.g., OpenAI, Cohere, Hugging Face) via the @[Embeddings] interface.
 
 Two main methods are available:
 
@@ -371,7 +369,7 @@ embeddings.embed_query("Hello, world!")
 </AccordionGroup>
 
 
-# Caching
+## Caching
 
 Embeddings can be stored or temporarily cached to avoid needing to recompute them.
 

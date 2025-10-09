@@ -1,26 +1,25 @@
 ---
 title: LangChain Overview
+sidebarTitle: Overview
 ---
 
 :::python
 <Warning>
-LangChain [v1](/oss/releases/langchain-v1) is under active development and is not recommended for production use.
+[LangChain v1](/oss/releases/langchain-v1) is under active development and is not recommended for production use.
 * APIs may change without notice
 * The docs are incomplete and subject to change
 
-For the latest stable version, see the v0
-[LangChain](https://python.langchain.com/docs/introduction/) docs.
+For the latest stable version, see the [v0 LangChain](https://python.langchain.com/docs/introduction/) docs.
 </Warning>
 :::
 
 :::js
 <Warning>
-LangChain [v1](/oss/releases/langchain-v1) is under active development and is not recommended for production use.
+[LangChain v1](/oss/releases/langchain-v1) is under active development and is not recommended for production use.
 * APIs may change without notice
 * The docs are incomplete and subject to change
 
-For the latest stable version, see the v0
-[LangChain](https://js.langchain.com/docs/introduction/) docs.
+For the latest stable version, see the [v0 LangChain](https://js.langchain.com/docs/introduction/) docs.
 </Warning>
 :::
 
@@ -76,7 +75,7 @@ def get_weather(city: str) -> str:
 agent = create_agent(
     model="anthropic:claude-3-7-sonnet-latest",
     tools=[get_weather],
-    prompt="You are a helpful assistant",
+    system_prompt="You are a helpful assistant",
 )
 
 # Run the agent
