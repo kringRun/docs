@@ -2,10 +2,10 @@ version = 1
 revision = 3
 requires-python = ">=3.13.0, <4.0.0"
 resolution-markers = [
-    "python_full_version >= '3.14' and platform_python_implementation != 'PyPy'",
-    "python_full_version < '3.14' and platform_python_implementation != 'PyPy'",
     "python_full_version >= '3.14' and platform_python_implementation == 'PyPy'",
+    "python_full_version >= '3.14' and platform_python_implementation != 'PyPy'",
     "python_full_version < '3.14' and platform_python_implementation == 'PyPy'",
+    "python_full_version < '3.14' and platform_python_implementation != 'PyPy'",
 ]
 
 [manifest]
@@ -692,7 +692,7 @@ wheels = [
 
 [[package]]
 name = "exa-py"
-version = "1.16.0"
+version = "1.16.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "httpcore" },
@@ -703,9 +703,9 @@ dependencies = [
     { name = "requests" },
     { name = "typing-extensions" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/bc/53/ebb3174d941b73c16b68d2aef23c228bab391693accdc48fe1809bdcb47f/exa_py-1.16.0.tar.gz", hash = "sha256:56ab39d5bc95ee7d9264f7eda8cba87c5fd614b73717d373d6d5885a2fb75b04", size = 41328, upload-time = "2025-10-08T22:34:31.18Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/77/15/abbe4361f42416c1741d252821bdfffe0e1ad9b39655b04db417b79b0d55/exa_py-1.16.1.tar.gz", hash = "sha256:3cb371b8efd321881a8217070f16afdac5afbaa9229177f80d5c427e1a6dbd59", size = 41364, upload-time = "2025-10-09T21:09:08.23Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/0b/d5/7a88b43dee643435344f5d88d0189234e46a81cfa3208dd574533129ea20/exa_py-1.16.0-py3-none-any.whl", hash = "sha256:fa4eb45c5b657f7c2f7cbb8af70f4c50f5e0cb51a21f2e76695d020d7f1ae0b6", size = 56600, upload-time = "2025-10-08T22:34:29.876Z" },
+    { url = "https://files.pythonhosted.org/packages/95/28/5b871e0ac1b76e560f75226f70897cb3e7cb66022cfb58507d0e7d6217ca/exa_py-1.16.1-py3-none-any.whl", hash = "sha256:3b323ed32725b72110720306ea12da09161cfa9c8ac64797a9c0b66869741f27", size = 56631, upload-time = "2025-10-09T21:09:07.099Z" },
 ]
 
 [[package]]
@@ -1624,31 +1624,29 @@ wheels = [
 
 [[package]]
 name = "kubernetes"
-version = "33.1.0"
+version = "34.1.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "certifi" },
     { name = "durationpy" },
     { name = "google-auth" },
-    { name = "oauthlib" },
     { name = "python-dateutil" },
     { name = "pyyaml" },
     { name = "requests" },
     { name = "requests-oauthlib" },
     { name = "six" },
-    { name = "urllib3", version = "1.26.20", source = { registry = "https://pypi.org/simple" }, marker = "platform_python_implementation == 'PyPy'" },
-    { name = "urllib3", version = "2.5.0", source = { registry = "https://pypi.org/simple" }, marker = "platform_python_implementation != 'PyPy'" },
+    { name = "urllib3" },
     { name = "websocket-client" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/ae/52/19ebe8004c243fdfa78268a96727c71e08f00ff6fe69a301d0b7fcbce3c2/kubernetes-33.1.0.tar.gz", hash = "sha256:f64d829843a54c251061a8e7a14523b521f2dc5c896cf6d65ccf348648a88993", size = 1036779, upload-time = "2025-06-09T21:57:58.521Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/ef/55/3f880ef65f559cbed44a9aa20d3bdbc219a2c3a3bac4a30a513029b03ee9/kubernetes-34.1.0.tar.gz", hash = "sha256:8fe8edb0b5d290a2f3ac06596b23f87c658977d46b5f8df9d0f4ea83d0003912", size = 1083771, upload-time = "2025-09-29T20:23:49.283Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/89/43/d9bebfc3db7dea6ec80df5cb2aad8d274dd18ec2edd6c4f21f32c237cbbb/kubernetes-33.1.0-py2.py3-none-any.whl", hash = "sha256:544de42b24b64287f7e0aa9513c93cb503f7f40eea39b20f66810011a86eabc5", size = 1941335, upload-time = "2025-06-09T21:57:56.327Z" },
+    { url = "https://files.pythonhosted.org/packages/ca/ec/65f7d563aa4a62dd58777e8f6aa882f15db53b14eb29aba0c28a20f7eb26/kubernetes-34.1.0-py2.py3-none-any.whl", hash = "sha256:bffba2272534e224e6a7a74d582deb0b545b7c9879d2cd9e4aae9481d1f2cc2a", size = 2008380, upload-time = "2025-09-29T20:23:47.684Z" },
 ]
 
 [[package]]
 name = "langchain"
 version = "1.0.0a12"
-source = { git = "https://github.com/langchain-ai/langchain.git?subdirectory=libs%2Flangchain_v1#b665b81a0e0490427da3e36c97ca337632a76f59" }
+source = { git = "https://github.com/langchain-ai/langchain.git?subdirectory=libs%2Flangchain_v1#6fc21afbc9528b7f072897bd09e5c3d96169b0d1" }
 dependencies = [
     { name = "langchain-core" },
     { name = "langgraph" },
@@ -1658,7 +1656,7 @@ dependencies = [
 [[package]]
 name = "langchain-anthropic"
 version = "1.0.0a3"
-source = { git = "https://github.com/langchain-ai/langchain.git?subdirectory=libs%2Fpartners%2Fanthropic#b665b81a0e0490427da3e36c97ca337632a76f59" }
+source = { git = "https://github.com/langchain-ai/langchain.git?subdirectory=libs%2Fpartners%2Fanthropic#6fc21afbc9528b7f072897bd09e5c3d96169b0d1" }
 dependencies = [
     { name = "anthropic" },
     { name = "langchain-core" },
@@ -1678,7 +1676,7 @@ dependencies = [
 [[package]]
 name = "langchain-chroma"
 version = "1.0.0a1"
-source = { git = "https://github.com/langchain-ai/langchain.git?subdirectory=libs%2Fpartners%2Fchroma#b665b81a0e0490427da3e36c97ca337632a76f59" }
+source = { git = "https://github.com/langchain-ai/langchain.git?subdirectory=libs%2Fpartners%2Fchroma#6fc21afbc9528b7f072897bd09e5c3d96169b0d1" }
 dependencies = [
     { name = "chromadb" },
     { name = "langchain-core" },
@@ -1688,7 +1686,7 @@ dependencies = [
 [[package]]
 name = "langchain-classic"
 version = "1.0.0a1"
-source = { git = "https://github.com/langchain-ai/langchain.git?subdirectory=libs%2Flangchain#b665b81a0e0490427da3e36c97ca337632a76f59" }
+source = { git = "https://github.com/langchain-ai/langchain.git?subdirectory=libs%2Flangchain#6fc21afbc9528b7f072897bd09e5c3d96169b0d1" }
 dependencies = [
     { name = "langchain-core" },
     { name = "langchain-text-splitters" },
@@ -1702,7 +1700,7 @@ dependencies = [
 [[package]]
 name = "langchain-cli"
 version = "1.0.0a1"
-source = { git = "https://github.com/langchain-ai/langchain.git?subdirectory=libs%2Fcli#b665b81a0e0490427da3e36c97ca337632a76f59" }
+source = { git = "https://github.com/langchain-ai/langchain.git?subdirectory=libs%2Fcli#6fc21afbc9528b7f072897bd09e5c3d96169b0d1" }
 dependencies = [
     { name = "gitpython" },
     { name = "gritql" },
@@ -1734,7 +1732,7 @@ dependencies = [
 [[package]]
 name = "langchain-core"
 version = "1.0.0a8"
-source = { git = "https://github.com/langchain-ai/langchain.git?subdirectory=libs%2Fcore#b665b81a0e0490427da3e36c97ca337632a76f59" }
+source = { git = "https://github.com/langchain-ai/langchain.git?subdirectory=libs%2Fcore#6fc21afbc9528b7f072897bd09e5c3d96169b0d1" }
 dependencies = [
     { name = "jsonpatch" },
     { name = "langsmith" },
@@ -1748,7 +1746,7 @@ dependencies = [
 [[package]]
 name = "langchain-deepseek"
 version = "1.0.0a1"
-source = { git = "https://github.com/langchain-ai/langchain.git?subdirectory=libs%2Fpartners%2Fdeepseek#b665b81a0e0490427da3e36c97ca337632a76f59" }
+source = { git = "https://github.com/langchain-ai/langchain.git?subdirectory=libs%2Fpartners%2Fdeepseek#6fc21afbc9528b7f072897bd09e5c3d96169b0d1" }
 dependencies = [
     { name = "langchain-core" },
     { name = "langchain-openai" },
@@ -1757,7 +1755,7 @@ dependencies = [
 [[package]]
 name = "langchain-exa"
 version = "1.0.0a1"
-source = { git = "https://github.com/langchain-ai/langchain.git?subdirectory=libs%2Fpartners%2Fexa#b665b81a0e0490427da3e36c97ca337632a76f59" }
+source = { git = "https://github.com/langchain-ai/langchain.git?subdirectory=libs%2Fpartners%2Fexa#6fc21afbc9528b7f072897bd09e5c3d96169b0d1" }
 dependencies = [
     { name = "exa-py" },
     { name = "langchain-core" },
@@ -1766,7 +1764,7 @@ dependencies = [
 [[package]]
 name = "langchain-fireworks"
 version = "1.0.0a1"
-source = { git = "https://github.com/langchain-ai/langchain.git?subdirectory=libs%2Fpartners%2Ffireworks#b665b81a0e0490427da3e36c97ca337632a76f59" }
+source = { git = "https://github.com/langchain-ai/langchain.git?subdirectory=libs%2Fpartners%2Ffireworks#6fc21afbc9528b7f072897bd09e5c3d96169b0d1" }
 dependencies = [
     { name = "aiohttp" },
     { name = "fireworks-ai" },
@@ -1778,7 +1776,7 @@ dependencies = [
 [[package]]
 name = "langchain-google-community"
 version = "2.0.10"
-source = { git = "https://github.com/langchain-ai/langchain-google.git?subdirectory=libs%2Fcommunity#1710b3a8e822eabb1b2b26dc1259cfbebb64094b" }
+source = { git = "https://github.com/langchain-ai/langchain-google.git?subdirectory=libs%2Fcommunity#13badbc55337484226908701cba57cd25ec31bad" }
 dependencies = [
     { name = "google-api-core" },
     { name = "google-api-python-client" },
@@ -1792,7 +1790,7 @@ dependencies = [
 [[package]]
 name = "langchain-google-genai"
 version = "2.1.12"
-source = { git = "https://github.com/langchain-ai/langchain-google.git?subdirectory=libs%2Fgenai#1710b3a8e822eabb1b2b26dc1259cfbebb64094b" }
+source = { git = "https://github.com/langchain-ai/langchain-google.git?subdirectory=libs%2Fgenai#13badbc55337484226908701cba57cd25ec31bad" }
 dependencies = [
     { name = "filetype" },
     { name = "google-ai-generativelanguage" },
@@ -1803,7 +1801,7 @@ dependencies = [
 [[package]]
 name = "langchain-google-vertexai"
 version = "2.1.2"
-source = { git = "https://github.com/langchain-ai/langchain-google.git?subdirectory=libs%2Fvertexai#1710b3a8e822eabb1b2b26dc1259cfbebb64094b" }
+source = { git = "https://github.com/langchain-ai/langchain-google.git?subdirectory=libs%2Fvertexai#13badbc55337484226908701cba57cd25ec31bad" }
 dependencies = [
     { name = "bottleneck" },
     { name = "google-cloud-aiplatform" },
@@ -1820,7 +1818,7 @@ dependencies = [
 [[package]]
 name = "langchain-groq"
 version = "1.0.0a1"
-source = { git = "https://github.com/langchain-ai/langchain.git?subdirectory=libs%2Fpartners%2Fgroq#b665b81a0e0490427da3e36c97ca337632a76f59" }
+source = { git = "https://github.com/langchain-ai/langchain.git?subdirectory=libs%2Fpartners%2Fgroq#6fc21afbc9528b7f072897bd09e5c3d96169b0d1" }
 dependencies = [
     { name = "groq" },
     { name = "langchain-core" },
@@ -1839,7 +1837,7 @@ dependencies = [
 [[package]]
 name = "langchain-mongodb"
 version = "0.7.0"
-source = { git = "https://github.com/langchain-ai/langchain-mongodb.git?subdirectory=libs%2Flangchain-mongodb#127e2f93dd08a6460292b3b189fba741336aec80" }
+source = { git = "https://github.com/langchain-ai/langchain-mongodb.git?subdirectory=libs%2Flangchain-mongodb#3913e4085f8cca6aae32b92c39fe2fdeb71d1a65" }
 dependencies = [
     { name = "langchain" },
     { name = "langchain-core" },
@@ -1852,7 +1850,7 @@ dependencies = [
 [[package]]
 name = "langchain-nomic"
 version = "1.0.0a1"
-source = { git = "https://github.com/langchain-ai/langchain.git?subdirectory=libs%2Fpartners%2Fnomic#b665b81a0e0490427da3e36c97ca337632a76f59" }
+source = { git = "https://github.com/langchain-ai/langchain.git?subdirectory=libs%2Fpartners%2Fnomic#6fc21afbc9528b7f072897bd09e5c3d96169b0d1" }
 dependencies = [
     { name = "langchain-core" },
     { name = "nomic" },
@@ -1862,7 +1860,7 @@ dependencies = [
 [[package]]
 name = "langchain-ollama"
 version = "1.0.0a1"
-source = { git = "https://github.com/langchain-ai/langchain.git?subdirectory=libs%2Fpartners%2Follama#b665b81a0e0490427da3e36c97ca337632a76f59" }
+source = { git = "https://github.com/langchain-ai/langchain.git?subdirectory=libs%2Fpartners%2Follama#6fc21afbc9528b7f072897bd09e5c3d96169b0d1" }
 dependencies = [
     { name = "langchain-core" },
     { name = "ollama" },
@@ -1871,7 +1869,7 @@ dependencies = [
 [[package]]
 name = "langchain-openai"
 version = "1.0.0a4"
-source = { git = "https://github.com/langchain-ai/langchain.git?subdirectory=libs%2Fpartners%2Fopenai#b665b81a0e0490427da3e36c97ca337632a76f59" }
+source = { git = "https://github.com/langchain-ai/langchain.git?subdirectory=libs%2Fpartners%2Fopenai#6fc21afbc9528b7f072897bd09e5c3d96169b0d1" }
 dependencies = [
     { name = "langchain-core" },
     { name = "openai" },
@@ -1881,7 +1879,7 @@ dependencies = [
 [[package]]
 name = "langchain-perplexity"
 version = "1.0.0a1"
-source = { git = "https://github.com/langchain-ai/langchain.git?subdirectory=libs%2Fpartners%2Fperplexity#b665b81a0e0490427da3e36c97ca337632a76f59" }
+source = { git = "https://github.com/langchain-ai/langchain.git?subdirectory=libs%2Fpartners%2Fperplexity#6fc21afbc9528b7f072897bd09e5c3d96169b0d1" }
 dependencies = [
     { name = "langchain-core" },
     { name = "openai" },
@@ -1890,7 +1888,7 @@ dependencies = [
 [[package]]
 name = "langchain-prompty"
 version = "1.0.0a1"
-source = { git = "https://github.com/langchain-ai/langchain.git?subdirectory=libs%2Fpartners%2Fprompty#b665b81a0e0490427da3e36c97ca337632a76f59" }
+source = { git = "https://github.com/langchain-ai/langchain.git?subdirectory=libs%2Fpartners%2Fprompty#6fc21afbc9528b7f072897bd09e5c3d96169b0d1" }
 dependencies = [
     { name = "langchain-core" },
     { name = "pyyaml" },
@@ -1899,7 +1897,7 @@ dependencies = [
 [[package]]
 name = "langchain-qdrant"
 version = "1.0.0a1"
-source = { git = "https://github.com/langchain-ai/langchain.git?subdirectory=libs%2Fpartners%2Fqdrant#b665b81a0e0490427da3e36c97ca337632a76f59" }
+source = { git = "https://github.com/langchain-ai/langchain.git?subdirectory=libs%2Fpartners%2Fqdrant#6fc21afbc9528b7f072897bd09e5c3d96169b0d1" }
 dependencies = [
     { name = "langchain-core" },
     { name = "pydantic" },
@@ -2025,7 +2023,7 @@ dependencies = [
 [[package]]
 name = "langchain-tests"
 version = "1.0.0a2"
-source = { git = "https://github.com/langchain-ai/langchain.git?subdirectory=libs%2Fstandard-tests#b665b81a0e0490427da3e36c97ca337632a76f59" }
+source = { git = "https://github.com/langchain-ai/langchain.git?subdirectory=libs%2Fstandard-tests#6fc21afbc9528b7f072897bd09e5c3d96169b0d1" }
 dependencies = [
     { name = "httpx" },
     { name = "langchain-core" },
@@ -2043,7 +2041,7 @@ dependencies = [
 [[package]]
 name = "langchain-text-splitters"
 version = "1.0.0a1"
-source = { git = "https://github.com/langchain-ai/langchain.git?subdirectory=libs%2Ftext-splitters#b665b81a0e0490427da3e36c97ca337632a76f59" }
+source = { git = "https://github.com/langchain-ai/langchain.git?subdirectory=libs%2Ftext-splitters#6fc21afbc9528b7f072897bd09e5c3d96169b0d1" }
 dependencies = [
     { name = "langchain-core" },
 ]
@@ -2051,7 +2049,7 @@ dependencies = [
 [[package]]
 name = "langchain-xai"
 version = "1.0.0a1"
-source = { git = "https://github.com/langchain-ai/langchain.git?subdirectory=libs%2Fpartners%2Fxai#b665b81a0e0490427da3e36c97ca337632a76f59" }
+source = { git = "https://github.com/langchain-ai/langchain.git?subdirectory=libs%2Fpartners%2Fxai#6fc21afbc9528b7f072897bd09e5c3d96169b0d1" }
 dependencies = [
     { name = "aiohttp" },
     { name = "langchain-core" },
@@ -3304,17 +3302,17 @@ wheels = [
 
 [[package]]
 name = "protobuf"
-version = "6.33.0rc1"
+version = "6.33.0rc2"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/31/80/969e6f0241d1ef54b03df7283e05acb95fe4ac8208661f3cd9190c8f3d76/protobuf-6.33.0rc1.tar.gz", hash = "sha256:0a81e3cf8e9b719c202f51262490d89a340cbdc09bd61a1aa7a3d169ffc64f9f", size = 443562, upload-time = "2025-10-01T17:52:51.976Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/38/78/9b3bf67f3e3abb06745343c8765f7547f5459bf5ff3b00f00614eaeed1b5/protobuf-6.33.0rc2.tar.gz", hash = "sha256:e94ea6659abb78dd3bee1b22e3cac77acbca35f49b94ac268c1201dfd6b1030a", size = 443506, upload-time = "2025-10-09T20:49:59.78Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/24/10/cae39701c59875605f063e77192a011809c34fe9cba3f3befdf69f2af2e2/protobuf-6.33.0rc1-cp310-abi3-win32.whl", hash = "sha256:167a5d0054104f42a787ff468df0c2da4d333bb42889a279c1b6d668490637df", size = 425692, upload-time = "2025-10-01T17:52:37.166Z" },
-    { url = "https://files.pythonhosted.org/packages/61/0d/9b1fc7c6f8557941b9174341879cc8d2e2fa050f02c305e3df843da0ebde/protobuf-6.33.0rc1-cp310-abi3-win_amd64.whl", hash = "sha256:d71b32b12484c0f1babee49b500d9ff707da5fc5dd056d68914d811ac6233acf", size = 436981, upload-time = "2025-10-01T17:52:39.68Z" },
-    { url = "https://files.pythonhosted.org/packages/28/2a/2d1bbce3fc76b03af08a8efa4f44cbe601488ce8d0df84726b0936a89184/protobuf-6.33.0rc1-cp39-abi3-macosx_10_9_universal2.whl", hash = "sha256:d1cfe9f9870600f80eff0b4df302cd0109007e36f4c7d824733468617dae0843", size = 427622, upload-time = "2025-10-01T17:52:40.835Z" },
-    { url = "https://files.pythonhosted.org/packages/44/45/4453601e45a622007f206f9fe3deb3901616b241e0be2f68a26920c4c9f4/protobuf-6.33.0rc1-cp39-abi3-manylinux2014_aarch64.whl", hash = "sha256:30255d66ae2871809662d5ef1b4773535233f38b700377d871e7a2aa4803505e", size = 324544, upload-time = "2025-10-01T17:52:41.908Z" },
-    { url = "https://files.pythonhosted.org/packages/93/39/09545b6153e6fffdf862fe713d2e065f989deb7bbd3cc3954198d83dee50/protobuf-6.33.0rc1-cp39-abi3-manylinux2014_s390x.whl", hash = "sha256:833ee6da7fb81201020f744fea3377de0e08addd5f5b350ab34e9ffc89cf4f10", size = 339259, upload-time = "2025-10-01T17:52:43.329Z" },
-    { url = "https://files.pythonhosted.org/packages/70/65/4a820c9d31b54a97ef579de677b89c89419bfcc2730afff78a48551e363a/protobuf-6.33.0rc1-cp39-abi3-manylinux2014_x86_64.whl", hash = "sha256:7ae840bd1228c2caee19f39095f6e0ec58127c66aea95925fef11440e2ea55c1", size = 323270, upload-time = "2025-10-01T17:52:45.774Z" },
-    { url = "https://files.pythonhosted.org/packages/a2/c8/9f89beffdeb712eb8dfd57731d176f9f21275285cbd209e493b78e396f78/protobuf-6.33.0rc1-py3-none-any.whl", hash = "sha256:a8dd991431cdf8a2f281f6dc0d796b4136383078658d5b8f4488c01791a1ce03", size = 170575, upload-time = "2025-10-01T17:52:50.885Z" },
+    { url = "https://files.pythonhosted.org/packages/c3/40/0f9c43c5cc7da508d1c4d9229dbc87dae27a5a5086d856e5c49487aa5ac0/protobuf-6.33.0rc2-cp310-abi3-win32.whl", hash = "sha256:17a37035fef4725e2f61760eaf4e6efb91c46ca4a7c517bbf6db6ec4492a4dcc", size = 425694, upload-time = "2025-10-09T20:49:45.627Z" },
+    { url = "https://files.pythonhosted.org/packages/e3/f7/db79c7fd02817ed7bd680fe87e7a405101a313bc69dc8ae0d3c8d2efe7ca/protobuf-6.33.0rc2-cp310-abi3-win_amd64.whl", hash = "sha256:c6223ccbe7541624a88acdc2bea111a499ff4ad25c0358b024f53f60a7fe9a5b", size = 436983, upload-time = "2025-10-09T20:49:47.87Z" },
+    { url = "https://files.pythonhosted.org/packages/48/ec/1c5165ec8197b55ead42ae2318a7b6704976c5b579c0b2d2e2161a857101/protobuf-6.33.0rc2-cp39-abi3-macosx_10_9_universal2.whl", hash = "sha256:328e75e973736510710c35b1ec1e59a57c20673132ab355d032298159c6980eb", size = 427623, upload-time = "2025-10-09T20:49:49.398Z" },
+    { url = "https://files.pythonhosted.org/packages/a5/63/0d3616c647b5a4d0201172b66ffc58e228dddf5c8f7d6701e31584c164a9/protobuf-6.33.0rc2-cp39-abi3-manylinux2014_aarch64.whl", hash = "sha256:bc36952422eb610fbee000ff68d056d2876a793afc7c1240a61fefa4772aa469", size = 324547, upload-time = "2025-10-09T20:49:50.863Z" },
+    { url = "https://files.pythonhosted.org/packages/63/a0/0c4122e50d796043b067188e0b486ddebff8ba74f3320b7947c78e3fa822/protobuf-6.33.0rc2-cp39-abi3-manylinux2014_s390x.whl", hash = "sha256:27898426a02fea9c5f54655d1c762d4abf35c034e43ce1ec8fd99c1fc768de83", size = 339262, upload-time = "2025-10-09T20:49:52.485Z" },
+    { url = "https://files.pythonhosted.org/packages/77/7a/4960ac5bda4f214f7dd478915d5caf38cc36b7c4deab40fb10882ab72bf9/protobuf-6.33.0rc2-cp39-abi3-manylinux2014_x86_64.whl", hash = "sha256:67f99530e86462ccf90943cf0bc0c81cf524a9afda83f61dd8cdcb4c90619e5d", size = 323272, upload-time = "2025-10-09T20:49:54.017Z" },
+    { url = "https://files.pythonhosted.org/packages/3d/16/529fd09f3f71df48b186d5f250c49d6855bf5252c2c8c9df0fe3d4ca55a1/protobuf-6.33.0rc2-py3-none-any.whl", hash = "sha256:8c7e2acbe5c907da2b7c52323f6c49c7ca2446e862f397b355f7c8efc18b7b52", size = 170577, upload-time = "2025-10-09T20:49:58.692Z" },
 ]
 
 [[package]]
@@ -3875,8 +3873,7 @@ dependencies = [
     { name = "portalocker" },
     { name = "protobuf" },
     { name = "pydantic" },
-    { name = "urllib3", version = "1.26.20", source = { registry = "https://pypi.org/simple" }, marker = "platform_python_implementation == 'PyPy'" },
-    { name = "urllib3", version = "2.5.0", source = { registry = "https://pypi.org/simple" }, marker = "platform_python_implementation != 'PyPy'" },
+    { name = "urllib3" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/79/8b/76c7d325e11d97cb8eb5e261c3759e9ed6664735afbf32fdded5b580690c/qdrant_client-1.15.1.tar.gz", hash = "sha256:631f1f3caebfad0fd0c1fba98f41be81d9962b7bf3ca653bed3b727c0e0cbe0e", size = 295297, upload-time = "2025-07-31T19:35:19.627Z" }
 wheels = [
@@ -3968,8 +3965,7 @@ dependencies = [
     { name = "certifi" },
     { name = "charset-normalizer" },
     { name = "idna" },
-    { name = "urllib3", version = "1.26.20", source = { registry = "https://pypi.org/simple" }, marker = "platform_python_implementation == 'PyPy'" },
-    { name = "urllib3", version = "2.5.0", source = { registry = "https://pypi.org/simple" }, marker = "platform_python_implementation != 'PyPy'" },
+    { name = "urllib3" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/c9/74/b3ff8e6c8446842c3f5c837e9c3dfcfe2018ea6ecef224c710c85ef728f4/requests-2.32.5.tar.gz", hash = "sha256:dbba0bac56e100853db0ea71b82b4dfd5fe2bf6d3754a8893c3af500cec7d7cf", size = 134517, upload-time = "2025-08-18T20:46:02.573Z" }
 wheels = [
@@ -4003,15 +3999,15 @@ wheels = [
 
 [[package]]
 name = "rich"
-version = "14.1.0"
+version = "14.2.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "markdown-it-py" },
     { name = "pygments" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/fe/75/af448d8e52bf1d8fa6a9d089ca6c07ff4453d86c65c145d0a300bb073b9b/rich-14.1.0.tar.gz", hash = "sha256:e497a48b844b0320d45007cdebfeaeed8db2a4f4bcf49f15e455cfc4af11eaa8", size = 224441, upload-time = "2025-07-25T07:32:58.125Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/fb/d2/8920e102050a0de7bfabeb4c4614a49248cf8d5d7a8d01885fbb24dc767a/rich-14.2.0.tar.gz", hash = "sha256:73ff50c7c0c1c77c8243079283f4edb376f0f6442433aecb8ce7e6d0b92d1fe4", size = 219990, upload-time = "2025-10-09T14:16:53.064Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/e3/30/3c4d035596d3cf444529e0b2953ad0466f6049528a879d27534700580395/rich-14.1.0-py3-none-any.whl", hash = "sha256:536f5f1785986d6dbdea3c75205c473f970777b4a0d6c6dd1b696aa05a3fa04f", size = 243368, upload-time = "2025-07-25T07:32:56.73Z" },
+    { url = "https://files.pythonhosted.org/packages/25/7a/b0178788f8dc6cafce37a212c99565fa1fe7872c70c6c9c1e1a372d9d88f/rich-14.2.0-py3-none-any.whl", hash = "sha256:76bc51fe2e57d2b1be1f96c524b890b816e334ab4c1e45888799bfaab0021edd", size = 243393, upload-time = "2025-10-09T14:16:51.245Z" },
 ]
 
 [[package]]
@@ -4490,26 +4486,9 @@ wheels = [
 name = "urllib3"
 version = "1.26.20"
 source = { registry = "https://pypi.org/simple" }
-resolution-markers = [
-    "python_full_version >= '3.14' and platform_python_implementation == 'PyPy'",
-    "python_full_version < '3.14' and platform_python_implementation == 'PyPy'",
-]
 sdist = { url = "https://files.pythonhosted.org/packages/e4/e8/6ff5e6bc22095cfc59b6ea711b687e2b7ed4bdb373f7eeec370a97d7392f/urllib3-1.26.20.tar.gz", hash = "sha256:40c2dc0c681e47eb8f90e7e27bf6ff7df2e677421fd46756da1161c39ca70d32", size = 307380, upload-time = "2024-08-29T15:43:11.37Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/33/cf/8435d5a7159e2a9c83a95896ed596f68cf798005fe107cc655b5c5c14704/urllib3-1.26.20-py2.py3-none-any.whl", hash = "sha256:0ed14ccfbf1c30a9072c7ca157e4319b70d65f623e91e7b32fadb2853431016e", size = 144225, upload-time = "2024-08-29T15:43:08.921Z" },
-]
-
-[[package]]
-name = "urllib3"
-version = "2.5.0"
-source = { registry = "https://pypi.org/simple" }
-resolution-markers = [
-    "python_full_version >= '3.14' and platform_python_implementation != 'PyPy'",
-    "python_full_version < '3.14' and platform_python_implementation != 'PyPy'",
-]
-sdist = { url = "https://files.pythonhosted.org/packages/15/22/9ee70a2574a4f4599c47dd506532914ce044817c7752a79b6a51286319bc/urllib3-2.5.0.tar.gz", hash = "sha256:3fc47733c7e419d4bc3f6b3dc2b4f890bb743906a30d56ba4a5bfa4bbff92760", size = 393185, upload-time = "2025-06-18T14:07:41.644Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/a7/c2/fe1e52489ae3122415c51f387e221dd0773709bad6c6cdaa599e8a2c5185/urllib3-2.5.0-py3-none-any.whl", hash = "sha256:e6b01673c0fa6a13e374b50871808eb3bf7046c4b125b216f6bf1cc604cff0dc", size = 129795, upload-time = "2025-06-18T14:07:40.39Z" },
 ]
 
 [[package]]
@@ -4574,8 +4553,7 @@ version = "7.0.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "pyyaml" },
-    { name = "urllib3", version = "1.26.20", source = { registry = "https://pypi.org/simple" }, marker = "platform_python_implementation == 'PyPy'" },
-    { name = "urllib3", version = "2.5.0", source = { registry = "https://pypi.org/simple" }, marker = "platform_python_implementation != 'PyPy'" },
+    { name = "urllib3" },
     { name = "wrapt" },
     { name = "yarl" },
 ]

@@ -52,7 +52,7 @@ dependencies = [
     "langchain-mcp-adapters",
     "langchain-astradb",
     #"langchain-ai21",
-    #"langchain-aws",
+    "langchain-aws",
     #"langchain-azure-ai",
     #"langchain-azure-dynamic-sessions",
     #"langchain-cerebras",
