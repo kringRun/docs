@@ -71,16 +71,11 @@ For simple changes like fixing typos, you can edit directly on GitHub without se
 
 ### Full development IDE setup
 
-For larger changes or ongoing contributions, set up a local development environment. Our documentation is built using [Mintlify](https://mintlify.com/), which offers local preview and live reload as you edit.
+For larger changes or ongoing contributions, set up a local development environment. Our documentation is built using [Mintlify](https://mintlify.com/), which offers local preview and live reload as you edit. (Note: reference docs are built following a different process - continue below for details.)
 
 <Steps>
     <Step title="Local repo">
-        :::python
-        Clone our [documentation repository](https://github.com/langchain-ai/docs) unless you plan to update API references only, in which case you can fork the relevant repo (e.g. [`langchain`](https://github.com/langchain-ai/langchain) or [`langgraph`](https://github.com/langchain-ai/langgraph))
-        :::
-        :::js
-        Clone our [documentation repository](https://github.com/langchain-ai/docs) unless you plan to update API references only, in which case you can fork the relevant repo (e.g. [`langchainjs`](https://github.com/langchain-ai/langchainjs) or [`langgraphjs`](https://github.com/langchain-ai/langgraphjs)).
-        :::
+        Clone our [documentation repository](https://github.com/langchain-ai/docs)
     </Step>
 
     <Step title="Mintlify knowledge">
@@ -113,11 +108,11 @@ This repository includes configuration files to ensure consistent formatting acr
         - Sublime Text / Atom
         - Vim / Emacs
 
-        Install the EditorConfig plugin if needed and restart your IDE.
+        Install the [EditorConfig plugin](https://editorconfig.org/) if needed and restart your IDE.
     </Tab>
 </Tabs>
 
-### Build system
+{/* ### Build system
 
 <Warning>
     Only edit files in `src/` - The `build/` directory is automatically generated!
@@ -151,7 +146,7 @@ Our documentation uses a build pipeline that allows us to write in MDX and use M
     <Step title="Make your changes">
         Edit files in `src/` and see changes reflected immediately in your browser
     </Step>
-</Steps>
+</Steps> */}
 
 ---
 
@@ -180,20 +175,23 @@ Conceptual guide cover core concepts abstractly, providing deep understanding.
         - Link to related tutorials and how-to guides
         - Focus on the **"why"** rather than the "how"
     </Accordion>
-</AccordionGroup>
 
-**Example pages**
-- [Memory](/oss/concepts/memory)
-- [Context](/oss/concepts/context)
-- [Subgraphs](/oss/concepts/subgraphs)
+    <Accordion title="Examples">
+        <Columns cols={3}>
+            <Card title="Memory" href="/oss/concepts/memory" />
+            <Card title="Context" href="/oss/concepts/context" />
+            <Card title="Subgraphs" href="/oss/concepts/subgraphs" />
+        </Columns>
+    </Accordion>
+</AccordionGroup>
 
 ### References
 
 Reference documentation contains detailed, low-level information describing exactly what functionality exists and how to use it.
 
 **Existing references**
-- [LangChain Python API reference](https://reference.langchain.com/python/) (auto-generated from docstrings)
-- [LangChain JavaScript/TypeScript API reference](https://reference.langchain.com/javascript/) (auto-generated from docstrings)
+- [LangChain Python API reference](https://reference.langchain.com/python/)
+- [LangChain JavaScript/TypeScript API reference](https://reference.langchain.com/javascript/)
 
 A good reference should:
 - Describe what exists (all parameters, options, return values)
@@ -202,7 +200,12 @@ A good reference should:
 
 <AccordionGroup>
     <Accordion title="Contributing to references">
-        - **API references**: Update docstrings in source code repositories
+        :::python
+        See the contributing guide for [Python reference docs](https://github.com/langchain-ai/docs/blob/main/reference/python/README.md).
+        :::
+        :::js
+        See the contributing guide for [JavaScript/TypeScript reference docs](https://github.com/langchain-ai/docs/blob/main/reference/javascript/README.md).
+        :::
     </Accordion>
 
     <Accordion title="LangChain reference best practices">
@@ -210,17 +213,27 @@ A good reference should:
         - Include both basic usage (code snippets) and common edge cases/failure modes
         - Note when features require specific versions
     </Accordion>
-</AccordionGroup>
 
-**When to create new reference documentation:**
-- New integrations or providers need dedicated reference pages
-- Complex configuration options require detailed explanation
-- API changes introduce new parameters or behavior
-- Community frequently asks questions about specific functionality
+    <Accordion title="When to create new reference documentation">
+        - New integrations or providers need dedicated reference pages
+        - Complex configuration options require detailed explanation
+        - API changes introduce new parameters or behavior
+        - Community frequently asks questions about specific functionality
+    </Accordion>
+</AccordionGroup>
 
 ---
 
 ## <Icon icon="pen" size={24}/> Writing standard
+
+<Warning>
+    :::python
+    Reference documentation has different standards - see the [reference docs contributing guide](https://github.com/langchain-ai/docs/blob/main/reference/python/README.md) for details.
+    :::
+    :::js
+    Reference documentation has different standards - see the [reference docs contributing guide](https://github.com/langchain-ai/docs/blob/main/reference/javascript/README.md) for details.
+    :::
+</Warning>
 
 ### Mintlify components
 

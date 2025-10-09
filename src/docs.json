@@ -14,8 +14,8 @@
     "href": "https://docs.langchain.com/oss/python"
   },
   "favicon": {
-    "light": "/images/brand/docs-favicon.png",
-    "dark": "/images/brand/docs-favicon.png"
+    "light": "/images/brand/docs-favicon.svg",
+    "dark": "/images/brand/docs-favicon.svg"
   },
   "fonts": {
     "heading": {
@@ -59,6 +59,10 @@
       {
         "header": "Resources",
         "items": [
+          {
+            "label": "Forum",
+            "href": "https://forum.langchain.com/"
+          },
           {
             "label": "Changelog",
             "href": "https://changelog.langchain.com/"
@@ -118,8 +122,8 @@
     ],
     "primary": {
       "type": "button",
-      "label": "Forum",
-      "href": "https://forum.langchain.com/"
+      "label": "Try LangSmith",
+      "href": "https://smith.langchain.com/"
     }
   },
   "navigation": {
@@ -136,7 +140,6 @@
                 "tab": "LangChain",
                 "pages": [
                   "oss/python/langchain/overview",
-                  "oss/python/releases/langchain-v1",
                   {
                     "group": "Get started",
                     "pages": [
@@ -230,11 +233,12 @@
               },
               {
                 "tab": "Integrations",
-                "groups": [
+                "pages": [
+                  "oss/python/integrations/providers/overview",
                   {
                     "group": "Providers",
+                    "icon": "user-group",
                     "pages": [
-                      "oss/python/integrations/providers/index",
                       {
                         "group": "OpenAI",
                         "pages": [
@@ -290,6 +294,7 @@
                   },
                   {
                     "group": "Integrations by component",
+                    "icon": "plug",
                     "pages": [
                       "oss/python/integrations/chat/index",
                       "oss/python/integrations/tools/index",
@@ -340,7 +345,37 @@
               },
               {
                 "tab": "Reference",
-                "groups": [
+                "pages": [
+                  "oss/python/reference/overview",
+                  {
+                    "group": "LangChain",
+                    "pages": [
+                      "oss/python/reference/langchain-python"
+                    ]
+                  },
+                  {
+                    "group": "LangGraph",
+                    "pages": [
+                      "oss/python/reference/langgraph-python"
+                    ]
+                  },
+                  {
+                    "group": "Error troubleshooting",
+                    "pages": [
+                      "oss/python/langgraph/common-errors",
+                      {
+                        "group": "Errors",
+                        "pages": [
+                          "oss/python/langgraph/GRAPH_RECURSION_LIMIT",
+                          "oss/python/langgraph/INVALID_CHAT_HISTORY",
+                          "oss/python/langgraph/INVALID_CONCURRENT_GRAPH_UPDATE",
+                          "oss/python/langgraph/INVALID_GRAPH_NODE_RETURN_VALUE",
+                          "oss/python/langgraph/MULTIPLE_SUBGRAPHS",
+                          "oss/python/langgraph/MISSING_CHECKPOINTER"
+                        ]
+                      }
+                    ]
+                  },
                   {
                     "group": "Release versions",
                     "pages": [
@@ -353,61 +388,17 @@
                         ]
                       }
                     ]
-                  },
-                  {
-                    "group": "LangChain",
-                    "pages": [
-                      "oss/python/reference/langchain-python"
-                    ]
-                  },
-                  {
-                    "group": "LangGraph",
-                    "pages": [
-                      "oss/python/reference/overview",
-                      "oss/python/reference/graphs",
-                      "oss/python/reference/functional-api",
-                      "oss/python/reference/pregel",
-                      "oss/python/reference/checkpointers",
-                      "oss/python/reference/storage",
-                      "oss/python/reference/caching",
-                      "oss/python/reference/types",
-                      "oss/python/reference/runtime",
-                      "oss/python/reference/config",
-                      "oss/python/reference/errors",
-                      "oss/python/reference/constants",
-                      "oss/python/reference/channels"
-                    ]
-                  },
-                  {
-                    "group": "Prebuilt",
-                    "pages": [
-                      "oss/python/reference/agents",
-                      "oss/python/reference/supervisor",
-                      "oss/python/reference/swarm",
-                      "oss/python/reference/mcp"
-                    ]
-                  },
-                  {
-                    "group": "Error troubleshooting",
-                    "pages": [
-                      "oss/python/langgraph/common-errors",
-                      "oss/python/langgraph/GRAPH_RECURSION_LIMIT",
-                      "oss/python/langgraph/INVALID_CHAT_HISTORY",
-                      "oss/python/langgraph/INVALID_CONCURRENT_GRAPH_UPDATE",
-                      "oss/python/langgraph/INVALID_GRAPH_NODE_RETURN_VALUE",
-                      "oss/python/langgraph/MULTIPLE_SUBGRAPHS",
-                      "oss/python/langgraph/MISSING_CHECKPOINTER"
-                    ]
                   }
                 ]
               },
               {
                 "tab": "Contributing",
-                "groups": [
+                "pages": [
+                  "oss/python/contributing/overview",
                   {
                     "group": "Contribute",
+                    "icon": "heart-circle-plus",
                     "pages": [
-                      "oss/python/contributing/index",
                       "oss/python/contributing/documentation",
                       "oss/python/contributing/code",
                       "oss/python/contributing/review"
@@ -415,6 +406,7 @@
                   },
                   {
                     "group": "Integrations",
+                    "icon": "plug",
                     "pages": [
                       {
                         "group": "LangChain",
@@ -694,6 +686,7 @@
                       {
                         "group": "Integrations",
                         "pages": [
+                          "langsmith/integrations",
                           "langsmith/trace-with-langchain",
                           "langsmith/trace-with-langgraph",
                           "langsmith/trace-anthropic",
@@ -1165,7 +1158,6 @@
                 "tab": "LangChain",
                 "pages": [
                   "oss/javascript/langchain/overview",
-                  "oss/python/releases/langchain-v1",
                   {
                     "group": "Get started",
                     "pages": [
@@ -1271,11 +1263,12 @@
               },
               {
                 "tab": "Integrations",
-                "groups": [
+                "pages": [
+                  "oss/javascript/integrations/providers/overview",
                   {
                     "group": "Providers",
+                    "icon": "user-group",
                     "pages": [
-                      "oss/javascript/integrations/providers/index",
                       {
                         "group": "OpenAI",
                         "pages": [
@@ -1319,10 +1312,22 @@
                     ]
                   },
                   {
-                    "group": "Integrations by component",
+                    "group": "General integrations",
+                    "icon": "plug",
                     "pages": [
                       "oss/javascript/integrations/chat/index",
                       "oss/javascript/integrations/tools/index",
+                      "oss/javascript/integrations/llms/index",
+                      "oss/javascript/integrations/stores/index",
+                      "oss/javascript/integrations/document_transformers/index",
+                      "oss/javascript/integrations/llm_caching/index",
+                      "oss/javascript/integrations/callbacks/index"
+                    ]
+                  },
+                  {
+                    "group": "RAG integrations",
+                    "icon": "database",
+                    "pages": [
                       "oss/javascript/integrations/retrievers/index",
                       "oss/javascript/integrations/splitters/index",
                       "oss/javascript/integrations/text_embedding/index",
@@ -1376,7 +1381,37 @@
               },
               {
                 "tab": "Reference",
-                "groups": [
+                "pages": [
+                  "oss/python/reference/overview",
+                  {
+                    "group": "LangChain ",
+                    "pages": [
+                      "oss/javascript/reference/langchain-javascript"
+                    ]
+                  },
+                  {
+                    "group": "LangGraph",
+                    "pages": [
+                      "oss/javascript/reference/langgraph-javascript"
+                    ]
+                  },
+                  {
+                    "group": "Error troubleshooting",
+                    "pages": [
+                      "oss/javascript/langgraph/common-errors",
+                      {
+                        "group": "Errors",
+                        "pages": [
+                          "oss/javascript/langgraph/GRAPH_RECURSION_LIMIT",
+                          "oss/javascript/langgraph/INVALID_CHAT_HISTORY",
+                          "oss/javascript/langgraph/INVALID_CONCURRENT_GRAPH_UPDATE",
+                          "oss/javascript/langgraph/INVALID_GRAPH_NODE_RETURN_VALUE",
+                          "oss/javascript/langgraph/MULTIPLE_SUBGRAPHS",
+                          "oss/javascript/langgraph/MISSING_CHECKPOINTER"
+                        ]
+                      }
+                    ]
+                  },
                   {
                     "group": "Release versions",
                     "pages": [
@@ -1389,61 +1424,17 @@
                         ]
                       }
                     ]
-                  },
-                  {
-                    "group": "LangChain ",
-                    "pages": [
-                      "oss/javascript/reference/langchain-javascript"
-                    ]
-                  },
-                  {
-                    "group": "LangGraph",
-                    "pages": [
-                      "oss/javascript/reference/overview",
-                      "oss/javascript/reference/graphs",
-                      "oss/javascript/reference/functional-api",
-                      "oss/javascript/reference/pregel",
-                      "oss/javascript/reference/checkpointers",
-                      "oss/javascript/reference/storage",
-                      "oss/javascript/reference/caching",
-                      "oss/javascript/reference/types",
-                      "oss/javascript/reference/runtime",
-                      "oss/javascript/reference/config",
-                      "oss/javascript/reference/errors",
-                      "oss/javascript/reference/constants",
-                      "oss/javascript/reference/channels"
-                    ]
-                  },
-                  {
-                    "group": "Prebuilt",
-                    "pages": [
-                      "oss/javascript/reference/agents",
-                      "oss/javascript/reference/supervisor",
-                      "oss/javascript/reference/swarm",
-                      "oss/javascript/reference/mcp"
-                    ]
-                  },
-                  {
-                    "group": "Error troubleshooting",
-                    "pages": [
-                      "oss/javascript/langgraph/common-errors",
-                      "oss/javascript/langgraph/GRAPH_RECURSION_LIMIT",
-                      "oss/javascript/langgraph/INVALID_CHAT_HISTORY",
-                      "oss/javascript/langgraph/INVALID_CONCURRENT_GRAPH_UPDATE",
-                      "oss/javascript/langgraph/INVALID_GRAPH_NODE_RETURN_VALUE",
-                      "oss/javascript/langgraph/MULTIPLE_SUBGRAPHS",
-                      "oss/javascript/langgraph/MISSING_CHECKPOINTER"
-                    ]
                   }
                 ]
               },
               {
                 "tab": "Contributing",
-                "groups": [
+                "pages": [
+                  "oss/javascript/contributing/overview",
                   {
                     "group": "Contribute",
+                    "icon": "heart-circle-plus",
                     "pages": [
-                      "oss/javascript/contributing/index",
                       "oss/javascript/contributing/documentation",
                       "oss/javascript/contributing/code",
                       "oss/javascript/contributing/review"
@@ -1451,6 +1442,7 @@
                   },
                   {
                     "group": "Integrations",
+                    "icon": "plug",
                     "pages": [
                       {
                         "group": "LangChain",
@@ -1743,6 +1735,7 @@
                       {
                         "group": "Integrations",
                         "pages": [
+                          "langsmith/integrations",
                           "langsmith/trace-with-langchain",
                           "langsmith/trace-with-langgraph",
                           "langsmith/trace-anthropic",
@@ -2207,6 +2200,13 @@
   },
   "interaction": {
     "drilldown": true
+  },
+  "errors": {
+    "404": {
+      "redirect": false,
+      "title": "Page not found",
+      "description": "We couldn't find the page you were looking for."
+    }
   },
   "redirects": [
   {

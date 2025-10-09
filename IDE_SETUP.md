@@ -6,7 +6,7 @@ This repository includes configuration files to ensure consistent formatting acr
 
 ### VSCode
 
-If you're using Visual Studio Code, the settings in `.vscode/settings.json` will be automatically applied when you open this project. No additional setup required.
+If you're using Visual Studio Code, the settings in `.vscode/settings.json` should be automatically applied when you open this project. No additional setup required.
 
 ### Other IDEs
 

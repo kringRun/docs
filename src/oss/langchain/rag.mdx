@@ -179,7 +179,7 @@ prompt = (
     "You have access to a tool that retrieves context from a blog post. "
     "Use the tool to help answer user queries."
 )
-agent = create_agent(llm, tools, prompt=prompt)
+agent = create_agent(llm, tools, system_prompt=prompt)
 ```
 
 ```python
@@ -610,7 +610,7 @@ prompt = (
     "You have access to a tool that retrieves context from a blog post. "
     "Use the tool to help answer user queries."
 )
-agent = create_agent(model="openai:gpt-5", tools, prompt=prompt)
+agent = create_agent(llm, tools, system_prompt=prompt)
 ```
 :::
 :::js
@@ -794,7 +794,7 @@ def prompt_with_context(state: AgentState) -> list[MessageLikeRepresentation]:
     return [{"role": "system", "content": system_message}, *list(state["messages"])]
 
 
-agent = create_agent(llm, tools=[], prompt=prompt_with_context)
+agent = create_agent(llm, tools=[], system_prompt=prompt_with_context)
 ```
 :::
 :::js

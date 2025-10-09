@@ -76,6 +76,11 @@ These params should be omitted: `read_only` (deprecated), `password` and `full_n
 "Shared resources" in this context refer to [public prompts](/langsmith/create-a-prompt#save-your-prompt), [shared runs](/langsmith/share-trace), and [shared datasets](/langsmith/manage-datasets#share-a-dataset).
 </Note>
 
+<Warning>
+Updating these settings affects **all resources in the organization**.
+</Warning>
+
+You can update these settings under the **Settings > Shared** tab for a workspace, or via API:
 * [Update organization sharing settings](https://api.smith.langchain.com/redoc#tag/orgs/operation/update_current_organization_info_api_v1_orgs_current_info_patch)
   * use `unshare_all` to unshare **ALL** shared resources in the organization - use `disable_public_sharing` to prevent future sharing of resources
 

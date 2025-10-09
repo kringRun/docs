@@ -1,5 +1,6 @@
 <Tabs>
     <Tab title="OpenAI">
+    👉 Read the [OpenAI integration docs](/oss/integrations/chat/openai/)
     ```shell
     pip install -U "langchain[openai]"
     ```
@@ -12,10 +13,9 @@
 
     llm = init_chat_model("openai:gpt-4.1")
     ```
-
-    👉 Read the [OpenAI integration docs](https://python.langchain.com/docs/integrations/chat/openai/)
     </Tab>
     <Tab title="Anthropic">
+    👉 Read the [Anthropic integration docs](/oss/integrations/chat/anthropic/)
     ```shell
     pip install -U "langchain[anthropic]"
     ```
@@ -28,10 +28,9 @@
 
     llm = init_chat_model("anthropic:claude-3-5-sonnet-latest")
     ```
-
-    👉 Read the [Anthropic integration docs](https://python.langchain.com/docs/integrations/chat/anthropic/)
     </Tab>
     <Tab title="Azure">
+    👉 Read the [Azure integration docs](/oss/integrations/chat/azure_chat_openai/)
     ```shell
     pip install -U "langchain[openai]"
     ```
@@ -49,10 +48,9 @@
         azure_deployment=os.environ["AZURE_OPENAI_DEPLOYMENT_NAME"],
     )
     ```
-
-    👉 Read the [Azure integration docs](https://python.langchain.com/docs/integrations/chat/azure_chat_openai/)
     </Tab>
     <Tab title="Google Gemini">
+    👉 Read the [Google GenAI integration docs](/oss/integrations/chat/google_generative_ai/)
     ```shell
     pip install -U "langchain[google-genai]"
     ```
@@ -63,12 +61,11 @@
 
     os.environ["GOOGLE_API_KEY"] = "..."
 
-    llm = init_chat_model("google_genai:gemini-2.0-flash")
+    llm = init_chat_model("google_genai:gemini-2.5-flash-lite-latest")
     ```
-
-    👉 Read the [Google GenAI integration docs](https://python.langchain.com/docs/integrations/chat/google_generative_ai/)
     </Tab>
     <Tab title="AWS Bedrock">
+    👉 Read the [AWS Bedrock integration docs](/oss/integrations/chat/bedrock/)
     ```shell
     pip install -U "langchain[aws]"
     ```
@@ -84,7 +81,5 @@
         model_provider="bedrock_converse",
     )
     ```
-
-    👉 Read the [AWS Bedrock integration docs](https://python.langchain.com/docs/integrations/chat/bedrock/)
     </Tab>
 </Tabs>

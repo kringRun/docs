@@ -2,38 +2,54 @@
 title: ChatOpenAI
 ---
 
-This guide provides a quick overview for getting started with OpenAI [chat models](/oss/langchain/models). For detailed documentation of all ChatOpenAI features and configurations head to the [API reference](https://python.langchain.com/api_reference/openai/chat_models/langchain_openai.chat_models.base.ChatOpenAI.html).
+This guide provides a quick overview for getting started with OpenAI [chat models](/oss/langchain/models).
 
-OpenAI has several chat models. You can find information about their latest models and their costs, context windows, and supported input types in the [OpenAI docs](https://platform.openai.com/docs/models).
+OpenAI has several chat models. You can find information about their latest models and their costs, context windows, and supported input types in the [OpenAI Platform](https://platform.openai.com) docs.
+
+<Tip>
+    **API Reference**
+
+    For detailed documentation of all features and configurations head to the @[`ChatOpenAI`][ChatOpenAI] API reference.
+</Tip>
 
 <Info>
-**Azure OpenAI**
+    **OpenAI models hosted on Azure**
 
-Note that certain OpenAI models can also be accessed via the [Microsoft Azure platform](https://azure.microsoft.com/en-us/products/ai-services/openai-service). To use the Azure OpenAI service use the [AzureChatOpenAI integration](/oss/integrations/chat/azure_chat_openai/).
-
+    Note that certain OpenAI models can also be accessed via the [Microsoft Azure platform](https://azure.microsoft.com/en-us/products/ai-foundry/models/openai/). To use the Azure OpenAI service use the [`AzureChatOpenAI`](/oss/integrations/chat/azure_chat_openai/) integration.
 </Info>
 
 ## Overview
 
 ### Integration details
 
-| Class | Package | Local | Serializable | [JS support](https://js.langchain.com/docs/integrations/chat/openai) | Downloads | Version |
+| Class | Package | <Tooltip tip="Can run on local hardware" cta="Learn more" href="/oss/langchain/models#local-models">Local</Tooltip> | Serializable | JS/TS Support | Downloads | Latest Version |
 | :--- | :--- | :---: | :---: |  :---: | :---: | :---: |
-| [ChatOpenAI](https://python.langchain.com/api_reference/openai/chat_models/langchain_openai.chat_models.base.ChatOpenAI.html) | [langchain-openai](https://python.langchain.com/api_reference/openai/index.html) | ❌ | beta | ✅ | ![PyPI - Downloads](https://img.shields.io/pypi/dm/langchain-openai?style=flat-square&label=%20) | ![PyPI - Version](https://img.shields.io/pypi/v/langchain-openai?style=flat-square&label=%20) |
+| @[`ChatOpenAI`][ChatOpenAI] | @[`langchain-openai`][langchain-openai] | ❌ | beta | ✅ [(npm)](https://js.langchain.com/docs/integrations/chat/openai) | <a href="https://pypi.org/project/langchain-openai/" target="_blank"><img src="https://static.pepy.tech/badge/langchain-openai/month" alt="Downloads per month" noZoom height="100" class="rounded" /></a> | <a href="https://pypi.org/project/langchain-openai/" target="_blank"><img src="https://img.shields.io/pypi/v/langchain-openai?style=flat-square&label=%20&color=orange" alt="PyPI - Latest version" noZoom height="100" class="rounded" /></a> |
 
 ### Model features
 
-| [Tool calling](/oss/langchain/tools) | [Structured output](/oss/langchain/structured-output) | JSON mode | Image input | Audio input | Video input | [Token-level streaming](/oss/langchain/streaming/) | Native async | [Token usage](/oss/langchain/models#token-usage) | [Logprobs](/oss/langchain/models#log-probabilities) |
-| :---: | :---: | :---: | :---: |  :---: | :---: | :---: | :---: | :---: | :---: |
-| ✅ | ✅ | ✅ | ✅ | ✅ | ❌ | ✅ | ✅ | ✅ | ✅ |
+| [Tool calling](/oss/langchain/tools) | [Structured output](/oss/langchain/structured-output) | Image input | Audio input | Video input | [Token-level streaming](/oss/langchain/streaming/) | Native async | [Token usage](/oss/langchain/models#token-usage) | [Logprobs](/oss/langchain/models#log-probabilities) |
+| :---: | :---: | :---: |  :---: | :---: | :---: | :---: | :---: | :---: |
+| ✅ | ✅ | ✅ | ✅ | ❌ | ✅ | ✅ | ✅ | ✅ |
 
 ## Setup
 
-To access OpenAI models you'll need to create an OpenAI account, get an API key, and install the `langchain-openai` integration package.
+To access OpenAI models you'll need to install the `langchain-openai` integration package and acquire an [OpenAI Platform](https://platform.openai.com) API key.
+
+### Installation
+
+<CodeGroup>
+    ```bash pip
+    pip install -U langchain-openai
+    ```
+    ```bash uv
+    uv add langchain-openai
+    ```
+</CodeGroup>
 
 ### Credentials
 
-Head to [platform.openai.com](https://platform.openai.com) to sign up to OpenAI and generate an API key. Once you've done this set the OPENAI_API_KEY environment variable:
+Head to [`platform.openai.com`](https://platform.openai.com/docs/api-reference/authentication) to sign up and generate an API key. Once you've done this set the `OPENAI_API_KEY` environment variable in your environment:
 
 ```python
 import getpass
@@ -43,24 +59,16 @@ if not os.environ.get("OPENAI_API_KEY"):
     os.environ["OPENAI_API_KEY"] = getpass.getpass("Enter your OpenAI API key: ")
 ```
 
-If you want to get automated tracing of your model calls you can also set your [LangSmith](https://docs.smith.langchain.com/) API key by uncommenting below:
+If you want to get automated tracing of your model calls you can also set your [LangSmith](/langsmith/home) API key:
 
 ```python
-# os.environ["LANGSMITH_API_KEY"] = getpass.getpass("Enter your LangSmith API key: ")
-# os.environ["LANGSMITH_TRACING"] = "true"
-```
-
-### Installation
-
-The LangChain OpenAI integration lives in the `langchain-openai` package:
-
-```python
-%pip install -qU langchain-openai
+os.environ["LANGSMITH_API_KEY"] = getpass.getpass("Enter your LangSmith API key: ")
+os.environ["LANGSMITH_TRACING"] = "true"
 ```
 
 ## Instantiation
 
-Now we can instantiate our model object and generate chat completions:
+Now we can instantiate our model object and generate responses:
 
 ```python
 from langchain_openai import ChatOpenAI
@@ -80,8 +88,7 @@ llm = ChatOpenAI(
 )
 ```
 
-See [API Reference](https://python.langchain.com/api_reference/openai/chat_models/langchain_openai.chat_models.base.ChatOpenAI.html)
-for the full set of available parameters.
+See the @[`ChatOpenAI`][ChatOpenAI] API Reference for the full set of available model parameters.
 
 ## Invocation
 

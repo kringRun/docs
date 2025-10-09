@@ -5,6 +5,38 @@ sidebarTitle: Server changelog
 
 [LangGraph Server](/langgraph-platform/langgraph-server) is an API platform for creating and managing agent-based applications. It provides built-in persistence, a task queue, and supports deploying, configuring, and running assistants (agentic workflows) at scale. This changelog documents all notable updates, features, and fixes to LangGraph Server releases.
 
+<a id="2025-10-06"></a>
+## v0.4.37
+- Required create permissions for copying threads to ensure proper authorization.
+
+<a id="2025-10-03"></a>
+## v0.4.36
+- Improved error handling and added a delay to the sweep loop for smoother operation during Redis downtime or cancellation errors.
+- Updated the queue entrypoint to start the core-api gRPC server when `FF_USE_CORE_API` is enabled.
+- Introduced checks for invalid configurations in assistant endpoints to ensure consistency with other endpoints.
+
+<a id="2025-10-02"></a>
+## v0.4.35
+- Resolved a timezone issue in the core API, ensuring accurate time data retrieval.
+- Introduced a new `middleware_order` setting to apply authentication middleware before custom middleware, allowing finer control over protected route configurations.
+- Logged the Redis URL when errors occur during Redis client creation.
+- Improved Go engine/runtime context propagation to ensure consistent execution flow.
+- Removed the unnecessary `assistants.put` call from the executor entrypoint to streamline the process.
+
+<a id="2025-10-01"></a>
+## v0.4.34
+- Blocked unauthorized users from updating thread TTL settings to enhance security.
+
+<a id="2025-10-01"></a>
+## v0.4.33
+- Improved error handling for Redis locks by logging `LockNotOwnedError` and extending initial pool migration lock timeout to 60 seconds.
+- Updated the BaseMessage schema to align with the latest langchain-core version and synchronized build dependencies for consistent local development.
+
+<a id="2025-09-30"></a>
+## v0.4.32
+- Added a GO persistence layer to the API image, enabling GRPC server operation with PostgreSQL support and enhancing configurability.
+- Set the status to error when a timeout occurs to improve error handling.
+
 <a id="2025-09-30"></a>
 ## v0.4.30
 - Added support for context when using `stream_mode="events"` and included new tests for this functionality.

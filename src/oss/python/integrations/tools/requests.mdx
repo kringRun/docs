@@ -156,13 +156,13 @@ Here is documentation on the API:
 {api_spec}
 """.format(api_spec=api_spec)
 
-agent_executor = create_agent(llm, tools, prompt=system_message)
+agent = create_agent(llm, tools, system_prompt=system_message)
 ```
 
 ```python
 example_query = "Fetch the top two posts. What are their titles?"
 
-events = agent_executor.stream(
+events = agent.stream(
     {"messages": [("user", example_query)]},
     stream_mode="values",
 )

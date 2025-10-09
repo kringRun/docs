@@ -997,6 +997,32 @@ console.log(JSON.stringify(resWithSplits.content, null, 2));
 ]
 ```
 
+## Context management
+
+Anthropic supports a context editing feature that will automatically manage the model's context window (e.g., by clearing tool results).
+
+See [Anthropic documentation](https://docs.claude.com/en/docs/build-with-claude/context-editing) for details and configuration options.
+
+<Info>
+    **Context management is supported since `@langchain/anthropic@0.3.29`**
+</Info>
+
+```typescript
+import { ChatAnthropic } from "@langchain/anthropic";
+
+const llm = new ChatAnthropic({
+  model: "claude-sonnet-4-5-20250929",
+  clientOptions: {
+    defaultHeaders: {
+      "anthropic-beta": "context-management-2025-06-27",
+    },
+  },
+  contextManagement: { edits: [{ type: "clear_tool_uses_20250919" }] },
+)
+const llmWithTools = llm.bindTools([{ type: "web_search_20250305", name: "web_search" }]);
+const response = await llmWithTools.invoke("Search for recent developments in AI");
+```
+
 ## API reference
 
 For detailed documentation of all ChatAnthropic features and configurations head to the [API reference](https://api.js.langchain.com/classes/langchain_anthropic.ChatAnthropic.html).

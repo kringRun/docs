@@ -2,15 +2,9 @@
 title: Chat models
 ---
 
-[Chat models](/oss/langchain/models) are language models that use a sequence of [messages](/oss/langchain/messages) as inputs and return messages as outputs (as opposed to using plain text). These are generally newer models.
+[Chat models](/oss/langchain/models) are language models that use a sequence of [messages](/oss/langchain/messages) as inputs and return messages as outputs <Tooltip tip="Models that do not include the prefix 'Chat' in their name or include 'LLM' as a suffix in their name typically refer to older models that do not follow the chat model interface and instead use an interface that takes a string as input and returns a string as output.">(as opposed to plaintext)</Tooltip>.
 
-<Info>
-If you'd like to contribute an integration, see [Contributing integrations](/oss/contributing#add-a-new-integration).
-</Info>
-
-
-
-#### Install and use
+## Install and use
 
 <Tip>
 See [this section for general instructions on installing LangChain packages](/oss/langchain/install).
@@ -155,7 +149,7 @@ Instantiate the model:
 import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
 
 const model = new ChatGoogleGenerativeAI({
-  modelName: "gemini-2.0-flash",
+  modelName: "gemini-2.5-flash-lite-latest",
   temperature: 0
 });
 ```
@@ -546,3 +540,7 @@ await model.invoke("Hello, world!")
     cta="View guide"
   />
 </Columns>
+
+<Info>
+    If you'd like to contribute an integration, see [Contributing integrations](/oss/contributing#add-a-new-integration).
+</Info>

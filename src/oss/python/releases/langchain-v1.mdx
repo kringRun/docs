@@ -8,15 +8,17 @@ import AlphaCallout from '/snippets/alpha-lc-callout.mdx';
 <AlphaCallout />
 
 <Note>
-    1.0 Alpha releases are available for the following packages:
+    1.0 Alpha releases are available for most packages. Only the following currently support new content blocks:
 
     - `langchain`
     - `langchain-core`
     - `langchain-anthropic`
     - `langchain-aws`
     - `langchain-openai`
+    - `langchain-google-genai`
+    - `langchain-ollama`
 
-    Broader support will be rolled out during the alpha period.
+    Broader support for content blocks will be rolled out during the alpha period and following stable release.
 </Note>
 
 ## <Icon icon="sparkles" /> New features
@@ -25,42 +27,40 @@ LangChain 1.0 introduces new features:
 
 - A new `.content_blocks` property on message objects. This property provides a fully typed view of message content and standardizes modern LLM features across providers, including reasoning, citations, server-side tool calls, and more. There are no breaking changes associated with the new message content. Refer to the [message content](/oss/langchain/messages#content) docs for more info.
 
-- New prebuilt `langgraph` chains and agents in `langchain`. The surface area of the `langchain` package has been reduced to focus on popular and essential abstractions. A new `langchain-legacy` package is available for backward compatibility. Refer to the new [agents docs](/oss/langchain/agents) and to the [release notes](https://github.com/langchain-ai/langchain/releases/tag/langchain%3D%3D1.0.0a1) for more detail.
+- New prebuilt `langgraph` chains and agents in `langchain`. The surface area of the `langchain` package has been reduced to focus on popular and essential abstractions. A new `langchain-classic` package is available for backward compatibility. Refer to the new [agents docs](/oss/langchain/agents) for more detail.
 
 ## <Icon icon="ban" /> Breaking changes
 
-<Accordion title="Dropped Python 3.9 support" icon="python">
-    Python 3.9 is [end of life](https://devguide.python.org/versions/) in October 2025. Consequently, all LangChain packages now require Python 3.10 or higher.
+<Accordion title="Dropped Python 3.9 support">
+    Python 3.9 is [end of life](https://devguide.python.org/versions/) in October 2025. Consequently, all LangChain packages now require Python >=3.10,\<4.0.0.
 </Accordion>
 
-<Accordion title="Some legacy code moved to `langchain-legacy`">
+<Accordion title="Some legacy code moved to langchain-classic">
     The new `langchain` package features a reduced surface area that focuses on standard interfaces for LangChain components (e.g., `init_chat_model` and `init_embeddings`) as well as pre-built chains and agents backed by the `langgraph` runtime.
 
-    Existing functionality outside this focus, such as the indexing API and exports of `langchain-community` features, have been moved to the `langchain-legacy` package.
+    Existing functionality outside this focus, such as the indexing API and exports of `langchain-community` features, have been moved to the `langchain-classic` package.
 
-    To restore the previous behavior, update package installs of `langchain` to `langchain-legacy`, and replace imports:
+    To restore the previous behavior, update package installs of `langchain` to `langchain-classic`, and replace imports:
 
-    Before:
     ```python
+    # Before:
     from langchain import ...
-    ```
 
-    After:
-    ```python
-    from langchain_legacy import ...
+    # After:
+    from langchain_classic import ...
     ```
 </Accordion>
 
 <Accordion title="Updated return type for chat models">
-    The return type signature for chat model invocation has been fixed from `BaseMessage` to `AIMessage`. Custom chat models implementing `bind_tools` should update their return signature to avoid type checker errors:
+    The return type signature for chat model invocation has been fixed from `BaseMessage` to `AIMessage`.
 
-    Before:
+    Custom chat models implementing `bind_tools` should update their return signature to avoid type checker errors:
+
     ```python
+    # Before:
     Runnable[LanguageModelInput, BaseMessage]:
-    ```
 
-    After:
-    ```python
+    # After:
     Runnable[LanguageModelInput, AIMessage]:
     ```
 </Accordion>
@@ -77,12 +77,12 @@ LangChain 1.0 introduces new features:
 
     from langchain_openai import ChatOpenAI
 
-    llm = ChatOpenA(model="...", output_version="v0")
+    llm = ChatOpenAI(model="...", output_version="v0")
     ```
 </Accordion>
 
 <Accordion title="Default `max_tokens` in `langchain-anthropic`">
-    The `max_tokens` parameter in `ChatAnthropic` will now default to new values that are higher than the previous default of `1024`. The new default will vary based on the model chosen.
+    The `max_tokens` parameter in `ChatAnthropic` will now default to new values that are higher than the previous default of `1024`. The new default will vary based on the model chosen. See the [full mapping](https://github.com/langchain-ai/langchain/blob/master/libs/partners/anthropic/langchain_anthropic/chat_models.py#L65-L74).
 </Accordion>
 
 <Accordion title="Removal of deprecated objects">
@@ -116,7 +116,7 @@ The **`langchain`** release focuses on reducing LangChain's surface area and nar
 
 ### ReAct agent migration
 
-**`create_react_agent` has moved from `langgraph.prebuilts` to `langchain.agents`** with significant enhancements:
+**`create_react_agent` has moved from `langgraph.prebuilt` to `langchain.agents`** with significant enhancements:
 
 **Enhanced structured output**
 
@@ -209,7 +209,7 @@ agent = create_agent("openai:gpt-4o-mini", tools=[some_tool])
 
 ```python
 # Before
-from langgraph.prebuilts import create_agent, ToolNode, AgentState
+from langgraph.prebuilt import create_react_agent, ToolNode, AgentState
 
 # After
 from langchain.agents import create_agent, ToolNode, AgentState

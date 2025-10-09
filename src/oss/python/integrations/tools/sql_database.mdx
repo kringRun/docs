@@ -151,7 +151,7 @@ We then instantiate the agent:
 ```python
 from langchain.agents import create_agent
 
-agent_executor = create_agent(llm, toolkit.get_tools(), prompt=system_message)
+agent = create_agent(llm, toolkit.get_tools(), system_prompt=system_message)
 ```
 
 And issue it a query:
@@ -159,7 +159,7 @@ And issue it a query:
 ```python
 example_query = "Which country's customers spent the most?"
 
-events = agent_executor.stream(
+events = agent.stream(
     {"messages": [("user", example_query)]},
     stream_mode="values",
 )
@@ -278,7 +278,7 @@ We can also observe the agent recover from an error:
 ```python
 example_query = "Who are the top 3 best selling artists?"
 
-events = agent_executor.stream(
+events = agent.stream(
     {"messages": [("user", example_query)]},
     stream_mode="values",
 )

@@ -1,8 +1,8 @@
-import { execSync } from 'child_process';
-import { installDependencies } from 'nypm';
-import { type TypeDocOptions, Application } from 'typedoc';
-import fs from 'fs';
-import path from 'path';
+import { execSync } from "child_process";
+import { installDependencies } from "nypm";
+import { type TypeDocOptions, Application } from "typedoc";
+import fs from "fs";
+import path from "path";
 
 /**
  * A reference to a remote repository
@@ -45,201 +45,201 @@ type PackageGroup = {
 
 type Source = PackageGroup | Package;
 
-const DIST_DIR = path.resolve(__dirname, '..', 'dist', 'javascript');
+const DIST_DIR = path.resolve(__dirname, "..", "dist", "javascript");
 
 const SOURCES: Source[] = [
   {
-    package: 'langchain',
-    path: 'libs/langchain',
-    repo: 'langchain-ai/langchainjs',
-    branch: 'v1',
+    package: "langchain",
+    path: "libs/langchain",
+    repo: "langchain-ai/langchainjs",
+    branch: "v1",
   },
   {
-    package: '@langchain/core',
-    path: 'libs/langchain-core',
-    repo: 'langchain-ai/langchainjs',
-    branch: 'v1',
+    package: "@langchain/core",
+    path: "libs/langchain-core",
+    repo: "langchain-ai/langchainjs",
+    branch: "v1",
   },
   {
-    package: '@langchain/textsplitters',
-    path: 'libs/langchain-textsplitters',
-    repo: 'langchain-ai/langchainjs',
-    branch: 'v1',
+    package: "@langchain/textsplitters",
+    path: "libs/langchain-textsplitters",
+    repo: "langchain-ai/langchainjs",
+    branch: "v1",
   },
   {
-    package: '@langchain/mcp-adapters',
-    path: 'libs/providers/langchain-mcp-adapters',
-    repo: 'langchain-ai/langchainjs',
-    branch: 'v1',
+    package: "@langchain/mcp-adapters",
+    path: "libs/providers/langchain-mcp-adapters",
+    repo: "langchain-ai/langchainjs",
+    branch: "v1",
   },
   {
-    group: 'Integrations',
+    group: "Integrations",
     items: [
       {
-        package: '@langchain/community',
-        path: 'libs/langchain-community',
-        repo: 'langchain-ai/langchainjs',
-        branch: 'v1',
+        package: "@langchain/community",
+        path: "libs/langchain-community",
+        repo: "langchain-ai/langchainjs",
+        branch: "v1",
       },
       {
-        package: '@langchain/anthropic',
-        path: 'libs/providers/langchain-anthropic',
-        repo: 'langchain-ai/langchainjs',
-        branch: 'v1',
+        package: "@langchain/anthropic",
+        path: "libs/providers/langchain-anthropic",
+        repo: "langchain-ai/langchainjs",
+        branch: "v1",
       },
       {
-        package: '@langchain/aws',
-        path: 'libs/providers/langchain-aws',
-        repo: 'langchain-ai/langchainjs',
-        branch: 'v1',
+        package: "@langchain/aws",
+        path: "libs/providers/langchain-aws",
+        repo: "langchain-ai/langchainjs",
+        branch: "v1",
       },
       {
-        package: '@langchain/deepseek',
-        path: 'libs/providers/langchain-deepseek',
-        repo: 'langchain-ai/langchainjs',
-        branch: 'v1',
+        package: "@langchain/deepseek",
+        path: "libs/providers/langchain-deepseek",
+        repo: "langchain-ai/langchainjs",
+        branch: "v1",
       },
       {
-        package: '@langchain/google-genai',
-        path: 'libs/providers/langchain-google-genai',
-        repo: 'langchain-ai/langchainjs',
-        branch: 'v1',
+        package: "@langchain/google-genai",
+        path: "libs/providers/langchain-google-genai",
+        repo: "langchain-ai/langchainjs",
+        branch: "v1",
       },
       {
-        package: '@langchain/google-vertexai-web',
-        path: 'libs/providers/langchain-google-vertexai-web',
-        repo: 'langchain-ai/langchainjs',
-        branch: 'v1',
+        package: "@langchain/google-vertexai-web",
+        path: "libs/providers/langchain-google-vertexai-web",
+        repo: "langchain-ai/langchainjs",
+        branch: "v1",
       },
       {
-        package: '@langchain/google-vertexai',
-        path: 'libs/providers/langchain-google-vertexai',
-        repo: 'langchain-ai/langchainjs',
-        branch: 'v1',
+        package: "@langchain/google-vertexai",
+        path: "libs/providers/langchain-google-vertexai",
+        repo: "langchain-ai/langchainjs",
+        branch: "v1",
       },
       {
-        package: '@langchain/groq',
-        path: 'libs/providers/langchain-groq',
-        repo: 'langchain-ai/langchainjs',
-        branch: 'v1',
+        package: "@langchain/groq",
+        path: "libs/providers/langchain-groq",
+        repo: "langchain-ai/langchainjs",
+        branch: "v1",
       },
       {
-        package: '@langchain/mistralai',
-        path: 'libs/providers/langchain-mistralai',
-        repo: 'langchain-ai/langchainjs',
-        branch: 'v1',
+        package: "@langchain/mistralai",
+        path: "libs/providers/langchain-mistralai",
+        repo: "langchain-ai/langchainjs",
+        branch: "v1",
       },
       {
-        package: '@langchain/ollama',
-        path: 'libs/providers/langchain-ollama',
-        repo: 'langchain-ai/langchainjs',
-        branch: 'v1',
+        package: "@langchain/ollama",
+        path: "libs/providers/langchain-ollama",
+        repo: "langchain-ai/langchainjs",
+        branch: "v1",
       },
       {
-        package: '@langchain/openai',
-        path: 'libs/providers/langchain-openai',
-        repo: 'langchain-ai/langchainjs',
-        branch: 'v1',
+        package: "@langchain/openai",
+        path: "libs/providers/langchain-openai",
+        repo: "langchain-ai/langchainjs",
+        branch: "v1",
       },
       {
-        package: '@langchain/xai',
-        path: 'libs/providers/langchain-xai',
-        repo: 'langchain-ai/langchainjs',
-        branch: 'v1',
+        package: "@langchain/xai",
+        path: "libs/providers/langchain-xai",
+        repo: "langchain-ai/langchainjs",
+        branch: "v1",
       },
     ],
   },
   {
-    group: 'LangGraph',
+    group: "LangGraph",
     items: [
       {
-        package: '@langchain/langgraph-checkpoint-mongodb',
-        path: 'libs/checkpoint-mongodb',
-        repo: 'langchain-ai/langgraphjs',
-        branch: 'v1',
+        package: "@langchain/langgraph-checkpoint-mongodb",
+        path: "libs/checkpoint-mongodb",
+        repo: "langchain-ai/langgraphjs",
+        branch: "v1",
       },
       {
-        package: '@langchain/langgraph-checkpoint-postgres',
-        path: 'libs/checkpoint-postgres',
-        repo: 'langchain-ai/langgraphjs',
-        branch: 'v1',
+        package: "@langchain/langgraph-checkpoint-postgres",
+        path: "libs/checkpoint-postgres",
+        repo: "langchain-ai/langgraphjs",
+        branch: "v1",
       },
       {
-        package: '@langchain/langgraph-checkpoint-redis',
-        path: 'libs/checkpoint-redis',
-        repo: 'langchain-ai/langgraphjs',
-        branch: 'v1',
+        package: "@langchain/langgraph-checkpoint-redis",
+        path: "libs/checkpoint-redis",
+        repo: "langchain-ai/langgraphjs",
+        branch: "v1",
       },
       {
-        package: '@langchain/langgraph-checkpoint-sqlite',
-        path: 'libs/checkpoint-sqlite',
-        repo: 'langchain-ai/langgraphjs',
-        branch: 'v1',
+        package: "@langchain/langgraph-checkpoint-sqlite",
+        path: "libs/checkpoint-sqlite",
+        repo: "langchain-ai/langgraphjs",
+        branch: "v1",
       },
       {
-        package: '@langchain/langgraph-checkpoint',
-        path: 'libs/checkpoint',
-        repo: 'langchain-ai/langgraphjs',
-        branch: 'v1',
+        package: "@langchain/langgraph-checkpoint",
+        path: "libs/checkpoint",
+        repo: "langchain-ai/langgraphjs",
+        branch: "v1",
       },
       {
-        package: '@langchain/langgraph-api',
-        path: 'libs/langgraph-api',
-        repo: 'langchain-ai/langgraphjs',
-        branch: 'v1',
+        package: "@langchain/langgraph-api",
+        path: "libs/langgraph-api",
+        repo: "langchain-ai/langgraphjs",
+        branch: "v1",
       },
       {
-        package: '@langchain/langgraph-cli',
-        path: 'libs/langgraph-cli',
-        repo: 'langchain-ai/langgraphjs',
-        branch: 'v1',
+        package: "@langchain/langgraph-cli",
+        path: "libs/langgraph-cli",
+        repo: "langchain-ai/langgraphjs",
+        branch: "v1",
       },
       {
-        package: '@langchain/langgraph-cua',
-        path: 'libs/langgraph-cua',
-        repo: 'langchain-ai/langgraphjs',
-        branch: 'v1',
+        package: "@langchain/langgraph-cua",
+        path: "libs/langgraph-cua",
+        repo: "langchain-ai/langgraphjs",
+        branch: "v1",
       },
       {
-        package: '@langchain/langgraph-supervisor',
-        path: 'libs/langgraph-supervisor',
-        repo: 'langchain-ai/langgraphjs',
-        branch: 'v1',
+        package: "@langchain/langgraph-supervisor",
+        path: "libs/langgraph-supervisor",
+        repo: "langchain-ai/langgraphjs",
+        branch: "v1",
       },
       {
-        package: '@langchain/langgraph-swarm',
-        path: 'libs/langgraph-swarm',
-        repo: 'langchain-ai/langgraphjs',
-        branch: 'v1',
+        package: "@langchain/langgraph-swarm",
+        path: "libs/langgraph-swarm",
+        repo: "langchain-ai/langgraphjs",
+        branch: "v1",
       },
       {
-        package: '@langchain/langgraph-ui',
-        path: 'libs/langgraph-ui',
-        repo: 'langchain-ai/langgraphjs',
-        branch: 'v1',
+        package: "@langchain/langgraph-ui",
+        path: "libs/langgraph-ui",
+        repo: "langchain-ai/langgraphjs",
+        branch: "v1",
       },
       {
-        package: '@langchain/langgraph',
-        path: 'libs/langgraph',
-        repo: 'langchain-ai/langgraphjs',
-        branch: 'v1',
+        package: "@langchain/langgraph",
+        path: "libs/langgraph",
+        repo: "langchain-ai/langgraphjs",
+        branch: "v1",
       },
       {
-        package: '@langchain/langgraph-sdk',
-        path: 'libs/sdk',
-        repo: 'langchain-ai/langgraphjs',
-        branch: 'v1',
+        package: "@langchain/langgraph-sdk",
+        path: "libs/sdk",
+        repo: "langchain-ai/langgraphjs",
+        branch: "v1",
       },
     ],
   },
   {
-    group: 'LangSmith',
+    group: "LangSmith",
     items: [
       {
-        package: 'langsmith',
-        path: 'js',
-        repo: 'langchain-ai/langsmith-sdk',
-        branch: 'main',
+        package: "langsmith",
+        path: "js",
+        repo: "langchain-ai/langsmith-sdk",
+        branch: "main",
         packageInstall: true,
       },
     ],
@@ -247,14 +247,22 @@ const SOURCES: Source[] = [
 ];
 
 const ROOT_TYPEDOC_CONFIG: TypeDocOptions = {
-  out: 'public',
-  sort: ['kind', 'visibility', 'instance-first', 'required-first', 'alphabetical'],
-  plugin: ['typedoc-plugin-expand-object-like-types'],
-  logLevel: 'Error',
-  name: 'langchain.js',
-  hostedBaseUrl: 'https://reference.langchain.com/javascript',
+  out: "public",
+  sort: [
+    "kind",
+    "visibility",
+    "instance-first",
+    "required-first",
+    "alphabetical",
+  ],
+  plugin: ["typedoc-plugin-expand-object-like-types", path.join(__dirname, "plugins/gtm")],
+  gtmId: "GTM-MBBX68ST",
+  logLevel: "Error",
+  name: "langchain.js",
+  hostedBaseUrl: "https://reference.langchain.com/javascript",
   useHostedBaseUrlForAbsoluteLinks: false,
-  entryPointStrategy: 'packages',
+  readme: "none",
+  entryPointStrategy: "packages",
   includeVersion: true,
 };
 
@@ -270,7 +278,8 @@ const PACKAGE_TYPEDOC_CONFIG: TypeDocOptions = {
 
 const iife = <T>(fn: () => T) => fn();
 
-const exec = (args: string[]) => execSync(args.join(' '), { encoding: 'utf-8', stdio: 'inherit' });
+const exec = (args: string[]) =>
+  execSync(args.join(" "), { encoding: "utf-8", stdio: "inherit" });
 
 /**
  * Reads a JSON file, applies a transformation function to its contents, and writes the result back to the file.
@@ -281,7 +290,7 @@ const exec = (args: string[]) => execSync(args.join(' '), { encoding: 'utf-8', s
 const updateJsonFile = (relativePath: string, fn: (json: any) => any) => {
   const contents = fs.readFileSync(relativePath).toString();
   const res = fn(JSON.parse(contents));
-  fs.writeFileSync(relativePath, JSON.stringify(res, null, 2) + '\n');
+  fs.writeFileSync(relativePath, JSON.stringify(res, null, 2) + "\n");
 };
 
 /**
@@ -291,7 +300,7 @@ const updateJsonFile = (relativePath: string, fn: (json: any) => any) => {
  * @returns {string} The absolute path to the target directory for the specified remote and branch.
  */
 const remotePath = (remote: Remote) =>
-  path.join(__dirname, 'remotes', remote.repo, remote.branch ?? 'main');
+  path.join(__dirname, "remotes", remote.repo, remote.branch ?? "main");
 
 /**
  * Constructs the absolute filesystem path for a given package.
@@ -312,7 +321,7 @@ const packagePath = (pkg: Package) => path.join(remotePath(pkg), pkg.path);
  */
 function* iteratePackages(sources: Source[]): Iterable<Package> {
   for (const source of sources) {
-    if ('group' in source) {
+    if ("group" in source) {
       yield* iteratePackages(source.items);
     } else {
       yield source;
@@ -332,7 +341,11 @@ function* iteratePackages(sources: Source[]): Iterable<Package> {
  * @param {T} initial - The initial value for the accumulator.
  * @returns {T} The final accumulated value after processing all packages.
  */
-function reducePackages<T>(sources: Source[], fn: (acc: T, pkg: Package) => T, initial: T): T {
+function reducePackages<T>(
+  sources: Source[],
+  fn: (acc: T, pkg: Package) => T,
+  initial: T
+): T {
   return Array.from(iteratePackages(sources)).reduce(fn, initial);
 }
 
@@ -345,14 +358,16 @@ function reducePackages<T>(sources: Source[], fn: (acc: T, pkg: Package) => T, i
  * @returns {Promise<string>} The SHA of the latest commit on the specified branch.
  */
 async function getLatestRemoteSha(remote: Remote): Promise<string> {
-  const branch = remote.branch ?? 'main';
+  const branch = remote.branch ?? "main";
   const apiUrl = `https://api.github.com/repos/${remote.repo}/commits/${branch}`;
   // These headers aren't explicitly required by GitHub, but we include them
   // if they are present to avoid rate limiting.
-  const headers: Record<string, string> = process.env.GITHUB_TOKEN ? {
-    'Authorization': `Bearer ${process.env.GITHUB_TOKEN}`,
-    'X-GitHub-Api-Version': '2022-11-28',
-  } : {};
+  const headers: Record<string, string> = process.env.GITHUB_TOKEN
+    ? {
+        Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
+        "X-GitHub-Api-Version": "2022-11-28",
+      }
+    : {};
   const res = await fetch(apiUrl, { headers });
   const data = await res.json();
   return data.sha;
@@ -368,16 +383,16 @@ async function getLatestRemoteSha(remote: Remote): Promise<string> {
  * @returns {Promise<string>} The cached SHA string, or an empty string if not present.
  */
 async function getLocalRemoteSha(remote: Remote) {
-  const shaFile = path.join(remotePath(remote), '.sha');
+  const shaFile = path.join(remotePath(remote), ".sha");
   if (fs.existsSync(shaFile)) {
     try {
-      const res = fs.readFileSync(shaFile, 'utf-8');
+      const res = fs.readFileSync(shaFile, "utf-8");
       return res.toString().trim();
     } catch {
-      return '';
+      return "";
     }
   }
-  return '';
+  return "";
 }
 
 /**
@@ -407,14 +422,14 @@ async function ensureLatestRemote(remote: Remote) {
  * into the directory returned by `remotePath(remote)`.
  */
 function pullRemote(remote: Remote, latestSha: string) {
-  const branch = remote.branch ?? 'main';
+  const branch = remote.branch ?? "main";
   const target = remotePath(remote);
   const url = `https://github.com/${remote.repo}/archive/refs/heads/${branch}.tar.gz`;
   console.info(`Fetching remote tarball ${remote.repo}/${branch}`);
-  exec(['rm -rf', target]);
-  exec(['mkdir -p', target]);
+  exec(["rm -rf", target]);
+  exec(["mkdir -p", target]);
   exec([`curl -L -s`, url, `| tar -xz --strip-components=1 -C`, target]);
-  const shaFile = path.join(target, '.sha');
+  const shaFile = path.join(target, ".sha");
   fs.writeFileSync(shaFile, `${latestSha}\n`);
 }
 
@@ -431,17 +446,25 @@ function pullRemote(remote: Remote, latestSha: string) {
  * @param {Package} pkg - The package for which to flush (write/update) the TypeDoc config.
  */
 function ensurePackageTypedocConfig(pkg: Package) {
-  const packageJsonPath = path.join(remotePath(pkg), pkg.path, 'package.json');
-  const typedocConfigPath = path.join(remotePath(pkg), pkg.path, 'typedoc.json');
+  const packageJsonPath = path.join(remotePath(pkg), pkg.path, "package.json");
+  const typedocConfigPath = path.join(
+    remotePath(pkg),
+    pkg.path,
+    "typedoc.json"
+  );
 
   const packageEntrypoints = iife(() => {
     const packageJson = require(packageJsonPath);
     const exports: Record<string, any> =
-      'exports' in packageJson && typeof packageJson.exports === 'object'
+      "exports" in packageJson && typeof packageJson.exports === "object"
         ? packageJson.exports
         : {};
     return Object.values(exports).reduce<string[]>((acc, value) => {
-      if (typeof value === 'object' && 'input' in value && typeof value.input === 'string') {
+      if (
+        typeof value === "object" &&
+        "input" in value &&
+        typeof value.input === "string"
+      ) {
         acc.push(value.input);
       }
       return acc;
@@ -449,7 +472,7 @@ function ensurePackageTypedocConfig(pkg: Package) {
   });
 
   if (!fs.existsSync(typedocConfigPath)) {
-    fs.writeFileSync(typedocConfigPath, '{}');
+    fs.writeFileSync(typedocConfigPath, "{}");
   }
   updateJsonFile(typedocConfigPath, () => ({
     ...PACKAGE_TYPEDOC_CONFIG,
@@ -462,7 +485,9 @@ async function build() {
   const remotes = reducePackages<Remote[]>(
     SOURCES,
     (acc, pkg) => {
-      const existing = acc.find((r) => r.repo === pkg.repo && r.branch === pkg.branch);
+      const existing = acc.find(
+        (r) => r.repo === pkg.repo && r.branch === pkg.branch
+      );
       if (!existing) acc.push({ repo: pkg.repo, branch: pkg.branch });
       return acc;
     },
@@ -470,16 +495,16 @@ async function build() {
   );
   const packages = Array.from(iteratePackages(SOURCES));
 
-  await Promise.all(
-    remotes.map((r) => ensureLatestRemote(r))
-  );
+  await Promise.all(remotes.map((r) => ensureLatestRemote(r)));
 
   const installTargets = reducePackages<Array<Package | Remote>>(
     SOURCES,
     (acc, pkg) => {
       if (pkg.packageInstall) acc.push(pkg);
       else {
-        const existingRemote = acc.find((r) => r.repo === pkg.repo && r.branch === pkg.branch);
+        const existingRemote = acc.find(
+          (r) => r.repo === pkg.repo && r.branch === pkg.branch
+        );
         if (!existingRemote) acc.push({ repo: pkg.repo, branch: pkg.branch });
       }
       return acc;
@@ -489,8 +514,10 @@ async function build() {
 
   await Promise.all(
     installTargets.map(async (t) => {
-      console.info(`Installing dependencies for ${t.repo}/${t.branch ?? 'main'}`);
-      if ('package' in t) {
+      console.info(
+        `Installing dependencies for ${t.repo}/${t.branch ?? "main"}`
+      );
+      if ("package" in t) {
         await installDependencies({ cwd: packagePath(t), silent: true });
       } else {
         await installDependencies({ cwd: remotePath(t), silent: true });
@@ -502,7 +529,9 @@ async function build() {
     ensurePackageTypedocConfig(p);
   }
 
-  const entrypoints = packages.map((pkg) => path.join(remotePath(pkg), pkg.path));
+  const entrypoints = packages.map((pkg) =>
+    path.join(remotePath(pkg), pkg.path)
+  );
 
   console.info(`Generating docs for ${entrypoints.length} entrypoints`);
 
@@ -517,7 +546,7 @@ async function build() {
     await app.generateDocs(reflection, DIST_DIR);
   }
 
-  console.info('Done');
+  console.info("Done");
 }
 
 if (require.main === module) {

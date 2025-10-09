@@ -1,5 +1,7 @@
 *
 node_modules
+!plugins
+!plugins/**
 !.gitignore
 !.prettierrc
 !.prettierignore
@@ -9,3 +11,4 @@ node_modules
 !package.json
 !pnpm-lock.yaml
 !tsconfig.json
+!README.md
