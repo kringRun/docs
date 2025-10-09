@@ -1157,6 +1157,14 @@
         "version": "JavaScript",
         "dropdowns": [
           {
+            "dropdown": "Home",
+            "icon": "house",
+            "description": "LangChain docs home",
+            "pages": [
+              "index"
+            ]
+          },
+          {
             "dropdown": "OSS (v1-alpha)",
             "icon": "link",
             "description": "LangChain and LangGraph",
