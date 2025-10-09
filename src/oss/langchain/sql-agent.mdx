@@ -449,6 +449,100 @@ agent = create_agent(
 
 :::
 
+## 6. Implement human-in-the-loop review
+
+It can be prudent to check the agent's SQL queries before they are executed for any unintended actions or inefficiencies.
+
+LangChain agents feature support for built-in [human-in-the-loop middleware](/oss/langchain/human-in-the-loop) to add oversight to agent tool calls. Let's configure the agent to pause for human review on calling the `sql_db_query` tool:
+
+```python
+from langchain.agents import create_agent
+from langchain.agents.middleware import HumanInTheLoopMiddleware # [!code highlight]
+from langgraph.checkpoint.memory import InMemorySaver # [!code highlight]
+
+agent = create_agent(
+    llm,
+    tools,
+    prompt=system_prompt,
+    middleware=[ # [!code highlight]
+        HumanInTheLoopMiddleware( # [!code highlight]
+            interrupt_on={"sql_db_query": True}, # [!code highlight]
+            description_prefix="Tool execution pending approval", # [!code highlight]
+        ), # [!code highlight]
+    ], # [!code highlight]
+    checkpointer=InMemorySaver(), # [!code highlight]
+)
+```
+<Note>
+We've added a [checkpointer](/oss/langchain/short-term-memory) to our agent to allow execution to be paused and resumed. See the [human-in-the-loop guide](/oss/langchain/human-in-the-loop) for detalis on this as well as available middleware configurations.
+</Note>
+
+On running the agent, it will now pause for review before executing the `sql_db_query` tool:
+```python
+question = "Which genre on average has the longest tracks?"
+config = {"configurable": {"thread_id": "1"}} # [!code highlight]
+
+for step in agent.stream(
+    {"messages": [{"role": "user", "content": question}]},
+    config, # [!code highlight]
+    stream_mode="values",
+):
+    if "messages" in step:
+        step["messages"][-1].pretty_print()
+    elif "__interrupt__" in step: # [!code highlight]
+        print("INTERRUPTED:") # [!code highlight]
+        interrupt = step["__interrupt__"][0] # [!code highlight]
+        for request in interrupt.value: # [!code highlight]
+            print(request["description"]) # [!code highlight]
+    else:
+        pass
+```
+```
+...
+
+INTERRUPTED:
+Tool execution pending approval
+
+Tool: sql_db_query
+Args: {'query': 'SELECT g.Name AS Genre, AVG(t.Milliseconds) AS AvgTrackLength FROM Track t JOIN Genre g ON t.GenreId = g.GenreId GROUP BY g.Name ORDER BY AvgTrackLength DESC LIMIT 1;'}
+```
+We can resume execution, in this case accepting the query, using [Command](/oss/langgraph/use-graph-api#combine-control-flow-and-state-updates-with-command):
+```python
+from langgraph.types import Command # [!code highlight]
+
+for step in agent.stream(
+    Command(resume=[{"type": "accept"}]), # [!code highlight]
+    config,
+    stream_mode="values",
+):
+    if "messages" in step:
+        step["messages"][-1].pretty_print()
+    elif "__interrupt__" in step:
+        print("INTERRUPTED:")
+        interrupt = step["__interrupt__"][0]
+        for request in interrupt.value:
+            print(request["description"])
+    else:
+        pass
+```
+```
+================================== Ai Message ==================================
+Tool Calls:
+  sql_db_query (call_7oz86Epg7lYRqi9rQHbZPS1U)
+ Call ID: call_7oz86Epg7lYRqi9rQHbZPS1U
+  Args:
+    query: SELECT Genre.Name, AVG(Track.Milliseconds) AS AvgDuration FROM Track JOIN Genre ON Track.GenreId = Genre.GenreId GROUP BY Genre.Name ORDER BY AvgDuration DESC LIMIT 5;
+================================= Tool Message =================================
+Name: sql_db_query
+
+[('Sci Fi & Fantasy', 2911783.0384615385), ('Science Fiction', 2625549.076923077), ('Drama', 2575283.78125), ('TV Shows', 2145041.0215053763), ('Comedy', 1585263.705882353)]
+================================== Ai Message ==================================
+
+The genre with the longest average track length is "Sci Fi & Fantasy" with an average duration of about 2,911,783 milliseconds, followed by "Science Fiction" and "Drama."
+```
+
+Refer to the [human-in-the-loop guide](/oss/langchain/human-in-the-loop) for details.
+
 :::js
 ## 4. Execute SQL queries
 
