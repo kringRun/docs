@@ -218,7 +218,7 @@
                       "oss/python/langgraph/persistence",
                       "oss/python/langgraph/durable-execution",
                       "oss/python/langgraph/streaming",
-                      "oss/python/langgraph/add-human-in-the-loop",
+                      "oss/python/langgraph/interrupts",
                       "oss/python/langgraph/use-time-travel",
                       "oss/python/langgraph/add-memory",
                       "oss/python/langgraph/use-subgraphs"
@@ -1239,7 +1239,7 @@
                       "oss/javascript/langgraph/persistence",
                       "oss/javascript/langgraph/durable-execution",
                       "oss/javascript/langgraph/streaming",
-                      "oss/javascript/langgraph/add-human-in-the-loop",
+                      "oss/javascript/langgraph/interrupts",
                       "oss/javascript/langgraph/use-time-travel",
                       "oss/javascript/langgraph/add-memory",
                       "oss/javascript/langgraph/use-subgraphs"
@@ -2289,11 +2289,11 @@
   },
   {
     "source": "/oss/python/langgraph/human-in-the-loop",
-    "destination": "/oss/python/langgraph/add-human-in-the-loop"
+    "destination": "/oss/python/langgraph/interrupts"
   },
   {
     "source": "/oss/javascript/langgraph/human-in-the-loop",
-    "destination": "/oss/javascript/langgraph/add-human-in-the-loop"
+    "destination": "/oss/javascript/langgraph/interrupts"
   }
 ]
 }
