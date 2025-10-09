@@ -78,7 +78,7 @@ Once you have the correct policy, there are three ways to authenticate with Amaz
    1. You'll need to provision a VPC endpoint and configure it to allow access to your S3 bucket.
    2. You can refer to our [public Terraform modules](https://github.com/langchain-ai/terraform/blob/main/modules/aws/s3/main.tf#L12) for guidance and an example of configuring this.
 
-#### KMS Encryption Header Support for S3
+#### KMS encryption header support for S3
 Starting with LangSmith Helm chart version **0.11.24**, you can pass a KMS encryption key header and enforce a specific KMS key for writes by providing its ARN. To enable this, set the following values in your Helm chart:
 ```yaml Helm
 config:
