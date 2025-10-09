@@ -1,62 +1,115 @@
 ---
-title: LangChain docs home
-sidebarTitle: Home
-description: "The platform for reliable agents"
-mode: "wide"
+title:
+sidebarTitle: All docs
+mode: "center"
 ---
 
+# The agent engineering platform
 
-# Frameworks
+Tools for every step of the agent development lifecycle. Ship reliable agents fast with open source frameworks for building agents, and our commercial platform LangSmith for observing, evaluating, and deploying agents.
+
+## Get started
+
+<CardGroup cols={4}>
+<Card title="Send your first trace" icon="monitor-waveform" href="/langsmith/integrations" cta="Get started" />
+
+<Card title="Build your first agent" icon="gear" href="/oss/python/langchain/quickstart" cta="Get started" />
+
+<Card title="Build an advanced agent" icon="gears" href="/oss/python/langgraph/quickstart" cta="Get started"/>
+
+<Card title="Sign up for LangSmith" icon="screwdriver-wrench" href="https://smith.langchain.com/" cta="Try LangSmith" />
+
+</CardGroup>
+
+## Open source agent frameworks
+
+<Tabs>
+<Tab title="Python" icon="python">
 
 <CardGroup cols={2}>
     <Card
-        title="LangChain - Python"
-        href="https://python.langchain.com/docs/introduction/"
+        title="LangChain"
+        href="/oss/python/langchain/overview"
+        icon="link"
+        cta="Learn more"
     >
-  Open-source framework for developing applications powered by large language models (LLMs).
-    </Card>
-
-    <Card
-        title="LangChain - JavaScript"
-        href="https://js.langchain.com/docs/introduction/"
-    >
-  Open-source framework for developing applications powered by large language models (LLMs).
+    Get started quickly with pre-built agent architectures and standard integrations for swapping model providers.
     </Card>
 
     <Card
         title="LangGraph"
-        href="/oss/python"
+        href="/oss/python/langgraph/overview"
+        icon="circle-nodes"
+        cta="Learn more"
     >
-  Low-level orchestration framework for building, managing, and deploying long-running, stateful agents.
+    Control every step of your custom agent with low-level orchestration, memory, and human-in-the-loop support.
     </Card>
 
 </CardGroup>
 
-# Platforms
+</Tab>
+<Tab title="JavaScript" icon="js">
+<CardGroup cols={2}>
+    <Card
+        title="LangChain"
+        href="/oss/javascript/langchain/overview"
+        icon="link"
+        cta="Learn more"
+    >
+    Get started quickly with pre-built agent architectures and standard integrations for swapping model providers.
+    </Card>
+
+    <Card
+        title="LangGraph"
+        href="/oss/javascript/langgraph/overview"
+        icon="circle-nodes"
+        cta="Learn more"
+    >
+    Control every step of your custom agent with low-level orchestration, memory, and human-in-the-loop support.
+    </Card>
+
+</CardGroup>
+</Tab>
+</Tabs>
+
+## LangSmith offerings
 
 <CardGroup cols={2}>
     <Card
-        title="LangGraph Platform"
-        href="/langgraph-platform/"
+        title="Observability"
+        href="/langsmith/observability"
+        icon="magnifying-glass"
+        cta="Learn more"
     >
-    Commercial platform for developing, deploying, and scaling long-running agents and worflows.
+    See exactly how your agent thinks and acts with detailed tracing and aggregate trend metrics.
     </Card>
 
     <Card
-        title="LangSmith"
-        href="https://docs.smith.langchain.com/"
+        title="Evaluation"
+        href="/langsmith/evaluation"
+        icon="chart-simple"
+        cta="Learn more"
     >
-    Observability and evals platform for debugging, testing, and monitoring any AI application.
+    Test and score agent behavior on production data or offline datasets to continuously improve performance.
     </Card>
-</CardGroup>
 
-# Experimental
-
-<CardGroup cols={2}>
     <Card
-        title="LangChain Labs"
-        href="/labs"
+        title="Prompt Engineering"
+        href="/langsmith/prompt-engineering"
+        icon="terminal"
+        cta="Learn more"
     >
-    A collection of agents and experimental AI products.
+    Iterate on prompts with version control, auto-generated prompt improvement, and collaboration features.
     </Card>
+
+    <Card
+        title="Deployment"
+        href="/langgraph-platform"
+        icon="rocket-launch"
+        cta="Learn more"
+    >
+    Ship your agent in one click with infrastructure built for long-running tasks and human oversight.
+    </Card>
+
 </CardGroup>
+

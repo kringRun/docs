@@ -10,8 +10,7 @@
   },
   "logo": {
     "light": "/images/brand/langchain-docs-teal.svg",
-    "dark": "/images/brand/langchain-docs-lilac.svg",
-    "href": "https://docs.langchain.com/oss/python"
+    "dark": "/images/brand/langchain-docs-lilac.svg"
   },
   "favicon": {
     "light": "/images/brand/docs-favicon.svg",
@@ -131,6 +130,14 @@
       {
         "version": "Python",
         "dropdowns": [
+          {
+            "dropdown": "Home",
+            "icon": "house",
+            "description": "LangChain docs home",
+            "pages": [
+              "index"
+            ]
+          },
           {
             "dropdown": "OSS (v1-alpha)",
             "icon": "link",
@@ -1149,6 +1156,14 @@
       {
         "version": "JavaScript",
         "dropdowns": [
+          {
+            "dropdown": "Home",
+            "icon": "house",
+            "description": "LangChain docs home",
+            "pages": [
+              "index"
+            ]
+          },
           {
             "dropdown": "OSS (v1-alpha)",
             "icon": "link",

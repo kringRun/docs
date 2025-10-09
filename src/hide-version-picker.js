@@ -15,7 +15,9 @@
         body.classList.remove('hide-version-picker');
 
         // Add appropriate class based on URL
-        if (currentPath.includes('/langgraph-platform/') || currentPath.includes('/langgraph-platform')) {
+        if (currentPath === '/' || currentPath === '/index') {
+            body.classList.add('hide-version-picker');
+        } else if (currentPath.includes('/langgraph-platform/') || currentPath.includes('/langgraph-platform')) {
             body.classList.add('hide-version-picker');
         } else if (currentPath.match(/\/labs(?:\/|$)/)) {
             body.classList.add('hide-version-picker');
