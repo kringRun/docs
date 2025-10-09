@@ -279,7 +279,7 @@ The [`useStream()`](https://langchain-ai.github.io/langgraphjs/reference/modules
 * Render a confirmation UI before executing a node
 * Wait for human input, allowing agent to ask the user with clarifying questions
 
-Learn more about interrupts in the [How to handle interrupts](/oss/langgraph/add-human-in-the-loop#pause-using-interrupt) guide.
+Learn more about interrupts in the [How to handle interrupts](/oss/langgraph/interrupts#pause-using-interrupt) guide.
 
 ```tsx
 const thread = useStream<{ messages: Message[] }, { InterruptType: string }>({
