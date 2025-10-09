@@ -35,6 +35,7 @@ This site is currently being migrated from a previous Sphinx-based implementatio
 - [ ] Post-processing step to link out to imports from code blocks
   - [ ] Maybe there's a plugin?
 - [ ] Fix `navigation.path` feature/plugin in `mkdocs.yml` not working
+- [ ] CI Griffe checks
 - [ ] Fix search magnifying glass icon color in dark mode
 - [ ] Consider using [inherited docstrings](https://mkdocstrings.github.io/griffe/extensions/official/inherited-docstrings/)
 - [ ] Copy page support (need to add a post-processing step to generate markdown files to serve alongside the API reference docs)
