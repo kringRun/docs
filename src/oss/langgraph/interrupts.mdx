@@ -48,7 +48,13 @@ async function approvalNode(state: State) {
 ```
 :::
 
-The `interrupt` function accepts any JSON-serializable value as its argument. This value is returned to the caller when the graph pauses, and can contain whatever information is needed for the human to make a decision.
+When you call `interrupt`, here's what happens:
+
+1. **Graph execution gets suspended** at the exact point where `interrupt` is called
+2. **State is saved** using the checkpointer so execution can be resumed later, In production, this should be a persistent checkpointer (e.g. backed by a database)
+3. **Value is returned** to the caller - this can be any JSON-serializable value (string, object, array, etc.)
+4. **Graph waits indefinitely** until you resume execution with a response
+5. **Response is passed back** into the node when you resume, becoming the return value of the `interrupt()` call
 
 ## Resuming interrupts
 
