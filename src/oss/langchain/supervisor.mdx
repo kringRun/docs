@@ -3,6 +3,10 @@ title: Build a supervisor agent
 sidebarTitle: Supervisor agent
 ---
 
+import ChatModelTabsPy from '/snippets/chat-model-tabs.mdx';
+
+## Overview
+
 The **supervisor pattern** is a multi-agent architecture where a central supervisor agent coordinates specialized worker agents. This approach excels when tasks require different types of expertise. Rather than building one complex agent that struggles with tool selection across domains, you create focused specialists coordinated by a supervisor who understands the overall workflow.
 
 In this tutorial, you'll build a personal assistant system that demonstrates these benefits through a realistic workflow. Your system will coordinate two specialists with fundamentally different responsibilities:
@@ -12,37 +16,62 @@ In this tutorial, you'll build a personal assistant system that demonstrates the
 
 You'll learn to build this system step by step, understanding why each layer exists and how they work together to handle complex user requests.
 
+### Why use a supervisor?
+
+A single agent with many tools struggles to make good routing decisions. Consider an agent with direct access to all calendar and email APIs—it must choose from many similar tools, understand exact formats for each API, and handle multiple domains simultaneously. This leads to poor tool selection and difficult maintenance.
+
+The supervisor pattern solves this by creating layers of abstraction. A supervisor routes to high-level capabilities like "schedule event" or "manage email", while specialized sub-agents handle the complexity of translating natural language to rigid API calls. This separation improves both routing quality and maintainability.
+
+### Concepts
+
+We will cover the following concepts:
+
+- [Multi-agent systems](/oss/langchain/multi-agent)
+
 ## Setup
 
-First, install the required packages and configure your API keys. You'll need LangChain for building the multi-agent system and Anthropic for the language model.
+### Installation
 
-```bash
-pip install --pre -U "langchain[anthropic]"
+This tutorial requires the `langchain` package:
+
+<CodeGroup>
+```bash pip
+pip install langchain
 ```
+```bash conda
+conda install langchain -c conda-forge
+```
+</CodeGroup>
+
+For more details, see our [Installation guide](/oss/langchain/install).
+
+### LangSmith
+
+Many of the applications you build with LangChain will contain multiple steps with multiple invocations of LLM calls.
+As these applications get more complex, it becomes crucial to be able to inspect what exactly is going on inside your chain or agent.
+The best way to do this is with [LangSmith](https://smith.langchain.com).
+
+After you sign up at the link above, make sure to set your environment variables to start logging traces:
+
+```shell
+export LANGSMITH_TRACING="true"
+export LANGSMITH_API_KEY="..."
+```
+Or, set them in Python:
 
 ```python
 import getpass
 import os
 
-def _set_if_undefined(var: str):
-    if not os.environ.get(var):
-        os.environ[var] = getpass.getpass(f"Please provide your {var}")
-
-_set_if_undefined("ANTHROPIC_API_KEY")
-```
-
-Optionally, set up LangSmith for debugging:
-
-```python
-_set_if_undefined("LANGSMITH_API_KEY")
 os.environ["LANGSMITH_TRACING"] = "true"
+os.environ["LANGSMITH_API_KEY"] = getpass.getpass()
 ```
 
-## Why use a supervisor?
+## Components
 
-A single agent with many tools struggles to make good routing decisions. Consider an agent with direct access to all calendar and email APIs—it must choose from many similar tools, understand exact formats for each API, and handle multiple domains simultaneously. This leads to poor tool selection and difficult maintenance.
+We will need to select a chat model from LangChain's suite of integrations:
 
-The supervisor pattern solves this by creating layers of abstraction. A supervisor routes to high-level capabilities like "schedule event" or "manage email", while specialized sub-agents handle the complexity of translating natural language to rigid API calls. This separation improves both routing quality and maintainability.
+<ChatModelTabsPy />
 
 ## 1. Define low-level API tools
 
