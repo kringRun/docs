@@ -394,36 +394,54 @@ class AgentState:
 
 ### Model
 
-Dynamic model selection allows you to choose different models based on runtime context (e.g., task complexity, cost constraints, or user preferences).
+Dynamic model selection allows you to choose different models based on runtime context (e.g., task complexity, cost constraints, or user preferences). `create_react_agent` released in V0.6 of `langgraph-prebuilt` supported dynamic model and tool selection
+via a callable passed to the `model` parameter.
+
+This functionality has been ported to the middleware interface in V1.
 
 #### Dynamic model selection
 
 <CodeGroup>
 ```python V1 (new)
-# Example coming soon
+from langchain.agents import create_agent
+from langchain.agents.middleware import AgentMiddleware
+
+basic_model = ChatOpenAI(model="gpt-5-nano")
+advanced_model = ChatOpenAI(model="gpt-5")
+
+class DynamicModelMiddleware(AgentMiddleware):
+
+    def wrap_model_call(self, request: ModelRequest, handler: ModelRequestHandler) -> AIMessage:
+        model_call = request.model_call
+        if len(request.state.messages) > 10:
+            model = advanced_model
+        else:
+            model = basic_model
+
+        return handler(model_call.replace(model=model))
+
+agent = create_agent(
+    model=basic_model,
+    tools=tools,
+    middleware=[DynamicModelMiddleware(select_model)]
+)
 ```
 ```python V0 (old)
-from dataclasses import dataclass
-from langgraph.prebuilt import create_react_agent
+from langgraph.prebuilt import create_react_agent, AgentState
 from langchain_openai import ChatOpenAI
 
-@dataclass
-class ModelContext:
-    model_name: str = "gpt-3.5-turbo"
+basic_model = ChatOpenAI(model="gpt-5-nano")
+advanced_model = ChatOpenAI(model="gpt-5")
 
-# Instantiate models globally
-gpt4_model = ChatOpenAI(model="gpt-4")
-gpt35_model = ChatOpenAI(model="gpt-3.5-turbo")
-
-def select_model(state, runtime):
-    model_name = runtime.context.model_name
-    model = gpt4_model if model_name == "gpt-4" else gpt35_model
-    return model.bind_tools(tools)
+def select_model(state: AgentState) -> BaseChatModel:
+    # use a more advanced model for longer conversations
+    if len(state.messages) > 10:
+        return advanced_model
+    return basic_model
 
 agent = create_react_agent(
     model=select_model,
     tools=tools,
-    context_schema=ModelContext
 )
 ```
 </CodeGroup>
@@ -447,24 +465,36 @@ Dynamic model functions can return pre-bound models if structured output is *not
 
 ### Tools
 
-Convert `ToolNode` instances to simple lists:
+The `tools` argument to `create_agent` accepts a list of:
+
+* LangChain `BaseTool` instances (functions decorated with `@tool`)
+* Callable objects (functions) with proper type hints and a docstring
+* `dict` that represents a built-in provider tools
+
+It no longer accepts `ToolNode` instances.
 
 <CodeGroup>
 ```python V1 (new)
-# Example coming soon
+from langchain.agents import create_agent
+
+agent = create_agent(
+    model="anthropic:claude-4-5-sonnet",
+    tools=[check_weather, search_web]
+)
 ```
 ```python V0 (old)
 from langgraph.prebuilt import create_react_agent, ToolNode
 
-tool_node = ToolNode([check_weather, search_web])
 agent = create_react_agent(
     model="anthropic:claude-4-5-sonnet",
-    tools=tool_node
+    tools=ToolNode([check_weather, search_web]) # [!code highlight]
 )
 ```
 </CodeGroup>
 
 #### Handling tool errors
+
+You can now configure the handling of tool errors with middleware implementing the `wrap_tool_call` method.
 
 <CodeGroup>
 ```python V1 (new)
@@ -477,15 +507,20 @@ agent = create_react_agent(
 
 ### Structured output
 
-#### Prompted output removed
+#### Node Changes
 
-**Prompted output** is no longer supported via the `response_format` argument. Use structured output with `ToolStrategy` or `ProviderStrategy` instead.
+Structured output used to be generated in a separate node from the main agent. This is no longer the case.
+We generate structured output in the main loop, reducing cost and latency.
 
 #### Tool and provider strategies
 
-**Migration example**:
+In V1 we're announcing two new structured output strategies:
 
-```python
+* `ToolStrategy` uses artificial tool calling to generate structured output
+* `ProviderStrategy` uses provider-native structured output generation
+
+<CodeGroup>
+```python V1 (new)
 from langchain.agents import create_agent
 from langchain.agents.structured_output import ToolStrategy, ProviderStrategy
 from pydantic import BaseModel
@@ -498,16 +533,41 @@ class OutputSchema(BaseModel):
 agent = create_agent(
     model="openai:gpt-4o-mini",
     tools=tools,
-    response_format=ToolStrategy(OutputSchema)
-)
-
-# Using ProviderStrategy
-agent = create_agent(
-    model="openai:gpt-4o-mini",
-    tools=tools,
-    response_format=ProviderStrategy(OutputSchema)
+    # explicitly using tool strategy
+    response_format=ToolStrategy(OutputSchema)  # [!code highlight]
 )
 ```
+
+```python V0 (old)
+from langgraph.prebuilt import create_react_agent
+from pydantic import BaseModel
+
+class OutputSchema(BaseModel):
+    summary: str
+    sentiment: str
+
+agent = create_react_agent(
+    model="openai:gpt-4o-mini",
+    tools=tools,
+    # using tool strategy by default with no option for provider strategy
+    response_format=OutputSchema  # [!code highlight]
+)
+
+# OR
+
+agent = create_react_agent(
+    model="openai:gpt-4o-mini",
+    tools=tools,
+    # using a custom prompt to instruct the model to generate the output schema
+    response_format=("please generate ...", OutputSchema)  # [!code highlight]
+)
+```
+</CodeGroup>
+
+#### Prompted output removed
+
+**Prompted output** is no longer supported via the `response_format` argument. Compared to strategies
+like artificial tool calling and provider native structured output, prompted output has not proven to be particularly reliable.
 
 ### Streaming node name rename
 
