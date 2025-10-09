@@ -769,7 +769,7 @@ class DocumentationBuilder:
                     # For snippet files, we need to handle URL rewriting differently
                     # Use a special marker-based approach for dynamic URL resolution
                     if "snippets" in relative_path.parts:
-                        logger.info(
+                        logger.debug(
                             "Processing snippet file with URL rewriting: %s",
                             relative_path,
                         )
