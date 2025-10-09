@@ -19,10 +19,8 @@ Self-hosting allows you to run all components entirely within your own cloud env
 Model | Includes | Best for | Methods
 ------------------|------------------|----------|--------------------
 **LangSmith** | <ul><li>LangSmith app (UI + API)</li><li>Backend services (queue, playground, ACE)</li><li>Datastores: PostgreSQL, Redis, ClickHouse, optional blob storage</li></ul> | <ul><li>Teams who need self-hosted observability, tracing, and evaluation</li><li>Running the LangSmith app without deploying agents/graphs</li></ul> | <ul><li>Docker Compose (dev/test)</li><li>Kubernetes + Helm (production)</li></ul>
-**With agent deployment** | <ul><li>Everything from LangSmith</li><li>Control plane (deployments UI, revision management, the Debugger)</li><li>Data plane (LangGraph Server pods)</li><li>Kubernetes operator for orchestration</li></ul> | <ul><li>Enterprise teams needing a private LangChain Cloud</li><li>Centralized UI/API for managing multiple agents/graphs</li><li>Integrated observability and orchestration</li></ul> | <ul><li>Kubernetes with Helm (required)</li><li>Runs on EKS, GKE, AKS, or self-managed clusters</li></ul>
+**LangSmith with agent deployment** | <ul><li>Everything from LangSmith</li><li>Control plane (deployments UI, revision management, the Debugger)</li><li>Data plane (LangGraph Server pods)</li><li>Kubernetes operator for orchestration</li></ul> | <ul><li>Enterprise teams needing a private LangChain Cloud</li><li>Centralized UI/API for managing multiple agents/graphs</li><li>Integrated observability and orchestration</li></ul> | <ul><li>Kubernetes with Helm (required)</li><li>Runs on EKS, GKE, AKS, or self-managed clusters</li></ul>
 **Standalone server** | <ul><li>LangGraph Server container(s)</li><li>Requires PostgreSQL + Redis (shared or dedicated)</li><li>Optional LangSmith integration for tracing</li></ul> | <ul><li>Lightweight deployments of one or a few agents</li><li>Integrating LangGraph Servers as microservices</li><li>Teams preferring to manage scaling & CI/CD themselves</li></ul> | <ul><li>Docker / Docker Compose (dev/test)</li><li>Kubernetes + Helm (production)</li><li>Any container runtime or VM (ECS, EC2, ACI, etc.)</li></ul>
-
-
 
 <Note>
 For a guide on deployment, refer to:
@@ -30,7 +28,7 @@ For a guide on deployment, refer to:
 * [How to deploy the Self-Hosted Full Platform](/langsmith/deploy-self-hosted-full-platform)
 * [How to deploy the Self-Hosted Standalone Server](/langsmith/deploy-standalone-server)
 
-Supported Compute Platforms: [Kubernetes](https://kubernetes.io/) (for Control Plane), any compute platform (for Standalone Server Only)
+Supported compute platforms: [Kubernetes](https://kubernetes.io/) (for Control Plane), any compute platform (for Standalone Server Only)
 </Note>
 
 ## LangSmith
@@ -64,6 +62,17 @@ You can run LangSmith in Kubernetes (recommended) or Docker in a cloud environme
 
 To access the LangSmith UI and send API requests, you will need to expose the [LangSmith frontend](#langsmith-frontend) service. Depending on your installation method, this can be a load balancer or a port exposed on the host machine.
 
+### Services
+
+| Service | Description |
+|---------|-------------|
+| <a id="langsmith-frontend"></a> **LangSmith frontend** | The frontend uses Nginx to serve the LangSmith UI and route API requests to the other servers. This serves as the entrypoint for the application and is the only component that must be exposed to users. |
+| <a id="langsmith-backend"></a> **LangSmith backend** | The backend is the main entrypoint for CRUD API requests and handles the majority of the business logic for the application. This includes handling requests from the frontend and SDK, preparing traces for ingestion, and supporting the hub API. |
+| <a id="langsmith-queue"></a> **LangSmith queue** | The queue handles incoming traces and feedback to ensure that they are ingested and persisted into the traces and feedback datastore asynchronously, handling checks for data integrity and ensuring successful insert into the datastore, handling retries in situations such as database errors or the temporary inability to connect to the database. |
+| <a id="langsmith-platform-backend"></a> **LangSmith backend** | The platform backend is another critical service that primarily handles authentication, run ingestion, and other high-volume tasks. |
+| <a id="langsmith-playground"></a> **LangSmith playground** | The playground is a service that handles forwarding requests to various LLM APIs to support the LangSmith Playground feature. This can also be used to connect to your own custom model servers. |
+| <a id="langsmith-ace-arbitrary-code-execution-backend"></a> **LangSmith ACE (Arbitrary Code Execution) backend** | The ACE backend is a service that handles executing arbitrary code in a secure environment. This is used to support running custom code within LangSmith. |
+
 ### Storage services
 
 <Note>
@@ -77,18 +86,7 @@ LangSmith will bundle all storage services by default. You can configure it to u
 | <a id="redis"></a> **Redis** | [Redis](https://github.com/redis/redis) is a powerful in-memory key-value database that persists on disk. By holding data in memory, Redis offers high performance for operations like caching.<br/><br/>LangSmith uses Redis to back queuing and caching operations. |
 | <a id="blob-storage"></a> **Blob storage** | LangSmith supports several blob storage providers, including [AWS S3](https://aws.amazon.com/s3/), [Azure Blob Storage](https://azure.microsoft.com/en-us/services/storage/blobs/), and [Google Cloud Storage](https://cloud.google.com/storage).<br/><br/>LangSmith uses blob storage to store large files, such as trace artifacts, feedback attachments, and other large data objects. Blob storage is optional, but highly recommended for production deployments. |
 
-### Services
-
-| Service | Description |
-|---------|-------------|
-| <a id="langsmith-frontend"></a> **LangSmith frontend** | The frontend uses Nginx to serve the LangSmith UI and route API requests to the other servers. This serves as the entrypoint for the application and is the only component that must be exposed to users. |
-| <a id="langsmith-backend"></a> **LangSmith backend** | The backend is the main entrypoint for CRUD API requests and handles the majority of the business logic for the application. This includes handling requests from the frontend and SDK, preparing traces for ingestion, and supporting the hub API. |
-| <a id="langsmith-queue"></a> **LangSmith queue** | The queue handles incoming traces and feedback to ensure that they are ingested and persisted into the traces and feedback datastore asynchronously, handling checks for data integrity and ensuring successful insert into the datastore, handling retries in situations such as database errors or the temporary inability to connect to the database. |
-| <a id="langsmith-platform-backend"></a> **LangSmith backend** | The platform backend is another critical service that primarily handles authentication, run ingestion, and other high-volume tasks. |
-| <a id="langsmith-playground"></a> **LangSmith playground** | The playground is a service that handles forwarding requests to various LLM APIs to support the LangSmith Playground feature. This can also be used to connect to your own custom model servers. |
-| <a id="langsmith-ace-arbitrary-code-execution-backend"></a> **LangSmith ACE (Arbitrary Code Execution) backend** | The ACE backend is a service that handles executing arbitrary code in a secure environment. This is used to support running custom code within LangSmith. |
-
-## With agent deployment
+## LangSmith with agent deployment
 
 **LangSmith with agent deployment** builds on top of the [LangSmith](#langsmith-platform) option. Enabling deployment is ideal for enterprise teams who want a centralized, UI-driven platform to deploy and manage multiple agents and graphs, with all infrastructure, data, and orchestration fully under their control.
 
@@ -112,7 +110,7 @@ You run both the control plane and the data plane entirely within your own infra
 
 ![Self-Hosted Full Platform Architecture](/langsmith/images/self-hosted-full-platform-architecture.png)
 
-### Compute Platforms
+### Supported compute platforms
 
 - **Kubernetes**: LangSmith with agent deployment supports running control plane and data plane infrastructure on any Kubernetes cluster.
 
@@ -146,7 +144,7 @@ Do not run standalone servers in serverless environments. Scale-to-zero may caus
 
 ![Standalone Container](/langsmith/images/langgraph-platform-deployment-architecture.png)
 
-### Supported Compute Platforms
+### Supported compute platforms
 
 - **Kubernetes**: Use the LangSmith Helm chart to run LangGraph Servers in a Kubernetes cluster. This is the recommended option for production-grade deployments.
 
