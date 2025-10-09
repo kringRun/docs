@@ -327,10 +327,23 @@
                     "group": "Tutorials",
                     "icon": "code",
                     "pages": [
-                      "oss/python/langchain/knowledge-base",
-		                  "oss/python/langchain/rag",
-                      "oss/python/langgraph/agentic-rag",
-                      "oss/python/langchain/sql-agent"
+                      {
+                        "group": "LangChain",
+                        "expanded": true,
+                        "pages": [
+                          "oss/python/langchain/knowledge-base",
+                          "oss/python/langchain/rag",
+                          "oss/python/langchain/sql-agent"
+                        ]
+                      },
+                      {
+                        "group": "LangGraph",
+                        "expanded": true,
+                        "pages": [
+                          "oss/python/langgraph/agentic-rag",
+                          "oss/python/langgraph/sql-agent"
+                        ]
+                      }
                     ]
                   },
                   {
