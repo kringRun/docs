@@ -7,20 +7,16 @@ import ChatModelTabsPy from '/snippets/chat-model-tabs.mdx';
 
 ## Overview
 
-The **supervisor pattern** is a multi-agent architecture where a central supervisor agent coordinates specialized worker agents. This approach excels when tasks require different types of expertise. Rather than building one complex agent that struggles with tool selection across domains, you create focused specialists coordinated by a supervisor who understands the overall workflow.
+The **supervisor pattern** is a [multi-agent](/oss/langchain/multi-agent) architecture where a central supervisor agent coordinates specialized worker agents. This approach excels when tasks require different types of expertise. Rather than building one agent that manages tool selection across domains, you create focused specialists coordinated by a supervisor who understands the overall workflow.
 
-In this tutorial, you'll build a personal assistant system that demonstrates these benefits through a realistic workflow. Your system will coordinate two specialists with fundamentally different responsibilities:
+In this tutorial, you'll build a personal assistant system that demonstrates these benefits through a realistic workflow. The system will coordinate two specialists with fundamentally different responsibilities:
 
-- A **calendar agent** that handles scheduling, availability checking, and event management. Calendar agents work with dates and time formats.
-- An **email agent** that manages communication, drafts messages, and sends notifications. Email agents work with recipients and message composition.
-
-You'll learn to build this system step by step, understanding why each layer exists and how they work together to handle complex user requests.
+- A **calendar agent** that handles scheduling, availability checking, and event management.
+- An **email agent** that manages communication, drafts messages, and sends notifications.
 
 ### Why use a supervisor?
 
-A single agent with many tools struggles to make good routing decisions. Consider an agent with direct access to all calendar and email APIs—it must choose from many similar tools, understand exact formats for each API, and handle multiple domains simultaneously. This leads to poor tool selection and difficult maintenance.
-
-The supervisor pattern solves this by creating layers of abstraction. A supervisor routes to high-level capabilities like "schedule event" or "manage email", while specialized sub-agents handle the complexity of translating natural language to rigid API calls. This separation improves both routing quality and maintainability.
+Multi-agent architectures allow you to partition [tools](/oss/langchain/tools) across workers, each with their own individual prompts or instructions. Consider an agent with direct access to all calendar and email APIs: it must choose from many similar tools, understand exact formats for each API, and handle multiple domains simultaneously. If performance degrades, it may be helpful to separate related tools and associated prompts into logical groups (in part to manage iterative improvements).
 
 ### Concepts
 
@@ -48,18 +44,13 @@ For more details, see our [Installation guide](/oss/langchain/install).
 
 ### LangSmith
 
-Many of the applications you build with LangChain will contain multiple steps with multiple invocations of LLM calls.
-As these applications get more complex, it becomes crucial to be able to inspect what exactly is going on inside your chain or agent.
-The best way to do this is with [LangSmith](https://smith.langchain.com).
+Set up [LangSmith](https://smith.langchain.com) to inspect what is happening inside your chain or agent. Then set the following environment variables:
 
-After you sign up at the link above, make sure to set your environment variables to start logging traces:
-
+<CodeGroup>
 ```shell
 export LANGSMITH_TRACING="true"
 export LANGSMITH_API_KEY="..."
 ```
-Or, set them in Python:
-
 ```python
 import getpass
 import os
@@ -67,6 +58,7 @@ import os
 os.environ["LANGSMITH_TRACING"] = "true"
 os.environ["LANGSMITH_API_KEY"] = getpass.getpass()
 ```
+</CodeGroup>
 
 ### Components
 
@@ -76,9 +68,7 @@ We will need to select a chat model from LangChain's suite of integrations:
 
 ## 1. Define low-level API tools
 
-Start by defining the rigid API tools that require structured inputs. In real applications, these would call actual APIs (Google Calendar, SendGrid, etc.). For this tutorial, you'll use stubs to demonstrate the pattern.
-
-The key insight here is that these tools have **strict requirements** that make them difficult for LLMs to use directly. This motivates the need for sub-agents that act as bridges between natural language and rigid APIs.
+Start by defining the tools that require structured inputs. In real applications, these would call actual APIs (Google Calendar, SendGrid, etc.). For this tutorial, you'll use stubs to demonstrate the pattern.
 
 ```python
 from langchain_core.tools import tool
@@ -86,8 +76,8 @@ from langchain_core.tools import tool
 @tool
 def create_calendar_event(
     title: str,
-    start_time: str,  # ISO format: "2024-01-15T14:00:00"
-    end_time: str,    # ISO format: "2024-01-15T15:00:00"
+    start_time: str,       # ISO format: "2024-01-15T14:00:00"
+    end_time: str,         # ISO format: "2024-01-15T15:00:00"
     attendees: list[str],  # email addresses
     location: str = ""
 ) -> str:
@@ -98,7 +88,7 @@ def create_calendar_event(
 
 @tool
 def send_email(
-    to: list[str],      # email addresses
+    to: list[str],  # email addresses
     subject: str,
     body: str,
     cc: list[str] = []
@@ -119,11 +109,9 @@ def get_available_time_slots(
     return ["09:00", "14:00", "16:00"]
 ```
 
-These tools require exact ISO format dates, properly formatted email addresses, and all required parameters. Rather than burden a single LLM with parsing natural language, choosing tools, and understanding formats simultaneously, you'll create specialized sub-agents that handle each domain.
-
 ## 2. Create specialized sub-agents
 
-Now create sub-agents that bridge natural language and the rigid APIs. Each sub-agent is an expert in its domain with focused tools and a specialized prompt. This specialization allows the agent to excel at its specific task rather than being a generalist.
+Next, we'll create specialized sub-agents that handle each domain.
 
 ### Create a calendar agent
 
@@ -291,7 +279,7 @@ def manage_email(request: str) -> str:
     return result["messages"][-1].text
 ```
 
-The tool descriptions help the supervisor decide when to use each tool, so make them clear and specific. The tools accept natural language strings rather than structured parameters, allowing sub-agents to handle parsing complexity. Return only the sub-agent's final response—the supervisor doesn't need to see intermediate reasoning or tool calls.
+The tool descriptions help the supervisor decide when to use each tool, so make them clear and specific. We return only the sub-agent's final response, as the supervisor doesn't need to see intermediate reasoning or tool calls.
 
 ## 4. Create the supervisor agent
 
@@ -312,11 +300,9 @@ supervisor_agent = create_agent(
 )
 ```
 
-The supervisor operates at a higher level of abstraction. It knows about high-level capabilities and how to coordinate them, but doesn't need to understand ISO datetime formats, email address formats, or other low-level API details. This separation of concerns is the key benefit of the supervisor pattern.
-
 ## 5. Use the supervisor
 
-Now test your complete system with complex requests that require coordination across multiple domains. This demonstrates the real power of the supervisor pattern.
+Now test your complete system with complex requests that require coordination across multiple domains:
 
 ### Example 1: Simple single-domain request
 
@@ -568,7 +554,7 @@ if __name__ == "__main__":
 
 Your system has three layers. The bottom layer contains rigid API tools that require exact formats. The middle layer contains sub-agents that accept natural language, translate it to structured API calls, and return natural language confirmations. The top layer contains the supervisor that routes to high-level capabilities and synthesizes results.
 
-This separation of concerns provides several benefits: each layer has a focused responsibility, you can add new domains without affecting existing ones, you can test each layer independently, complexity grows linearly rather than exponentially, and specialized agents perform better than generalists.
+This separation of concerns provides several benefits: each layer has a focused responsibility, you can add new domains without affecting existing ones, and you can test and iterate on each layer independently.
 
 ## 6. Add human-in-the-loop review
 
@@ -797,9 +783,7 @@ def schedule_event(request: str) -> str:
 
 ## 8. Key takeaways
 
-The supervisor pattern creates layers of abstraction where each layer has a clear responsibility. Specialized sub-agents outperform generalists, and complex systems emerge from composing simple, focused components.
-
-When designing a supervisor system, start with clear domain boundaries and give each sub-agent focused tools and prompts. Write clear tool descriptions for the supervisor, test each layer independently before integration, and control information flow based on your specific needs.
+The supervisor pattern creates layers of abstraction where each layer has a clear responsibility. When designing a supervisor system, start with clear domain boundaries and give each sub-agent focused tools and prompts. Write clear tool descriptions for the supervisor, test each layer independently before integration, and control information flow based on your specific needs.
 
 <Tip>
 **When to use the supervisor pattern**
