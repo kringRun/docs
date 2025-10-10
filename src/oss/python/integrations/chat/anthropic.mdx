@@ -399,7 +399,7 @@ Second:
 
 ```python highlight={17,18}
 from langchain_anthropic import convert_to_anthropic_tool
-from langchain_core.tools import tool
+from langchain.tools import tool
 
 # For demonstration purposes, we artificially expand the
 # tool description.
@@ -496,7 +496,7 @@ app = workflow.compile(checkpointer=memory)
 ```
 
 ```python
-from langchain_core.messages import HumanMessage
+from langchain.messages import HumanMessage
 
 config = {"configurable": {"thread_id": "abc123"}}
 
@@ -577,7 +577,7 @@ Anthropic supports a (beta) [token-efficient tool use](https://docs.anthropic.co
 
 ```python highlight={6}
 from langchain_anthropic import ChatAnthropic
-from langchain_core.tools import tool
+from langchain.tools import tool
 
 llm = ChatAnthropic(
     model="claude-3-7-sonnet-20250219",

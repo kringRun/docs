@@ -59,7 +59,7 @@ model = ChatOutlines(model="microsoft/phi-2")  # defaults to transformers backen
 ## Invocation
 
 ```python
-from langchain_core.messages import HumanMessage
+from langchain.messages import HumanMessage
 
 messages = [HumanMessage(content="What will the capital of mars be called?")]
 response = model.invoke(messages)

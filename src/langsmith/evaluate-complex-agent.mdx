@@ -296,7 +296,7 @@ For the lookup (i.e. question-answering) agent, we'll use a simple ReACT archite
 
 ```python
 from langchain.embeddings import init_embeddings
-from langchain_core.tools import tool
+from langchain.tools import tool
 from langchain_core.vectorstores import InMemoryVectorStore
 from langchain.agents import create_agent
 
@@ -720,7 +720,7 @@ from typing import Literal
 from langchain.chat_models import init_chat_model
 from langchain.embeddings import init_embeddings
 from langchain_core.runnables import RunnableConfig
-from langchain_core.tools import tool
+from langchain.tools import tool
 from langchain_core.vectorstores import InMemoryVectorStore
 from langgraph.graph import END, StateGraph
 from langgraph.graph.message import AnyMessage, add_messages

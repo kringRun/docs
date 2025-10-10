@@ -45,7 +45,7 @@ if os.environ.get("SNOWFLAKE_ROLE") is None:
 
 ```python
 from langchain_community.chat_models import ChatSnowflakeCortex
-from langchain_core.messages import HumanMessage, SystemMessage
+from langchain.messages import HumanMessage, SystemMessage
 
 # By default, we'll be using the cortex provided model: `mistral-large`, with function: `complete`
 chat = ChatSnowflakeCortex()

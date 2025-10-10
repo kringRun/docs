@@ -66,7 +66,7 @@ For tasks involving the generation of long text, such as creating an extensive a
 #### Synchronous
 
 ```python
-from langchain_core.messages import HumanMessage
+from langchain.messages import HumanMessage
 
 messages = [HumanMessage(content="Suggest 3 names for my dog")]
 
@@ -77,7 +77,7 @@ for chunk in llm.stream(messages):
 #### Asynchronous
 
 ```python
-from langchain_core.messages import HumanMessage
+from langchain.messages import HumanMessage
 
 
 async def async_invoke_chain(animal: str):

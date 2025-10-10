@@ -91,7 +91,7 @@ You can access the runtime information inside tools to:
 Use the @[get_runtime] function from `langgraph.runtime` to access the @[Runtime] object inside a tool.
 
 ```python
-from langchain_core.tools import tool
+from langchain.tools import tool
 from langgraph.runtime import get_runtime  # [!code highlight]
 
 @tool
@@ -153,7 +153,7 @@ Use the @[get_runtime] function from `langgraph.runtime` to access the @[Runtime
 ```python
 from dataclasses import dataclass
 
-from langchain_core.messages import AnyMessage
+from langchain.messages import AnyMessage
 from langchain.agents import create_agent
 from langgraph.runtime import get_runtime  # [!code highlight]
 
@@ -161,18 +161,18 @@ from langgraph.runtime import get_runtime  # [!code highlight]
 class Context:
     user_name: str
 
-def my_prompt(state: State) -> list[AnyMessage]:
-    runtime = get_runtime(Context)  # [!code highlight]
-    system_msg = (
-        "You are a helpful assistant. "
-        f"Address the user as {runtime.context.user_name}."  # [!code highlight]
-    )
-    return [{"role": "system", "content": system_msg}] + state["messages"]
+from langchain.agents.middleware import dynamic_prompt, ModelRequest
+
+@dynamic_prompt
+def dynamic_system_prompt(request: ModelRequest) -> str:
+    user_name = request.runtime.context["user_name"]
+    system_prompt = f"You are a helpful assistant. Address the user as {user_name}."
+    return system_prompt
 
 agent = create_agent(
     model="openai:gpt-5-nano",
     tools=[...],
-    prompt=my_prompt,
+    middleware=[dynamic_system_prompt],
     context_schema=Context
 )
 

@@ -36,7 +36,7 @@ ChatCohere supports all [ChatModel](/oss/langchain/models) functionality:
 
 ```python
 from langchain_cohere import ChatCohere
-from langchain_core.messages import HumanMessage
+from langchain.messages import HumanMessage
 ```
 
 ```python
@@ -82,11 +82,11 @@ chat.batch([messages])
 Cohere supports tool calling functionalities!
 
 ```python
-from langchain_core.messages import (
+from langchain.messages import (
     HumanMessage,
     ToolMessage,
 )
-from langchain_core.tools import tool
+from langchain.tools import tool
 ```
 
 ```python

@@ -132,7 +132,7 @@ Putting these steps in dedicated nodes lets us (1) force tool-calls when needed,
 from typing import Literal
 
 from langchain.agents import ToolNode
-from langchain_core.messages import AIMessage
+from langchain.messages import AIMessage
 from langchain_core.runnables import RunnableConfig
 from langgraph.graph import END, START, MessagesState, StateGraph
 
@@ -383,7 +383,7 @@ Here we leverage LangGraph's [human-in-the-loop](/oss/langgraph/add-human-in-the
 Let's wrap the `sql_db_query` tool in a node that receives human input. We can implement this using the [interrupt](/oss/langgraph/add-human-in-the-loop) function. Below, we allow for input to approve the tool call, edit its arguments, or provide user feedback.
 ```python
 from langchain_core.runnables import RunnableConfig
-from langchain_core.tools import tool
+from langchain.tools import tool
 from langgraph.types import interrupt
 
 @tool(
