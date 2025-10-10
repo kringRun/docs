@@ -161,10 +161,10 @@ from langgraph.runtime import get_runtime  # [!code highlight]
 class Context:
     user_name: str
 
-from langchain.agents.middleware import dynamic_prompt
+from langchain.agents.middleware import dynamic_prompt, ModelRequest
 
 @dynamic_prompt
-def dynamic_system_prompt(request: ModelRequest):
+def dynamic_system_prompt(request: ModelRequest) -> str:
     user_name = request.runtime.context["user_name"]
     system_prompt = f"You are a helpful assistant. Address the user as {user_name}."
     return system_prompt
