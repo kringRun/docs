@@ -20,6 +20,7 @@ In v1, the agent prebuilt is now in the langchain package. The table below outli
 | [Structured output](#structured-output) | prompted output removed, use `ToolStrategy`/`ProviderStrategy` |
 | [Streaming node name](#streaming-node-name-rename) | Node name changed from `"agent"` to `"model"` |
 | [Runtime context](#runtime-context) | Dependency injection via `context` argument instead of `config["configurable"]` |
+| [Namespace](#simplified-namespace) | Streamlined to focus on agent building blocks, legacy code moved to `langchain-classic` |
 
 ### Import path
 
@@ -615,6 +616,53 @@ result = agent.invoke(
 
 ---
 
+## Simplified package
+
+The `langchain` package namespace has been significantly reduced in v1 to focus on essential building blocks for agents. The streamlined package makes it easier to discover and use the core functionality.
+
+### Namespace
+
+| Module | What's available | Notes |
+|--------|------------------|-------|
+| `langchain.agents` | `create_agent`, `AgentState` | Core agent creation functionality |
+| `langchain.messages` | Message types, content blocks, `trim_messages` | Re-exported from `langchain-core` |
+| `langchain.tools` | `tool`, `BaseTool`, `ToolNode`, injection helpers | Re-exported from `langchain-core` |
+| `langchain.chat_models` | `init_chat_model`, `BaseChatModel` | Unified model initialization |
+| `langchain.embeddings` | `Embeddings`, `init_embeddings`, `CacheBackedEmbeddings` | Embedding models and caching |
+| `langchain.documents` | `Document` | Re-exported from `langchain-core` |
+| `langchain.storage` | `InMemoryStore`, `EncoderBackedStore`, etc. | Key-value storage for caching |
+
+### `langchain-classic`
+
+If you were using any of the following from the `langchain` package, you'll need to install `langchain-classic` and update your imports:
+
+- Legacy chains (`LLMChain`, `ConversationChain`, etc.)
+- The indexing API
+- `langchain-community` re-exports
+- Other deprecated functionality
+
+<CodeGroup>
+```python v1 (new)
+# For legacy chains
+from langchain_classic.chains import LLMChain
+
+# For indexing
+from langchain_classic.indexes import ...
+```
+
+```python v0 (old)
+from langchain.chains import LLMChain
+from langchain.indexes import ...
+```
+</CodeGroup>
+
+**Installation**:
+```bash
+uv pip install langchain-classic
+```
+
+---
+
 ## Breaking changes
 
 ### Dropped Python 3.9 support
@@ -649,30 +697,9 @@ The `max_tokens` parameter now defaults to higher values based on the model chos
 
 ### Legacy code moved to `langchain-classic`
 
-Existing functionality outside the focus of standard interfaces and agents has been moved to the [`langchain-classic`](https://pypi.org/project/langchain-classic) package. Install [`langchain-classic`](https://pypi.org/project/langchain-classic) and update imports from `langchain` to [`langchain-classic`](https://pypi.org/project/langchain-classic).
+Existing functionality outside the focus of standard interfaces and agents has been moved to the [`langchain-classic`](https://pypi.org/project/langchain-classic) package. See the [Simplified namespace](#simplified-namespace) section for details on what's available in the core `langchain` package and what moved to `langchain-classic`.
 
-<CodeGroup>
-```python v1 (new)
-from langchain_classic import SomeClassicFeature
-
-# Use classic functionality
-classic_feature = SomeClassicFeature()
-```
-
-```python v0 (old)
-from langchain import SomeClassicFeature
-
-# Old import path
-classic_feature = SomeClassicFeature()
-```
-</CodeGroup>
-
-**Installation**:
-```bash
-uv pip install langchain-classic
-```
-
-### Removal of deprecated objects
+### Removal of deprecated APIs
 
 Methods, functions, and other objects that were already deprecated and slated for removal in 1.0 have been deleted. Check the [deprecation notices](https://python.langchain.com/docs/versions/migrating_chains) from previous versions for replacement APIs.
 

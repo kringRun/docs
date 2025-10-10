@@ -7,20 +7,6 @@ import AlphaCallout from '/snippets/alpha-lc-callout.mdx';
 
 <AlphaCallout />
 
-<Note>
-    1.0 Alpha releases are available for most packages. Only the following currently support new content blocks:
-
-    - [`langchain`](https://pypi.org/project/langchain/)
-    - [`langchain-core`](https://pypi.org/project/langchain-core/)
-    - [`langchain-anthropic`](https://pypi.org/project/langchain-anthropic/)
-    - [`langchain-aws`](https://pypi.org/project/langchain-aws/)
-    - [`langchain-openai`](https://pypi.org/project/langchain-openai/)
-    - [`langchain-google-genai`](https://pypi.org/project/langchain-google-genai/)
-    - [`langchain-ollama`](https://pypi.org/project/langchain-ollama/)
-
-    Broader support for content blocks will be rolled out during the alpha period and following stable release.
-</Note>
-
 **LangChain v1 is a focused, production-ready foundation for building agentic applications.** We've streamlined the framework around three core improvements:
 
 <CardGroup cols={1}>
@@ -30,8 +16,8 @@ import AlphaCallout from '/snippets/alpha-lc-callout.mdx';
     <Card title="Standard content blocks" icon="cube" href="#standard-content-blocks" arrow>
         A new `content_blocks` property that provides unified access to modern LLM features across all providers.
     </Card>
-    <Card title="LangChain Classic" icon="arrows-turn-right" href="#langchain-classic" arrow>
-        Legacy functionality has moved to [`langchain-classic`](https://pypi.org/project/langchain-classic) to keep the core package focused on the most important agent building blocks.
+    <Card title="Simplified namespace" icon="sitemap" href="#simplified-namespace" arrow>
+        The `langchain` namespace has been streamlined to focus on essential building blocks for agents, with legacy functionality moved to `langchain-classic`.
     </Card>
 </CardGroup>
 
@@ -50,11 +36,14 @@ agent = create_agent(
 )
 
 result = agent.invoke({
-    "messages": [{"role": "user", "content": "Research AI safety trends"}]
+    "messages": [
+        {"role": "user", "content": "Research AI safety trends"}
+    ]
 })
 ```
 
 For more information, see [Agents](/oss/langchain/agents).
+
 ### Middleware
 
 Middleware is the defining feature of `create_agent`. It makes `create_agent` highly customizable, raising the ceiling for what you can build.
@@ -87,7 +76,11 @@ agent = create_agent(
             max_tokens_before_summary=500
         ),
         HumanInTheLoopMiddleware(
-            interrupt_on={"send_email": {"allowed_decisions": ["approve", "edit", "reject"]}}
+            interrupt_on={
+                "send_email": {
+                    "allowed_decisions": ["approve", "edit", "reject"]
+                }
+            }
         ),
     ]
 )
@@ -227,6 +220,20 @@ print(repr(result["structured_response"]))
 
 ## Standard content blocks
 
+<Note>
+    1.0 Alpha releases are available for most packages. Only the following currently support new content blocks:
+
+    - [`langchain`](https://pypi.org/project/langchain/)
+    - [`langchain-core`](https://pypi.org/project/langchain-core/)
+    - [`langchain-anthropic`](https://pypi.org/project/langchain-anthropic/)
+    - [`langchain-aws`](https://pypi.org/project/langchain-aws/)
+    - [`langchain-openai`](https://pypi.org/project/langchain-openai/)
+    - [`langchain-google-genai`](https://pypi.org/project/langchain-google-genai/)
+    - [`langchain-ollama`](https://pypi.org/project/langchain-ollama/)
+
+    Broader support for content blocks will be rolled out during the alpha period and following stable release.
+</Note>
+
 The new `content_blocks` property provides unified access to modern LLM features across all providers:
 
 ```python
@@ -255,13 +262,47 @@ For more information, see our guide on [content blocks](/oss/langchain/messages#
 
 ---
 
-## `langchain-classic`
+## Simplified package
 
-LangChain v1 focuses on standard interfaces and production-ready agents.
+LangChain v1 streamlines the `langchain` package namespace to focus on essential building blocks for agents. The namespace exposes only the most useful and relevant functionality:
 
-Legacy functionality has moved to [`langchain-classic`](https://pypi.org/project/langchain-classic) to keep the core package lean.
+### Namespace
 
-### What's in `langchain-classic`
+The v1 namespace includes:
+
+| Module | Purpose | Key Exports |
+|--------|---------|-------------|
+| `langchain.agents` | Agent creation and orchestration | `create_agent`, `AgentState` |
+| `langchain.chat_models` | Chat model initialization | `init_chat_model`, `BaseChatModel` |
+| `langchain.messages` | Message types for LLM interactions | `AIMessage`, `HumanMessage`, `SystemMessage`, `ToolMessage`, content blocks, `trim_messages` |
+| `langchain.tools` | Tool creation and management | `tool`, `BaseTool`, `ToolNode`, injection helpers |
+| `langchain.embeddings` | Embedding models | `Embeddings`, `init_embeddings`, `CacheBackedEmbeddings` |
+| `langchain.documents` | Document representation | `Document` |
+| `langchain.storage` | Key-value storage for caching | `InMemoryStore`, `EncoderBackedStore` |
+| `langchain.rate_limiters` | Rate limiters | `BaseRateLimiter`, `InMemoryRateLimiter` |
+
+Most of these exports are re-exported from `langchain-core` for convenience, giving you a focused API surface for building agents.
+
+```python
+# Agent building
+from langchain.agents import create_agent
+
+# Messages and content
+from langchain.messages import AIMessage, HumanMessage
+
+# Tools
+from langchain.tools import tool
+
+# Model initialization
+from langchain.chat_models import init_chat_model
+from langchain.embeddings import init_embeddings
+```
+
+### `langchain-classic`
+
+Legacy functionality has moved to [`langchain-classic`](https://pypi.org/project/langchain-classic) to keep the core package lean and focused.
+
+#### What's in `langchain-classic`
 
 - Legacy chains and chain implementations
 - The indexing API
