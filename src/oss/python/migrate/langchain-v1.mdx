@@ -331,25 +331,34 @@ agent = create_react_agent(
 
 <CodeGroup>
 ```python v1 (new)
-from typing import TypedDict  # [!code highlight]
+from langchain.agents import AgentState
+from langchain.agents.middleware import AgentMiddleware
 
-class AgentState(TypedDict):  # [!code highlight]
-    messages: list
+# AgentState is a TypedDict
+class CustomAgentState(AgentState):  # [!code highlight]
     user_id: str
+
+class CustomAgentMiddleware(AgentMiddleware[CustomAgentState]):
+    state_schema = CustomAgentState
 
 agent = create_agent(
     model="anthropic:claude-sonnet-4-5-20250929",
     tools=tools,
-    middleware=[middleware_with_agent_state]
+    middleware=[CustomAgentMiddleware()]
 )
 ```
 
 ```python v0 (old)
+from typing_extensions import Annotated
+
 from pydantic import BaseModel
 from langgraph.graph import StateGraph
+from langgraph.graph.messages import add_messages
+from langchain_core.messages import AnyMessage
 
-class AgentState(BaseModel):
-    messages: list
+
+class AgentState(BaseModel):  # [!code highlight]
+    messages: Annotated[list[AnyMessage], add_messages]
     user_id: str
 
 agent = create_react_agent(
@@ -360,38 +369,8 @@ agent = create_react_agent(
 ```
 </CodeGroup>
 
-To migrate:
-1. Convert Pydantic models to `TypedDict`
-2. Convert dataclasses to `TypedDict`
-3. Remove validators and default values (handle these in your node functions instead)
-
-<CodeGroup>
-```python v1 (new) - TypedDict
-from typing import TypedDict  # [!code highlight]
-
-class AgentState(TypedDict, total=False):  # [!code highlight]
-    messages: list
-    user_id: str
-    retry_count: int
-
-# Handle defaults in your initialization code
-def create_initial_state() -> AgentState:  # [!code highlight]
-    return {  # [!code highlight]
-        "messages": [],  # [!code highlight]
-        "user_id": "",  # [!code highlight]
-        "retry_count": 0  # [!code highlight]
-    }  # [!code highlight]
-```
-```python v0 (old) - Dataclass
-from dataclasses import dataclass, field
-
-@dataclass
-class AgentState:
-    messages: list = field(default_factory=list)
-    user_id: str = ""
-    retry_count: int = 0
-```
-</CodeGroup>
+Simply inherit from `langchain.agents.AgentState` instead of `BaseModel` or decorating with `dataclass`.
+If you need to perform validation, handle it in middleware hooks instead.
 
 ### Model
 
