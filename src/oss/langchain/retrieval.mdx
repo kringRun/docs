@@ -201,7 +201,7 @@ const fetchUrl = tool(
 const agent = createAgent({
     model: "claude-sonnet-4-0",
     tools: [fetchUrl],
-    messageModifier: systemPrompt,
+    systemPrompt,
 });
 ```
 :::

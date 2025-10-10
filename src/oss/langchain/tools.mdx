@@ -429,7 +429,7 @@ const toolNode = new ToolNode([searchDatabase, sendEmail], {
 const agent = createAgent({
     model: new ChatOpenAI({ model: "gpt-5" }),
     tools: toolNode, // Pass ToolNode instead of tools list
-    messageModifier: "You are a helpful email assistant."
+    systemPrompt: "You are a helpful email assistant."
 });
 
 // The agent will use your custom ToolNode configuration

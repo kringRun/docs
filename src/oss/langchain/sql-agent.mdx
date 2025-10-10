@@ -641,7 +641,7 @@ import { createAgent } from "langchain";
 const agent = createAgent({
   model: "openai:gpt-5",
   tools: [executeSql],
-  messageModifier: getSystemPrompt,
+  systemPrompt: getSystemPrompt,
 });
 
 ```
@@ -802,7 +802,7 @@ Rules:
 export const agent = createAgent({
   model: "openai:gpt-5",
   tools: [executeSql],
-  messageModifier: getSystemPrompt,
+  systemPrompt: getSystemPrompt,
 });
 ```
 </Accordion>
