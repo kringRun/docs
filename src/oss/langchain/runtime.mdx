@@ -161,19 +161,18 @@ from langgraph.runtime import get_runtime  # [!code highlight]
 class Context:
     user_name: str
 
-from langchain.agents.middleware import AgentMiddleware, ModelRequest, ModelRequestHandler
+from langchain.agents.middleware import dynamic_prompt
 
-class DynamicPromptMiddleware(AgentMiddleware):
-    def wrap_model_call(self, request: ModelRequest, handler: ModelRequestHandler):
-        user_name = request.runtime.context["user_name"]  # [!code highlight]
-        system_prompt = f"You are a helpful assistant. Address the user as {user_name}."  # [!code highlight]
-        modified_request = request.replace(system_prompt=system_prompt)  # [!code highlight]
-        return handler(modified_request)
+@dynamic_prompt
+def dynamic_system_prompt(request: ModelRequest):
+    user_name = request.runtime.context["user_name"]
+    system_prompt = f"You are a helpful assistant. Address the user as {user_name}."
+    return system_prompt
 
 agent = create_agent(
     model="openai:gpt-5-nano",
     tools=[...],
-    middleware=[DynamicPromptMiddleware()],
+    middleware=[dynamic_system_prompt],
     context_schema=Context
 )
 

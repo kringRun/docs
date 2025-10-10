@@ -365,7 +365,7 @@ Note that the components will operate on the [`MessagesState`](/oss/langgraph/gr
   ```
 2. Run this with irrelevant documents in the tool response:
   ```python
-  from langchain.messages import convert_to_messages
+  from langchain_core.messages import convert_to_messages
 
   input = {
       "messages": convert_to_messages(

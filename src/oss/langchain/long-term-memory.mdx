@@ -129,8 +129,9 @@ store.put( # [!code highlight]
 def get_user_info() -> str:
     """Look up user info."""
     # Access the store - same as that provided to `create_agent`
-    store = get_runtime().store # [!code highlight]
-    user_id = get_runtime(Context).context.user_id
+    runtime = get_runtime(Context)
+    store = runtime.store # [!code highlight]
+    user_id = runtime.context.user_id
     # Retrieve data from store - returns StoreValue object with value and metadata
     user_info = store.get(("users",), user_id) # [!code highlight]
     return str(user_info.value) if user_info else "Unknown user"
@@ -245,8 +246,9 @@ class UserInfo(TypedDict):
 def save_user_info(user_info: UserInfo) -> str:
     """Save user info."""
     # Access the store - same as that provided to `create_agent`
-    store = get_runtime().store # [!code highlight]
-    user_id = get_runtime(Context).context.user_id # [!code highlight]
+    runtime = get_runtime(Context)
+    store = runtime.store # [!code highlight]
+    user_id = runtime.context.user_id # [!code highlight]
     # Store data in the store (namespace, key, data)
     store.put(("users",), user_id, user_info) # [!code highlight]
     return "Successfully saved user info."

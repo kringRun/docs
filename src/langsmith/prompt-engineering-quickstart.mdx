@@ -229,7 +229,7 @@ Then, you'll iterate on the prompt by creating a new version. Members of your wo
     ```python Python
     from langsmith import Client
     from openai import OpenAI
-    from langchain.messages import convert_to_openai_messages
+    from langchain_core.messages import convert_to_openai_messages
 
     client = Client()
     oai_client = OpenAI()

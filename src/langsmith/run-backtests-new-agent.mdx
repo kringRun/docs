@@ -191,7 +191,7 @@ First let's define the evaluators we will use to compare the two systems. Note t
 ```python
 import emoji
 from pydantic import BaseModel, Field
-from langchain.messages import convert_to_openai_messages
+from langchain_core.messages import convert_to_openai_messages
 
 class Grade(BaseModel):
     """Grade whether a response is supported by some context."""
