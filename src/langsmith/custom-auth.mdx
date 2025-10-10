@@ -2,58 +2,64 @@
 title: Add custom authentication
 sidebarTitle: Add custom authentication
 ---
-This guide shows how to add custom authentication to your LangSmith application. This guide applies to both cloud and self-hosted deployments. It does not apply to isolated usage of the LangGraph open source library in your own custom server.
+
+This guide shows you how to add custom authentication to your LangSmith application. The steps on this page apply to both [cloud](/langsmith/cloud) and [self-hosted](/langsmith/self-hosted) deployments. It does not apply to isolated usage of the [LangGraph open source library](/oss/langgraph/overview) in your own custom server.
 
 ## Add custom authentication to your deployment
 
 To leverage custom authentication and access user-level metadata in your deployments, set up custom authentication to automatically populate the `config["configurable"]["langgraph_auth_user"]` object through a custom authentication handler. You can then access this object in your graph with the `langgraph_auth_user` key to [allow an agent to perform authenticated actions on behalf of the user](#enable-agent-authentication).
 
 1. Implement authentication:
+
     <Note>
     Without a custom `@auth.authenticate` handler, LangGraph sees only the API-key owner (usually the developer), so requests aren’t scoped to individual end-users. To propagate custom tokens, you must implement your own handler.
     </Note>
-  ```python
-  from langgraph_sdk import Auth
-  import requests
 
-  auth = Auth()
+    ```python
+    from langgraph_sdk import Auth
+    import requests
 
-  def is_valid_key(api_key: str) -> bool:
-      is_valid = # your API key validation logic
-      return is_valid
+    auth = Auth()
 
-  @auth.authenticate # (1)!
-  async def authenticate(headers: dict) -> Auth.types.MinimalUserDict:
-      api_key = headers.get(b"x-api-key")
-      if not api_key or not is_valid_key(api_key):
-          raise Auth.exceptions.HTTPException(status_code=401, detail="Invalid API key")
+    def is_valid_key(api_key: str) -> bool:
+        is_valid = # your API key validation logic
+        return is_valid
 
-      # Fetch user-specific tokens from your secret store
-      user_tokens = await fetch_user_tokens(api_key)
+    @auth.authenticate # (1)!
+    async def authenticate(headers: dict) -> Auth.types.MinimalUserDict:
+        api_key = headers.get(b"x-api-key")
+        if not api_key or not is_valid_key(api_key):
+            raise Auth.exceptions.HTTPException(status_code=401, detail="Invalid API key")
 
-      return { # (2)!
-          "identity": api_key,  #  fetch user ID from LangSmith
-          "github_token" : user_tokens.github_token
-          "jira_token" : user_tokens.jira_token
-          # ... custom fields/secrets here
-      }
-  ```
-  1. This handler receives the request (headers, etc.), validates the user, and returns a dictionary with at least an identity field.
-  2. You can add any custom fields you want (e.g., OAuth tokens, roles, org IDs, etc.).
-2. In your `langgraph.json`, add the path to your auth file:
-  ```json {highlight={7-9}}
-  {
-    "dependencies": ["."],
-    "graphs": {
-      "agent": "./agent.py:graph"
-    },
-    "env": ".env",
-    "auth": {
-      "path": "./auth.py:my_auth"
+        # Fetch user-specific tokens from your secret store
+        user_tokens = await fetch_user_tokens(api_key)
+
+        return { # (2)!
+            "identity": api_key,  #  fetch user ID from LangSmith
+            "github_token" : user_tokens.github_token
+            "jira_token" : user_tokens.jira_token
+            # ... custom fields/secrets here
+        }
+    ```
+  - This handler receives the request (headers, etc.), validates the user, and returns a dictionary with at least an identity field.
+  - You can add any custom fields you want (e.g., OAuth tokens, roles, org IDs, etc.).
+
+2. In your [`langgraph.json`](/langsmith/application-structure#configuration-file), add the path to your auth file:
+
+    ```json highlight={7-9}
+    {
+        "dependencies": ["."],
+        "graphs": {
+        "agent": "./agent.py:graph"
+        },
+        "env": ".env",
+        "auth": {
+            "path": "./auth.py:my_auth"
+        }
     }
-  }
-  ```
+    ```
 3. Once you've set up authentication in your server, requests must include the required authorization information based on your chosen scheme. Assuming you are using JWT token authentication, you could access your deployments using any of the following methods:
+
     <Tabs>
         <Tab title="Python Client">
       ```python
@@ -112,6 +118,8 @@ To leverage custom authentication and access user-level metadata in your deploym
         </Tab>
     </Tabs>
 
+    For more details on RemoteGraph, refer to the [Use RemoteGraph](/langsmith/use-remote-graph) guide.
+
 ## Enable agent authentication
 
 After [authentication](#add-custom-authentication-to-your-deployment), the platform creates a special configuration object (`config`) that is passed to LangSmith deployment. This object contains information about the current user, including any custom fields you return from your `@auth.authenticate` handler.
@@ -130,9 +138,9 @@ def my_node(state, config):
 Fetch user credentials from a secure secret store. Storing secrets in graph state is not recommended.
 </Note>
 
-### Authorizing a user for the Debugger
+### Authorizing a user for Studio
 
-By default, if you add custom authorization on your resources, this will also apply to interactions made from the [Debugger](/langsmith/debugger). If you want, you can handle logged-in Debugger users differently by checking [is_studio_user()](https://langchain-ai.github.io/langgraph/cloud/reference/sdk/python_sdk_ref/#langgraph_sdk.auth.types.StudioUser).
+By default, if you add custom authorization on your resources, this will also apply to interactions made from [Studio](/langsmith/studio). If you want, you can handle logged-in Studio users differently by checking [is_studio_user()](https://langchain-ai.github.io/langgraph/cloud/reference/sdk/python_sdk_ref/#langgraph_sdk.auth.types.StudioUser).
 
 <Note>
 `is_studio_user` was added in version 0.1.73 of the langgraph-sdk. If you're on an older version, you can still check whether `isinstance(ctx.user, StudioUser)`.
@@ -163,5 +171,4 @@ Only use this if you want to permit developer access to a graph deployed on the 
 ## Learn more
 
 * [Authentication & Access Control](/langsmith/auth)
-* [LangSmith](/langsmith/home)
 * [Setting up custom authentication tutorial](/langsmith/set-up-custom-auth)

@@ -190,7 +190,7 @@
                   {
                     "group": "Use in production",
                     "pages": [
-                      "oss/python/langchain/debugger",
+                      "oss/python/langchain/studio",
                       "oss/python/langchain/test",
                       "oss/python/langchain/deploy",
                       "oss/python/langchain/ui",
@@ -228,7 +228,7 @@
                     "group": "Production",
                     "pages": [
                       "oss/python/langgraph/application-structure",
-                      "oss/python/langgraph/debugger",
+                      "oss/python/langgraph/studio",
                       "oss/python/langgraph/test",
                       "oss/python/langgraph/deploy",
                       "oss/python/langgraph/ui",
@@ -487,7 +487,6 @@
                 "pages": [
                   "langsmith/home",
                   "langsmith/pricing-plans",
-                  "langsmith/pricing-faq",
                   {
                     "group": "App development",
                     "pages": [
@@ -588,6 +587,7 @@
                     "pages": [
                       "langsmith/faq",
                       "langsmith/regions-faq",
+                      "langsmith/pricing-faq",
                       "langsmith/authentication-methods",
                       {
                         "group": "Releases & changelogs",
@@ -884,14 +884,9 @@
               },
               {
                 "tab": "Deployment",
-                "groups": [
-                  {
-                    "group": "Overview",
-                    "pages": [
-                      "langsmith/deployments",
-                      "langsmith/local-server"
-                    ]
-                  },
+                "pages": [
+                  "langsmith/deployments",
+                  "langsmith/local-server",
                   {
                     "group": "Configure for deployment",
                     "pages": [
@@ -903,22 +898,22 @@
                           "langsmith/setup-pyproject",
                           "langsmith/setup-javascript",
                           "langsmith/monorepo-support"
-                        ]
-                      },
-                      "langsmith/graph-rebuild",
-                      "langsmith/use-remote-graph",
-                      "langsmith/semantic-search",
-                      "langsmith/configure-ttl"
-                    ]
+                          ]
+                        },
+                        "langsmith/graph-rebuild",
+                        "langsmith/use-remote-graph",
+                        "langsmith/semantic-search",
+                        "langsmith/configure-ttl"
+                      ]
                   },
                   {
-                    "group": "Debugger",
+                    "group": "Studio",
                     "pages": [
-                      "langsmith/debugger",
-                      "langsmith/quick-start-debugger",
-                      "langsmith/use-debugger",
-                      "langsmith/observability-debugger",
-                      "langsmith/troubleshooting-debugger"
+                      "langsmith/studio",
+                      "langsmith/quick-start-studio",
+                      "langsmith/use-studio",
+                      "langsmith/observability-studio",
+                      "langsmith/troubleshooting-studio"
                     ]
                   },
                   {
@@ -1130,7 +1125,7 @@
                   {
                     "group": "Use in production",
                     "pages": [
-                      "oss/javascript/langchain/debugger",
+                      "oss/javascript/langchain/studio",
                       "oss/javascript/langchain/test",
                       "oss/javascript/langchain/deploy",
                       "oss/javascript/langchain/ui",
@@ -1168,7 +1163,7 @@
                     "group": "Production",
                     "pages": [
                       "oss/javascript/langgraph/application-structure",
-                      "oss/javascript/langgraph/debugger",
+                      "oss/javascript/langgraph/studio",
                       "oss/javascript/langgraph/test",
                       "oss/javascript/langgraph/deploy",
                       "oss/javascript/langgraph/ui",
@@ -1420,7 +1415,6 @@
                 "pages": [
                   "langsmith/home",
                   "langsmith/pricing-plans",
-                  "langsmith/pricing-faq",
                   {
                     "group": "App development",
                     "pages": [
@@ -1521,6 +1515,7 @@
                     "pages": [
                       "langsmith/faq",
                       "langsmith/regions-faq",
+                      "langsmith/pricing-faq",
                       "langsmith/authentication-methods",
                       {
                         "group": "Releases & changelogs",
@@ -1817,14 +1812,9 @@
               },
               {
                 "tab": "Deployment",
-                "groups": [
-                  {
-                    "group": "Overview",
-                    "pages": [
-                      "langsmith/deployments",
-                      "langsmith/local-server"
-                    ]
-                  },
+                "pages": [
+                  "langsmith/deployments",
+                  "langsmith/local-server",
                   {
                     "group": "Configure for deployment",
                     "pages": [
@@ -1836,22 +1826,22 @@
                           "langsmith/setup-pyproject",
                           "langsmith/setup-javascript",
                           "langsmith/monorepo-support"
-                        ]
-                      },
-                      "langsmith/graph-rebuild",
-                      "langsmith/use-remote-graph",
-                      "langsmith/semantic-search",
-                      "langsmith/configure-ttl"
-                    ]
+                          ]
+                        },
+                        "langsmith/graph-rebuild",
+                        "langsmith/use-remote-graph",
+                        "langsmith/semantic-search",
+                        "langsmith/configure-ttl"
+                      ]
                   },
                   {
-                    "group": "Debugger",
+                    "group": "Studio",
                     "pages": [
-                      "langsmith/debugger",
-                      "langsmith/quick-start-debugger",
-                      "langsmith/use-debugger",
-                      "langsmith/observability-debugger",
-                      "langsmith/troubleshooting-debugger"
+                      "langsmith/studio",
+                      "langsmith/quick-start-studio",
+                      "langsmith/use-studio",
+                      "langsmith/observability-studio",
+                      "langsmith/troubleshooting-studio"
                     ]
                   },
                   {

@@ -7,11 +7,11 @@ import FrameworkAgnostic from '/snippets/langsmith/framework-agnostic.mdx';
 
 To deploy on LangSmith, an application must consist of one or more graphs, a configuration file (`langgraph.json`), a file that specifies dependencies, and an optional `.env` file that specifies environment variables.
 
-This page describes the typical structure of an application and shows how the required information to deploy an application using LangSmith is specified.
+This page explains how a LangSmith application is organized and how to provide the configuration details required for deployment.
 
 ## Key Concepts
 
-To deploy using LangSmith, the following information should be provided:
+To deploy using LangSmith, provide the following information:
 
 1. A [configuration file](#configuration-file-concepts) (`langgraph.json`) that specifies the dependencies, graphs, and environment variables to use for the application.
 1. The [graphs](#graphs) that implement the logic of the application.
@@ -147,10 +147,10 @@ You will generally need to specify the following information for dependencies to
 
 Use the `graphs` key in the [configuration file](#configuration-file-concepts) to specify which graphs will be available in the deployed application.
 
-You can specify one or more graphs in the configuration file. Each graph is identified by a name (which should be unique) and a path for either: (1) the compiled graph or (2) a function that makes a graph is defined.
+You can specify one or more graphs in the configuration file. Each graph is identified by a unique name and a path to either (1) a compiled graph or (2) a function that defines a graph.
 
 ## Environment Variables
 
-If you're working with a deployed LangGraph application locally, you can configure environment variables in the `env` key of the [configuration file](#configuration-file-concepts).
+If you're working with a deployed LangGraph application [locally](/langsmith/local-server), you can configure environment variables in the `env` key of the [configuration file](#configuration-file-concepts).
 
 For a production deployment, you will typically want to configure the environment variables in the deployment environment.
