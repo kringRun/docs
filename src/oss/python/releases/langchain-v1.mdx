@@ -114,28 +114,45 @@ Build custom middleware by implementing any of these hooks on a subclass of the 
 Example custom middleware:
 
 ```python
-from langchain.agents.middleware import AgentMiddleware, ModelRequest, ModelRequestHandler
+from dataclasses import dataclass
+
+from langchain.agents.middleware import (
+    AgentMiddleware,
+    ModelRequest,
+    ModelRequestHandler
+)
 from langchain_core.messages import AIMessage
 
+@dataclass
+class Context:
+    user_expertise: str = "beginner"
+
 class ExpertiseBasedToolMiddleware(Middleware):
-    def wrap_model_call(self, request: ModelRequest, handler: ModelRequestHandler) -> AIMessage:
-        user_level = request.runtime.context.get("user_expertise", "beginner")
+    def wrap_model_call(
+        self, request: ModelRequest, handler: ModelRequestHandler
+    ) -> AIMessage:
+        user_level = request.runtime.context.user_expertise
 
         if user_level == "expert":
-            model = "openai:gpt-5"  # More powerful model
-            available_tools = [advanced_search, data_analysis, api_integration]
+            # More powerful model
+            model = "openai:gpt-5"
+            tools = [advanced_search, data_analysis]
         else:
-            model = "openai:gpt-5-nano"  # Less powerful model
-            available_tools = [simple_search, basic_calculator]
+            # Less powerful model
+            model = "openai:gpt-5-nano"
+            tools = [simple_search, basic_calculator]
 
-        request.model = model
-        request.tools = available_tools
-        return handler(request)
+        return handler(
+            request.replace(model=model, tools=tools)
+        )
 
 agent = create_agent(
     model="anthropic:claude-sonnet-4-5-20250929",
-    tools=[simple_search, advanced_search, basic_calculator, data_analysis, api_integration],
-    middleware=[ExpertiseBasedToolMiddleware()]
+    tools=[
+        simple_search, advanced_search, basic_calculator, data_analysis
+    ],
+    middleware=[ExpertiseBasedToolMiddleware()],
+    context_schema=Context
 )
 ```
 

@@ -405,7 +405,11 @@ This functionality has been ported to the middleware interface in V1.
 <CodeGroup>
 ```python V1 (new)
 from langchain.agents import create_agent
-from langchain.agents.middleware import AgentMiddleware
+from langchain.agents.middleware import (
+    AgentMiddleware, ModelRequest, ModelRequestHandler
+)
+from langchain_core.messages import AIMessage
+from langchain_openai import ChatOpenAI
 
 basic_model = ChatOpenAI(model="gpt-5-nano")
 advanced_model = ChatOpenAI(model="gpt-5")
@@ -418,7 +422,7 @@ class DynamicModelMiddleware(AgentMiddleware):
         else:
             model = basic_model
 
-        return handler(model_call.replace(model=model))
+        return handler(request.replace(model=model))
 
     def __init__(self, messages_threshold: int) -> None:
         self.messages_threshold = messages_threshold
