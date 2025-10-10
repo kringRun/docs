@@ -1,5 +1,6 @@
 ---
-title: Overview
+title: What's new in V1
+sidebarTitle: What's new
 ---
 
 import AlphaCallout from '/snippets/alpha-lc-callout.mdx';
@@ -22,9 +23,9 @@ import AlphaCallout from '/snippets/alpha-lc-callout.mdx';
 
 ## What's new
 
-**LangChain 1.0 is a focused, production-ready foundation for building agentic applications.** We've streamlined the framework around three core improvements:
+**LangChain v1 is a focused, production-ready foundation for building agentic applications.** We've streamlined the framework around three core improvements:
 
-<CardGroup cols={1}>
+<CardGroup cols={3}>
     <Card title="create_agent" icon="robot" href="#create-agent">
         A new standard way to build agents in LangChain, replacing `langgraph.prebuilt.create_react_agent` with a cleaner, more powerful API.
     </Card>
@@ -55,6 +56,7 @@ result = agent.invoke({
 })
 ```
 
+For more information, see [Agents](/oss/python/langchain/agents).
 #### Middleware
 
 Middleware is the defining feature of `create_agent`. It makes `create_agent` highly customizable, raising the ceiling for what you can build.
@@ -136,7 +138,7 @@ agent = create_agent(
 )
 ```
 
-<Card title="Full Documentation" icon="book" href="/oss/python/langchain/middleware">
+For more information, see [Middleware](/oss/python/langchain/middleware).
     See the complete middleware guide
 </Card>
 
@@ -227,15 +229,15 @@ for block in response.content_blocks:
 - **Type safe**: Full type hints for all content block types
 - **Backward compatible**: Standard content can be [loaded lazily](/oss/langchain/messages#standard-content-blocks), so there are no associated breaking changes
 
-<Card title="Content Blocks Documentation" icon="message" href="/oss/langchain/messages#content">
+For more information, see [Messages - Content](/oss/langchain/messages#content)
     Learn about the new content blocks API
 </Card>
 
-### LangChain Classic
+### `langchain-classic`
 
-LangChain 1.0 focuses on standard interfaces and production-ready agents. Legacy functionality has moved to `langchain-classic` to keep the core package lean.
+LangChain v1 focuses on standard interfaces and production-ready agents. Legacy functionality has moved to `langchain-classic` to keep the core package lean.
 
-#### What moved to langchain-classic
+#### What's in `langchain-classic`
 
 - Legacy chains and chain implementations
 - The indexing API
