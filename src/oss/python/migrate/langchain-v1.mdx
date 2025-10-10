@@ -20,6 +20,7 @@ In v1, the agent prebuilt is now in the langchain package. The table below outli
 | [Structured output](#structured-output) | prompted output removed, use `ToolStrategy`/`ProviderStrategy` |
 | [Streaming node name](#streaming-node-name-rename) | Node name changed from `"agent"` to `"model"` |
 | [Runtime context](#runtime-context) | Dependency injection via `context` argument instead of `config["configurable"]` |
+| [Namespace](#simplified-namespace) | Streamlined to focus on agent building blocks, legacy code moved to `langchain-classic` |
 
 ### Import path
 
@@ -331,25 +332,34 @@ agent = create_react_agent(
 
 <CodeGroup>
 ```python v1 (new)
-from typing import TypedDict  # [!code highlight]
+from langchain.agents import AgentState
+from langchain.agents.middleware import AgentMiddleware
 
-class AgentState(TypedDict):  # [!code highlight]
-    messages: list
+# AgentState is a TypedDict
+class CustomAgentState(AgentState):  # [!code highlight]
     user_id: str
+
+class CustomAgentMiddleware(AgentMiddleware[CustomAgentState]):
+    state_schema = CustomAgentState
 
 agent = create_agent(
     model="anthropic:claude-sonnet-4-5-20250929",
     tools=tools,
-    middleware=[middleware_with_agent_state]
+    middleware=[CustomAgentMiddleware()]
 )
 ```
 
 ```python v0 (old)
+from typing_extensions import Annotated
+
 from pydantic import BaseModel
 from langgraph.graph import StateGraph
+from langgraph.graph.messages import add_messages
+from langchain_core.messages import AnyMessage
 
-class AgentState(BaseModel):
-    messages: list
+
+class AgentState(BaseModel):  # [!code highlight]
+    messages: Annotated[list[AnyMessage], add_messages]
     user_id: str
 
 agent = create_react_agent(
@@ -360,38 +370,8 @@ agent = create_react_agent(
 ```
 </CodeGroup>
 
-To migrate:
-1. Convert Pydantic models to `TypedDict`
-2. Convert dataclasses to `TypedDict`
-3. Remove validators and default values (handle these in your node functions instead)
-
-<CodeGroup>
-```python v1 (new) - TypedDict
-from typing import TypedDict  # [!code highlight]
-
-class AgentState(TypedDict, total=False):  # [!code highlight]
-    messages: list
-    user_id: str
-    retry_count: int
-
-# Handle defaults in your initialization code
-def create_initial_state() -> AgentState:  # [!code highlight]
-    return {  # [!code highlight]
-        "messages": [],  # [!code highlight]
-        "user_id": "",  # [!code highlight]
-        "retry_count": 0  # [!code highlight]
-    }  # [!code highlight]
-```
-```python v0 (old) - Dataclass
-from dataclasses import dataclass, field
-
-@dataclass
-class AgentState:
-    messages: list = field(default_factory=list)
-    user_id: str = ""
-    retry_count: int = 0
-```
-</CodeGroup>
+Simply inherit from `langchain.agents.AgentState` instead of `BaseModel` or decorating with `dataclass`.
+If you need to perform validation, handle it in middleware hooks instead.
 
 ### Model
 
@@ -636,6 +616,51 @@ result = agent.invoke(
 
 ---
 
+## Simplified package
+
+The `langchain` package namespace has been significantly reduced in v1 to focus on essential building blocks for agents. The streamlined package makes it easier to discover and use the core functionality.
+
+### Namespace
+
+| Module | What's available | Notes |
+|--------|------------------|-------|
+| `langchain.agents` | `create_agent`, `AgentState` | Core agent creation functionality |
+| `langchain.messages` | Message types, content blocks, `trim_messages` | Re-exported from `langchain-core` |
+| `langchain.tools` | `tool`, `BaseTool`, injection helpers | Re-exported from `langchain-core` |
+| `langchain.chat_models` | `init_chat_model`, `BaseChatModel` | Unified model initialization |
+| `langchain.embeddings` | `Embeddings`, `init_embeddings`, | Embedding models |
+
+### `langchain-classic`
+
+If you were using any of the following from the `langchain` package, you'll need to install `langchain-classic` and update your imports:
+
+- Legacy chains (`LLMChain`, `ConversationChain`, etc.)
+- The indexing API
+- `langchain-community` re-exports
+- Other deprecated functionality
+
+<CodeGroup>
+```python v1 (new)
+# For legacy chains
+from langchain_classic.chains import LLMChain
+
+# For indexing
+from langchain_classic.indexes import ...
+```
+
+```python v0 (old)
+from langchain.chains import LLMChain
+from langchain.indexes import ...
+```
+</CodeGroup>
+
+**Installation**:
+```bash
+uv pip install langchain-classic
+```
+
+---
+
 ## Breaking changes
 
 ### Dropped Python 3.9 support
@@ -670,30 +695,9 @@ The `max_tokens` parameter now defaults to higher values based on the model chos
 
 ### Legacy code moved to `langchain-classic`
 
-Existing functionality outside the focus of standard interfaces and agents has been moved to the [`langchain-classic`](https://pypi.org/project/langchain-classic) package. Install [`langchain-classic`](https://pypi.org/project/langchain-classic) and update imports from `langchain` to [`langchain-classic`](https://pypi.org/project/langchain-classic).
+Existing functionality outside the focus of standard interfaces and agents has been moved to the [`langchain-classic`](https://pypi.org/project/langchain-classic) package. See the [Simplified namespace](#simplified-namespace) section for details on what's available in the core `langchain` package and what moved to `langchain-classic`.
 
-<CodeGroup>
-```python v1 (new)
-from langchain_classic import SomeClassicFeature
-
-# Use classic functionality
-classic_feature = SomeClassicFeature()
-```
-
-```python v0 (old)
-from langchain import SomeClassicFeature
-
-# Old import path
-classic_feature = SomeClassicFeature()
-```
-</CodeGroup>
-
-**Installation**:
-```bash
-uv pip install langchain-classic
-```
-
-### Removal of deprecated objects
+### Removal of deprecated APIs
 
 Methods, functions, and other objects that were already deprecated and slated for removal in 1.0 have been deleted. Check the [deprecation notices](https://python.langchain.com/docs/versions/migrating_chains) from previous versions for replacement APIs.
 

@@ -11,7 +11,7 @@ import AlphaCallout from '/snippets/alpha-lc-callout.mdx';
 LangChain is driven by a few core beliefs:
 
 - LLMs are great, powerful new technology.
-- LLMs are even better when you combine them with external sources of data computation.
+- LLMs are even better when you combine them with external sources of data.
 - LLMs will transform what the applications of the future look like. Specifically, the applications of the future will look more and more agentic.
 - It is still very early on in that transformation.
 - While it's easy to build a prototype of those agentic applications, it's still really hard to build agents that are reliable enough to put into production.
@@ -19,14 +19,13 @@ LangChain is driven by a few core beliefs:
 With LangChain, we have two core focuses:
 
 <Steps>
-<Step title="We want to make it possible for developers to build with whatever the best model is at the time.">
-
-Different providers expose different APIs, with different model parameters and different message formats.
-Standardizing these model inputs and outputs is a core focus, making it easy for developer to easily change to the most recent state-of-the-art model, avoiding lock-in.
-</Step>
-<Step title="We want to make it easy to use these models to orchestrate more complex flows that interact with other data and computation.">
-Models should be used for more than just *calling* - they should also be used to orchestrate more complex flows that interact with other data and computation. LangChain makes it easy to define [tools](/oss/langchain/tools) that LLMs can use dynamically, as well as help with parsing of and access to unstructured data.
-</Step>
+    <Step title="We want to enable developers to build with the best models.">
+        Different providers expose different APIs, with different model parameters and different message formats.
+        Standardizing these model inputs and outputs is a core focus, making it easy for developer to easily change to the most recent state-of-the-art model, avoiding lock-in.
+    </Step>
+    <Step title="We want to make it easy to use models to orchestrate more complex flows that interact with other data and computation.">
+        Models should be used for more than just *calling* - they should also be used to orchestrate more complex flows that interact with other data. LangChain makes it easy to define [tools](/oss/langchain/tools) that LLMs can use dynamically, as well as help with parsing of and access to unstructured data.
+    </Step>
 </Steps>
 
 ## History
@@ -95,7 +94,12 @@ Given the constant rate of change in the field, LangChain has also evolved over 
 <Update label="2024-06">
     **LangChain has over 700 integrations.**
 
+    :::python
     Integrations were split out of the core LangChain package, and either moved into their own standalone packages (for the core integrations) or `langchain-community`.
+    :::
+    :::js
+    Integrations were split out of the core LangChain package, and either moved into their own standalone packages (for the core integrations) or `@langchain/community`.
+    :::
 </Update>
 
 <Update label="2024-10">
@@ -107,15 +111,25 @@ Given the constant rate of change in the field, LangChain has also evolved over 
 <Update label="2025-04">
     Model APIs become more multimodal.
 
+    :::python
     Models started to accept files, images, videos, and more. We updated the `langchain-core` message format accordingly to allow developers to specify these multimodal inputs in a standard way.
+    :::
+    :::js
+    Models started to accept files, images, videos, and more. We updated the `@langchain/core` message format accordingly to allow developers to specify these multimodal inputs in a standard way.
+    :::
 </Update>
 
-<Update label="2025-10">
+<Update label="2025-10" description="v1.0.0">
     **LangChain releases 1.0** with two major changes:
 
     1. Complete revamp of all chains and agents in `langchain`. All chains and agents are now replaced with only one high level abstraction: an agent abstraction built on top of LangGraph. This was the high-level abstraction that was originally created in LangGraph, but just moved to LangChain.
 
+        :::python
         For users still using old LangChain chains/agents who do NOT want to upgrade (note: we recommend you do), you can continue using old LangChain by installing the `langchain-classic` package.
+        :::
+        :::js
+        For users still using old LangChain chains/agents who do NOT want to upgrade (note: we recommend you do), you can continue using old LangChain by installing the `@langchain/classic` package.
+        :::
 
-    2. **Standard content blocks**: Model APIs evolved from returning messages with a simple content string to more complex output types - reasoning blocks, citations, server-side tool calls, etc. LangChain evolved its message formats to standardize these across providers.
+    2. A standard message content format: Model APIs evolved from returning messages with a simple content string to more complex output types - reasoning blocks, citations, server-side tool calls, etc. LangChain evolved its message formats to standardize these across providers.
 </Update>
