@@ -7,6 +7,10 @@ import AlphaCallout from '/snippets/alpha-lc-callout.mdx';
 
 <AlphaCallout />
 
+<Note>
+This guide uses LangChain v1 syntax. If you're migrating from v0, see the [LangChain v1 migration guide](/oss/python/migrate/langchain-v1).
+</Note>
+
 The hard part of building agents (or any LLM application) is making them reliable enough.
 While they may work for a prototype, they often mess up in more real world and widespread use cases.
 
@@ -93,49 +97,29 @@ What functionality does our agent need to support, and how does LangChain's agen
 
 ### Specify custom system prompt
 
-You can use [`prompt` parameter](/oss/langchain/agents#prompt) to pass in a function that returns a string to use as system prompt
+You can use [`system_prompt` parameter](/oss/langchain/agents#system_prompt) to pass in a string to use as system prompt
 
 Use cases:
 - Personalize the system prompt with information in session context, long term memory, or runtime context
 
-### Explicit control over "messages generation" prior to calling model
+### Dynamic system prompts
 
-You can use [`prompt` parameter](/oss/langchain/agents#prompt) to pass in a function that returns a list of messages
-
-Use cases:
-- Reinforce instructions by dynamically adding an extra system message to the end of the messages sent in, without updating state
-
-### Access to runtime configuration in "messages generation"/custom system prompt
-
-You can use [`prompt` parameter](/oss/langchain/agents#prompt) to pass in a function that returns a list of messages or a custom system prompt.
-You can access runtime configuration by calling `get_runtime`
+You can use the [`@dynamic_prompt` decorator](/oss/langchain/agents#dynamic-prompt) from `langchain.agents.middleware` to create a function that dynamically generates the system prompt based on state, context, or memory
 
 Use cases:
-- Use `user_id` passed in to look up user profile, and put it in the system prompt
-
-### Access to session context in "messages generation"/custom system prompt
-
-You can use [`prompt` parameter](/oss/langchain/agents#prompt) to pass in a function that returns a list of messages or a custom system prompt.
-Session context is passed in with the [`state` parameter](/oss/langchain/short-term-memory#prompt)
-
-Use cases:
+- Reinforce instructions by dynamically adjusting the system message based on conversation state
+- Personalize the system prompt with information in session context, long term memory, or runtime context
+- Use `user_id` from context to look up user profile and customize the system prompt
 - Use more structured information that the user passes in at runtime (preferences) in the system prompt
-
-### Access to long term memory in "messages generation"/custom system prompt
-
-You can use [`prompt` parameter](/oss/langchain/agents#prompt) to pass in a function that returns a list of messages or a custom system prompt.
-You can access long term memory by calling `get_store`
-
-Use cases:
 - Look up user preferences from long term memory and put them in the system prompt
 
 ### Update session context before model invocation
 
-You can use [pre_model_hook](/oss/langchain/agents#pre-model-hook) to update state
+You can use middleware with the [`@before_model` decorator](/oss/langchain/agents#before-model) to update state before the model is invoked
 
 Use cases:
 - Filter out messages if message list is getting long, save filtered list in state and only use that
-- Create a summary of conversation every N messages, save that in state
+- Create a summary of conversation every N messages, save that in state (see [SummarizationMiddleware](/oss/langchain/agents#summarization-middleware))
 
 ### Access to runtime configuration in tools
 
@@ -174,7 +158,7 @@ Use cases:
 
 ### Update tools before model call
 
-You can pass in a [function to `model` parameter](/oss/langchain/agents#dynamic-model) that attaches custom tools
+You can use middleware with the [`@wrap_model_call` decorator](/oss/langchain/agents#wrap-model-call) to dynamically modify the tools passed to the model
 
 Use cases:
 - Force the agent to call a certain tool first
@@ -183,7 +167,7 @@ Use cases:
 
 ### Update model to use before model call
 
-You can pass in a [function to `model` parameter](/oss/langchain/agents#dynamic-model) that returns a custom model
+You can use middleware with the [`@wrap_model_call` decorator](/oss/langchain/agents#wrap-model-call) to dynamically select which model to use
 
 Use cases:
 - Use a model with a longer context window once message history gets long

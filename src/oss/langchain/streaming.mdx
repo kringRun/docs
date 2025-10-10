@@ -6,6 +6,8 @@ import AlphaCallout from '/snippets/alpha-lc-callout.mdx';
 
 <AlphaCallout />
 
+This guide uses LangChain v1 syntax. If you're migrating from v0, see the [LangChain v1 migration guide](/oss/python/migrate/langchain-v1).
+
 LangChain implements a streaming system to surface real-time updates.
 
 Streaming is crucial for enhancing the responsiveness of applications built on LLMs. By displaying output progressively, even before a complete response is ready, streaming significantly improves user experience (UX), particularly when dealing with the latency of LLMs.
@@ -61,14 +63,14 @@ for chunk in agent.stream(
 ```
 
 ```shell title="Output"
-step: agent
+step: model
 content: [{'type': 'tool_call', 'name': 'get_weather', 'args': {'city': 'San Francisco'}, 'id': 'call_OW2NYNsNSKhRZpjW0wm2Aszd'}]
 
 step: tools
 content: [{'type': 'text', 'text': "It's always sunny in San Francisco!"}]
 
-step: agent
-content: [{'type': 'text', 'text': 'It’s always sunny in San Francisco!'}]
+step: model
+content: [{'type': 'text', 'text': 'It's always sunny in San Francisco!'}]
 ```
 :::
 
@@ -104,7 +106,7 @@ for await (const chunk of await agent.stream(
     console.log(`content: ${JSON.stringify(content, null, 2)}`);
 }
 /**
- * step: agent
+ * step: model
  * content: {
  *   "messages": [
  *     {
@@ -137,12 +139,12 @@ for await (const chunk of await agent.stream(
  *     }
  *   ]
  * }
- * step: agent
+ * step: model
  * content: {
  *   "messages": [
  *     {
  *       "kwargs": {
- *         "content": "The latest update says: The weather in San Francisco is always sunny!\n\nIf you’d like real-time details (current temperature, humidity, wind, and today’s forecast), I can pull the latest data for you. Want me to fetch that?",
+ *         "content": "The latest update says: The weather in San Francisco is always sunny!\n\nIf you'd like real-time details (current temperature, humidity, wind, and today's forecast), I can pull the latest data for you. Want me to fetch that?",
  *         // ...
  *       }
  *     }
@@ -179,35 +181,35 @@ for token, metadata in agent.stream(
 ```
 
 ```shell title="Output" expandable
-node: agent
+node: model
 content: [{'type': 'tool_call_chunk', 'id': 'call_vbCyBcP8VuneUzyYlSBZZsVa', 'name': 'get_weather', 'args': '', 'index': 0}]
 
 
-node: agent
+node: model
 content: [{'type': 'tool_call_chunk', 'id': None, 'name': None, 'args': '{"', 'index': 0}]
 
 
-node: agent
+node: model
 content: [{'type': 'tool_call_chunk', 'id': None, 'name': None, 'args': 'city', 'index': 0}]
 
 
-node: agent
+node: model
 content: [{'type': 'tool_call_chunk', 'id': None, 'name': None, 'args': '":"', 'index': 0}]
 
 
-node: agent
+node: model
 content: [{'type': 'tool_call_chunk', 'id': None, 'name': None, 'args': 'San', 'index': 0}]
 
 
-node: agent
+node: model
 content: [{'type': 'tool_call_chunk', 'id': None, 'name': None, 'args': ' Francisco', 'index': 0}]
 
 
-node: agent
+node: model
 content: [{'type': 'tool_call_chunk', 'id': None, 'name': None, 'args': '"}', 'index': 0}]
 
 
-node: agent
+node: model
 content: []
 
 
@@ -215,64 +217,64 @@ node: tools
 content: [{'type': 'text', 'text': "It's always sunny in San Francisco!"}]
 
 
-node: agent
+node: model
 content: []
 
 
-node: agent
+node: model
 content: [{'type': 'text', 'text': 'Here'}]
 
 
-node: agent
-content: [{'type': 'text', 'text': '’s'}]
+node: model
+content: [{'type': 'text', 'text': ''s'}]
 
 
-node: agent
+node: model
 content: [{'type': 'text', 'text': ' what'}]
 
 
-node: agent
+node: model
 content: [{'type': 'text', 'text': ' I'}]
 
 
-node: agent
+node: model
 content: [{'type': 'text', 'text': ' got'}]
 
 
-node: agent
+node: model
 content: [{'type': 'text', 'text': ':'}]
 
 
-node: agent
-content: [{'type': 'text', 'text': ' “'}]
+node: model
+content: [{'type': 'text', 'text': ' "'}]
 
 
-node: agent
+node: model
 content: [{'type': 'text', 'text': "It's"}]
 
 
-node: agent
+node: model
 content: [{'type': 'text', 'text': ' always'}]
 
 
-node: agent
+node: model
 content: [{'type': 'text', 'text': ' sunny'}]
 
 
-node: agent
+node: model
 content: [{'type': 'text', 'text': ' in'}]
 
 
-node: agent
+node: model
 content: [{'type': 'text', 'text': ' San'}]
 
 
-node: agent
+node: model
 content: [{'type': 'text', 'text': ' Francisco'}]
 
 
-node: agent
-content: [{'type': 'text', 'text': '!”\n\n'}]
+node: model
+content: [{'type': 'text', 'text': '!"\n\n'}]
 ```
 :::
 
@@ -430,7 +432,7 @@ for stream_mode, chunk in agent.stream(
 
 ```shell title="Output"
 stream_mode: updates
-content: {'agent': {'messages': [AIMessage(content='', response_metadata={'token_usage': {'completion_tokens': 280, 'prompt_tokens': 132, 'total_tokens': 412, 'completion_tokens_details': {'accepted_prediction_tokens': 0, 'audio_tokens': 0, 'reasoning_tokens': 256, 'rejected_prediction_tokens': 0}, 'prompt_tokens_details': {'audio_tokens': 0, 'cached_tokens': 0}}, 'model_provider': 'openai', 'model_name': 'gpt-5-nano-2025-08-07', 'system_fingerprint': None, 'id': 'chatcmpl-C9tlgBzGEbedGYxZ0rTCz5F7OXpL7', 'service_tier': 'default', 'finish_reason': 'tool_calls', 'logprobs': None}, id='lc_run--480c07cb-e405-4411-aa7f-0520fddeed66-0', tool_calls=[{'name': 'get_weather', 'args': {'city': 'San Francisco'}, 'id': 'call_KTNQIftMrl9vgNwEfAJMVu7r', 'type': 'tool_call'}], usage_metadata={'input_tokens': 132, 'output_tokens': 280, 'total_tokens': 412, 'input_token_details': {'audio': 0, 'cache_read': 0}, 'output_token_details': {'audio': 0, 'reasoning': 256}})]}}
+content: {'model': {'messages': [AIMessage(content='', response_metadata={'token_usage': {'completion_tokens': 280, 'prompt_tokens': 132, 'total_tokens': 412, 'completion_tokens_details': {'accepted_prediction_tokens': 0, 'audio_tokens': 0, 'reasoning_tokens': 256, 'rejected_prediction_tokens': 0}, 'prompt_tokens_details': {'audio_tokens': 0, 'cached_tokens': 0}}, 'model_provider': 'openai', 'model_name': 'gpt-5-nano-2025-08-07', 'system_fingerprint': None, 'id': 'chatcmpl-C9tlgBzGEbedGYxZ0rTCz5F7OXpL7', 'service_tier': 'default', 'finish_reason': 'tool_calls', 'logprobs': None}, id='lc_run--480c07cb-e405-4411-aa7f-0520fddeed66-0', tool_calls=[{'name': 'get_weather', 'args': {'city': 'San Francisco'}, 'id': 'call_KTNQIftMrl9vgNwEfAJMVu7r', 'type': 'tool_call'}], usage_metadata={'input_tokens': 132, 'output_tokens': 280, 'total_tokens': 412, 'input_token_details': {'audio': 0, 'cache_read': 0}, 'output_token_details': {'audio': 0, 'reasoning': 256}})]}}
 
 
 stream_mode: custom
@@ -446,7 +448,7 @@ content: {'tools': {'messages': [ToolMessage(content="It's always sunny in San F
 
 
 stream_mode: updates
-content: {'agent': {'messages': [AIMessage(content='San Francisco weather: It’s always sunny in San Francisco!\n\n', response_metadata={'token_usage': {'completion_tokens': 764, 'prompt_tokens': 168, 'total_tokens': 932, 'completion_tokens_details': {'accepted_prediction_tokens': 0, 'audio_tokens': 0, 'reasoning_tokens': 704, 'rejected_prediction_tokens': 0}, 'prompt_tokens_details': {'audio_tokens': 0, 'cached_tokens': 0}}, 'model_provider': 'openai', 'model_name': 'gpt-5-nano-2025-08-07', 'system_fingerprint': None, 'id': 'chatcmpl-C9tljDFVki1e1haCyikBptAuXuHYG', 'service_tier': 'default', 'finish_reason': 'stop', 'logprobs': None}, id='lc_run--acbc740a-18fe-4a14-8619-da92a0d0ee90-0', usage_metadata={'input_tokens': 168, 'output_tokens': 764, 'total_tokens': 932, 'input_token_details': {'audio': 0, 'cache_read': 0}, 'output_token_details': {'audio': 0, 'reasoning': 704}})]}}
+content: {'model': {'messages': [AIMessage(content='San Francisco weather: It's always sunny in San Francisco!\n\n', response_metadata={'token_usage': {'completion_tokens': 764, 'prompt_tokens': 168, 'total_tokens': 932, 'completion_tokens_details': {'accepted_prediction_tokens': 0, 'audio_tokens': 0, 'reasoning_tokens': 704, 'rejected_prediction_tokens': 0}, 'prompt_tokens_details': {'audio_tokens': 0, 'cached_tokens': 0}}, 'model_provider': 'openai', 'model_name': 'gpt-5-nano-2025-08-07', 'system_fingerprint': None, 'id': 'chatcmpl-C9tljDFVki1e1haCyikBptAuXuHYG', 'service_tier': 'default', 'finish_reason': 'stop', 'logprobs': None}, id='lc_run--acbc740a-18fe-4a14-8619-da92a0d0ee90-0', usage_metadata={'input_tokens': 168, 'output_tokens': 764, 'total_tokens': 932, 'input_token_details': {'audio': 0, 'cache_read': 0}, 'output_token_details': {'audio': 0, 'reasoning': 704}})]}}
 ```
 :::
 

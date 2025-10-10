@@ -5,6 +5,10 @@ sidebarTitle: Supervisor agent
 
 import ChatModelTabsPy from '/snippets/chat-model-tabs.mdx';
 
+<Note>
+This guide uses LangChain v1 syntax. If you're migrating from v0, see the [LangChain v1 migration guide](/oss/python/migrate/langchain-v1).
+</Note>
+
 ## Overview
 
 The **supervisor pattern** is a [multi-agent](/oss/langchain/multi-agent) architecture where a central supervisor agent coordinates specialized worker agents. This approach excels when tasks require different types of expertise. Rather than building one agent that manages tool selection across domains, you create focused specialists coordinated by a supervisor who understands the overall workflow.
@@ -725,7 +729,7 @@ By default, sub-agents receive only the request string from the supervisor. You 
 
 ```python
 from typing import Annotated
-from langchain.tools import InjectedState
+from langgraph.prebuilt import InjectedState
 
 @tool
 def schedule_event(

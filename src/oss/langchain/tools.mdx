@@ -6,6 +6,10 @@ import AlphaCallout from "/snippets/alpha-lc-callout.mdx";
 
 <AlphaCallout />
 
+<Note>
+This guide uses LangChain v1 syntax. If you're using v0, see the [migration guide](/oss/python/migrate/langchain-v1) to update your code.
+</Note>
+
 Many AI applications interact with users via natural language. However, some use cases require models to interface directly with external systems—such as APIs, databases, or file systems—using structured input.
 
 Tools are components that [agents](/oss/langchain/agents) call to perform actions. They extend model capabilities by letting them interact with the world through well-defined inputs and outputs. Tools encapsulate a callable function and its input schema. These can be passed to compatible [chat models](/oss/langchain/models), allowing the model to decide whether to invoke a tool and with what arguments. In these scenarios, tool calling enables models to generate requests that conform to a specified input schema.
@@ -144,33 +148,76 @@ Agents go beyond simple tool binding by adding reasoning loops, state management
 
 ## Advanced tool patterns
 
-### ToolNode
+### Tool error handling
 
 :::python
-ToolNode is a prebuilt LangChain component that handles tool calls within an agent's workflow. It works seamlessly with `create_agent()`, offering advanced tool execution control, built in parallelism, and error handling.
+In v1, tool error handling is configured using middleware with the `@wrap_tool_call` decorator. This provides fine-grained control over how tool execution failures are handled within an agent's workflow.
+
+For basic usage with `create_agent()`, pass tools as a list directly:
+
+```python wrap
+from langchain.agents import create_agent
+
+agent = create_agent(
+    model="anthropic:claude-sonnet-4-5-20250929",
+    tools=[search_database, calculate],  # Pass tools as a list
+    system_prompt="You are a helpful assistant."
+)
+```
+
+For advanced error handling, use middleware with the `@wrap_tool_call` decorator:
+
+```python wrap
+from langchain.agents import create_agent
+from langchain.agents.middleware import AgentMiddleware, wrap_tool_call, ToolCallRequest, ToolCallHandler
+from langchain.tools import tool
+from langchain.messages import ToolMessage
+
+@tool
+def my_tool(query: str) -> str:
+    """Example tool that might fail."""
+    if "error" in query.lower():
+        raise ValueError("Invalid query")
+    return f"Result for: {query}"
+
+class ErrorHandlingMiddleware(AgentMiddleware):
+    @wrap_tool_call
+    def handle_errors(self, request: ToolCallRequest, handler: ToolCallHandler) -> ToolMessage:
+        try:
+            return handler(request)
+        except ValueError as e:
+            return ToolMessage(
+                content=f"Error: {e}. Please rephrase your request.",
+                tool_call_id=request.tool_call.id
+            )
+        except Exception as e:
+            return ToolMessage(
+                content="An unexpected error occurred. Please try again.",
+                tool_call_id=request.tool_call.id
+            )
+
+agent = create_agent(
+    model="anthropic:claude-sonnet-4-5-20250929",
+    tools=[my_tool],
+    middleware=[ErrorHandlingMiddleware()],
+    system_prompt="You are a helpful assistant."
+)
+```
+
+The `@wrap_tool_call` decorator allows you to intercept tool calls and handle errors gracefully, returning `ToolMessage` objects that the agent can use to recover and retry.
+
+<Note>
+In v0, `ToolNode` was passed as a parameter to `create_react_agent`. In v1, `create_agent()` accepts tools as a list directly, and error handling is configured via middleware. See the [migration guide](/oss/python/migrate/langchain-v1#tools) for more details.
+</Note>
 :::
 
 :::js
-ToolNode is a prebuilt LangChain component that handles tool calls within an agent's workflow. It works seamlessly with `createAgent()`, offering advanced tool execution control, built in parallelism, and error handling.
-:::
+`ToolNode` is a prebuilt LangChain component that handles tool calls within an agent's workflow. It works seamlessly with `createAgent()`, offering advanced tool execution control, built-in parallelism, and error handling.
 
 #### Configuration options
 
 `ToolNode` accepts the following parameters:
 
-:::python
-```python wrap
-from langchain.tools import ToolNode
-
-tool_node = ToolNode(
-    tools=[...],              # List of tools or callables
-    handle_tool_errors=True,  # Error handling configuration
-    ...
-)
-```
-:::
-
-:::js
 ```ts
 import { ToolNode } from "langchain";
 
@@ -183,69 +230,20 @@ const toolNode = new ToolNode(
   }
 );
 ```
-:::
 
-:::python
-<ParamField path="tools" required>
-    A list of tools that this node can execute. Can include:
-
-    - LangChain `@tool` decorated functions
-    - Callable objects (e.g. functions) with proper type hints and a docstring
-</ParamField>
-:::
-
-:::js
 <ParamField path="tools">A list of LangChain `tool` objects.</ParamField>
-:::
 
-:::python
-<ParamField path="handle_tool_errors">
-    Controls how tool execution failures are handled.
-    Can be:
-        - `bool`
-        - `str`
-        - `Callable[..., str]`
-        - `type[Exception]`
-        - `tuple[type[Exception], ...]`
-
-    Default: internal `_default_handle_tool_errors`
-</ParamField>
-:::
-
-:::js
 <ParamField path="handleToolErrors">
     Controls how tool execution failures are handled.
     Can be:
         - `boolean`
         - `((error: unknown, toolCall: ToolCall) => ToolMessage | undefined)`
 
-    See [Error handling strategies](#error-handling-strategies) below for details.
     Default: `true`
 </ParamField>
-:::
 
 #### Error handling strategies
 
-{/* TODO this section isn't very visually appealing */}
-:::python
-`ToolNode` provides built-in error handling for tool execution through its `handle_tool_errors` property.
-
-To customize the error handling behavior, you can configure `handle_tool_errors` to either be a boolean, a string, a callable, an exception type, or a tuple of exception types:
-
-- **`True`**: Catch all errors and return a ToolMessage with the default error template containing the exception details.
-- **`str`**: Catch all errors and return a ToolMessage with this custom error message string.
-- **`type[Exception]`**: Only catch exceptions with the specified type and return the default error message for it.
-- **`tuple[type[Exception], ...]`**: Only catch exceptions with the specified types and return default error messages for them.
-- **`Callable[..., str]`**: Catch exceptions matching the callable's signature and return the string result of calling it with the exception.
-- **`False`**: Disable error handling entirely, allowing exceptions to propagate.
-
-`handle_tool_errors` defaults to a callable `_default_handle_tool_errors` that:
-
-- catches tool invocation errors `ToolInvocationError` (due to invalid arguments provided by the model) and returns a descriptive error message
-- ignores tool execution errors (they will be re-raised with the template string `TOOL_CALL_ERROR_TEMPLATE = "Error: {error}\n Please fix your mistakes."`)
-:::
-
-:::js
 `ToolNode` provides built-in error handling for tool execution through its `handleToolErrors` property.
 
 To customize the error handling behavior, you can configure `handleToolErrors` to either be a `boolean` or a custom error handler function:
@@ -253,35 +251,9 @@ To customize the error handling behavior, you can configure `handleToolErrors` t
 - **`true`**: Catch all errors and return a `ToolMessage` with the default error template containing the exception details. (default)
 - **`false`**: Disable error handling entirely, allowing exceptions to propagate.
 - **`((error: unknown, toolCall: ToolCall) => ToolMessage | undefined)`**: Catch all errors and return a `ToolMessage` with the result of calling the function with the exception.
-:::
 
-Examples of how to use the different error handling strategies:
+Examples:
 
-:::python
-```python wrap
-# Retry on all exception types with the default error message template string
-tool_node = ToolNode(tools=[my_tool], handle_tool_errors=True)
-
-# Retry on all exception types with a custom message string
-tool_node = ToolNode(
-    tools=[my_tool],
-    handle_tool_errors="I encountered an issue. Please try rephrasing your request."
-)
-
-# Retry on ValueError with a custom message, otherwise raise
-def handle_errors(e: ValueError) -> str:
-    return "Invalid input provided"
-
-tool_node = ToolNode([my_tool], handle_tool_errors=handle_errors)
-
-# Retry on ValueError and KeyError with the default error message template string, otherwise raise
-tool_node = ToolNode(
-    tools=[my_tool],
-    handle_tool_errors=(ValueError, KeyError)
-)
-```
-:::
-:::js
 ```ts
 const toolNode = new ToolNode([my_tool], {
   handleToolErrors: true
@@ -298,61 +270,6 @@ const toolNode = new ToolNode([my_tool], {
 ```
 :::
 
-:::python
-
-#### Use with create_agent()
-
-<Note>
-    We recommend that you familiarize yourself with `create_agent()` before covering this section. [Read more about agents](/oss/langchain/agents).
-</Note>
-
-Pass a configured `ToolNode` directly to `create_agent()`:
-
-```python
-from langchain_openai import ChatOpenAI
-from langchain.agents import create_agent
-from langchain.tools import ToolNode
-import random
-
-@tool
-def fetch_user_data(user_id: str) -> str:
-    """Fetch user data from database."""
-    if random.random() > 0.7:
-        raise ConnectionError("Database connection timeout")
-    return f"User {user_id}: John Doe, john@example.com, Active"
-
-@tool
-def process_transaction(amount: float, user_id: str) -> str:
-    """Process a financial transaction."""
-    if amount > 10000:
-        raise ValueError(f"Amount {amount} exceeds maximum limit of 10000")
-    return f"Processed ${amount} for user {user_id}"
-
-def handle_errors(e: Exception) -> str:
-    if isinstance(e, ConnectionError):
-        return "The database is currently overloaded, but it is safe to retry. Please try again with the same parameters."
-    elif isinstance(e, ValueError):
-        return f"Error: {e}. Try to process the transaction in smaller amounts."
-    return f"Error: {e}. Please try again."
-
-tool_node = ToolNode(
-    tools=[fetch_user_data, process_transaction],
-    handle_tool_errors=handle_errors
-)
-
-agent = create_agent(
-    model=ChatOpenAI(model="gpt-4o"),
-    tools=tool_node,
-    system_prompt="You are a financial assistant."
-)
-
-agent.invoke({
-    "messages": [{"role": "user", "content": "Process a payment of 15000 dollars for user123. Generate a receipt email and address it to the user."}]
-})
-```
-
-When you pass a `ToolNode` to `create_agent()`, the agent uses your exact configuration including error handling, custom names, and tags. This is useful when you need fine-grained control over tool execution behavior.
-:::
 :::js
 
 #### Use with createAgent()
@@ -452,7 +369,16 @@ When you pass a `ToolNode` to `createAgent()`, the agent uses your exact configu
 
             return f"Conversation has {human_msgs} user messages, {ai_msgs} AI responses, and {tool_msgs} tool results"
 
-        # Access custom state fields
+        # Access custom state fields - requires middleware with state_schema
+        from langchain.agents.middleware import AgentMiddleware, AgentState
+        from typing import TypedDict
+
+        class CustomState(AgentState):
+            user_preferences: dict
+
+        class UserPreferencesMiddleware(AgentMiddleware[CustomState]):
+            state_schema = CustomState
+
         @tool
         def get_user_preference(
             pref_name: str,
@@ -460,11 +386,22 @@ When you pass a `ToolNode` to `createAgent()`, the agent uses your exact configu
         ) -> str:
             """Get a user preference value."""
             return preferences.get(pref_name, "Not set")
+
+        # Create agent with middleware that defines custom state
+        agent = create_agent(
+            model="anthropic:claude-sonnet-4-5-20250929",
+            tools=[get_user_preference],
+            middleware=[UserPreferencesMiddleware()]
+        )
         ```
 
         <Warning>
             State-injected arguments are hidden from the model. For the example above, the model only sees `pref_name` in the tool schema - `preferences` is *not* included in the request.
         </Warning>
+
+        <Note>
+            Custom state fields must be defined in middleware using the `state_schema` attribute, which must be a `TypedDict`. See the [migration guide](/oss/python/migrate/langchain-v1#custom-state) for more details.
+        </Note>
     </Accordion>
 
     <Accordion title="Updating agent state inside a tool">

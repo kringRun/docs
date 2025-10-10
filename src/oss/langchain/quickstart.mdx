@@ -233,10 +233,11 @@ Let's walk through each step:
     <Step title="Define response format">
         :::python
         Optionally, define a structured response format if you need the agent responses to match
-        a specific schema.
+        a specific schema. In v1, use `ToolStrategy` to generate structured output via artificial tool calling:
 
         ```python
         from dataclasses import dataclass
+        from langchain.agents.structured_output import ToolStrategy
 
         # We use a dataclass here, but Pydantic models are also supported.
         @dataclass
@@ -246,6 +247,8 @@ Let's walk through each step:
             punny_response: str
             # Any interesting information about the weather if available
             weather_conditions: str | None = None
+
+        response_format = ToolStrategy(ResponseFormat)
         ```
         :::
 
@@ -297,7 +300,7 @@ Let's walk through each step:
             system_prompt=system_prompt,
             tools=[get_user_location, get_weather_for_location],
             context_schema=Context,
-            response_format=ResponseFormat,
+            response_format=response_format,
             checkpointer=checkpointer
         )
 
@@ -426,6 +429,9 @@ class ResponseFormat:
     # Any interesting information about the weather if available
     weather_conditions: str | None = None
 
+from langchain.agents.structured_output import ToolStrategy
+response_format = ToolStrategy(ResponseFormat)
+
 # Set up memory
 checkpointer = InMemorySaver()
 
@@ -435,7 +441,7 @@ agent = create_agent(
     system_prompt=system_prompt,
     tools=[get_user_location, get_weather_for_location],
     context_schema=Context,
-    response_format=ResponseFormat,
+    response_format=response_format,
     checkpointer=checkpointer
 )
 

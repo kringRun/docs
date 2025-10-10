@@ -8,6 +8,10 @@ import ChatModelTabsJS from '/snippets/chat-model-tabs-js.mdx';
 
 <AlphaCallout />
 
+<Note>
+This guide has been updated for LangChain v1. If you're upgrading from v0, see the [migration guide](/oss/python/migrate/langchain-v1) for breaking changes and migration patterns.
+</Note>
+
 [LLMs](https://en.wikipedia.org/wiki/Large_language_model) are powerful AI tools that can interpret and generate text like humans. They're versatile enough to write content, translate languages, summarize, and answer questions without needing specialized training for each task.
 
 In addition to text generation, many models support:
@@ -983,6 +987,7 @@ Models can be requested to provide their response in a format matching a given s
         - `'json_mode'` is a precursor to `'json_schema'` offered by some providers- it generates valid json, but the schema must be described in the prompt
     - **Include raw**: Use `include_raw=True` to get both the parsed output and the raw AI message
     - **Validation**: Pydantic models provide automatic validation, while `TypedDict` and JSON Schema require manual validation
+    - **Agent compatibility**: When using models with [agents](/oss/langchain/agents), pre-bound models (created with `bind_tools()` or `with_structured_output()`) are not supported. Pass the base model to `create_agent` instead.
 </Note>
 :::
 

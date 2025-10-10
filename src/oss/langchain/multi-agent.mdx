@@ -7,6 +7,10 @@ import AlphaCallout from '/snippets/alpha-lc-callout.mdx';
 
 <AlphaCallout />
 
+<Note>
+This guide uses LangChain v1 syntax. If you're migrating from v0, see the [LangChain v1 migration guide](/oss/python/migrate/langchain-v1).
+</Note>
+
 **Multi-agent systems** break a complex application into multiple specialized agents that work together to solve problems.
 Instead of relying on a single agent to handle every step, **multi-agent architectures** allow you to compose smaller, focused agents into a coordinated workflow.
 
@@ -93,7 +97,7 @@ def call_subagent1(query: str):
     result = subagent1.invoke({
         "messages": [{"role": "user", "content": query}]
     })
-    return result["messages"].text
+    return result["messages"][-1].text
 
 agent = create_agent(..., tools=[call_subagent1])
 ```
@@ -153,21 +157,21 @@ There are two main levers to control the input that the main agent passes to a s
 ```python
 from typing import Annotated
 from langchain.agents import AgentState
-from langchain.tools import InjectedState
+from langgraph.prebuilt import InjectedState
 
 @tool(
     name="subagent1_name",
     description="subagent1_description"
 )
-def call_subagent1(query: str, state: Annotated[CustomState, InjectedState]):
+def call_subagent1(query: str, state: Annotated[AgentState, InjectedState]):
     # Apply any logic needed to transform the messages into a suitable input
-    subagent_input = some_logic(query, state.messages)
+    subagent_input = some_logic(query, state["messages"])
     result = subagent1.invoke({
         "messages": subagent_input,
         # You could also pass other state keys here as needed.
         # Make sure to define these in both the main and subagent's
         # state schemas.
-        "example_state_key": state.example_state_key
+        "example_state_key": state["example_state_key"]
     })
     return result["messages"][-1].text
 ```
@@ -216,8 +220,9 @@ Two common strategies for shaping what the main agent receives back from a subag
 ```python
 from typing import Annotated
 from langchain.agents import AgentState
-from langchain.tools import InjectedToolCallId
+from langgraph.prebuilt import InjectedToolCallId
 from langgraph.types import Command
+from langchain_core.messages import ToolMessage
 
 
 @tool(
@@ -238,8 +243,9 @@ def call_subagent1(
         "example_state_key": result["example_state_key"],
         "messages": [
             ToolMessage(
+                content=result["messages"][-1].text,
                 # We need to include the tool call id so it matches up with the right tool call
-                result["messages"][-1].text, tool_call_id=tool_call_id
+                tool_call_id=tool_call_id
             )
         ]
     })
