@@ -46,7 +46,7 @@ The `prompt` parameter has been renamed to `system_prompt`:
 from langchain.agents import create_agent
 
 agent = create_agent(
-    model="anthropic:claude-4-5-sonnet",
+    model="anthropic:claude-sonnet-4-5-20250929",
     tools=[check_weather],
     system_prompt="You are a helpful assistant"  # [!code highlight]
 )
@@ -55,7 +55,7 @@ agent = create_agent(
 from langgraph.prebuilt import create_react_agent
 
 agent = create_react_agent(
-    model="anthropic:claude-4-5-sonnet",
+    model="anthropic:claude-sonnet-4-5-20250929",
     tools=[check_weather],
     prompt="You are a helpful assistant"  # [!code highlight]
 )
@@ -71,7 +71,7 @@ If using `SystemMessage` objects in the system prompt, extract the string conten
 from langchain.agents import create_agent
 
 agent = create_agent(
-    model="anthropic:claude-4-5-sonnet",
+    model="anthropic:claude-sonnet-4-5-20250929",
     tools=[check_weather],
     system_prompt="You are a helpful assistant"  # [!code highlight]
 )
@@ -81,7 +81,7 @@ from langchain_core.messages import SystemMessage
 from langgraph.prebuilt import create_react_agent
 
 agent = create_react_agent(
-    model="anthropic:claude-4-5-sonnet",
+    model="anthropic:claude-sonnet-4-5-20250929",
     tools=[check_weather],
     prompt=SystemMessage(content="You are a helpful assistant")  # [!code highlight]
 )
@@ -192,11 +192,11 @@ from langchain.agents import create_agent
 from langchain.agents.middleware import SummarizationMiddleware
 
 agent = create_agent(
-    model="anthropic:claude-4-5-sonnet",
+    model="anthropic:claude-sonnet-4-5-20250929",
     tools=tools,
     middleware=[
         SummarizationMiddleware(  # [!code highlight]
-            model="anthropic:claude-4-5-sonnet",  # [!code highlight]
+            model="anthropic:claude-sonnet-4-5-20250929",  # [!code highlight]
             max_tokens_before_summary=1000  # [!code highlight]
         )  # [!code highlight]
     ]  # [!code highlight]
@@ -210,7 +210,7 @@ def custom_summarization_function(state: AgentState):
     ...
 
 agent = create_react_agent(
-    model="anthropic:claude-4-5-sonnet",
+    model="anthropic:claude-sonnet-4-5-20250929",
     tools=tools,
     pre_model_hook=custom_summarization_function
 )
@@ -235,7 +235,7 @@ from langchain.agents import create_agent
 from langchain.agents.middleware import HumanInTheLoopMiddleware
 
 agent = create_agent(
-    model="anthropic:claude-4-5-sonnet",
+    model="anthropic:claude-sonnet-4-5-20250929",
     tools=[read_email, send_email],
     middleware=[HumanInTheLoopMiddleware(
         interrupt_on={
@@ -255,7 +255,7 @@ def custom_human_in_the_loop_hook(state: AgentState):
     ...
 
 agent = create_react_agent(
-    model="anthropic:claude-4-5-sonnet",
+    model="anthropic:claude-sonnet-4-5-20250929",
     tools=[read_email, send_email],
     post_model_hook=custom_human_in_the_loop_hook
 )
@@ -291,7 +291,7 @@ def greet(
     return f"Hello {user_name}!"
 
 agent = create_agent(  # [!code highlight]
-    model="anthropic:claude-4-5-sonnet",
+    model="anthropic:claude-sonnet-4-5-20250929",
     tools=[greet],
     middleware=[UserStateMiddleware()]  # [!code highlight]
 )
@@ -312,7 +312,7 @@ def greet(
     return f"Hello {user_name}!"
 
 agent = create_react_agent(
-    model="anthropic:claude-4-5-sonnet",
+    model="anthropic:claude-sonnet-4-5-20250929",
     tools=[greet],
     state_schema=CustomState
 )
@@ -336,7 +336,7 @@ class AgentState(TypedDict):  # [!code highlight]
     user_id: str
 
 agent = create_agent(
-    model="anthropic:claude-4-5-sonnet",
+    model="anthropic:claude-sonnet-4-5-20250929",
     tools=tools,
     middleware=[middleware_with_agent_state]
 )
@@ -351,7 +351,7 @@ class AgentState(BaseModel):
     user_id: str
 
 agent = create_react_agent(
-    model="anthropic:claude-4-5-sonnet",
+    model="anthropic:claude-sonnet-4-5-20250929",
     tools=tools,
     state_schema=AgentState
 )
@@ -479,7 +479,7 @@ It no longer accepts `ToolNode` instances.
 from langchain.agents import create_agent
 
 agent = create_agent(
-    model="anthropic:claude-4-5-sonnet",
+    model="anthropic:claude-sonnet-4-5-20250929",
     tools=[check_weather, search_web]
 )
 ```
@@ -487,7 +487,7 @@ agent = create_agent(
 from langgraph.prebuilt import create_react_agent, ToolNode
 
 agent = create_react_agent(
-    model="anthropic:claude-4-5-sonnet",
+    model="anthropic:claude-sonnet-4-5-20250929",
     tools=ToolNode([check_weather, search_web]) # [!code highlight]
 )
 ```
@@ -627,6 +627,8 @@ result = agent.invoke(
 <Note>
     The old `config["configurable"]` pattern still works for backward compatibility, but using the new `context` parameter is recommended for new applications or applications migrating to V1.
 </Note>
+
+---
 
 ## Breaking changes
 

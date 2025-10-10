@@ -10,12 +10,12 @@ import AlphaCallout from '/snippets/alpha-lc-callout.mdx';
 <Note>
     1.0 Alpha releases are available for most packages. Only the following currently support new content blocks:
 
-    - `langchain`
-    - `langchain-core`
-    - `langchain-anthropic`
-    - `langchain-aws`
-    - `langchain-openai`
-    - `langchain-google-genai`
+    - [`langchain`](https://pypi.org/project/langchain/)
+    - [`langchain-core`](https://pypi.org/project/langchain-core/)
+    - [`langchain-anthropic`](https://pypi.org/project/langchain-anthropic/)
+    - [`langchain-aws`](https://pypi.org/project/langchain-aws/)
+    - [`langchain-openai`](https://pypi.org/project/langchain-openai/)
+    - [`langchain-google-genai`](https://pypi.org/project/langchain-google-genai/)
     - `langchain-ollama`
 
     Broader support for content blocks will be rolled out during the alpha period and following stable release.
@@ -24,13 +24,13 @@ import AlphaCallout from '/snippets/alpha-lc-callout.mdx';
 **LangChain v1 is a focused, production-ready foundation for building agentic applications.** We've streamlined the framework around three core improvements:
 
 <CardGroup cols={3}>
-    <Card title="create_agent" icon="robot" href="#create-agent">
+    <Card title="create_agent" icon="robot" href="#create-agent" arrow>
         A new standard way to build agents in LangChain, replacing `langgraph.prebuilt.create_react_agent` with a cleaner, more powerful API.
     </Card>
-    <Card title="Standard content blocks" icon="cube" href="#standard-content-blocks">
+    <Card title="Standard content blocks" icon="cube" href="#standard-content-blocks" arrow>
         A new `.content_blocks` property that provides unified access to modern LLM features across all providers.
     </Card>
-    <Card title="LangChain Classic" icon="box-archive" href="#langchain-classic">
+    <Card title="LangChain Classic" icon="arrows-turn-right" href="#langchain-classic" arrow>
         Legacy functionality has moved to `langchain-classic` to keep the core package focused on the most important agent building blocks.
     </Card>
 </CardGroup>
@@ -44,7 +44,7 @@ import AlphaCallout from '/snippets/alpha-lc-callout.mdx';
 from langchain.agents import create_agent
 
 agent = create_agent(
-    model="anthropic:claude-4-5-sonnet",
+    model="anthropic:claude-sonnet-4-5-20250929",
     tools=[search_web, analyze_data, send_email],
     system_prompt="You are a helpful research assistant."
 )
@@ -78,12 +78,12 @@ from langchain.agents.middleware import (
 )
 
 agent = create_agent(
-    model="anthropic:claude-4-5-sonnet",
+    model="anthropic:claude-sonnet-4-5-20250929",
     tools=[read_email, send_email],
     middleware=[
         PIIRedactionMiddleware(patterns=["email", "phone", "ssn"]),
         SummarizationMiddleware(
-            model="anthropic:claude-4-5-sonnet",
+            model="anthropic:claude-sonnet-4-5-20250929",
             max_tokens_before_summary=500
         ),
         HumanInTheLoopMiddleware(
@@ -130,7 +130,7 @@ class ExpertiseBasedToolMiddleware(Middleware):
         return handler(request)
 
 agent = create_agent(
-    model="anthropic:claude-4-5-sonnet",
+    model="anthropic:claude-sonnet-4-5-20250929",
     tools=[simple_search, advanced_search, basic_calculator, data_analysis, api_integration],
     middleware=[ExpertiseBasedToolMiddleware()]
 )
@@ -198,6 +198,8 @@ print(repr(result["structured_response"]))
 - **Parsing errors**: Model generates data that doesn't match desired structure
 - **Multiple tool calls**: Model generates 2+ tool calls for structured output schemas
 
+---
+
 ## Standard content blocks
 
 The new `.content_blocks` property provides unified access to modern LLM features across all providers:
@@ -226,6 +228,8 @@ for block in response.content_blocks:
 - **Backward compatible**: Standard content can be [loaded lazily](/oss/langchain/messages#standard-content-blocks), so there are no associated breaking changes
 
 For more information, see our guide on [content blocks](/oss/langchain/messages#content)
+
+---
 
 ## `langchain-classic`
 
@@ -275,8 +279,8 @@ Please report any issues discovered with 1.0 on [GitHub](https://github.com/lang
     <Card title="Message Content" icon="message" href="/oss/langchain/messages#content" arrow>
         New content blocks API
     </Card>
-    <Card title="LangChain Discord" icon="discord" href="https://discord.gg/langchain">
-        Join the community
+    <Card title="Migration guide" icon="arrow-right-arrow-left" href="/oss/python/migrate/langchain-v1" arrow>
+        How to migrate to LangChain v1
     </Card>
     <Card title="GitHub" icon="github" href="https://github.com/langchain-ai/langchain">
         Report issues or contribute
@@ -287,3 +291,4 @@ Please report any issues discovered with 1.0 on [GitHub](https://github.com/lang
 
 - [Versioning](/oss/versioning) - Understanding version numbers
 - [Release policy](/oss/release-policy) - Detailed release policies
+
