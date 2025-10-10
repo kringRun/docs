@@ -25,6 +25,7 @@ This site is currently being migrated from a previous Sphinx-based implementatio
 
 - [ ] Code block admonitions
 - [ ] URLs
+- [ ] Pydantic object refs? for linking
 - [ ] See if it's possible to make our types clickable (like the Python ones)
 - [ ] [Backlinks](https://mkdocstrings.github.io/python/usage/configuration/general/#backlinks)
 - [ ] [More xref](https://github.com/analog-garage/mkdocstrings-python-xref)
