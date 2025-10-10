@@ -877,11 +877,11 @@ To learn more about evaluating your agent, see the [LangSmith docs](/langsmith/v
 </Tip>
 :::
 
+:::python
 ## Recording & Replaying HTTP Calls
 
 Integration tests that call real LLM APIs can be slow and expensive, especially when run frequently in CI/CD pipelines. We recommend using a library for recording HTTP requests and responses, then replaying them in subsequent runs without making actual network calls.
 
-:::python
 You can use [`vcrpy`](https://pypi.org/project/vcrpy/1.5.2/) to achieve this. If you're using `pytest`, the [`pytest-recording` plugin](https://pypi.org/project/pytest-recording/) provides a simple way to enable this with minimal configuration. Request/responses are recorded in cassettes, which are then used to mock the real network calls in subsequent runs.
 
 Set up your `conftest.py` file to filter out sensitive information from the cassettes:
@@ -939,12 +939,4 @@ The first time you run this test, your agent will make real network calls and py
 <Warning>
 When you modify prompts, add new tools, or change expected trajectories, your saved cassettes will become outdated and your existing tests **will fail**. You should delete the corresponding cassette files and rerun the tests to record fresh interactions.
 </Warning>
-:::
-
-:::js
-You can use [`nock`](https://github.com/nock/nock) to achieve this. Request/responses are recorded in cassettes, which are then used to mock the real network calls in subsequent runs.
-
-<Note>
-When you modify prompts, add new tools, or change expected trajectories, delete the corresponding cassette files and rerun the tests to record fresh interactions.
-</Note>
 :::

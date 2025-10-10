@@ -92,7 +92,6 @@ LINK_MAPS: list[LinkMap] = [
             "add_node": "reference/classes/langgraph.StateGraph.html#addNode",
             "add_messages": "reference/modules/langgraph.html#addMessages",
             "astream_events": "https://v03.api.js.langchain.com/types/_langchain_core.tracers_log_stream.StreamEvent.html",
-            "ToolNode": "reference/classes/langgraph_prebuilt.ToolNode.html",
             "BaseCheckpointSaver": "reference/classes/checkpoint.BaseCheckpointSaver.html",
             "BaseLoader": "https://v03.api.js.langchain.com/classes/_langchain_core.document_loaders_base.BaseDocumentLoader.html",
             "BaseStore": "reference/classes/checkpoint.BaseStore.html",
@@ -183,6 +182,9 @@ LINK_MAPS: list[LinkMap] = [
         "scope": "js",
         "links": {
             "Runtime": "interfaces/_langchain_langgraph.index.Runtime.html",
+            "tool": "functions/_langchain_core.tools.tool.html",
+            "ToolNode": "classes/langchain.index.ToolNode.html",
+            "UsageMetadata": "types/_langchain_core.messages.UsageMetadata.html",
         },
     },
 ]

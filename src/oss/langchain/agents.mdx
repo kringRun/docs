@@ -50,7 +50,12 @@ graph TD
 
 <Info>
 
+:::python
 `create_agent()` builds a **graph**-based agent runtime using [LangGraph](/oss/langgraph/overview). A graph consists of nodes (steps) and edges (connections) that define how your agent processes information. The agent moves through this graph, executing nodes like the model node (which calls the model), the tools node (which executes tools), or pre/post model hook nodes.
+:::
+:::js
+`createAgent()` builds a **graph**-based agent runtime using [LangGraph](/oss/langgraph/overview). A graph consists of nodes (steps) and edges (connections) that define how your agent processes information. The agent moves through this graph, executing nodes like the model node (which calls the model), the tools node (which executes tools), or pre/post model hook nodes.
+:::
 
 Learn more about the [graph API](/oss/langgraph/graph-api).
 
@@ -81,8 +86,8 @@ agent = create_agent(
 import { createAgent } from "langchain";
 
 const agent = createAgent({
-    model: "openai:gpt-5",
-    tools: []
+  model: "openai:gpt-5",
+  tools: []
 });
 ```
 :::
@@ -118,15 +123,15 @@ import { createAgent } from "langchain";
 import { ChatOpenAI } from "@langchain/openai";
 
 const model = new ChatOpenAI({
-    model: "gpt-4o",
-    temperature: 0.1,
-    maxTokens: 1000,
-    timeout: 30
+  model: "gpt-4o",
+  temperature: 0.1,
+  maxTokens: 1000,
+  timeout: 30
 });
 
 const agent = createAgent({
-    model,
-    tools: []
+  model,
+  tools: []
 });
 ```
 
@@ -139,7 +144,7 @@ Dynamic models are selected at <Tooltip tip="The execution environment of your a
 
 :::python
 
-To use a dynamic model, you need to provide a function that receives the graph state and runtime and returns an instance of `BaseChatModel` with the tools bound to it using `.bind_tools(tools)`, where `tools` is a subset of the `tools` parameter.
+To use a dynamic model, you need to provide a function that receives the graph state and runtime and returns an instance of a chat model. The returned chat model needs to have the tools bound to it using `.bind_tools(tools)`, where `tools` is a subset of the `tools` parameter.
 
 ```python
 from langchain_openai import ChatOpenAI
@@ -161,24 +166,24 @@ agent = create_agent(select_model, tools=tools)
 :::
 :::js
 
-To use a dynamic model, you need to provide a function that receives the graph state and runtime and returns an instance of `BaseChatModel` with the tools bound to it using `.bindTools(tools)`, where `tools` is a subset of the `tools` parameter.
+To use a dynamic model, you need to provide a function that receives the graph state and runtime and returns an instance of a chat model. The returned chat model needs to have the tools bound to it using `.bindTools(tools)`, where `tools` is a subset of the `tools` parameter.
 
 ```ts wrap
 import { createAgent, AgentState } from "langchain";
 import { ChatOpenAI } from "@langchain/openai";
 
 const selectModel = (state: AgentState) => {
-    const messageCount = state.messages.length;
+  const messageCount = state.messages.length;
 
-    if (messageCount > 10) {
-        return new ChatOpenAI({ model: "gpt-4.1" }).bindTools(tools);
-    }
-    return new ChatOpenAI({ model: "gpt-4o" }).bindTools(tools);
+  if (messageCount > 10) {
+    return new ChatOpenAI({ model: "gpt-4.1" }).bindTools(tools);
+  }
+  return new ChatOpenAI({ model: "gpt-4o" }).bindTools(tools);
 };
 
 const agent = createAgent({
-    llm: selectModel,
-    tools,
+  llm: selectModel,
+  tools,
 });
 ```
 :::
@@ -203,7 +208,7 @@ Tools can be provided to the agent as either:
 2. A configured @[`ToolNode`][ToolNode]
 :::
 :::js
-1. A list of tools (created with @[`tool`][@tool] function, or object that represents a built-in provider tool)
+1. A list of tools (created with @[`tool`][tool] function, or object that represents a built-in provider tool)
 2. A configured @[`ToolNode`][ToolNode]
 :::
 
@@ -222,11 +227,11 @@ def search(query: str) -> str:
     return f"Results for: {query}"
 
 @tool
-def calculate(expression: str) -> str:
-    """Perform calculations."""
-    return str(eval(expression))
+def get_weather(location: str) -> str:
+    """Get weather information for a location."""
+    return f"Weather in {location}: Sunny, 72°F"
 
-agent = create_agent(model, tools=[search, calculate])
+agent = create_agent(model, tools=[search, get_weather])
 ```
 :::
 :::js
@@ -235,47 +240,31 @@ import { z } from "zod";
 import { createAgent, tool } from "langchain";
 
 const search = tool(
-    ({ query }) => {
-        return `Results for: ${query}`;
-    },
-    {
-        name: "search",
-        description: "Search for information",
-        schema: z.object({
-        query: z.string().describe("The query to search for"),
-        }),
-    }
+  ({ query }) => `Results for: ${query}`,
+  {
+    name: "search",
+    description: "Search for information",
+    schema: z.object({
+      query: z.string().describe("The query to search for"),
+    }),
+  }
 );
 
-const calculate = tool(
-    ({ expression }) => {
-        return String(eval(expression));
-    },
-    {
-        name: "calculate",
-        description: "Perform calculations",
-        schema: z.object({
-        expression: z.string().describe("The expression to calculate"),
-        }),
-    }
+const getWeather = tool(
+  ({ location }) => `Weather in ${location}: Sunny, 72°F`,
+  {
+    name: "get_weather",
+    description: "Get weather information for a location",
+    schema: z.object({
+      location: z.string().describe("The location to get weather for"),
+    }),
+  }
 );
 
 const agent = createAgent({
-    model: "openai:gpt-4o",
-    tools: [search, calculate],
+  model: "openai:gpt-4o",
+  tools: [search, getWeather],
 });
-
-const result = await agent.invoke({
-    messages: [
-        {
-        role: "user",
-        content:
-            "Find wireless headphones, check if they're in stock, and calculate shipping to New York",
-        },
-    ],
-});
-
-console.log(result);
 ```
 :::
 
@@ -311,19 +300,27 @@ If an error occurs within @[`ToolNode`][ToolNode], the agent will return a `Tool
 ```ts wrap
 import { ToolNode, ToolMessage } from "langchain";
 
-const toolNode = new ToolNode([search, calculate], {
+const toolNode = new ToolNode(
+  [search, calculate],
+  {
     handleToolErrors: (error, toolCall) => {
-        return new ToolMessage({
-            content: "Please check your input and try again.",
-            tool_call_id: toolCall.id
-        });
+      return new ToolMessage({
+        content: "Please check your input and try again.",
+        tool_call_id: toolCall.id
+      });
     }
-});
+  }
+);
+
+const agent = createAgent({
+  model: "openai:gpt-4o",
+  tools: toolNode,
+})
 ```
 :::
 
 <Tip>
-To learn more about error handling in @[`ToolNode`][ToolNode], see [ToolNode](/oss/langchain/tools#toolnode).
+Learn more about how to use @[`ToolNode`][ToolNode] in [Tools](/oss/langchain/tools).
 </Tip>
 
 #### Tool use in the ReAct loop
@@ -339,9 +336,8 @@ Prompt: Identify the current most popular wireless headphones and verify availab
 Find the most popular wireless headphones right now and check if they're in stock
 ```
 
-**Reasoning**: "Popularity is time-sensitive, I need to use the provided search tool."
-
-**Acting**: Call `search_products("wireless headphones")`
+* **Reasoning**: "Popularity is time-sensitive, I need to use the provided search tool."
+* **Acting**: Call `search_products("wireless headphones")`
 
 ```
 ================================== Ai Message ==================================
@@ -357,9 +353,8 @@ Tool Calls:
 Found 5 products matching "wireless headphones". Top 5 results: WH-1000XM5, ...
 ```
 
-**Reasoning**: "I need to confirm availability for the top-ranked item before answering."
-
-**Acting**: Call `check_inventory("WH-1000XM5")`
+* **Reasoning**: "I need to confirm availability for the top-ranked item before answering."
+* **Acting**: Call `check_inventory("WH-1000XM5")`
 
 ```
 ================================== Ai Message ==================================
@@ -375,9 +370,8 @@ Tool Calls:
 Product WH-1000XM5: 10 units in stock
 ```
 
-**Reasoning**: "I have the most popular model and its stock status. I can now answer the user's question."
-
-**Acting**: Produce final answer
+* **Reasoning**: "I have the most popular model and its stock status. I can now answer the user's question."
+* **Acting**: Produce final answer
 
 ```
 ================================== Ai Message ==================================
@@ -393,7 +387,6 @@ To learn more about tools, see [Tools](/oss/langchain/tools).
 ### Prompt
 
 You can shape how your agent approaches tasks by providing a prompt. The `prompt` parameter can be provided as a string, SystemMessage, or a callable:
-
 
 :::python
 <CodeGroup>
@@ -424,6 +417,7 @@ def dynamic_prompt(state):
         else "Provide simple, clear explanations."
     )
     return [system_msg] + state["messages"]
+
 agent = create_agent(model, tools, system_prompt=dynamic_prompt)
 ```
 </CodeGroup>
@@ -432,42 +426,41 @@ agent = create_agent(model, tools, system_prompt=dynamic_prompt)
 <CodeGroup>
 ```ts String
 const agent = createAgent({
-    model,
-    tools,
-    prompt: "You are a helpful assistant. Be concise and accurate."
+  model,
+  tools,
+  prompt: "You are a helpful assistant. Be concise and accurate.",
 });
 ```
 ```ts SystemMessage
 import { SystemMessage } from "langchain";
 
 const agent = createAgent({
-    model,
-    tools,
-    prompt: new SystemMessage("You are a research assistant. Cite your sources.")
+  model,
+  tools,
+  prompt: new SystemMessage("You are a research assistant. Cite your sources."),
 });
 ```
-```ts Callable
+```ts Dynamic
 import { createAgent } from "langchain";
 
 const agent = createAgent({
-    model,
-    tools,
-    prompt: (state) => {
-        const userType = state.userType || "standard";
-        return [
-        new SystemMessage(
-            userType === "expert"
-                ? "Provide detailed technical responses."
-                : "Provide simple, clear explanations."
-        ),
-        ...state.messages
-        ];
-    }
+  model,
+  tools,
+  prompt: (state) => {
+    const userType = state.userType || "standard";
+    return [
+      new SystemMessage(
+        userType === "expert"
+          ? "Provide detailed technical responses."
+          : "Provide simple, clear explanations."
+      ),
+      ...state.messages
+    ];
+  }
 });
 ```
 </CodeGroup>
 :::
-
 
 When no `prompt` is provided, the agent will infer its task from the messages directly.
 
@@ -530,32 +523,32 @@ import { createAgent } from "langchain";
 import { dynamicSystemPromptMiddleware } from "langchain/middleware";
 
 const contextSchema = z.object({
-    userRole: z.enum(["expert", "beginner"]),
+  userRole: z.enum(["expert", "beginner"]),
 });
 
 const agent = createAgent({
-    model: "openai:gpt-4o",
-    tools: [/* ... */],
-    contextSchema,
-    middleware: [
-        dynamicSystemPromptMiddleware<z.infer<typeof contextSchema>>((state, runtime) => {
-            const userRole = runtime.context.userRole || "user";
-            const basePrompt = "You are a helpful assistant.";
+  model: "openai:gpt-4o",
+  tools: [/* ... */],
+  contextSchema,
+  middleware: [
+    dynamicSystemPromptMiddleware<z.infer<typeof contextSchema>>((state, runtime) => {
+      const userRole = runtime.context.userRole || "user";
+      const basePrompt = "You are a helpful assistant.";
 
-            if (userRole === "expert") {
-                return `${basePrompt} Provide detailed technical responses.`;
-            } else if (userRole === "beginner") {
-                return `${basePrompt} Explain concepts simply and avoid jargon.`;
-            }
-            return basePrompt;
-        }),
-    ],
+      if (userRole === "expert") {
+        return `${basePrompt} Provide detailed technical responses.`;
+      } else if (userRole === "beginner") {
+        return `${basePrompt} Explain concepts simply and avoid jargon.`;
+      }
+      return basePrompt;
+    }),
+  ],
 });
 
 // The system prompt will be set dynamically based on context
 const result = await agent.invoke(
-    { messages: [{ role: "user", content: "Explain machine learning" }] },
-    { context: { userRole: "expert" } }
+  { messages: [{ role: "user", content: "Explain machine learning" }] },
+  { context: { userRole: "expert" } }
 );
 ```
 :::
@@ -602,35 +595,32 @@ import { z } from "zod";
 import { createAgent } from "langchain";
 
 const ContactInfo = z.object({
-    name: z.string(),
-    email: z.string(),
-    phone: z.string(),
+  name: z.string(),
+  email: z.string(),
+  phone: z.string(),
 });
 
 const agent = createAgent({
-    model: "openai:gpt-4o",
-    tools: [],
-    responseFormat: ContactInfo,
+  model: "openai:gpt-4o",
+  tools: [],
+  responseFormat: ContactInfo,
 });
 
 const result = await agent.invoke({
-    messages: [
-        {
-        role: "user",
-        content:
-            "Extract contact info from: John Doe, john@example.com, (555) 123-4567",
-        },
-    ],
+  messages: [
+    {
+      role: "user",
+      content: "Extract contact info from: John Doe, john@example.com, (555) 123-4567",
+    },
+  ],
 });
 
 console.log(result.structuredResponse);
-/**
- * {
- *   name: 'John Doe',
- *   email: 'john@example.com',
- *   phone: '(555) 123-4567'
- * }
- */
+// {
+//   name: 'John Doe',
+//   email: 'john@example.com',
+//   phone: '(555) 123-4567'
+// }
 ```
 :::
 <Tip>
@@ -675,14 +665,14 @@ import { MessagesZodState } from "@langchain/langgraph";
 import { createAgent, type BaseMessage } from "langchain";
 
 const customAgentState = z.object({
-    messages: MessagesZodState.shape.messages,
-    userPreferences: z.record(z.string(), z.string()),
+  messages: MessagesZodState.shape.messages,
+  userPreferences: z.record(z.string(), z.string()),
 });
 
 const CustomAgentState = createAgent({
-    model: "openai:gpt-4o",
-    tools: [],
-    stateSchema: customAgentState,
+  model: "openai:gpt-4o",
+  tools: [],
+  stateSchema: customAgentState,
 });
 ```
 :::
@@ -743,14 +733,12 @@ It must be a callable or a runnable that takes in current graph state and return
 :::
 :::js
 ```ts wrap
-const agent = createAgent({
-    model: "openai:gpt-4o",
-    preModelHook: (state) => {
-        return {
-            messages: [RemoveMessage({ id: REMOVE_ALL_MESSAGES }), ...state.messages],
-        };
-    },
-});
+{
+  // Will UPDATE the `messages` in the state
+  messages: [new RemoveMessage({ id: REMOVE_ALL_MESSAGES }), ...],
+  // Any other state keys that need to be propagated
+  ...
+}
 ```
 :::
 Example of a pre-model hook that trims messages to fit the context window:
@@ -793,31 +781,31 @@ import { REMOVE_ALL_MESSAGES } from "@langchain/langgraph";
 import { RemoveMessage } from "@langchain/core/messages";
 
 const trimMessages = (state: AgentState) => {
-    const messages = state.messages;
+  const messages = state.messages;
 
-    if (messages.length <= 3) {
-        return { messages };
-    }
+  if (messages.length <= 3) {
+    return { messages };
+  }
 
-    const firstMsg = messages[0];
-    const recentMessages = messages.length % 2 === 0
-        ? messages.slice(-3)
-        : messages.slice(-4);
+  const firstMsg = messages[0];
+  const recentMessages = messages.length % 2 === 0
+    ? messages.slice(-3)
+    : messages.slice(-4);
 
-    const newMessages = [firstMsg, ...recentMessages];
+  const newMessages = [firstMsg, ...recentMessages];
 
-    return {
-        messages: [
-            new RemoveMessage({ id: REMOVE_ALL_MESSAGES }),
-            ...newMessages
-        ]
-    };
+  return {
+    messages: [
+      new RemoveMessage({ id: REMOVE_ALL_MESSAGES }),
+      ...newMessages
+    ]
+  };
 };
 
 const agent = createAgent({
-    model: "openai:gpt-4o",
-    tools,
-    preModelHook: trimMessages,
+  model: "openai:gpt-4o",
+  tools,
+  preModelHook: trimMessages,
 });
 ```
 :::
@@ -832,28 +820,17 @@ If you are returning `messages` in the pre-model hook, you should **overwrite th
 :::python
 ```python wrap
 {
-    "messages": [RemoveMessage(id=REMOVE_ALL_MESSAGES), *new_messages]
-...
+    "messages": [RemoveMessage(id=REMOVE_ALL_MESSAGES), *new_messages],
+    ...
 }
 ```
 :::
 :::js
 ```ts wrap
-import { RemoveMessage } from "@langchain/core/messages";
-import { REMOVE_ALL_MESSAGES } from "@langchain/langgraph";
-
-const agent = createAgent({
-    // ...
-    preModelHook: (state) => {
-        // ...
-        return {
-            messages: [
-                RemoveMessage({ id: REMOVE_ALL_MESSAGES }),
-                ...state.messages
-            ],
-        };
-    };
-});
+{
+  messages: [new RemoveMessage({ id: REMOVE_ALL_MESSAGES }), ...newMessages],
+  ...
+}
 ```
 :::
 </Warning>
@@ -934,23 +911,25 @@ import { createAgent, type AgentState, AIMessage, RemoveMessage } from "langchai
 import { REMOVE_ALL_MESSAGES } from "@langchain/langgraph";
 
 const validateResponse = (state: AgentState) => {
-    const lastMessage = state.messages.at(-1)?.content as string;
-    if (lastMessage.toLowerCase().includes("confidential")) {
-        return {
-        messages: [
-            new RemoveMessage({ id: REMOVE_ALL_MESSAGES }),
-            ...state.messages.slice(0, -1),
-            new AIMessage("I cannot share confidential information."),
-        ],
-        };
-    }
-    return {};
+  const messages = state.messages;
+  const lastMessage = messages.at(-1)?.text;
+
+  if (lastMessage?.toLowerCase().includes("confidential")) {
+    return {
+      messages: [
+        new RemoveMessage({ id: REMOVE_ALL_MESSAGES }),
+        ...state.messages.slice(0, -1),
+        new AIMessage("I cannot share confidential information."),
+      ],
+    };
+  }
+  return {};
 };
 
 const agent = createAgent({
-    model: "openai:gpt-4o",
-    tools,
-    postModelHook: validateResponse,
+  model: "openai:gpt-4o",
+  tools,
+  postModelHook: validateResponse,
 });
 ```
 :::
@@ -975,20 +954,24 @@ for chunk in agent.stream({
 :::js
 ```ts wrap
 const stream = await agent.stream(
-    {
-        messages: [new HumanMessage("What's the weather in NYC?")],
-    },
-    { streamMode: "values" }
+  {
+    messages: [{
+      role: "user",
+      content: "Search for AI news and summarize the findings"
+    }],
+  },
+  { streamMode: "values" }
 );
 
 for await (const chunk of stream) {
-    // Each chunk contains the full state at that point
-    const latestMessage = chunk.messages.at(-1);
-    if (latestMessage?.content) {
-        console.log(`Agent: ${latestMessage.content}`);
-    } else if (latestMessage?.tool_calls) {
-        console.log(`Calling tools: ${latestMessage.tool_calls.map((tc: ToolCall) => tc.name).join(", ")}`);
-    }
+  // Each chunk contains the full state at that point
+  const latestMessage = chunk.messages.at(-1);
+  if (latestMessage?.content) {
+    console.log(`Agent: ${latestMessage.content}`);
+  } else if (latestMessage?.tool_calls) {
+    const toolCallNames = latestMessage.tool_calls.map((tc) => tc.name);
+    console.log(`Calling tools: ${toolCallNames.join(", ")}`);
+  }
 }
 ```
 :::

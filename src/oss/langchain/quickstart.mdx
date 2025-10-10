@@ -8,41 +8,6 @@ import AlphaCallout from '/snippets/alpha-lc-callout.mdx';
 
 This quickstart takes you from a simple setup to a fully functional AI agent in just a few minutes.
 
-## Install
-
-:::python
-<CodeGroup>
-    ```bash pip
-    pip install --pre -U "langchain[anthropic]"
-    ```
-
-    ```bash uv
-    uv add --prerelease=allow "langchain[anthropic]"
-    ```
-</CodeGroup>
-:::
-
-:::js
-<CodeGroup>
-    ```bash npm
-    npm install langchain@next @langchain/anthropic@next
-    ```
-
-    ```bash pnpm
-    pnpm add langchain@next @langchain/anthropic@next
-    ```
-
-    ```bash yarn
-    yarn add langchain@next @langchain/anthropic@next
-    ```
-
-    ```bash bun
-    bun add langchain@next @langchain/anthropic@next
-    ```
-</CodeGroup>
-:::
-
-
 ## Build a basic agent
 
 Start by creating a simple agent that can answer questions and call tools.
@@ -80,11 +45,13 @@ agent.invoke(
 import { createAgent, tool } from "langchain";
 
 const getWeather = tool(
-  (city) => `It's always sunny in ${city}!`,
+  (input) => `It's always sunny in ${input.city}!`,
   {
     name: "get_weather",
     description: "Get the weather for a given city",
-    schema: z.string().describe("The city to get the weather for"),
+    schema: z.object({
+      city: z.string().describe("The city to get the weather for"),
+    }),
   }
 );
 
@@ -182,7 +149,7 @@ Let's walk through each step:
         :::
 
         :::js
-        [Tools](/oss/langchain/tools) are functions your agent can call. They should be well-documented. Oftentimes tools will want to connect to external systems, and will rely on runtime configuration to do so. Notice here how the `getUserLocation` tool does exactly that:
+        [Tools](/oss/langchain/tools) are functions your agent can call. Oftentimes tools will want to connect to external systems, and will rely on runtime configuration to do so. Notice here how the `getUserLocation` tool does exactly that:
 
         ```ts
         import { type Runtime } from "@langchain/langgraph";
@@ -200,15 +167,16 @@ Let's walk through each step:
           }
         );
 
+        type AgentRuntime = Runtime<{ user_id: string }>;
+
         const getUserLocation = tool(
-          (_, config: Runtime<{ user_id: string }>) => {
+          (_, config: AgentRuntime) => {
             const { user_id } = config.context;
             return user_id === "1" ? "Florida" : "SF";
           },
           {
             name: "get_user_location",
             description: "Retrieve user information based on user ID",
-            schema: z.object({}),
           }
         );
         ```
@@ -216,7 +184,7 @@ Let's walk through each step:
         <Note>
             [Zod](https://zod.dev/) is a library for validating and parsing pre-defined schemas. You can use it to define the input schema for your tools to make sure the agent only calls the tool with the correct arguments.
 
-            Alternatively, you can define the `schema` property as a JSON schema object. Keep in mind that JSON schemas *won't* be validated at runtime.
+            Alternatively, you can define the `schema` property as a [JSON schema](https://json-schema.org/overview/what-is-jsonschema) object. Keep in mind that JSON schemas **won't** be validated at runtime.
 
             <Accordion title="Example: Using JSON schema for tool input">
                 ```ts
@@ -394,7 +362,7 @@ Let's walk through each step:
         );
         console.log(response.structuredResponse);
         // {
-        //   punny_response: "Florida is still having a 'sun-derful' day! The sunshine is playing 'ray-dio' hits all day long! I'd say it's the perfect weather for some 'solar-bration'! If you were hoping for rain, I'm afraid that idea is all 'washed up' - the forecast remains 'clear-ly' brilliant!",
+        //   punny_response: "Florida is still having a 'sun-derful' day ...",
         //   weather_conditions: "It's always sunny in Florida!"
         // }
 
@@ -405,7 +373,7 @@ Let's walk through each step:
         );
         console.log(thankYouResponse.structuredResponse);
         // {
-        //   punny_response: "You're 'thund-erfully' welcome! It's always a 'breeze' to help you stay 'current' with the weather. I'm just 'cloud'-ing around waiting to 'shower' you with more forecasts whenever you need them. Have a 'sun-sational' day in the Florida sunshine!",
+        //   punny_response: "You're 'thund-erfully' welcome! ...",
         //   weather_conditions: undefined
         // }
         ```
