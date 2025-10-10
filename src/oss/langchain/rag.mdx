@@ -55,7 +55,7 @@ lines of code. See below for the full code snippet:
 import bs4
 from langchain.agents import AgentState, create_agent
 from langchain_community.document_loaders import WebBaseLoader
-from langchain_core.messages import MessageLikeRepresentation
+from langchain.messages import MessageLikeRepresentation
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 # Load and chunk contents of the blog
@@ -773,7 +773,7 @@ prompt:
 :::python
 ```python
 from langchain.agents import AgentState
-from langchain_core.messages import MessageLikeRepresentation
+from langchain.messages import MessageLikeRepresentation
 
 
 def prompt_with_context(state: AgentState) -> list[MessageLikeRepresentation]:

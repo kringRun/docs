@@ -182,7 +182,7 @@ Use fetch_url when you need to fetch information from a web-page; quote relevant
 agent = create_agent(
     model="claude-sonnet-4-0",
     tools=[fetch_url], # A tool for retrieval [!code highlight]
-    prompt=system_prompt,
+    system_prompt=system_prompt,
 )
 ```
 :::
@@ -201,7 +201,7 @@ const fetchUrl = tool(
 const agent = createAgent({
     model: "claude-sonnet-4-0",
     tools: [fetchUrl],
-    prompt: systemPrompt,
+    messageModifier: systemPrompt,
 });
 ```
 :::
@@ -214,7 +214,7 @@ This example implements an **Agentic RAG system** to assist users in querying La
 ```python
 import requests
 from langchain.agents import create_agent
-from langchain_core.messages import HumanMessage
+from langchain.messages import HumanMessage
 from langchain_core.tools import tool
 from markdownify import markdownify
 
@@ -269,7 +269,7 @@ model = init_chat_model("claude-sonnet-4-0", max_tokens=32_000)
 agent = create_agent(
     model=model,
     tools=tools,  # [!code highlight]
-    prompt=system_prompt,  # [!code highlight]
+    system_prompt=system_prompt,  # [!code highlight]
     name="Agentic RAG",
 )
 

@@ -365,7 +365,7 @@ tool_node = ToolNode(
 agent = create_agent(
     model=ChatOpenAI(model="gpt-4o"),
     tools=tool_node,
-    prompt="You are a financial assistant."
+    system_prompt="You are a financial assistant."
 )
 
 agent.invoke({
@@ -429,7 +429,7 @@ const toolNode = new ToolNode([searchDatabase, sendEmail], {
 const agent = createAgent({
     model: new ChatOpenAI({ model: "gpt-5" }),
     tools: toolNode, // Pass ToolNode instead of tools list
-    prompt: "You are a helpful email assistant."
+    messageModifier: "You are a helpful email assistant."
 });
 
 // The agent will use your custom ToolNode configuration
@@ -498,7 +498,7 @@ When you pass a `ToolNode` to `createAgent()`, the agent uses your exact configu
 
         ```python wrap
         from langgraph.types import Command
-        from langchain_core.messages import RemoveMessage
+        from langchain.messages import RemoveMessage
         from langgraph.graph.message import REMOVE_ALL_MESSAGES
         from langchain_core.tools import tool, InjectedToolCallId
         from typing_extensions import Annotated
@@ -576,7 +576,7 @@ When you pass a `ToolNode` to `createAgent()`, the agent uses your exact configu
             model,
             tools=[get_account_info],
             context_schema=UserContext,
-            prompt="You are a financial assistant."
+            system_prompt="You are a financial assistant."
         )
 
         result = agent.invoke(

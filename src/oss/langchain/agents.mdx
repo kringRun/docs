@@ -757,7 +757,7 @@ Example of a pre-model hook that trims messages to fit the context window:
 
 :::python
 ```python wrap
-from langchain_core.messages import RemoveMessage
+from langchain.messages import RemoveMessage
 from langgraph.graph.message import REMOVE_ALL_MESSAGES
 from langchain.agents import create_agent
 
@@ -902,7 +902,7 @@ Example of a post-model hook that filters out confidential information:
 
 :::python
 ```python wrap
-from langchain_core.messages import AIMessage, RemoveMessage
+from langchain.messages import AIMessage, RemoveMessage
 from langgraph.graph.message import REMOVE_ALL_MESSAGES
 
 def validate_response(state):
