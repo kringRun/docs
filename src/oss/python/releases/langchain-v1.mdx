@@ -270,16 +270,13 @@ LangChain v1 streamlines the `langchain` package namespace to focus on essential
 
 The v1 namespace includes:
 
-| Module | Purpose | Key Exports |
-|--------|---------|-------------|
-| `langchain.agents` | Agent creation and orchestration | `create_agent`, `AgentState` |
-| `langchain.chat_models` | Chat model initialization | `init_chat_model`, `BaseChatModel` |
-| `langchain.messages` | Message types for LLM interactions | `AIMessage`, `HumanMessage`, `SystemMessage`, `ToolMessage`, content blocks, `trim_messages` |
-| `langchain.tools` | Tool creation and management | `tool`, `BaseTool`, `ToolNode`, injection helpers |
-| `langchain.embeddings` | Embedding models | `Embeddings`, `init_embeddings`, `CacheBackedEmbeddings` |
-| `langchain.documents` | Document representation | `Document` |
-| `langchain.storage` | Key-value storage for caching | `InMemoryStore`, `EncoderBackedStore` |
-| `langchain.rate_limiters` | Rate limiters | `BaseRateLimiter`, `InMemoryRateLimiter` |
+| Module | What's available | Notes |
+|--------|------------------|-------|
+| `langchain.agents` | `create_agent`, `AgentState` | Core agent creation functionality |
+| `langchain.messages` | Message types, content blocks, `trim_messages` | Re-exported from `langchain-core` |
+| `langchain.tools` | `tool`, `BaseTool`, injection helpers | Re-exported from `langchain-core` |
+| `langchain.chat_models` | `init_chat_model`, `BaseChatModel` | Unified model initialization |
+| `langchain.embeddings` | `Embeddings`, `init_embeddings`, | Embedding models |
 
 Most of these exports are re-exported from `langchain-core` for convenience, giving you a focused API surface for building agents.
 
