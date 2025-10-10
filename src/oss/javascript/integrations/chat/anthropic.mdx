@@ -929,7 +929,7 @@ Anthropic also lets you specify your own splits using [custom document](https://
 
 ```typescript
 import { ChatAnthropic } from "@langchain/anthropic";
-import { MarkdownTextSplitter } from "langchain/text_splitter";
+import { MarkdownTextSplitter } from "@langchain/classic/text_splitter";
 
 function formatToAnthropicDocuments(documents: string[]) {
   return {

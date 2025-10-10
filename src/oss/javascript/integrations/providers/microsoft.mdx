@@ -10,9 +10,17 @@ All functionality related to `Microsoft Azure` and other `Microsoft` products.
 
 See a [usage example](/oss/integrations/chat/azure)
 
-import IntegrationAzureOpenai from "/snippets/javascript-integrations/examples/models/chat/integration_azure_openai.mdx";
+```typescript
+import { AzureChatOpenAI } from "@langchain/openai";
 
-<IntegrationAzureOpenai />
+const model = new AzureChatOpenAI({
+  temperature: 0.9,
+  azureOpenAIApiKey: "<your_key>", // In Node.js defaults to process.env.AZURE_OPENAI_API_KEY
+  azureOpenAIApiInstanceName: "<your_instance_name>", // In Node.js defaults to process.env.AZURE_OPENAI_API_INSTANCE_NAME
+  azureOpenAIApiDeploymentName: "<your_deployment_name>", // In Node.js defaults to process.env.AZURE_OPENAI_API_DEPLOYMENT_NAME
+  azureOpenAIApiVersion: "<api_version>", // In Node.js defaults to process.env.AZURE_OPENAI_API_VERSION
+});
+```
 
 ## LLM
 
@@ -46,22 +54,25 @@ AZURE_OPENAI_API_VERSION="2024-02-01"
 
 </Info>
 
-import IntegrationInstallTooltip from '/snippets/javascript-integrations/integration-install-tooltip.mdx';
-
-<IntegrationInstallTooltip/>
+<Tip>
+See [this section for general instructions on installing LangChain packages](/oss/langchain/install).
+</Tip>
 
 ```bash npm
 npm install @langchain/openai @langchain/core
 ```
 See a [usage example](/oss/integrations/llms/azure).
 
-import AzureOpenai from "/snippets/javascript-integrations/examples/models/llm/azure_openai.mdx";
+```typescript
+import { AzureOpenAI } from "@langchain/openai";
 
-import UnifiedModelParamsTooltip from "/snippets/javascript-integrations/unified-model-params-tooltip.mdx";
-
-<UnifiedModelParamsTooltip />
-
-<AzureOpenai />
+const model = new AzureOpenAI({
+  azureOpenAIApiKey: "<your_key>", // In Node.js defaults to process.env.AZURE_OPENAI_API_KEY
+  azureOpenAIApiInstanceName: "<your_instance_name>", // In Node.js defaults to process.env.AZURE_OPENAI_API_INSTANCE_NAME
+  azureOpenAIApiDeploymentName: "<your_deployment_name>", // In Node.js defaults to process.env.AZURE_OPENAI_API_DEPLOYMENT_NAME
+  azureOpenAIApiVersion: "<api_version>", // In Node.js defaults to process.env.AZURE_OPENAI_API_VERSION
+});
+```
 
 ## Text Embedding Models
 
@@ -69,9 +80,16 @@ import UnifiedModelParamsTooltip from "/snippets/javascript-integrations/unified
 
 See a [usage example](/oss/integrations/text_embedding/azure_openai)
 
-import AzureOpenaiEmbeddings from "/snippets/javascript-integrations/examples/models/embeddings/azure_openai_embeddings.mdx";
+```typescript
+import { AzureOpenAIEmbeddings } from "@langchain/openai";
 
-<AzureOpenaiEmbeddings />
+const model = new AzureOpenAIEmbeddings({
+  azureOpenAIApiKey: "<your_key>", // In Node.js defaults to process.env.AZURE_OPENAI_API_KEY
+  azureOpenAIApiInstanceName: "<your_instance_name>", // In Node.js defaults to process.env.AZURE_OPENAI_API_INSTANCE_NAME
+  azureOpenAIApiEmbeddingsDeploymentName: "<your_embeddings_deployment_name>", // In Node.js defaults to process.env.AZURE_OPENAI_API_EMBEDDINGS_DEPLOYMENT_NAME
+  azureOpenAIApiVersion: "<api_version>", // In Node.js defaults to process.env.AZURE_OPENAI_API_VERSION
+});
+```
 
 ## Vector stores
 

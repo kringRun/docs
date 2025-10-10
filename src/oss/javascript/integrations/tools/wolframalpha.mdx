@@ -10,9 +10,17 @@ You'll need to create an app from the [WolframAlpha portal](https://developer.wo
 
 ## Usage
 
-import Wolframalpha from "/snippets/javascript-integrations/examples/tools/wolframalpha.mdx";
+```typescript
+import { WolframAlphaTool } from "@langchain/community/tools/wolframalpha";
 
-<Wolframalpha />
+const tool = new WolframAlphaTool({
+  appid: "YOUR_APP_ID",
+});
+
+const res = await tool.invoke("What is 2 * 2?");
+
+console.log(res);
+```
 
 ## Related
 

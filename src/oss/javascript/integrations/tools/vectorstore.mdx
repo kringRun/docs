@@ -48,9 +48,9 @@ const llm = new ChatOpenAI({
 ```
 
 ```typescript
-import { VectorStoreToolkit, VectorStoreInfo } from "langchain/agents/toolkits"
+import { VectorStoreToolkit, VectorStoreInfo } from "@langchain/classic/agents/toolkits"
 import { OpenAIEmbeddings } from "@langchain/openai"
-import { MemoryVectorStore } from "langchain/vectorstores/memory"
+import { MemoryVectorStore } from "@langchain/classic/vectorstores/memory"
 import { RecursiveCharacterTextSplitter } from "@langchain/textsplitters";
 import fs from "fs";
 
@@ -107,7 +107,7 @@ First, ensure you have LangGraph installed:
 Then, instantiate the agent:
 
 ```typescript
-import { createAgent } from "langchain"
+import { createAgent } from "@langchain/classic"
 
 const agentExecutor = createAgent({ llm, tools });
 ```

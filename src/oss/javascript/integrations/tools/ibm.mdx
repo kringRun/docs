@@ -34,9 +34,9 @@ process.env.LANGSMITH_API_KEY="your-api-key"
 
 This toolkit lives in the `@langchain/community` package:
 
-import IntegrationInstallTooltip from '/snippets/javascript-integrations/integration-install-tooltip.mdx';
-
-<IntegrationInstallTooltip/>
+<Tip>
+See [this section for general instructions on installing LangChain packages](/oss/langchain/install).
+</Tip>
 
 ```bash npm
 npm install @langchain/community @langchain/core
@@ -124,7 +124,7 @@ const llm = new ChatWatsonx({
 });
 ```
 ```typescript
-import { createAgent } from "langchain"
+import { createAgent } from "@langchain/classic"
 
 const agent = createAgent({ llm, tools });
 ```

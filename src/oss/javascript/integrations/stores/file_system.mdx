@@ -67,7 +67,7 @@ import IntegrationInstallTooltip from "@mdx_components/integration_install_toolt
 Now we can instantiate our byte store:
 
 ```typescript
-import { LocalFileStore } from "langchain/storage/file_system"
+import { LocalFileStore } from "@langchain/classic/storage/file_system"
 
 const kvStore = await LocalFileStore.fromPath("./messages");
 ```
@@ -131,7 +131,7 @@ await kvStore.mget(
 If you want to get back all the keys you can call the `yieldKeys` method. Optionally, you can pass a key prefix to only get back keys which match that prefix.
 
 ```typescript
-import { LocalFileStore } from "langchain/storage/file_system"
+import { LocalFileStore } from "@langchain/classic/storage/file_system"
 
 const kvStoreForYield = await LocalFileStore.fromPath("./messages");
 
