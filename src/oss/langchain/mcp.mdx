@@ -401,7 +401,7 @@ app.listen(PORT, () => {
 You can also expose existing LangChain tools through an MCP server using the `to_fastmcp` function. This allows you to make your LangChain tools available to any MCP client.
 
 ```python Make LangChain tools available via MCP icon="tool"
-from langchain_core.tools import tool
+from langchain.tools import tool
 from langchain_mcp_adapters.tools import to_fastmcp
 from mcp.server.fastmcp import FastMCP
 

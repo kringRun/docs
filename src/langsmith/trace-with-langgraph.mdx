@@ -83,9 +83,8 @@ Once you've set up your environment, you can call LangChain runnables as normal.
 from typing import Literal
 from langchain_core.messages import HumanMessage
 from langchain_openai import ChatOpenAI
-from langchain_core.tools import tool
+from langchain.tools import tool, ToolNode
 from langgraph.graph import StateGraph, MessagesState
-from langchain.tools import ToolNode
 
 @tool
 def search(query: str):

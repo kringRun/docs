@@ -1010,7 +1010,7 @@ You can create a wrapper to add interrupts to _any_ tool. The example below prov
 :::python
 ```python title="Wrapper that adds human-in-the-loop to any tool" {highlight={37}}
 from typing import Callable
-from langchain_core.tools import BaseTool, tool as create_tool
+from langchain.tools import BaseTool, tool as create_tool
 from langchain_core.runnables import RunnableConfig
 from langgraph.types import interrupt
 from langgraph.prebuilt.interrupt import HumanInterruptConfig, HumanInterrupt

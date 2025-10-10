@@ -595,11 +595,10 @@ This is useful for persisting intermediate results or making information accessi
 :::python
 ```python {highlight={10,19,20,31,40,45}}
 from typing import Annotated
-from langchain_core.tools import InjectedToolCallId
+from langchain.tools import InjectedToolCallId, InjectedState
 from langchain_core.runnables import RunnableConfig
 from langchain.messages import ToolMessage
 from langchain.agents import create_agent, AgentState
-from langchain.tools import InjectedState
 from langgraph.runtime import get_runtime
 from langgraph.types import Command
 from pydantic import BaseModel

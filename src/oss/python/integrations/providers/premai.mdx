@@ -290,7 +290,7 @@ In order to pass tools and let the LLM choose the tool it needs to call, we need
 > When defining function/tool schema, do not forget to add information around the function arguments, otherwise it would throw error.
 
 ```python
-from langchain_core.tools import tool
+from langchain.tools import tool
 from pydantic import BaseModel, Field
 
 # Define the schema for function arguments

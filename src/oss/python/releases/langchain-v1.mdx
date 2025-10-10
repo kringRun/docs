@@ -87,7 +87,7 @@ agent = create_agent(
             max_tokens_before_summary=500
         ),
         HumanInTheLoopMiddleware(
-            interrupt_on={"send_email": {"allow_accept": True, "allow_edit": True}}
+            interrupt_on={"send_email": {"allowed_decisions": ["approve", "edit", "reject"]}}
         ),
     ]
 )
@@ -129,7 +129,9 @@ class Context:
 
 class ExpertiseBasedToolMiddleware(Middleware):
     def wrap_model_call(
-        self, request: ModelRequest, handler: ModelRequestHandler
+        self,
+        request: ModelRequest,
+        handler: ModelRequestHandler
     ) -> AIMessage:
         user_level = request.runtime.context.user_expertise
 
@@ -149,7 +151,10 @@ class ExpertiseBasedToolMiddleware(Middleware):
 agent = create_agent(
     model="anthropic:claude-sonnet-4-5-20250929",
     tools=[
-        simple_search, advanced_search, basic_calculator, data_analysis
+        simple_search,
+        advanced_search,
+        basic_calculator,
+        data_analysis
     ],
     middleware=[ExpertiseBasedToolMiddleware()],
     context_schema=Context

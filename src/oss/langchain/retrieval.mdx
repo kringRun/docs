@@ -164,7 +164,7 @@ graph LR
 :::python
 ```python
 import requests
-from langchain_core.tools import tool
+from langchain.tools import tool
 from langchain.chat_models import init_chat_model
 from langchain.agents import create_agent
 
@@ -215,7 +215,7 @@ This example implements an **Agentic RAG system** to assist users in querying La
 import requests
 from langchain.agents import create_agent
 from langchain.messages import HumanMessage
-from langchain_core.tools import tool
+from langchain.tools import tool
 from markdownify import markdownify
 
 ALLOWED_DOMAINS = ["https://langchain-ai.github.io/"]
@@ -344,7 +344,7 @@ const tools = [fetchDocumentation];
 const agent = createAgent({
   model: "claude-sonnet-4-0"
   tools,  // [!code highlight]
-  messageModifier: systemPrompt,  // [!code highlight]
+  systemPrompt,  // [!code highlight]
   name: "Agentic RAG",
 });
 
