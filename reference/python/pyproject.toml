@@ -160,7 +160,7 @@ langchain-sema4 = { git = "https://github.com/langchain-ai/langchain-sema4.git",
 langchain-snowflake = { git = "https://github.com/langchain-ai/langchain-snowflake.git", subdirectory = "libs/snowflake" }
 langchain-sqlserver = { git = "https://github.com/langchain-ai/langchain-azure.git", subdirectory = "libs/sqlserver" }
 langchain-together = { git = "https://github.com/langchain-ai/langchain-together.git", subdirectory = "libs/together" }
-langchain-unstructured = { git = "https://github.com/langchain-ai/langchain-unstructures.git", subdirectory = "libs/unstructured" }
+langchain-unstructured = { git = "https://github.com/langchain-ai/langchain-unstructured.git", subdirectory = "libs/unstructured" }
 langchain-upstage = { git = "https://github.com/langchain-ai/langchain-upstage.git", subdirectory = "libs/upstage" }
 langchain-weaviate = { git = "https://github.com/langchain-ai/langchain-weaviate.git", subdirectory = "libs/weaviate", branch = "v1.0" }
 
