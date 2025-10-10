@@ -19,7 +19,7 @@ Self-hosting allows you to run all components entirely within your own cloud env
 Model | Includes | Best for | Methods
 ------------------|------------------|----------|--------------------
 **LangSmith** | <ul><li>LangSmith app (UI + API)</li><li>Backend services (queue, playground, ACE)</li><li>Datastores: PostgreSQL, Redis, ClickHouse, optional blob storage</li></ul> | <ul><li>Teams who need self-hosted observability, tracing, and evaluation</li><li>Running the LangSmith app without deploying agents/graphs</li></ul> | <ul><li>Docker Compose (dev/test)</li><li>Kubernetes + Helm (production)</li></ul>
-**LangSmith with agent deployment** | <ul><li>Everything from LangSmith</li><li>Control plane (deployments UI, revision management, the Debugger)</li><li>Data plane (LangGraph Server pods)</li><li>Kubernetes operator for orchestration</li></ul> | <ul><li>Enterprise teams needing a private LangChain Cloud</li><li>Centralized UI/API for managing multiple agents/graphs</li><li>Integrated observability and orchestration</li></ul> | <ul><li>Kubernetes with Helm (required)</li><li>Runs on EKS, GKE, AKS, or self-managed clusters</li></ul>
+**LangSmith with agent deployment** | <ul><li>Everything from LangSmith</li><li>Control plane (deployments UI, revision management, Studio)</li><li>Data plane (LangGraph Server pods)</li><li>Kubernetes operator for orchestration</li></ul> | <ul><li>Enterprise teams needing a private LangChain Cloud</li><li>Centralized UI/API for managing multiple agents/graphs</li><li>Integrated observability and orchestration</li></ul> | <ul><li>Kubernetes with Helm (required)</li><li>Runs on EKS, GKE, AKS, or self-managed clusters</li></ul>
 **Standalone server** | <ul><li>LangGraph Server container(s)</li><li>Requires PostgreSQL + Redis (shared or dedicated)</li><li>Optional LangSmith integration for tracing</li></ul> | <ul><li>Lightweight deployments of one or a few agents</li><li>Integrating LangGraph Servers as microservices</li><li>Teams preferring to manage scaling & CI/CD themselves</li></ul> | <ul><li>Docker / Docker Compose (dev/test)</li><li>Kubernetes + Helm (production)</li><li>Any container runtime or VM (ECS, EC2, ACI, etc.)</li></ul>
 
 <Note>
@@ -101,7 +101,7 @@ You run both the control plane and the data plane entirely within your own infra
 
 ### Requirements
 
-1. Use the `langgraph-cli` or the [Debugger](/langsmith/debugger) to test your graph locally.
+1. Use the `langgraph-cli` or [Studio](/langsmith/studio) to test your graph locally.
 2. Build a Docker image with `langgraph build`.
 3. Deploy your LangGraph Server via the LangSmith control plane UI or through your container tooling of choice.
 4. All agents are deployed as Kubernetes services behind the ingress configured for your LangSmith instance.
@@ -135,7 +135,7 @@ Do not run standalone servers in serverless environments. Scale-to-zero may caus
 
 ### Workflow
 
-1. Define and test your graph locally using the `langgraph-cli` or the [Debugger](/langsmith/debugger).
+1. Define and test your graph locally using the `langgraph-cli` or [Studio](/langsmith/studio).
 2. Package your agent as a Docker image.
 3. Deploy the LangGraph Server to your compute platform of choice (Kubernetes, Docker, VM).
 4. Optionally, configure LangSmith API keys and endpoints so the server reports traces and evaluations back to LangSmith (self-hosted or SaaS).
