@@ -23,22 +23,19 @@ As these docs are built from the source code, the best way to contribute is to m
 
 This site is currently being migrated from a previous Sphinx-based implementation, so there are still some rough edges to be smoothed out. Here are some known issues and potential improvements:
 
-- [ ] Code block admonitions
-- [ ] URLs
-- [ ] Pydantic object refs? for linking
-- [ ] See if it's possible to make our types clickable (like the Python ones)
+- [ ] For methods that are from base classes, indicate it is inherited from such and link to the base class
 - [ ] [Backlinks](https://mkdocstrings.github.io/python/usage/configuration/general/#backlinks)
 - [ ] [More xref](https://github.com/analog-garage/mkdocstrings-python-xref)
 - [ ] [Modernize annotations](https://mkdocstrings.github.io/python/usage/configuration/signatures/#modernize_annotations)
-- [ ] For methods that are from base classes, indicate it is inherited from such and link to the base class
 - [ ] [Inheritance diagrams](https://mkdocstrings.github.io/python/usage/configuration/general/#show_inheritance_diagram)
-- [ ] Code snippet double backticks
+- [ ] Consider using [inherited docstrings](https://mkdocstrings.github.io/griffe/extensions/official/inherited-docstrings/)
+- [ ] Pydantic object refs preloading so that we link to them? Should find their tree and load it in (like we did for old LC)
 - [ ] Post-processing step to link out to imports from code blocks
   - [ ] Maybe there's a plugin?
 - [ ] Fix `navigation.path` feature/plugin in `mkdocs.yml` not working
-- [ ] CI Griffe checks
+- [ ] Resolve Griffe errors
+- [ ] Set up CI to fail on unexpected Griffe warnings
 - [ ] Fix search magnifying glass icon color in dark mode
-- [ ] Consider using [inherited docstrings](https://mkdocstrings.github.io/griffe/extensions/official/inherited-docstrings/)
 - [ ] Copy page support (need to add a post-processing step to generate markdown files to serve alongside the API reference docs)
 - [ ] Language switcher (JS/TS)
 - [ ] [Social cards](https://squidfunk.github.io/mkdocs-material/setup/setting-up-social-cards/)

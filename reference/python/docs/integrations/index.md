@@ -1,10 +1,12 @@
-# Integrations
+---
+title: Integrations Overview - LangChain Reference
+hide:
+  - toc
+---
 
-Welcome to the LangChain's integrations home. This is a reference for all `langchain-x` integrations.
+Welcome! These pages include reference documentation for all `langchain-x` Python packages.
 
-## Popular Providers
-
-*See the full list of integrations in the section navigation.*
+## Popular providers
 
 <div class="grid cards" markdown>
 
@@ -72,5 +74,9 @@ Welcome to the LangChain's integrations home. This is a reference for all `langc
 
     [:octicons-arrow-right-24: Reference](./langchain_ollama.md)
 
-
 </div>
+
+All providers are listed in the section navigation (left sidebar).
+
+!!! note
+    For integrations not listed on this site, please refer to their respective repositories.

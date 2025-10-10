@@ -1,5 +1,5 @@
 ---
-title: Snowflake - LangChain Integrations
+title: Snowflake - LangChain Integration Reference
 ---
 
 # `langchain-snowflake`

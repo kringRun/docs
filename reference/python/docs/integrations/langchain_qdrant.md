@@ -1,5 +1,5 @@
 ---
-title: Qdrant - LangChain Integrations
+title: Qdrant - LangChain Integration Reference
 ---
 
 # `langchain-qdrant`

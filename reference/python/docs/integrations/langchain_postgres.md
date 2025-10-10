@@ -1,5 +1,5 @@
 ---
-title: Postgres - LangChain Integrations
+title: Postgres - LangChain Integration Reference
 ---
 
 # :simple-postgresql:{ .lg .middle } `langchain-postgres`

@@ -1,5 +1,5 @@
 ---
-title: MistralAI - LangChain Integrations
+title: MistralAI - LangChain Integration Reference
 ---
 
 # :simple-mistralai:{ .lg .middle } `langchain-mistralai`

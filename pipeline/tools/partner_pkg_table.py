@@ -28,6 +28,8 @@ IGNORE_PKG = {
     "langchain-mcp-adapters",
 }
 
+# Minimum downloads threshold for inclusion (bypassed for highlighted packages)
+MIN_DOWNLOADS = 100_000
 
 DOCS_DIR = Path(__file__).parents[2]
 PROVIDERS_PATH = Path() / "src" / "oss" / "python" / "integrations" / "providers"
@@ -131,8 +133,19 @@ def _enrich_package(p: dict) -> dict | None:
 PACKAGES_N = [_enrich_package(p) for p in PACKAGE_YML["packages"]]
 PACKAGES = [p for p in PACKAGES_N if p is not None]
 
-# Sort by downloads
-PACKAGES_SORTED = sorted(PACKAGES, key=lambda p: p.get("downloads", 0), reverse=True)
+# Filter out packages with downloads less than MIN_DOWNLOADS
+# unless they are highlighted (bypass filter for highlighted packages)
+PACKAGES = [
+    p
+    for p in PACKAGES
+    if p.get("highlight", False) or p.get("downloads", 0) >= MIN_DOWNLOADS
+]
+
+# Sort by highlight status (highlighted first), then by downloads
+PACKAGES_SORTED = sorted(
+    PACKAGES,
+    key=lambda p: (not p.get("highlight", False), -p.get("downloads", 0)),
+)
 
 # Truncate to top 50 by total downloads
 PACKAGES_SORTED = PACKAGES_SORTED[:50]
@@ -150,7 +163,7 @@ def package_row(p: dict) -> str:
     provider = f"[{title}]({link})" if link else title
     return (
         f"| {provider} "
-        f"| [{p['name']}]({p['package_url']}) "
+        f"| [`{p['name']}`]({p['package_url']}) "
         f'| <a href="https://pypi.org/project/{p["name"]}/" target="_blank"><img src="https://static.pepy.tech/badge/{p["name"]}/month" alt="Downloads per month" noZoom height="100" class="rounded" /></a> '  # noqa: E501
         f'| <a href="https://pypi.org/project/{p["name"]}/" target="_blank"><img src="https://img.shields.io/pypi/v/{p["name"]}?style=flat-square&label=%20&color=orange" alt="PyPI - Latest version" noZoom height="100" class="rounded" /></a> '  # noqa: E501
         f"| {js} |"
@@ -169,12 +182,15 @@ def doc() -> str:
     return f"""\
 ---
 title: Integration packages
+sidebarTitle: Overview
 mode: wide
 ---
+{{/* File generated automatically by pipeline/tools/partner_pkg_table.py */}}
+{{/* Do not manually edit */}}
 
-LangChain Python offers the most extensive ecosystem with 1000+ integrations across chat & embedding models, tools & toolkits, document loaders, vector stores, and more.
+LangChain Python offers an extensive ecosystem with 1000+ integrations across chat & embedding models, tools & toolkits, document loaders, vector stores, and more.
 
-These providers have standalone `langchain-provider` packages for improved versioning, dependency management, and testing.
+To see a full list of integrations by component type, refer to the categories in the sidebar.
 
 ## Popular providers
 
@@ -193,5 +209,5 @@ These providers have standalone `langchain-provider` packages for improved versi
 
 if __name__ == "__main__":
     output_dir = Path() / "src" / "oss" / "python" / "integrations" / "providers"
-    with (output_dir / "index.mdx").open("w") as f:
+    with (output_dir / "overview.mdx").open("w") as f:
         f.write(doc())

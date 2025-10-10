@@ -1,5 +1,5 @@
 ---
-title: Nomic - LangChain Integrations
+title: Nomic - LangChain Integration Reference
 ---
 
 # `langchain-nomic`

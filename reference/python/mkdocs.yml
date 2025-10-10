@@ -295,8 +295,9 @@ plugins:
 nav:
   - Get started: index.md
   - LangChain:
-    - langchain/index.md
+    - LangChain reference: langchain/index.md
     - langchain:
+      - Overview: langchain/langchain/index.md
       - agents: langchain/agents.md
       - middleware: langchain/middleware.md
       - models: langchain/models.md
@@ -305,10 +306,13 @@ nav:
       - documents: langchain/documents.md
       - embeddings: langchain/embeddings.md
       - storage: langchain/storage.md
-    - langchain_core: langchain_core/index.md
+    - langchain_core:
+      - Overview: langchain_core/index.md
+    - langchain_classic:
+      - Overview: langchain_classic/index.md
   - LangGraph:
-    - langgraph/index.md
-    - LangGraph:
+    - LangGraph reference: langgraph/index.md
+    - langgraph:
       - Graphs: langgraph/graphs.md
       - Functional API: langgraph/func.md
       - Pregel: langgraph/pregel.md
@@ -327,19 +331,8 @@ nav:
       - Swarm: langgraph/swarm.md
       - MCP Adapters: langgraph/mcp.md
   - Integrations:
-    - Overview: integrations/index.md
-    - Popular:
-      - OpenAI:
-        - integrations/langchain_openai/index.md
-        - ChatOpenAI: integrations/langchain_openai/ChatOpenAI.md
-      - Anthropic: integrations/langchain_anthropic.md
-      - Google (GenAI): integrations/langchain_google_genai.md
-      - Google (VertexAI): integrations/langchain_google_vertexai.md
-      - AWS: integrations/langchain_aws.md
-      - HuggingFace: integrations/langchain_huggingface.md
-      - Groq: integrations/langchain_groq.md
-      - Ollama: integrations/langchain_ollama.md
-    - All Packages:
+    - LangChain integrations: integrations/index.md
+    - All packages:
       - Anthropic: integrations/langchain_anthropic.md
       - AstraDB: integrations/langchain_astradb.md
       - AWS: integrations/langchain_aws.md
@@ -366,7 +359,15 @@ nav:
       - Nomic: integrations/langchain_nomic.md
       - Nvidia AI Endpoints: integrations/langchain_nvidia_ai_endpoints.md
       - Ollama: integrations/langchain_ollama.md
-      # - OpenAI: integrations/langchain_openai/index.md
+      - OpenAI:
+        - integrations/langchain_openai/index.md
+        - BaseChatOpenAI: integrations/langchain_openai/BaseChatOpenAI.md
+        - ChatOpenAI: integrations/langchain_openai/ChatOpenAI.md
+        - AzureChatOpenAI: integrations/langchain_openai/AzureChatOpenAI.md
+        - OpenAI: integrations/langchain_openai/OpenAI.md
+        - AzureOpenAI: integrations/langchain_openai/AzureOpenAI.md
+        - OpenAIEmbeddings: integrations/langchain_openai/OpenAIEmbeddings.md
+        - AzureOpenAIEmbeddings: integrations/langchain_openai/AzureOpenAIEmbeddings.md
       - Perplexity: integrations/langchain_perplexity.md
       - Pinecone: integrations/langchain_pinecone.md
       - Postgres: integrations/langchain_postgres.md

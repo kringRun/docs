@@ -1,5 +1,5 @@
 ---
-title: Chroma - LangChain Integrations
+title: Chroma - LangChain Integration Reference
 ---
 
 # `langchain-chroma`

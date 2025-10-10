@@ -1,5 +1,5 @@
 ---
-title: Exa - LangChain Integrations
+title: Exa - LangChain Integration Reference
 ---
 
 # `langchain-exa`

@@ -1,5 +1,5 @@
 ---
-title: xAI - LangChain Integrations
+title: xAI - LangChain Integration Reference
 ---
 
 # `langchain-xai`

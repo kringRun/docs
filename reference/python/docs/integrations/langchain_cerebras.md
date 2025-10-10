@@ -1,5 +1,5 @@
 ---
-title: Cerebras - LangChain Integrations
+title: Cerebras - LangChain Integration Reference
 ---
 
 # `langchain-cerebras`

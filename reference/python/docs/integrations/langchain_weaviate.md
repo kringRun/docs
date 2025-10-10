@@ -1,5 +1,5 @@
 ---
-title: Weaviate - LangChain Integrations
+title: Weaviate - LangChain Integration Reference
 ---
 
 # `langchain-weaviate`

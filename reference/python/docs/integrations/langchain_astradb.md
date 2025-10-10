@@ -1,5 +1,5 @@
 ---
-title: AstraDB - LangChain Integrations
+title: AstraDB - LangChain Integration Reference
 ---
 
 # :simple-datastax:{ .lg .middle } `langchain-astradb`

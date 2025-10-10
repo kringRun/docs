@@ -1,5 +1,5 @@
 ---
-title: Redis - LangChain Integrations
+title: Redis - LangChain Integration Reference
 ---
 
 # :simple-redis:{ .lg .middle } `langchain-redis`

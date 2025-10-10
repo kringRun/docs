@@ -1,5 +1,5 @@
 ---
-title: Perplexity - LangChain Integrations
+title: Perplexity - LangChain Integration Reference
 ---
 
 # :simple-perplexity:{ .lg .middle } `langchain-perplexity`

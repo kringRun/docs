@@ -1,5 +1,5 @@
 ---
-title: Prompty - LangChain Integrations
+title: Prompty - LangChain Integration Reference
 ---
 
 # :material-microsoft:{ .lg .middle } `langchain-prompty`

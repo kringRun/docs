@@ -1,5 +1,5 @@
 ---
-title: Milvus - LangChain Integrations
+title: Milvus - LangChain Integration Reference
 ---
 
 # :simple-milvus:{ .lg .middle } `langchain-milvus`

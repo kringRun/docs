@@ -1,5 +1,5 @@
 ---
-title: Sema4 - LangChain Integrations
+title: Sema4 - LangChain Integration Reference
 ---
 
 # `langchain-sema4`

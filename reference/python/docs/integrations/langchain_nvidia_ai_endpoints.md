@@ -1,5 +1,5 @@
 ---
-title: Nvidia AI Endpoints - LangChain Integrations
+title: Nvidia AI Endpoints - LangChain Integration Reference
 ---
 
 # :simple-nvidia:{ .lg .middle } `langchain-nvidia-ai-endpoints`
