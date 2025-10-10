@@ -108,9 +108,25 @@ Build custom middleware by implementing any of these hooks on a subclass of the 
 | `after_model`     | After each LLM response  | Validate output, apply guardrails       |
 | `after_agent`     | After agent completes    | Save results, cleanup                   |
 
+```mermaid
+flowchart TD
+    request["request"]
+    before_agent["before_agent"]
+    before_model["before_model"]
+    wrap_tool_call["wrap_tool_call<br/>(tools)"]
+    wrap_model_call["wrap_model_call<br/>(model)"]
+    after_model["after_model"]
+    after_agent["after_agent"]
+    result["result"]
 
-{/* TODO: make into mermaid */}
-![Middleware flow diagram](/images/middleware_final.png)
+    request --> before_agent --> before_model
+    before_model --> wrap_tool_call
+    before_model --> wrap_model_call
+    wrap_tool_call -.-> after_model
+    wrap_model_call --> after_model
+    after_model -.-> after_agent
+    after_agent --> result
+```
 
 Example custom middleware:
 
