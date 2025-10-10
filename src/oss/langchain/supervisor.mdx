@@ -67,7 +67,7 @@ os.environ["LANGSMITH_TRACING"] = "true"
 os.environ["LANGSMITH_API_KEY"] = getpass.getpass()
 ```
 
-## Components
+### Components
 
 We will need to select a chat model from LangChain's suite of integrations:
 
@@ -394,7 +394,7 @@ The supervisor recognizes this requires both calendar and email actions, calls `
 Refer to the [LangSmith trace](https://smith.langchain.com/public/95cd00a3-d1f9-4dba-9731-7bf733fb6a3c/r) to see the detailed information flow for the above run, including individual chat model prompts and responses.
 </Tip>
 
-## Complete working example
+### Complete working example
 
 Here's everything together in a runnable script:
 
@@ -557,13 +557,13 @@ if __name__ == "__main__":
 
 </Expandable>
 
-## Understanding the architecture
+### Understanding the architecture
 
 Your system has three layers. The bottom layer contains rigid API tools that require exact formats. The middle layer contains sub-agents that accept natural language, translate it to structured API calls, and return natural language confirmations. The top layer contains the supervisor that routes to high-level capabilities and synthesizes results.
 
 This separation of concerns provides several benefits: each layer has a focused responsibility, you can add new domains without affecting existing ones, you can test each layer independently, complexity grows linearly rather than exponentially, and specialized agents perform better than generalists.
 
-## Advanced: Control information flow
+## 6. Advanced: Control information flow
 
 By default, sub-agents receive only the request string from the supervisor. You might want to pass additional context, such as conversation history or user preferences.
 
@@ -629,17 +629,19 @@ def schedule_event(request: str) -> str:
 
 **Important:** Make sure sub-agent prompts emphasize that their final message should contain all relevant information. A common failure mode is sub-agents that perform tool calls but don't include the results in their final response.
 
-## When to use the supervisor pattern
-
-Use the supervisor pattern when you have multiple distinct domains (calendar, email, CRM, database), each domain has multiple tools or complex logic, you want centralized workflow control, and sub-agents don't need to converse directly with users.
-
-For simpler cases with just a few tools, use a single agent. When agents need to have conversations with users, use [handoffs](/oss/python/langchain/multi-agent#handoffs) instead. For peer-to-peer collaboration between agents, consider other multi-agent patterns.
-
-## Key takeaways
+## 7. Key takeaways
 
 The supervisor pattern creates layers of abstraction where each layer has a clear responsibility. Specialized sub-agents outperform generalists, and complex systems emerge from composing simple, focused components.
 
 When designing a supervisor system, start with clear domain boundaries and give each sub-agent focused tools and prompts. Write clear tool descriptions for the supervisor, test each layer independently before integration, and control information flow based on your specific needs.
+
+<Tip>
+**When to use the supervisor pattern**
+
+Use the supervisor pattern when you have multiple distinct domains (calendar, email, CRM, database), each domain has multiple tools or complex logic, you want centralized workflow control, and sub-agents don't need to converse directly with users.
+
+For simpler cases with just a few tools, use a single agent. When agents need to have conversations with users, use [handoffs](/oss/python/langchain/multi-agent#handoffs) instead. For peer-to-peer collaboration between agents, consider other multi-agent patterns.
+</Tip>
 
 ## Next steps
 
