@@ -18,7 +18,7 @@ Tools are components that [agents](/oss/langchain/agents) call to perform action
 The simplest way to create a tool is with the `@tool` decorator. By default, the function's docstring becomes the tool's description that helps the model understand when to use it:
 
 ```python wrap
-from langchain_core.tools import tool
+from langchain.tools import tool
 
 @tool
 def search_database(query: str, limit: int = 10) -> str:
@@ -365,7 +365,7 @@ tool_node = ToolNode(
 agent = create_agent(
     model=ChatOpenAI(model="gpt-4o"),
     tools=tool_node,
-    prompt="You are a financial assistant."
+    system_prompt="You are a financial assistant."
 )
 
 agent.invoke({
@@ -429,7 +429,7 @@ const toolNode = new ToolNode([searchDatabase, sendEmail], {
 const agent = createAgent({
     model: new ChatOpenAI({ model: "gpt-5" }),
     tools: toolNode, // Pass ToolNode instead of tools list
-    prompt: "You are a helpful email assistant."
+    systemPrompt: "You are a helpful email assistant."
 });
 
 // The agent will use your custom ToolNode configuration
@@ -498,9 +498,9 @@ When you pass a `ToolNode` to `createAgent()`, the agent uses your exact configu
 
         ```python wrap
         from langgraph.types import Command
-        from langchain_core.messages import RemoveMessage
+        from langchain.messages import RemoveMessage
         from langgraph.graph.message import REMOVE_ALL_MESSAGES
-        from langchain_core.tools import tool, InjectedToolCallId
+        from langchain.tools import tool, InjectedToolCallId
         from typing_extensions import Annotated
 
         # Update the conversation history by removing all messages
@@ -538,7 +538,7 @@ When you pass a `ToolNode` to `createAgent()`, the agent uses your exact configu
         from dataclasses import dataclass
         from langchain_openai import ChatOpenAI
         from langchain.agents import create_agent
-        from langchain_core.tools import tool
+        from langchain.tools import tool
         from langgraph.runtime import get_runtime
 
         USER_DATABASE = {
@@ -576,7 +576,7 @@ When you pass a `ToolNode` to `createAgent()`, the agent uses your exact configu
             model,
             tools=[get_account_info],
             context_schema=UserContext,
-            prompt="You are a financial assistant."
+            system_prompt="You are a financial assistant."
         )
 
         result = agent.invoke(
@@ -686,7 +686,7 @@ When you pass a `ToolNode` to `createAgent()`, the agent uses your exact configu
         from langgraph.config import get_store
         from langgraph.store.memory import InMemoryStore
         from langchain.agents import create_agent
-        from langchain_core.tools import tool
+        from langchain.tools import tool
 
         @tool
         def get_user_info(user_id: str) -> str:

@@ -45,7 +45,7 @@ Now we can instantiate our model object and generate chat completions:
 
 ```python
 from langchain_community.chat_models.oci_generative_ai import ChatOCIGenAI
-from langchain_core.messages import AIMessage, HumanMessage, SystemMessage
+from langchain.messages import AIMessage, HumanMessage, SystemMessage
 
 chat = ChatOCIGenAI(
     model_id="cohere.command-r-16k",

@@ -61,8 +61,8 @@ initial testing, you will want to use something like a
 
 ```typescript
 import { MatchingEngine } from "@langchain/community/vectorstores/googlevertexai";
-import { Document } from "langchain/document";
-import { SyntheticEmbeddings } from "langchain/embeddings/fake";
+import { Document } from "@langchain/classic/document";
+import { SyntheticEmbeddings } from "@langchain/classic/embeddings/fake";
 import { GoogleCloudStorageDocstore } from "@langchain/community/stores/doc/gcs";
 
 const embeddings = new SyntheticEmbeddings({

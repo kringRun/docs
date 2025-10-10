@@ -55,7 +55,7 @@ lines of code. See below for the full code snippet:
 import bs4
 from langchain.agents import AgentState, create_agent
 from langchain_community.document_loaders import WebBaseLoader
-from langchain_core.messages import MessageLikeRepresentation
+from langchain.messages import MessageLikeRepresentation
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 # Load and chunk contents of the blog
@@ -526,7 +526,7 @@ our vector store:
 
 :::python
 ```python
-from langchain_core.tools import tool
+from langchain.tools import tool
 
 @tool(response_format="content_and_artifact")
 def retrieve_context(query: str):
@@ -773,7 +773,7 @@ prompt:
 :::python
 ```python
 from langchain.agents import AgentState
-from langchain_core.messages import MessageLikeRepresentation
+from langchain.messages import MessageLikeRepresentation
 
 
 def prompt_with_context(state: AgentState) -> list[MessageLikeRepresentation]:
@@ -884,7 +884,7 @@ populate that key (as well as inject the context).
 ```python
 from langchain_core.documents import Document
 from langchain.agents.middleware import AgentMiddleware, AgentState
-from langchain_core.messages import AIMessage
+from langchain.messages import AIMessage
 
 
 class State(AgentState):

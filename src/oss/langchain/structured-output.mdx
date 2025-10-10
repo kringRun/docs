@@ -856,7 +856,7 @@ agent = create_agent(
     model="openai:gpt-5",
     tools=[],
     response_format=ToolStrategy(ProductRating),  # Default: handle_errors=True
-    prompt="You are a helpful assistant that parses product reviews. Do not make any field or value up."
+    system_prompt="You are a helpful assistant that parses product reviews. Do not make any field or value up."
 )
 
 agent.invoke({

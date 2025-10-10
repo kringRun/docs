@@ -126,8 +126,8 @@ The `strict` mode ensures trajectories contain identical messages in the same or
 :::python
 ```python highlight={13-15}
 from langchain.agents import create_agent
-from langchain_core.tools import tool
-from langchain_core.messages import HumanMessage, AIMessage, ToolMessage
+from langchain.tools import tool
+from langchain.messages import HumanMessage, AIMessage, ToolMessage
 from agentevals.trajectory.match import create_trajectory_match_evaluator
 
 @tool
@@ -241,8 +241,8 @@ The `unordered` mode allows the same tool calls in any order, which is helpful w
 :::python
 ```python highlight={18-20}
 from langchain.agents import create_agent
-from langchain_core.tools import tool
-from langchain_core.messages import HumanMessage, AIMessage, ToolMessage
+from langchain.tools import tool
+from langchain.messages import HumanMessage, AIMessage, ToolMessage
 from agentevals.trajectory.match import create_trajectory_match_evaluator
 
 @tool
@@ -377,8 +377,8 @@ The `superset` and `subset` modes match partial trajectories. The `superset` mod
 :::python
 ```python highlight={18-20}
 from langchain.agents import create_agent
-from langchain_core.tools import tool
-from langchain_core.messages import HumanMessage, AIMessage, ToolMessage
+from langchain.tools import tool
+from langchain.messages import HumanMessage, AIMessage, ToolMessage
 from agentevals.trajectory.match import create_trajectory_match_evaluator
 
 @tool
@@ -523,8 +523,8 @@ You can also use an LLM to evaluate the agent's execution path with the `createT
 :::python
 ```python highlight={13-16}
 from langchain.agents import create_agent
-from langchain_core.tools import tool
-from langchain_core.messages import HumanMessage, AIMessage, ToolMessage
+from langchain.tools import tool
+from langchain.messages import HumanMessage, AIMessage, ToolMessage
 from agentevals.trajectory.llm import create_trajectory_llm_as_judge, TRAJECTORY_ACCURACY_PROMPT
 
 @tool

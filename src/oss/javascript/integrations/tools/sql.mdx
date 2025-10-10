@@ -59,9 +59,9 @@ const llm = new ChatOpenAI({
 ```
 
 ```typescript
-import { SqlToolkit } from "langchain/agents/toolkits/sql"
+import { SqlToolkit } from "@langchain/classic/agents/toolkits/sql"
 import { DataSource } from "typeorm";
-import { SqlDatabase } from "langchain/sql_db";
+import { SqlDatabase } from "@langchain/classic/sql_db";
 
 const datasource = new DataSource({
   type: "sqlite",
@@ -125,7 +125,7 @@ First, ensure you have LangGraph installed:
 ```
 
 ```typescript
-import { createAgent } from "langchain"
+import { createAgent } from "@langchain/classic"
 
 const agentExecutor = createAgent({ llm, tools });
 ```

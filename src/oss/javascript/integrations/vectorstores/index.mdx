@@ -40,7 +40,7 @@ Most vectorstores in LangChain accept an embedding model as an argument when ini
 
 ```typescript
 import { OpenAIEmbeddings } from "@langchain/openai";
-import { MemoryVectorStore } from "langchain/vectorstores/memory";
+import { MemoryVectorStore } from "@langchain/classic/vectorstores/memory";
 
 const embeddings = new OpenAIEmbeddings({
   model: "text-embedding-3-small",
@@ -417,7 +417,7 @@ pnpm add langchain
 </CodeGroup>
 
 ```typescript
-import { MemoryVectorStore } from "langchain/vectorstores/memory";
+import { MemoryVectorStore } from "@langchain/classic/vectorstores/memory";
 
 const vectorStore = new MemoryVectorStore(embeddings);
 ```

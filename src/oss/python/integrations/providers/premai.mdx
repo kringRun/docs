@@ -25,7 +25,7 @@ uv add premai langchain
 Before proceeding further, please make sure that you have made an account on PremAI and already created a project. If not, please refer to the [quick start](https://docs.premai.io/introduction) guide to get started with the PremAI platform. Create your first project and grab your API key.
 
 ```python
-from langchain_core.messages import HumanMessage, SystemMessage
+from langchain.messages import HumanMessage, SystemMessage
 from langchain_community.chat_models import ChatPremAI
 ```
 
@@ -290,7 +290,7 @@ In order to pass tools and let the LLM choose the tool it needs to call, we need
 > When defining function/tool schema, do not forget to add information around the function arguments, otherwise it would throw error.
 
 ```python
-from langchain_core.tools import tool
+from langchain.tools import tool
 from pydantic import BaseModel, Field
 
 # Define the schema for function arguments
@@ -370,7 +370,7 @@ Since tool calling happens into two phases, where:
 2. in our second call, we will parse those set of tools decided by LLM and run them (in our case it will be the functions we defined, with the LLM's extracted arguments) and pass this result to the LLM
 
 ```python
-from langchain_core.messages import ToolMessage
+from langchain.messages import ToolMessage
 
 for tool_call in ai_msg.tool_calls:
     selected_tool = {"add": add, "multiply": multiply}[tool_call["name"].lower()]

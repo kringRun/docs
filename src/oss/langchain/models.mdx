@@ -485,7 +485,7 @@ Some model providers offer built-in tools that can be enabled via model paramete
 
 :::python
 ```python Binding user tools highlight={8}
-from langchain_core.tools import tool
+from langchain.tools import tool
 
 @tool
 def get_weather(location: str) -> str:

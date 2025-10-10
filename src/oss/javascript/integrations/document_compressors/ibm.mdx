@@ -135,7 +135,7 @@ First, set up a basic RAG ingest pipeline with embeddings, a text splitter and a
 
 ```javascript
 import { readFileSync } from "node:fs";
-import { MemoryVectorStore } from "langchain/vectorstores/memory";
+import { MemoryVectorStore } from "@langchain/classic/vectorstores/memory";
 import { WatsonxEmbeddings } from "@langchain/community/embeddings/ibm";
 import { CharacterTextSplitter } from "@langchain/textsplitters";
 

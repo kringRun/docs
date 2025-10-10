@@ -71,7 +71,7 @@ chat = ChatRunPod(
 Use the standard LangChain `.invoke()` and `.ainvoke()` methods to call the model. Streaming is also supported via `.stream()` and `.astream()` (simulated by polling the RunPod `/stream` endpoint).
 
 ```python
-from langchain_core.messages import HumanMessage, SystemMessage
+from langchain.messages import HumanMessage, SystemMessage
 
 messages = [
     SystemMessage(content="You are a helpful AI assistant."),

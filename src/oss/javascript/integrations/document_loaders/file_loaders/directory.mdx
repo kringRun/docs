@@ -59,12 +59,12 @@ import IntegrationInstallTooltip from "@mdx_components/integration_install_toolt
 Now we can instantiate our model object and load documents:
 
 ```typescript
-import { DirectoryLoader } from "langchain/document_loaders/fs/directory";
+import { DirectoryLoader } from "@langchain/classic/document_loaders/fs/directory";
 import {
   JSONLoader,
   JSONLinesLoader,
-} from "langchain/document_loaders/fs/json";
-import { TextLoader } from "langchain/document_loaders/fs/text";
+} from "@langchain/classic/document_loaders/fs/json";
+import { TextLoader } from "@langchain/classic/document_loaders/fs/text";
 import { CSVLoader } from "@langchain/community/document_loaders/fs/csv";
 
 const loader = new DirectoryLoader(

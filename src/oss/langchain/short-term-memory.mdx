@@ -177,7 +177,7 @@ To trim message history in an agent, use @[`pre_model_hook`][create_agent] with 
 
 ```python
 from langchain_core.messages.utils import trim_messages, count_tokens_approximately
-from langchain_core.messages import BaseMessage
+from langchain.messages import BaseMessage
 from langgraph.checkpoint.memory import InMemorySaver
 from langchain.agents import create_agent
 from langchain_core.runnables import RunnableConfig
@@ -272,7 +272,7 @@ The default `AgentState` provides this.
 To remove specific messages:
 
 ```python {highlight={1,7}}
-from langchain_core.messages import RemoveMessage
+from langchain.messages import RemoveMessage
 
 def delete_messages(state):
     messages = state["messages"]
@@ -323,7 +323,7 @@ const deleteMessages = (state) => {
 :::python
 
 ```python
-from langchain_core.messages import RemoveMessage
+from langchain.messages import RemoveMessage
 from langchain.agents import create_agent
 from langgraph.checkpoint.memory import InMemorySaver
 from langchain_core.runnables import RunnableConfig
@@ -595,11 +595,10 @@ This is useful for persisting intermediate results or making information accessi
 :::python
 ```python {highlight={10,19,20,31,40,45}}
 from typing import Annotated
-from langchain_core.tools import InjectedToolCallId
+from langchain.tools import InjectedToolCallId, InjectedState
 from langchain_core.runnables import RunnableConfig
-from langchain_core.messages import ToolMessage
+from langchain.messages import ToolMessage
 from langchain.agents import create_agent, AgentState
-from langchain.tools import InjectedState
 from langgraph.runtime import get_runtime
 from langgraph.types import Command
 from pydantic import BaseModel
@@ -716,7 +715,7 @@ Access short term memory (state) in a dynamic prompt function by injecting the a
 
 :::python
 ```python
-from langchain_core.messages import AnyMessage
+from langchain.messages import AnyMessage
 from langchain.agents import create_agent, AgentState
 from langgraph.runtime import get_runtime
 from typing import TypedDict
@@ -726,21 +725,24 @@ class CustomContext(TypedDict):
     user_name: str
 
 
+from langchain.agents.middleware import dynamic_prompt, ModelRequest
+
 def get_weather(city: str) -> str:
     """Get the weather in a city."""
     return f"The weather in {city} is always sunny!"
 
 
-def prompt(state: AgentState) -> list[AnyMessage]:
-    user_name = get_runtime(CustomContext).context["user_name"]
-    system_msg = f"You are a helpful assistant. Address the user as {user_name}."
-    return [{"role": "system", "content": system_msg}] + state["messages"]
+@dynamic_prompt
+def dynamic_system_prompt(request: ModelRequest) -> str:
+    user_name = request.runtime.context["user_name"]
+    system_prompt = f"You are a helpful assistant. Address the user as {user_name}."
+    return system_prompt
 
 
 agent = create_agent(
     model="openai:gpt-5-nano",
     tools=[get_weather],
-    prompt=prompt,
+    middleware=[dynamic_system_prompt],
     context_schema=CustomContext,
 )
 
@@ -860,7 +862,7 @@ Access short term memory (state) in a pre model hook by injecting the agent's st
 :::python
 ```python
 from langchain_core.messages.utils import trim_messages, count_tokens_approximately
-from langchain_core.messages import BaseMessage
+from langchain.messages import BaseMessage
 from langgraph.checkpoint.memory import InMemorySaver
 from langchain.agents import create_agent, AgentState
 

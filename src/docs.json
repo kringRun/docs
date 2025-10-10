@@ -348,7 +348,8 @@
                         "pages": [
                           "oss/python/langchain/knowledge-base",
                           "oss/python/langchain/rag",
-                          "oss/python/langchain/sql-agent"
+                          "oss/python/langchain/sql-agent",
+                          "oss/python/langchain/supervisor"
                         ]
                       },
                       {
