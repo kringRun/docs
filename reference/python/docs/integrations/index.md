@@ -14,7 +14,7 @@ Welcome to the LangChain's integrations home. This is a reference for all `langc
 
     Interact with OpenAI (completions, responses) and OpenAI compatible APIs.
 
-    [:octicons-arrow-right-24: Reference](./langchain_openai.md)
+    [:octicons-arrow-right-24: Reference](./langchain_openai/index.md)
 
 - :simple-claude:{ .lg .middle } __`langchain-anthropic`__
 

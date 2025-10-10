@@ -185,7 +185,7 @@ ToolNode is a prebuilt LangGraph component that handles tool calls within an age
 
 :::python
 ```python wrap
-from langchain.agents import ToolNode
+from langchain.tools import ToolNode
 
 tool_node = ToolNode(
     tools=[...],              # List of tools or callables
@@ -332,7 +332,8 @@ Pass a configured `ToolNode` directly to `create_agent()`:
 
 ```python
 from langchain_openai import ChatOpenAI
-from langchain.agents import ToolNode, create_agent
+from langchain.agents import create_agent
+from langchain.tools import ToolNode
 import random
 
 @tool

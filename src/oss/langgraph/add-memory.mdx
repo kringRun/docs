@@ -437,7 +437,7 @@ const graph = builder.compile({ checkpointer });
 
 ### Use in subgraphs
 
-If your graph contains [subgraphs](/oss/concepts/subgraphs), you only need to provide the checkpointer when compiling the parent graph. LangGraph will automatically propagate the checkpointer to the child subgraphs.
+If your graph contains [subgraphs](/oss/langgraph/use-subgraphs), you only need to provide the checkpointer when compiling the parent graph. LangGraph will automatically propagate the checkpointer to the child subgraphs.
 
 :::python
 ```python {highlight={16,21,25}}

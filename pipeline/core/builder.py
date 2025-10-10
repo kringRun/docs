@@ -170,6 +170,47 @@ class DocumentationBuilder:
         pattern = r'(\[.*?\]\(|\bhref="|")(/oss/[^")\s]+)([")\s])'
         return re.sub(pattern, rewrite_link, content)
 
+    def _add_suggested_edits_link(self, content: str, input_path: Path) -> str:
+        """Add 'Edit Source' link to the end of markdown content.
+
+        This method appends GitHub links with icons pointing to the source file,
+        but only for files that are within the src/ directory.
+
+        Args:
+            content: The markdown content to process.
+            input_path: Path to the source file.
+
+        Returns:
+            The content with the source links appended (if applicable).
+        """
+        try:
+            # Only add links for files in the src/ directory
+            relative_path = input_path.absolute().relative_to(self.src_dir.absolute())
+
+            # Construct the GitHub URLs
+            edit_url = (
+                f"https://github.com/langchain-ai/docs/edit/main/src/{relative_path}"
+            )
+
+            # Create the callout section with Mintlify Callout component
+            source_links_section = (
+                "\n\n---\n\n"
+                f'<Callout icon="pen-to-square" iconType="regular">\n'
+                f"  [Edit the source of this page on GitHub]({edit_url})\n"
+                "</Callout>\n"
+            )
+
+            # Append to content
+            return content.rstrip() + source_links_section
+
+        except ValueError:
+            # File is not within src_dir, return content unchanged
+            return content
+        except Exception:
+            logger.exception("Failed to add source links for %s", input_path)
+            # Return original content if there's an error
+            return content
+
     def _process_markdown_content(
         self, content: str, file_path: Path, target_language: str | None = None
     ) -> str:
@@ -221,6 +262,11 @@ class DocumentationBuilder:
             # Apply markdown preprocessing
             processed_content = self._process_markdown_content(
                 content, input_path, target_language
+            )
+
+            # Add "Edit Source" link for files in src/ directory
+            processed_content = self._add_suggested_edits_link(
+                processed_content, input_path
             )
 
             # Convert .md to .mdx if needed
@@ -685,6 +731,10 @@ class DocumentationBuilder:
         if file_path.name == "docs.json":
             return True
 
+        # index.mdx at root should be shared
+        if file_path.name == "index.mdx" and len(relative_path.parts) == 1:
+            return True
+
         # Images directory should be shared
         if "images" in relative_path.parts:
             return True
@@ -723,7 +773,7 @@ class DocumentationBuilder:
                     # For snippet files, we need to handle URL rewriting differently
                     # Use a special marker-based approach for dynamic URL resolution
                     if "snippets" in relative_path.parts:
-                        logger.info(
+                        logger.debug(
                             "Processing snippet file with URL rewriting: %s",
                             relative_path,
                         )

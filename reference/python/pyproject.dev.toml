@@ -27,19 +27,19 @@ dependencies = [
     # Format / Lint
     "ruff>=0.13.0,<14.0.0",
     # Libraries
-    "langchain-cli",
+    #"langchain-cli",
     "langchain-core",
     "langchain",
-    "langchain-tests",
-    "langchain-text-splitters",
+    #"langchain-tests",
+    #"langchain-text-splitters",
     "langchain-anthropic",
     "langchain-chroma",
     "langchain-deepseek",
     "langchain-exa",
     "langchain-fireworks",
     "langchain-groq",
-    "langchain-huggingface",
-    "langchain-mistralai",
+    #"langchain-huggingface",
+    #"langchain-mistralai",
     "langchain-nomic",
     "langchain-ollama",
     "langchain-openai",
@@ -50,9 +50,9 @@ dependencies = [
     #"langchain-experimental",
     #"langchain-community",
     "langchain-mcp-adapters",
-    #"langchain-astradb",
+    "langchain-astradb",
     #"langchain-ai21",
-    #"langchain-aws",
+    "langchain-aws",
     #"langchain-azure-ai",
     #"langchain-azure-dynamic-sessions",
     #"langchain-cerebras",
@@ -77,21 +77,24 @@ dependencies = [
     #"langchain-unstructured",
     #"langchain-upstage",
     #"langchain-weaviate",
-    #"langchain-tavily",
+    "langchain-tavily",
     "langgraph",
     "langgraph-prebuilt",
     "langgraph-checkpoint",
     "langgraph-checkpoint-sqlite",
     "langgraph-checkpoint-postgres",
     "langgraph-sdk",
-    "langgraph-supervisor",
-    "langgraph-swarm",
-    "langgraph-checkpoint-aws",
+    #"langgraph-supervisor",
+    #"langgraph-swarm",
+    #"langgraph-checkpoint-aws",
 ]
 
 
 [tool.uv]
 package = false
+override-dependencies = [
+    "pytest-codspeed>=3.1.0,<4.0.0",
+]
 
 [tool.uv.sources]
 # Local installs for development

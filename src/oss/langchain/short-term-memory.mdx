@@ -517,7 +517,7 @@ This annotation hides the state from the tool signature (so the model doesn't se
 ```python
 from typing import Annotated
 from langchain.agents import create_agent, AgentState
-from langchain.agents.tool_node import InjectedState
+from langchain.tools import InjectedState
 
 class CustomState(AgentState):
     user_id: str
@@ -599,7 +599,7 @@ from langchain_core.tools import InjectedToolCallId
 from langchain_core.runnables import RunnableConfig
 from langchain_core.messages import ToolMessage
 from langchain.agents import create_agent, AgentState
-from langchain.agents.tool_node import InjectedState
+from langchain.tools import InjectedState
 from langgraph.runtime import get_runtime
 from langgraph.types import Command
 from pydantic import BaseModel
