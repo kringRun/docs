@@ -27,6 +27,7 @@ The supervisor pattern solves this by creating layers of abstraction. A supervis
 We will cover the following concepts:
 
 - [Multi-agent systems](/oss/langchain/multi-agent)
+- [Human-in-the-loop revew](/oss/langchainhuman-in-the-loop)
 
 ## Setup
 
@@ -574,7 +575,7 @@ This separation of concerns provides several benefits: each layer has a focused 
 It can be prudent to incorporate [human-in-the-loop review](/oss/langchain/human-in-the-loop) of sensitive actions. LangChain includes [built-in middleware](/oss/langchain/human-in-the-loop#configuring-interrupts) to review tool calls, in this case the tools invoked by sub-agents.
 
 Let's add human-in-the-loop review to both sub-agents:
-- We configure the `create_calendar_event` and `send_email` tools to interrupt
+- We configure the `create_calendar_event` and `send_email` tools to interrupt, permitting all [response types](/oss/langchain/human-in-the-loop) (`approve`, `edit`, `reject`)
 - We add a [checkpointer](/oss/langchain/short-term-memory) **only to the top-level agent**. This is required to pause and resume execution.
 
 ```python
@@ -588,7 +589,6 @@ calendar_agent = create_agent(
     system_prompt=CALENDAR_AGENT_PROMPT,
     middleware=[ # [!code highlight]
         HumanInTheLoopMiddleware( # [!code highlight]
-            # All actions (accept, edit, respond) allowed # [!code highlight]
             interrupt_on={"create_calendar_event": True}, # [!code highlight]
             description_prefix="Calendar event pending approval", # [!code highlight]
         ), # [!code highlight]
@@ -677,7 +677,7 @@ Args: {'to': ['designteam@example.com'], 'subject': 'Reminder: Review New Mockup
 
 We can specify decisions for each interrupt by referring to its ID using a `Command`. Refer to the [human-in-the-loop guide](/oss/langchain/human-in-the-loop) for additional details. For demonstration purposes, here we will accept the calendar event, but edit the subject of the outbound email:
 ```python
-from langgraph.types import Command
+from langgraph.types import Command # [!code highlight]
 
 resume = {}
 for interrupt_ in interrupts:
@@ -693,7 +693,7 @@ for interrupt_ in interrupts:
 
 interrupts = []
 for step in supervisor_agent.stream(
-    Command(resume=resume),
+    Command(resume=resume), # [!code highlight]
     config,
 ):
     for update in step.values():

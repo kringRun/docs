@@ -319,7 +319,8 @@
                       "oss/python/langchain/knowledge-base",
 		                  "oss/python/langchain/rag",
                       "oss/python/langgraph/agentic-rag",
-                      "oss/python/langchain/sql-agent"
+                      "oss/python/langchain/sql-agent",
+                      "oss/python/langchain/supervisor"
                     ]
                   },
                   {
