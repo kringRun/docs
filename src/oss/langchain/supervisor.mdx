@@ -745,7 +745,7 @@ def schedule_event(
     state: Annotated[dict, InjectedState]
 ) -> str:
     """Schedule calendar events using natural language."""
-    # Customize copntext received by sub-agent
+    # Customize context received by sub-agent
     original_user_message = next(
         message for message in state["messages"]
         if message.type == "human"
