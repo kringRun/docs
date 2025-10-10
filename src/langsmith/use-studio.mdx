@@ -1,9 +1,9 @@
 ---
-title: How to use the Debugger
+title: How to use Studio
 sidebarTitle: Runs, assistants, threads
 ---
 
-This page describes the core workflows you’ll use in the Debugger. It explains how to run your application, manage assistant configurations, and work with conversation threads. Each section includes steps in both graph mode (full-featured view of your graph’s execution) and chat mode (lightweight conversational interface):
+This page describes the core workflows you’ll use in Studio. It explains how to run your application, manage assistant configurations, and work with conversation threads. Each section includes steps in both graph mode (full-featured view of your graph’s execution) and chat mode (lightweight conversational interface):
 
 - [Run application](#run-application): Execute your application or agent and observe its behavior.
 - [Manage assistants](#manage-assistants): Create, edit, and select the assistant configuration used by your application.
@@ -16,7 +16,7 @@ This page describes the core workflows you’ll use in the Debugger. It explains
 
 ### Specify input
 
-1. Define the input to your graph in the **Input** section on the left side of the page, below the graph interface. The Debugger will attempt to render a form for your input based on the graph's defined [state schema](/oss/langgraph/graph-api/#schema). To disable this, click the **View Raw** button, which will present you with a JSON editor.
+1. Define the input to your graph in the **Input** section on the left side of the page, below the graph interface. Studio will attempt to render a form for your input based on the graph's defined [state schema](/oss/langgraph/graph-api/#schema). To disable this, click the **View Raw** button, which will present you with a JSON editor.
 1. Click the up or down arrows at the top of the **Input** section to toggle through and use previously submitted inputs.
 
 ### Run settings
@@ -69,7 +69,7 @@ To cancel the ongoing run:
 
 ## Manage assistants
 
-The Debugger lets you view, edit, and update your assistants, and allows you to run your graph using these assistant configurations.
+Studio lets you view, edit, and update your assistants, and allows you to run your graph using these assistant configurations.
 
 For more conceptual details, refer to the [Assistants overview](/langsmith/assistants/).
 
@@ -93,7 +93,7 @@ Chat mode enables you to switch through the different assistants in your graph v
 
 ## Manage threads
 
-The Debugger provides tools to view all [threads](/oss/langgraph/persistence#threads) saved on the server and edit their state. You can create new threads, switch between threads, and modify past states both in graph mode and chat mode.
+Studio provides tools to view all [threads](/oss/langgraph/persistence#threads) saved on the server and edit their state. You can create new threads, switch between threads, and modify past states both in graph mode and chat mode.
 
 <Tabs>
 <Tab title="Graph">
@@ -133,7 +133,7 @@ To edit a human message in the thread:
 
 ## Next steps
 
-Refer to the following guides for more detail on tasks you can complete in the Debugger:
+Refer to the following guides for more detail on tasks you can complete in Studio:
 
-- [Iterate on prompts](/langsmith/observability-debugger)
-- [Run experiments over datasets](/langsmith/observability-debugger#run-experiments-over-a-dataset)
+- [Iterate on prompts](/langsmith/observability-studio)
+- [Run experiments over datasets](/langsmith/observability-studio#run-experiments-over-a-dataset)
