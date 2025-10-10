@@ -63,7 +63,7 @@ The request is routed through your TrueFoundry gateway to the specified model pr
 ```python
 from langchain_openai import ChatOpenAI
 from langgraph.graph import StateGraph, MessagesState
-from langchain_core.messages import HumanMessage
+from langchain.messages import HumanMessage
 
 # Define your LangGraph workflow
 def call_model(state: MessagesState):

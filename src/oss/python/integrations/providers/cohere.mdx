@@ -35,7 +35,7 @@ Get a [Cohere api key](https://dashboard.cohere.ai/) and set it as an environmen
 
 ```python
 from langchain_cohere import ChatCohere
-from langchain_core.messages import HumanMessage
+from langchain.messages import HumanMessage
 chat = ChatCohere()
 messages = [HumanMessage(content="knock knock")]
 print(chat.invoke(messages))
@@ -58,7 +58,7 @@ Usage of the Cohere (legacy) [LLM model](/oss/integrations/llms/cohere)
 ### Tool calling
 ```python
 from langchain_cohere import ChatCohere
-from langchain_core.messages import (
+from langchain.messages import (
     HumanMessage,
     ToolMessage,
 )

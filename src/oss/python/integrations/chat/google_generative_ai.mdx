@@ -105,7 +105,7 @@ Provide image inputs along with text using a `HumanMessage` with a list content 
 ```python
 import base64
 
-from langchain_core.messages import HumanMessage
+from langchain.messages import HumanMessage
 from langchain_google_genai import ChatGoogleGenerativeAI
 
 # Example using a public URL (remains the same)
@@ -149,7 +149,7 @@ Provide audio file inputs along with text.
 ```python
 import base64
 
-from langchain_core.messages import HumanMessage
+from langchain.messages import HumanMessage
 
 # Ensure you have an audio file named 'example_audio.mp3' or provide the correct path.
 audio_file_path = "example_audio.mp3"
@@ -180,7 +180,7 @@ Provide video file inputs along with text.
 ```python
 import base64
 
-from langchain_core.messages import HumanMessage
+from langchain.messages import HumanMessage
 from langchain_google_genai import ChatGoogleGenerativeAI
 
 # Ensure you have a video file named 'example_video.mp4' or provide the correct path.
@@ -213,7 +213,7 @@ Certain models (such as `gemini-2.0-flash-preview-image-generation`) can generat
 import base64
 
 from IPython.display import Image, display
-from langchain_core.messages import AIMessage
+from langchain.messages import AIMessage
 from langchain_google_genai import ChatGoogleGenerativeAI
 
 llm = ChatGoogleGenerativeAI(model="models/gemini-2.0-flash-preview-image-generation")
@@ -269,7 +269,7 @@ ai_msg = llm_with_tools.invoke(query)
 print(ai_msg.tool_calls)
 
 # Example tool call message would be needed here if you were actually running the tool
-from langchain_core.messages import ToolMessage
+from langchain.messages import ToolMessage
 
 tool_message = ToolMessage(
     content=get_weather(*ai_msg.tool_calls[0]["args"]),

@@ -331,7 +331,7 @@ In addition to keeping track of message IDs, the `add_messages` function will al
 Since the state updates are always deserialized into LangChain `Messages` when using `add_messages`, you should use dot notation to access message attributes, like `state["messages"][-1].content`. Below is an example of a graph that uses `add_messages` as its reducer function.
 
 ```python
-from langchain_core.messages import AnyMessage
+from langchain.messages import AnyMessage
 from langgraph.graph.message import add_messages
 from typing import Annotated
 from typing_extensions import TypedDict

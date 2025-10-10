@@ -18,7 +18,7 @@ Before proceeding further, please make sure that you have made an account on Pre
 
 ```python
 from langchain_community.chat_models import ChatPremAI
-from langchain_core.messages import HumanMessage, SystemMessage
+from langchain.messages import HumanMessage, SystemMessage
 ```
 
 ### Setup PremAI client in LangChain
@@ -317,7 +317,7 @@ Since tool calling happens into two phases, where:
 2. in our second call, we will parse those set of tools decided by LLM and run them (in our case it will be the functions we defined, with the LLM's extracted arguments) and pass this result to the LLM
 
 ```python
-from langchain_core.messages import ToolMessage
+from langchain.messages import ToolMessage
 
 for tool_call in ai_msg.tool_calls:
     selected_tool = {"add": add, "multiply": multiply}[tool_call["name"].lower()]

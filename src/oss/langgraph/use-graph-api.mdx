@@ -63,7 +63,7 @@ Let's consider a simple example using [messages](/oss/langgraph/graph-api#messag
 
 :::python
 ```python
-from langchain_core.messages import AnyMessage
+from langchain.messages import AnyMessage
 from typing_extensions import TypedDict
 
 class State(TypedDict):
@@ -96,7 +96,7 @@ This state tracks a list of [message](https://js.langchain.com/docs/concepts/mes
 Let's build an example graph with a single node. Our [node](/oss/langgraph/graph-api#nodes) is just a Python function that reads our graph's state and makes updates to it. The first argument to this function will always be the state:
 
 ```python
-from langchain_core.messages import AIMessage
+from langchain.messages import AIMessage
 
 def node(state: State):
     messages = state["messages"]
@@ -181,7 +181,7 @@ In this case, our graph just executes a single node. Let's proceed with a simple
 
 :::python
 ```python
-from langchain_core.messages import HumanMessage
+from langchain.messages import HumanMessage
 
 result = graph.invoke({"messages": [HumanMessage("Hi")]})
 result
@@ -839,7 +839,7 @@ See below for additional features of Pydantic model state:
   ```python
   from langgraph.graph import StateGraph, START, END
   from pydantic import BaseModel
-  from langchain_core.messages import HumanMessage, AIMessage, AnyMessage
+  from langchain.messages import HumanMessage, AIMessage, AnyMessage
   from typing import List
 
   class ChatState(BaseModel):
@@ -1107,7 +1107,7 @@ console.log(await graph.invoke({}, { context: { myRuntimeValue: "b" } }));
   ```python
   from dataclasses import dataclass
   from langchain.chat_models import init_chat_model
-  from langchain_core.messages import SystemMessage
+  from langchain.messages import SystemMessage
   from langgraph.graph import END, MessagesState, StateGraph, START
   from langgraph.runtime import Runtime
   from typing_extensions import TypedDict
@@ -1288,7 +1288,7 @@ By default, the retry policy retries on any exception except for the following:
   from langgraph.graph import END, MessagesState, StateGraph, START
   from langgraph.types import RetryPolicy
   from langchain_community.utilities import SQLDatabase
-  from langchain_core.messages import AIMessage
+  from langchain.messages import AIMessage
 
   db = SQLDatabase.from_uri("sqlite:///:memory:")
   model = init_chat_model("anthropic:claude-3-5-haiku-latest")

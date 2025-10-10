@@ -109,7 +109,7 @@ content='' additional_kwargs={'tool_calls': [{'index': 0, 'id': 'call_f0c2cc4930
 ### Vision Support
 #### Image
 ```python
-from langchain_core.messages import HumanMessage
+from langchain.messages import HumanMessage
 
 model = ChatQwen(model="qwen-vl-max-latest")
 
@@ -134,7 +134,7 @@ content='In this image, I see a heartwarming scene on a sandy beach during what 
 ```
 #### Video
 ```python
-from langchain_core.messages import HumanMessage
+from langchain.messages import HumanMessage
 
 model = ChatQwen(model="qwen-vl-max-latest")
 

@@ -647,7 +647,7 @@ We next construct a ToolMessage with these properties:
 3. Its content is either an `image_url` or an `input_image` output block (see [OpenAI docs](https://platform.openai.com/docs/guides/tools-computer-use#5-repeat) for formatting).
 
 ```python
-from langchain_core.messages import ToolMessage
+from langchain.messages import ToolMessage
 
 tool_call_id = next(
     item["call_id"] for item in response.content if item["type"] == "computer_call"

@@ -207,7 +207,7 @@ def is_valid_email(email):
 With Gemini, you can use LLM in a multimodal mode:
 
 ```python
-from langchain_core.messages import HumanMessage
+from langchain.messages import HumanMessage
 from langchain_google_vertexai import ChatVertexAI
 
 llm = ChatVertexAI(model="gemini-pro-vision")
@@ -319,7 +319,7 @@ print(output.content)
 ### Using Pdfs with Gemini Models
 
 ```python
-from langchain_core.messages import HumanMessage
+from langchain.messages import HumanMessage
 from langchain_google_vertexai import ChatVertexAI
 
 llm = ChatVertexAI(model="gemini-2.5-pro")
@@ -352,7 +352,7 @@ AIMessage(content='The document introduces Gemini 1.5 Pro, a new multimodal mode
 ### Using Video with Gemini Models
 
 ```python
-from langchain_core.messages import HumanMessage
+from langchain.messages import HumanMessage
 from langchain_google_vertexai import ChatVertexAI
 
 llm = ChatVertexAI(model="gemini-2.5-pro")
@@ -387,7 +387,7 @@ AIMessage(content='The video showcases a young woman\'s journey through the vibr
 ### Using Audio with Gemini Models
 
 ```python
-from langchain_core.messages import HumanMessage
+from langchain.messages import HumanMessage
 from langchain_google_vertexai import ChatVertexAI
 
 llm = ChatVertexAI(model="gemini-2.5-pro")
@@ -550,7 +550,7 @@ As an AI language model, my personal belief is that the meaning of life varies f
 To use Gemma on Vertex Model Garden you must first [deploy it to Vertex AI Endpoint](https://cloud.google.com/vertex-ai/generative-ai/docs/model-garden/explore-models#deploy-a-model)
 
 ```python
-from langchain_core.messages import (
+from langchain.messages import (
     AIMessage,
     HumanMessage,
 )
@@ -609,7 +609,7 @@ NOTE : Anthropic Models on Vertex are implemented as Chat Model through class `C
 ```
 
 ```python
-from langchain_core.messages import (
+from langchain.messages import (
     AIMessage,
     AIMessageChunk,
     HumanMessage,

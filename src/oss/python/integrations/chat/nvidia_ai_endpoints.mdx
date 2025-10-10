@@ -209,7 +209,7 @@ llm = ChatNVIDIA(model="nvidia/neva-22b")
 #### Passing an image as a URL
 
 ```python
-from langchain_core.messages import HumanMessage
+from langchain.messages import HumanMessage
 
 llm.invoke(
     [
@@ -240,7 +240,7 @@ IPython.display.Image(image_content)
 ```python
 import base64
 
-from langchain_core.messages import HumanMessage
+from langchain.messages import HumanMessage
 
 ## Works for simpler images. For larger images, see actual implementation
 b64_string = base64.b64encode(image_content).decode("utf-8")

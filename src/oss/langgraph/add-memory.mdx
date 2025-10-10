@@ -1346,7 +1346,7 @@ To delete messages from the graph state, you can use the `RemoveMessage`. For `R
 To remove specific messages:
 
 ```python {highlight={1,7}}
-from langchain_core.messages import RemoveMessage
+from langchain.messages import RemoveMessage
 
 def delete_messages(state):
     messages = state["messages"]
@@ -1397,7 +1397,7 @@ When deleting messages, **make sure** that the resulting message history is vali
 <Accordion title="Full example: delete messages">
   :::python
   ```python {highlight={1,7}}
-  from langchain_core.messages import RemoveMessage
+  from langchain.messages import RemoveMessage
 
   def delete_messages(state):
       messages = state["messages"]
@@ -1615,7 +1615,7 @@ const summarizeConversation = async (state: z.infer<typeof State>) => {
   from typing import Any, TypedDict
 
   from langchain.chat_models import init_chat_model
-  from langchain_core.messages import AnyMessage
+  from langchain.messages import AnyMessage
   from langchain_core.messages.utils import count_tokens_approximately
   from langgraph.graph import StateGraph, START, MessagesState
   from langgraph.checkpoint.memory import InMemorySaver

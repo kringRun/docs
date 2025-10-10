@@ -199,7 +199,7 @@ llm_with_translation_tool = chat_with_translation.bind_tools([translation_tool])
 The model will automatically choose the tool during invocation with all modes (streaming/non-streaming, sync/async).
 
 ```python
-from langchain_core.messages import HumanMessage
+from langchain.messages import HumanMessage
 
 # Example with graph tool and function tools
 llm_with_tools = chat.bind_tools([graph_tool, get_supercopa_trophies_count])

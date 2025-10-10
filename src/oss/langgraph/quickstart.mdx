@@ -133,7 +133,7 @@ The graph's state is used to store the messages and the number of LLM calls.
 :::python
 
 ```python
-from langchain_core.messages import AnyMessage
+from langchain.messages import AnyMessage
 from typing_extensions import TypedDict, Annotated
 import operator
 
@@ -168,7 +168,7 @@ The model node is used to call the LLM and decide whether to call a tool or not.
 :::python
 
 ```python
-from langchain_core.messages import SystemMessage
+from langchain.messages import SystemMessage
 def llm_call(state: dict):
     """LLM decides whether to call a tool or not"""
 
@@ -213,7 +213,7 @@ The tool node is used to call the tools and return the results.
 :::python
 
 ```python
-from langchain_core.messages import ToolMessage
+from langchain.messages import ToolMessage
 
 def tool_node(state: dict):
     """Performs the tool call"""
@@ -322,7 +322,7 @@ from IPython.display import Image, display
 display(Image(agent.get_graph(xray=True).draw_mermaid_png()))
 
 # Invoke
-from langchain_core.messages import HumanMessage
+from langchain.messages import HumanMessage
 messages = [HumanMessage(content="Add 3 and 4.")]
 messages = agent.invoke({"messages": messages})
 for m in messages["messages"]:
@@ -411,7 +411,7 @@ llm_with_tools = llm.bind_tools(tools)
 
 # Step 2: Define state
 
-from langchain_core.messages import AnyMessage
+from langchain.messages import AnyMessage
 from typing_extensions import TypedDict, Annotated
 import operator
 
@@ -420,7 +420,7 @@ class MessagesState(TypedDict):
     llm_calls: int
 
 # Step 3: Define model node
-from langchain_core.messages import SystemMessage
+from langchain.messages import SystemMessage
 def llm_call(state: dict):
     """LLM decides whether to call a tool or not"""
 
@@ -441,7 +441,7 @@ def llm_call(state: dict):
 
 # Step 4: Define tool node
 
-from langchain_core.messages import ToolMessage
+from langchain.messages import ToolMessage
 
 def tool_node(state: dict):
     """Performs the tool call"""
@@ -497,7 +497,7 @@ from IPython.display import Image, display
 display(Image(agent.get_graph(xray=True).draw_mermaid_png()))
 
 # Invoke
-from langchain_core.messages import HumanMessage
+from langchain.messages import HumanMessage
 messages = [HumanMessage(content="Add 3 and 4.")]
 messages = agent.invoke({"messages": messages})
 for m in messages["messages"]:
@@ -698,7 +698,7 @@ tools_by_name = {tool.name: tool for tool in tools}
 llm_with_tools = llm.bind_tools(tools)
 
 from langgraph.graph import add_messages
-from langchain_core.messages import (
+from langchain.messages import (
     SystemMessage,
     HumanMessage,
     BaseMessage,
@@ -949,7 +949,7 @@ tools_by_name = {tool.name: tool for tool in tools}
 llm_with_tools = llm.bind_tools(tools)
 
 from langgraph.graph import add_messages
-from langchain_core.messages import (
+from langchain.messages import (
     SystemMessage,
     HumanMessage,
     BaseMessage,

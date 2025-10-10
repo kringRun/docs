@@ -132,7 +132,7 @@ Putting these steps in dedicated nodes lets us (1) force tool-calls when needed,
 from typing import Literal
 
 from langchain.agents import ToolNode
-from langchain_core.messages import AIMessage
+from langchain.messages import AIMessage
 from langchain_core.runnables import RunnableConfig
 from langgraph.graph import END, START, MessagesState, StateGraph
 

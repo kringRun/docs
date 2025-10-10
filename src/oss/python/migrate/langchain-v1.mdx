@@ -79,7 +79,7 @@ agent = create_agent(
 )
 ```
 ```python V0 (old)
-from langchain_core.messages import SystemMessage
+from langchain.messages import SystemMessage
 from langgraph.prebuilt import create_react_agent
 
 agent = create_react_agent(
@@ -408,7 +408,7 @@ from langchain.agents import create_agent
 from langchain.agents.middleware import (
     AgentMiddleware, ModelRequest, ModelRequestHandler
 )
-from langchain_core.messages import AIMessage
+from langchain.messages import AIMessage
 from langchain_openai import ChatOpenAI
 
 basic_model = ChatOpenAI(model="gpt-5-nano")
