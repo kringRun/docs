@@ -731,6 +731,10 @@ class DocumentationBuilder:
         if file_path.name == "docs.json":
             return True
 
+        # index.mdx at root should be shared
+        if file_path.name == "index.mdx" and len(relative_path.parts) == 1:
+            return True
+
         # Images directory should be shared
         if "images" in relative_path.parts:
             return True

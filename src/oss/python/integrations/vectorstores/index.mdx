@@ -366,8 +366,8 @@ model = init_chat_model("deepseek-chat", model_provider="deepseek")
 
 **Select vector store:**
 
-<Tabs>
-<Tab title="In-memory">
+<AccordionGroup>
+<Accordion title="In-memory">
 
 <CodeGroup>
 ```bash pip
@@ -383,8 +383,8 @@ from langchain_core.vectorstores import InMemoryVectorStore
 
 vector_store = InMemoryVectorStore(embeddings)
 ```
-</Tab>
-<Tab title="AstraDB">
+</Accordion>
+<Accordion title="AstraDB">
 
 <CodeGroup>
 ```bash pip
@@ -406,8 +406,8 @@ vector_store = AstraDBVectorStore(
     namespace=ASTRA_DB_NAMESPACE,
 )
 ```
-</Tab>
-<Tab title="Chroma">
+</Accordion>
+<Accordion title="Chroma">
 
 <CodeGroup>
 ```bash pip
@@ -427,8 +427,8 @@ vector_store = Chroma(
     persist_directory="./chroma_langchain_db",  # Where to save data locally, remove if not necessary
 )
 ```
-</Tab>
-<Tab title="FAISS">
+</Accordion>
+<Accordion title="FAISS">
 ```bash
 pip install -qU langchain-community
 ```
@@ -447,8 +447,8 @@ vector_store = FAISS(
     index_to_docstore_id={},
 )
 ```
-</Tab>
-<Tab title="Milvus">
+</Accordion>
+<Accordion title="Milvus">
 
 <CodeGroup>
 ```bash pip
@@ -470,8 +470,8 @@ vector_store = Milvus(
     index_params={"index_type": "FLAT", "metric_type": "L2"},
 )
 ```
-</Tab>
-<Tab title="MongoDB">
+</Accordion>
+<Accordion title="MongoDB">
 ```bash
 pip install -qU langchain-mongodb
 ```
@@ -485,8 +485,8 @@ vector_store = MongoDBAtlasVectorSearch(
     relevance_score_fn="cosine",
 )
 ```
-</Tab>
-<Tab title="PGVector">
+</Accordion>
+<Accordion title="PGVector">
 
 <CodeGroup>
 ```bash pip
@@ -506,8 +506,8 @@ vector_store = PGVector(
     connection="postgresql+psycopg://..."
 )
 ```
-</Tab>
-<Tab title="PGVectorStore">
+</Accordion>
+<Accordion title="PGVectorStore">
 
 <CodeGroup>
 ```bash pip
@@ -531,8 +531,8 @@ vector_store = PGVectorStore.create_sync(
     embedding_service=embedding
 )
 ```
-</Tab>
-<Tab title="Pinecone">
+</Accordion>
+<Accordion title="Pinecone">
 
 <CodeGroup>
 ```bash pip
@@ -552,8 +552,8 @@ index = pc.Index(index_name)
 
 vector_store = PineconeVectorStore(embedding=embeddings, index=index)
 ```
-</Tab>
-<Tab title="Qdrant">
+</Accordion>
+<Accordion title="Qdrant">
 
 <CodeGroup>
 ```bash pip
@@ -584,8 +584,8 @@ vector_store = QdrantVectorStore(
     embedding=embeddings,
 )
 ```
-</Tab>
-</Tabs>
+</Accordion>
+</AccordionGroup>
 
 | Vectorstore | Delete by ID | Filtering | Search by Vector | Search with score | Async | Passes Standard Tests | Multi Tenancy | IDs in add Documents |
 |------------|-------------|-----------|-----------------|------------------|--------|---------------------|---------------|-------------------|

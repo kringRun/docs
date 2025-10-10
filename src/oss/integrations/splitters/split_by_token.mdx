@@ -4,6 +4,7 @@ title: Splitting by token
 
 Language models have a token limit. You should not exceed the token limit. When you [split your text](/oss/integrations/splitters/) into chunks it is therefore a good idea to count the number of tokens. There are many tokenizers. When you count tokens in your text you should use the same tokenizer as used in the language model.
 
+:::python
 ## tiktoken
 
 <Note>
@@ -16,7 +17,7 @@ We can use `tiktoken` to estimate tokens used. It will probably be more accurate
 1. How the text is split: by character passed in.
 2. How the chunk size is measured: by `tiktoken` tokenizer.
 
-[CharacterTextSplitter](https://python.langchain.com/api_reference/text_splitters/character/langchain_text_splitters.character.CharacterTextSplitter.html), [RecursiveCharacterTextSplitter](https://python.langchain.com/api_reference/text_splitters/character/langchain_text_splitters.character.RecursiveCharacterTextSplitter.html), and [TokenTextSplitter](https://python.langchain.com/api_reference/text_splitters/base/langchain_text_splitters.base.TokenTextSplitter.html) can be used with `tiktoken` directly.
+@[CharacterTextSplitter], @[RecursiveCharacterTextSplitter], and @[TokenTextSplitter] can be used with `tiktoken` directly.
 
 
 ```python
@@ -32,7 +33,7 @@ with open("state_of_the_union.txt") as f:
     state_of_the_union = f.read()
 ```
 
-To split with a [CharacterTextSplitter](https://python.langchain.com/api_reference/text_splitters/character/langchain_text_splitters.character.CharacterTextSplitter.html) and then merge chunks with `tiktoken`, use its `.from_tiktoken_encoder()` method. Note that splits from this method can be larger than the chunk size measured by the `tiktoken` tokenizer.
+To split with a @[CharacterTextSplitter] and then merge chunks with `tiktoken`, use its `.from_tiktoken_encoder()` method. Note that splits from this method can be larger than the chunk size measured by the `tiktoken` tokenizer.
 
 The `.from_tiktoken_encoder()` method takes either `encoding_name` as an argument (e.g. `cl100k_base`), or the `model_name` (e.g. `gpt-4`). All additional arguments like `chunk_size`, `chunk_overlap`, and `separators` are used to instantiate `CharacterTextSplitter`:
 
@@ -85,7 +86,69 @@ print(texts[0])
 Madam Speaker, Madam Vice President, our
 ```
 Some written languages (e.g. Chinese and Japanese) have characters which encode to 2 or more tokens. Using the `TokenTextSplitter` directly can split the tokens for a character between two chunks causing malformed Unicode characters. Use `RecursiveCharacterTextSplitter.from_tiktoken_encoder` or `CharacterTextSplitter.from_tiktoken_encoder` to ensure chunks contain valid Unicode strings.
+:::
 
+:::js
+## js-tiktoken
+
+<Note>
+**[js-tiktoken](https://github.com/dqbd/tiktoken) is a JavaScript vesrion of the `BPE` tokenizer created by `OpenAI`.**
+</Note>
+
+We can use `tiktoken` to estimate tokens used using @[TokenTextSplitter]. It will probably be more accurate for OpenAI mdoels.
+
+1. How the text is split: by character passed in.
+2. How the chunk size is measured: by `tiktoken` tokenizer.
+
+<CodeGroup>
+```bash npm
+npm install @langchain/textsplitters
+```
+
+```bash pnpm
+pnpm install @langchain/textsplitters
+```
+
+```bash yarn
+yarn add @langchain/textsplitters
+```
+
+```bash bun
+bun add @langchain/textsplitters
+```
+</CodeGroup>
+
+```ts
+import { TokenTextSplitter } from "@langchain/textsplitters";
+import { readFileSync } from "fs";
+
+// Example: read a long document
+const stateOfTheUnion = readFileSync("state_of_the_union.txt", "utf8");
+```
+
+To split with a @[TokenTextSplitter] and then merge chunks with `tiktoken`, pass in an `encodingName` (e.g. cl100k_base) when initializing the @[TokenTextSplitter]. Note that splits from this method can be larger than the chunk size measured by the `tiktoken` tokenizer.
+
+```ts
+import { TokenTextSplitter } from "@langchain/textsplitters";
+
+// Example: use cl100k_base encoding
+const splitter = new TokenTextSplitter({ encodingName: "cl100k_base", chunkSize: 10, chunkOverlap: 0 });
+
+const texts = splitter.splitText(stateOfTheUnion);
+console.log(texts[0]);
+```
+```output
+Madam Speaker, Madam Vice President, our First Lady and Second Gentleman. Members of Congress and the Cabinet. Justices of the Supreme Court. My fellow Americans.
+
+Last year COVID-19 kept us apart. This year we are finally together again.
+
+Tonight, we meet as Democrats Republicans and Independents. But most importantly as Americans.
+
+With a duty to one another to the American people to the Constitution.
+```
+:::
+
+:::python
 ## spaCy
 
 <Note>
@@ -398,3 +461,4 @@ Tonight, we meet as Democrats Republicans and Independents. But most importantly
 
 With a duty to one another to the American people to the Constitution.
 ```
+:::

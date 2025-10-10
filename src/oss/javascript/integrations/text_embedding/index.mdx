@@ -1,10 +1,42 @@
 ---
-title: Embeddings
+title: "Embedding models"
 ---
 
-[Embedding models](/oss/integrations/text_embedding) create a vector representation of a piece of text.
+## Overview
 
-This page documents integrations with various model providers that allow you to use embeddings in LangChain.
+<Note>
+This overview covers **text-based embedding models**. LangChain does not currently support multimodal embeddings.
+</Note>
+
+Embedding models transform raw text—such as a sentence, paragraph, or tweet—into a fixed-length vector of numbers that captures its **semantic meaning**. These vectors allow machines to compare and search text based on meaning rather than exact words.
+
+In practice, this means that texts with similar ideas are placed close together in the vector space. For example, instead of matching only the phrase *"machine learning"*, embeddings can surface documents that discuss related concepts even when different wording is used.
+
+### How it works
+
+1. **Vectorization** — The model encodes each input string as a high-dimensional vector.
+2. **Similarity scoring** — Vectors are compared using mathematical metrics to measure how closely related the underlying texts are.
+
+### Similarity metrics
+
+Several metrics are commonly used to compare embeddings:
+
+* **Cosine similarity** — measures the angle between two vectors.
+* **Euclidean distance** — measures the straight-line distance between points.
+* **Dot product** — measures how much one vector projects onto another.
+
+## Interface
+
+LangChain provides a standard interface for text embedding models (e.g., OpenAI, Cohere, Hugging Face) via the @[Embeddings] interface.
+
+Two main methods are available:
+
+* `embedDocuments(documents: string[]) → number[][]`: Embeds a list of documents.
+* `embedQuery(text: string) → number[]`: Embeds a single query.
+
+<Note>
+The interface allows queries and documents to be embedded with different strategies, though most providers handle them the same way in practice.
+</Note>
 
 ## Install and use
 
@@ -18,11 +50,9 @@ Install dependencies:
 ```bash npm
 npm i @langchain/openai
 ```
-
 ```bash yarn
 yarn add @langchain/openai
 ```
-
 ```bash pnpm
 pnpm add @langchain/openai
 ```
@@ -42,19 +72,18 @@ import { OpenAIEmbeddings } from "@langchain/openai";
 const embeddings = new OpenAIEmbeddings({
   model: "text-embedding-3-large"
 });
-
-await embeddings.embedQuery("Hello, world!");
 ```
 
 </Accordion>
 <Accordion title="Azure">
 
-Install dependencies:
+Install dependencies
+
+<CodeGroup>
 
 ```bash npm
 npm i @langchain/openai
 ```
-
 ```bash yarn
 yarn add @langchain/openai
 ```
@@ -62,6 +91,7 @@ yarn add @langchain/openai
 ```bash pnpm
 pnpm add @langchain/openai
 ```
+</CodeGroup>
 
 Add environment variables:
 
@@ -79,16 +109,16 @@ import { AzureOpenAIEmbeddings } from "@langchain/openai";
 const embeddings = new AzureOpenAIEmbeddings({
   azureOpenAIApiEmbeddingsDeploymentName: "text-embedding-ada-002"
 });
-
-await embeddings.embedQuery("Hello, world!");
 ```
 
 </Accordion>
+
 <Accordion title="AWS">
 
 Install dependencies:
 
 <CodeGroup>
+
 ```bash npm
 npm i @langchain/aws
 ```
@@ -100,6 +130,7 @@ yarn add @langchain/aws
 ```bash pnpm
 pnpm add @langchain/aws
 ```
+
 </CodeGroup>
 
 Add environment variables:
@@ -116,13 +147,45 @@ import { BedrockEmbeddings } from "@langchain/aws";
 const embeddings = new BedrockEmbeddings({
   model: "amazon.titan-embed-text-v1"
 });
-
-await embeddings.embedQuery("Hello, world!");
 ```
 
 </Accordion>
+<Accordion title="Google Gemini">
 
-<Accordion title="VertexAI">
+Install dependencies:
+
+<CodeGroup>
+```bash npm
+npm i @langchain/google-genai
+```
+
+```bash yarn
+yarn add @langchain/google-genai
+```
+
+```bash pnpm
+pnpm add @langchain/google-genai
+```
+</CodeGroup>
+
+Add environment variables:
+
+```bash
+GOOGLE_API_KEY=your-api-key
+```
+
+Instantiate the model:
+
+```typescript
+import { GoogleGenerativeAIEmbeddings } from "@langchain/google-genai";
+
+const embeddings = new GoogleGenerativeAIEmbeddings({
+  model: "text-embedding-004"
+});
+```
+
+</Accordion>
+<Accordion title="Google Vertex">
 
 Install dependencies:
 
@@ -155,8 +218,6 @@ import { VertexAIEmbeddings } from "@langchain/google-vertexai";
 const embeddings = new VertexAIEmbeddings({
   model: "gemini-embedding-001"
 });
-
-await embeddings.embedQuery("Hello, world!");
 ```
 
 </Accordion>
@@ -165,7 +226,6 @@ await embeddings.embedQuery("Hello, world!");
 Install dependencies:
 
 <CodeGroup>
-
 ```bash npm
 npm i @langchain/mistralai
 ```
@@ -177,7 +237,6 @@ yarn add @langchain/mistralai
 ```bash pnpm
 pnpm add @langchain/mistralai
 ```
-
 </CodeGroup>
 
 Add environment variables:
@@ -194,8 +253,6 @@ import { MistralAIEmbeddings } from "@langchain/mistralai";
 const embeddings = new MistralAIEmbeddings({
   model: "mistral-embed"
 });
-
-await embeddings.embedQuery("Hello, world!");
 ```
 
 </Accordion>
@@ -211,6 +268,7 @@ npm i @langchain/cohere
 ```bash yarn
 yarn add @langchain/cohere
 ```
+
 ```bash pnpm
 pnpm add @langchain/cohere
 ```
@@ -231,15 +289,88 @@ import { CohereEmbeddings } from "@langchain/cohere";
 const embeddings = new CohereEmbeddings({
   model: "embed-english-v3.0"
 });
+```
 
-await embeddings.embedQuery("Hello, world!");
+</Accordion>
+<Accordion title="Ollama">
+
+Install dependencies:
+
+<CodeGroup>
+```bash npm
+npm i @langchain/ollama
+```
+
+```bash yarn
+yarn add @langchain/ollama
+```
+
+```bash pnpm
+pnpm add @langchain/ollama
+```
+</CodeGroup>
+
+Instantiate the model:
+
+```typescript
+import { OllamaEmbeddings } from "@langchain/ollama";
+
+const embeddings = new OllamaEmbeddings({
+  model: "llama2",
+  baseUrl: "http://localhost:11434", // Default value
+});
 ```
 
 </Accordion>
 </AccordionGroup>
 
+## Caching
 
-## All embedding models
+Embeddings can be stored or temporarily cached to avoid needing to recompute them.
+
+Caching embeddings can be done using a `CacheBackedEmbeddings`. This wrapper stores embeddings in a key-value store, where the text is hashed and the hash is used as the key in the cache.
+
+The main supported way to initialize a `CacheBackedEmbeddings` is `fromBytesStore`. It takes the following parameters:
+
+- **underlyingEmbeddings**: The embedder to use for embedding.
+- **documentEmbeddingStore**: Any [`BaseStore`](/oss/integrations/stores/) for caching document embeddings.
+- **options.namespace**: (optional, defaults to `""`) The namespace to use for the document cache. Helps avoid collisions (e.g., set it to the embedding model name).
+
+<Important>
+- Always set the `namespace` parameter to avoid collisions when using different embedding models.
+- `CacheBackedEmbeddings` does not cache query embeddings by default. To enable this, specify a `query_embedding_store`.
+</Important>
+
+```typescript
+import { CacheBackedEmbeddings } from "langchain/embeddings/cache_backed";
+import { InMemoryStore } from "@langchain/core/stores";
+
+const underlyingEmbeddings = new OpenAIEmbeddings();
+
+const inMemoryStore = new InMemoryStore();
+
+const cacheBackedEmbeddings = CacheBackedEmbeddings.fromBytesStore(
+  underlyingEmbeddings,
+  inMemoryStore,
+  {
+    namespace: underlyingEmbeddings.model,
+  }
+);
+
+// Example: caching a query embedding
+const tic = Date.now();
+const queryEmbedding = cacheBackedEmbeddings.embedQuery("Hello, world!");
+console.log(`First call took: ${Date.now() - tic}ms`);
+
+// Example: caching a document embedding
+const tic = Date.now();
+const documentEmbedding = cacheBackedEmbeddings.embedDocuments(["Hello, world!"]);
+console.log(`Cached creation time: ${Date.now() - tic}ms`);
+```
+
+In production, you would typically use a more robust persistent store, such as a database or cloud storage. Please see [stores integrations](/oss/integrations/stores/) for options.
+
+## All integrations
 
 <Columns cols={3}>
   <Card
