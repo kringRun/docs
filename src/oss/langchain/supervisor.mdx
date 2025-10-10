@@ -23,7 +23,7 @@ Multi-agent architectures allow you to partition [tools](/oss/langchain/tools) a
 We will cover the following concepts:
 
 - [Multi-agent systems](/oss/langchain/multi-agent)
-- [Human-in-the-loop revew](/oss/langchainhuman-in-the-loop)
+- [Human-in-the-loop review](/oss/langchain/human-in-the-loop)
 
 ## Setup
 
@@ -731,7 +731,7 @@ def schedule_event(
     state: Annotated[dict, InjectedState]
 ) -> str:
     """Schedule calendar events using natural language."""
-    # Customize copntext received by sub-agent
+    # Customize context received by sub-agent
     original_user_message = next(
         message for message in state["messages"]
         if message.type == "human"
