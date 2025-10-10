@@ -79,7 +79,7 @@ agent = create_agent(
 )
 ```
 ```python v0 (old)
-from langchain_core.messages import SystemMessage
+from langchain.messages import SystemMessage
 from langgraph.prebuilt import create_react_agent
 
 agent = create_react_agent(
@@ -271,7 +271,7 @@ Custom state is now defined in middleware using the `state_schema` attribute:
 <CodeGroup>
 ```python v1 (new)
 from typing import Annotated
-from langchain_core.tools import tool
+from langchain.tools import tool
 from langchain.agents import create_agent  # [!code highlight]
 from langchain.agents.middleware import AgentMiddleware, AgentState  # [!code highlight]
 from langgraph.prebuilt import InjectedState
@@ -408,7 +408,7 @@ from langchain.agents import create_agent
 from langchain.agents.middleware import (
     AgentMiddleware, ModelRequest, ModelRequestHandler
 )
-from langchain_core.messages import AIMessage
+from langchain.messages import AIMessage
 from langchain_openai import ChatOpenAI
 
 basic_model = ChatOpenAI(model="gpt-5-nano")
