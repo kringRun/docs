@@ -1,9 +1,10 @@
 ---
 title: LangChain v1 migration guide
-sidebarTitle: Migration guide
+sidebarTitle: Migrate to v1
 ---
 
-## Migrating to `create_agent`
+This guide outlines the major changes between LangChain v1 and previous versions.
+## Migrate to `create_agent`
 
 ### Overview
 
@@ -11,8 +12,8 @@ sidebarTitle: Migration guide
 |---------|--------------|
 | [Import path](#import-path) | Package moved from `langgraph.prebuilt` to `langchain.agents` |
 | [Prompts](#prompts) | Parameter renamed to `system_prompt`, dynamic prompts use middleware |
-| [Pre model hook](#pre-model-hook) | Replaced by middleware with `before_model` method |
-| [Post model hook](#post-model-hook) | Replaced by middleware with `after_model` method |
+| [Pre-model hook](#pre-model-hook) | Replaced by middleware with `before_model` method |
+| [Post-model hook](#post-model-hook) | Replaced by middleware with `after_model` method |
 | [Custom state](#custom-state) | Defined in middleware, `TypedDict` only |
 | [Model](#model) | Dynamic selection via middleware, pre-bound models not supported |
 | [Tools](#tools) | Tool error handling moved to middleware with `wrap_tool_call` |
@@ -23,7 +24,7 @@ sidebarTitle: Migration guide
 ### Import path
 
 The import path for the agent prebuilt has changed from `langgraph.prebuilt` to `langchain.agents`.
-The name of the function has changed from `create_react_agent` to `create_agent`.
+The name of the function has changed from `create_react_agent` to `create_agent`:
 
 <CodeGroup>
 ```python V1 (new)
@@ -38,7 +39,7 @@ from langgraph.prebuilt import create_react_agent
 
 #### Static prompt rename
 
-The `prompt` parameter has been renamed to `system_prompt`.
+The `prompt` parameter has been renamed to `system_prompt`:
 
 <CodeGroup>
 ```python V1 (new)
@@ -89,7 +90,7 @@ agent = create_react_agent(
 
 #### Dynamic prompts
 
-Dynamic prompts are a core context engineering pattern—adapting what you tell the model based on the current conversation state. The `@dynamic_prompt` decorator makes this simple:
+Dynamic prompts are a core context engineering pattern— they adapt what you tell the model based on the current conversation state. To do this, use the `@dynamic_prompt` decorator:
 
 <CodeGroup>
 ```python V1 (new)
@@ -172,13 +173,13 @@ agent.invoke(
 </CodeGroup>
 
 
-### Pre model hook
+### Pre-model hook
 
 Pre-model hooks are now implemented as middleware with the `before_model` method.
-This new pattern is more extensible - you can define multiple middlewares to run before the model is called,
+This new pattern is more extensible-- you can define multiple middlewares to run before the model is called,
 reusing common patterns across different agents.
 
-Common use cases here are:
+Common use cases include:
 * Summarizing conversation history
 * Trimming messages
 * Input guardrails, like PII redaction
@@ -216,13 +217,13 @@ agent = create_react_agent(
 ```
 </CodeGroup>
 
-### Post model hook
+### Post-model hook
 
 Post-model hooks are now implemented as middleware with the `after_model` method.
-This new pattern is more extensible - you can define multiple middlewares to run after the model is called,
+This new pattern is more extensible-- you can define multiple middlewares to run after the model is called,
 reusing common patterns across different agents.
 
-Common use cases here are:
+Common use cases include:
 * Human in the loop
 * Output guardrails
 
@@ -324,7 +325,7 @@ agent = create_react_agent(
 
 #### State type restrictions
 
-`create_agent` now only supports `TypedDict` for state schemas. Pydantic models and dataclasses are no longer supported for simplicity and consistency.
+`create_agent` now only supports `TypedDict` for state schemas. Pydantic models and dataclasses are no longer supported.
 
 <CodeGroup>
 ```python V1 (new)
@@ -357,7 +358,7 @@ agent = create_react_agent(
 ```
 </CodeGroup>
 
-**Migration steps**:
+To migrate:
 1. Convert Pydantic models to `TypedDict`
 2. Convert dataclasses to `TypedDict`
 3. Remove validators and default values (handle these in your node functions instead)
@@ -507,14 +508,14 @@ You can now configure the handling of tool errors with middleware implementing t
 
 ### Structured output
 
-#### Node Changes
+#### Node changes
 
 Structured output used to be generated in a separate node from the main agent. This is no longer the case.
 We generate structured output in the main loop, reducing cost and latency.
 
 #### Tool and provider strategies
 
-In V1 we're announcing two new structured output strategies:
+In V1, there are two new structured output strategies:
 
 * `ToolStrategy` uses artificial tool calling to generate structured output
 * `ProviderStrategy` uses provider-native structured output generation
@@ -578,10 +579,10 @@ When streaming events from agents, the node name has changed from `"agent"` to `
 ### Runtime context
 
 When you invoke an agent, it's often the case that you want to pass two types of data:
-* Dynamic state that changes throughout the conversation (ex, message history)
-* Static context that doesn't change during the conversation (ex, user metadata)
+* Dynamic state that changes throughout the conversation (e.g., message history)
+* Static context that doesn't change during the conversation (e.g., user metadata)
 
-In V1, we've added first class support for static context with the `context` parameter to `invoke` and `stream`.
+In V1, static context is supported by setting the `context` parameter to `invoke` and `stream`.
 
 <CodeGroup>
 ```python V1 (new)
@@ -627,7 +628,7 @@ result = agent.invoke(
     The old `config["configurable"]` pattern still works for backward compatibility, but using the new `context` parameter is recommended for new applications or applications migrating to V1.
 </Note>
 
-## Breaking Changes
+## Breaking changes
 
 ### Dropped Python 3.9 support
 
