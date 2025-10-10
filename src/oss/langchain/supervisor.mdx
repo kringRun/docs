@@ -14,6 +14,8 @@ In this tutorial, you'll build a personal assistant system that demonstrates the
 - A **calendar agent** that handles scheduling, availability checking, and event management.
 - An **email agent** that manages communication, drafts messages, and sends notifications.
 
+We will also incorporate [human-in-the-loop review](/oss/langchain/human-in-the-loop) to allow users to approve, edit, and reject actions (such as outbound emails) as desired.
+
 ### Why use a supervisor?
 
 Multi-agent architectures allow you to partition [tools](/oss/langchain/tools) across workers, each with their own individual prompts or instructions. Consider an agent with direct access to all calendar and email APIs: it must choose from many similar tools, understand exact formats for each API, and handle multiple domains simultaneously. If performance degrades, it may be helpful to separate related tools and associated prompts into logical groups (in part to manage iterative improvements).
@@ -44,14 +46,14 @@ For more details, see our [Installation guide](/oss/langchain/install).
 
 ### LangSmith
 
-Set up [LangSmith](https://smith.langchain.com) to inspect what is happening inside your chain or agent. Then set the following environment variables:
+Set up [LangSmith](https://smith.langchain.com) to inspect what is happening inside your agent. Then set the following environment variables:
 
 <CodeGroup>
-```shell
+```bash bash
 export LANGSMITH_TRACING="true"
 export LANGSMITH_API_KEY="..."
 ```
-```python
+```python python
 import getpass
 import os
 
