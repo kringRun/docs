@@ -222,6 +222,32 @@ const agent = createAgent({
 ```
 :::
 
+<Accordion title="Configuration options">
+
+:::python
+| Parameter | Description | Default |
+|-----------|-------------|---------|
+| `interrupt_on` | Mapping of tool names to approval configs (`True`, `False`, or `InterruptOnConfig`) | Required |
+| `description_prefix` | Prefix for action request descriptions | `"Tool execution requires approval"` |
+
+**`InterruptOnConfig` options:**
+- `allowed_decisions`: List of allowed decisions (`"approve"`, `"edit"`, `"reject"`)
+- `description`: Static string or callable for custom description
+:::
+
+:::js
+| Parameter | Description | Default |
+|-----------|-------------|---------|
+| `interruptOn` | Mapping of tool names to approval configs | Required |
+
+**Tool approval config options:**
+- `allowAccept`: Whether approval is allowed | `false`
+- `allowEdit`: Whether editing is allowed | `false`
+- `allowRespond`: Whether responding/rejection is allowed | `false`
+:::
+
+</Accordion>
+
 <Note>
 **Important:** Human-in-the-loop middleware requires a [checkpointer](/oss/python/langgraph/checkpointing) to maintain state across interruptions.
 
@@ -296,6 +322,25 @@ const result = await agent.invoke({
 });
 ```
 :::
+
+<Accordion title="Configuration options">
+
+:::python
+| Parameter | Description | Default |
+|-----------|-------------|---------|
+| `type` | Cache type (only `"ephemeral"` supported) | `"ephemeral"` |
+| `ttl` | Time to live (`"5m"` or `"1h"`) | `"5m"` |
+| `min_messages_to_cache` | Minimum messages before caching starts | `0` |
+| `unsupported_model_behavior` | Behavior for non-Anthropic models (`"ignore"`, `"warn"`, `"raise"`) | `"warn"` |
+:::
+
+:::js
+| Parameter | Description | Default |
+|-----------|-------------|---------|
+| `ttl` | Time to live (`"5m"` or `"1h"`) | `"5m"` |
+:::
+
+</Accordion>
 
 ### Model call limit
 
@@ -489,6 +534,28 @@ const agent = createAgent({
 ```
 :::
 
+<Accordion title="Configuration options">
+
+:::python
+| Parameter | Description | Default |
+|-----------|-------------|---------|
+| `first_model` | First fallback model (string or `BaseChatModel` instance) | Required |
+| `*additional_models` | Additional fallback models in order | - |
+:::
+
+:::js
+The middleware accepts a variable number of string arguments representing fallback models in order:
+```typescript
+modelFallbackMiddleware(
+  "first-fallback-model",
+  "second-fallback-model",
+  // ... more models
+)
+```
+:::
+
+</Accordion>
+
 ### PII detection
 
 Detect and handle Personally Identifiable Information in conversations.
@@ -555,7 +622,29 @@ const agent = createAgent({
 ```
 :::
 
-<Accordion title="Built-in PII types and strategies">
+<Accordion title="Configuration options">
+
+:::python
+| Parameter | Description | Default |
+|-----------|-------------|---------|
+| `pii_type` | Type of PII to detect (built-in or custom) | Required |
+| `strategy` | How to handle detected PII (`"block"`, `"redact"`, `"mask"`, `"hash"`) | `"redact"` |
+| `detector` | Custom detector function or regex pattern | `None` (uses built-in) |
+| `apply_to_input` | Check user messages before model call | `True` |
+| `apply_to_output` | Check AI messages after model call | `False` |
+| `apply_to_tool_results` | Check tool result messages after execution | `False` |
+:::
+
+:::js
+| Parameter | Description | Default |
+|-----------|-------------|---------|
+| `piiType` | Type of PII to detect (built-in or custom) | Required |
+| `strategy` | How to handle detected PII (`"block"`, `"redact"`, `"mask"`, `"hash"`) | `"redact"` |
+| `detector` | Custom detector regex pattern | `undefined` (uses built-in) |
+| `applyToInput` | Check user messages before model call | `true` |
+| `applyToOutput` | Check AI messages after model call | `false` |
+| `applyToToolResults` | Check tool result messages after execution | `false` |
+:::
 
 **Built-in PII types:**
 - `email` - Email addresses
@@ -614,6 +703,21 @@ console.log(result.todos); // Array of todo items with status tracking
 ```
 :::
 
+<Accordion title="Configuration options">
+
+:::python
+| Parameter | Description | Default |
+|-----------|-------------|---------|
+| `system_prompt` | Custom system prompt for guiding todo usage | Built-in prompt |
+| `tool_description` | Custom description for the `write_todos` tool | Built-in description |
+:::
+
+:::js
+No configuration options available (uses defaults).
+:::
+
+</Accordion>
+
 ### LLM tool selector
 
 Use an LLM to intelligently select relevant tools before calling the main model.
@@ -662,6 +766,27 @@ const agent = createAgent({
 ```
 :::
 
+<Accordion title="Configuration options">
+
+:::python
+| Parameter | Description | Default |
+|-----------|-------------|---------|
+| `model` | Model for tool selection (string or `BaseChatModel` instance) | Uses agent's main model |
+| `system_prompt` | Instructions for the selection model | Built-in prompt |
+| `max_tools` | Maximum number of tools to select | `None` (no limit) |
+| `always_include` | Tool names to always include | `None` |
+:::
+
+:::js
+| Parameter | Description | Default |
+|-----------|-------------|---------|
+| `model` | Model for tool selection (string) | Uses agent's main model |
+| `maxTools` | Maximum number of tools to select | `undefined` (no limit) |
+| `alwaysInclude` | Tool names to always include | `undefined` |
+:::
+
+</Accordion>
+
 ### Context editing
 
 Manage conversation context by trimming, summarizing, or clearing tool uses.
@@ -709,6 +834,34 @@ const agent = createAgent({
 });
 ```
 :::
+
+<Accordion title="Configuration options">
+
+:::python
+| Parameter | Description | Default |
+|-----------|-------------|---------|
+| `edits` | List of `ContextEdit` strategies to apply | `[ClearToolUsesEdit()]` |
+| `token_count_method` | Token counting method (`"approximate"` or `"model"`) | `"approximate"` |
+
+**`ClearToolUsesEdit` options:**
+- `trigger`: Token count that triggers the edit (default: `100000`)
+- `clear_at_least`: Minimum tokens to reclaim (default: `0`)
+- `keep`: Number of recent tool results to preserve (default: `3`)
+- `clear_tool_inputs`: Whether to clear tool call parameters (default: `False`)
+- `exclude_tools`: List of tool names to exclude from clearing (default: `()`)
+- `placeholder`: Placeholder text for cleared outputs (default: `"[cleared]"`)
+:::
+
+:::js
+| Parameter | Description | Default |
+|-----------|-------------|---------|
+| `edits` | Array of `ContextEdit` strategies to apply | `[new ClearToolUsesEdit()]` |
+
+**`ClearToolUsesEdit` options:**
+- `maxTokens`: Token count that triggers the edit (default: `1000`)
+:::
+
+</Accordion>
 
 ## Custom middleware
 
