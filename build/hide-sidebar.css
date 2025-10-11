@@ -1,0 +1,14 @@
+/**
+ * Hide sidebar on home page.
+ *
+ * This CSS hides the Mintlify sidebar when users are viewing
+ * the home page.
+ */
+
+.hide-sidebar #sidebar-content {
+  display: none !important;
+}
+
+.hide-sidebar #content-container {
+  max-width: calc(100% - 2rem) !important;
+}
