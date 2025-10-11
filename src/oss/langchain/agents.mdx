@@ -9,15 +9,14 @@ import AlphaCallout from '/snippets/alpha-lc-callout.mdx';
 Agents combine language models with tools to create systems that can reason about tasks, decide which tools to use, and iteratively work towards solutions.
 
 :::python
-`create_agent()` provides a production-ready ReAct (Reasoning + Acting) agent implementation based on the paper [ReAct: Synergizing Reasoning and Acting in Language Models](https://arxiv.org/abs/2210.03629).
+`create_agent()` provides a production-ready agent implementation.
 :::
 :::js
-`createAgent()` provides a production-ready ReAct (Reasoning + Acting) agent implementation based on the paper [ReAct: Synergizing Reasoning and Acting in Language Models](https://arxiv.org/abs/2210.03629).
+`createAgent()` provides a production-ready agent implementation.
 :::
 
-ReAct frames an agent's behavior as an interleaving of `thought` -> `action` -> `observation` steps, where the model writes out its reasoning, picks a tool, sees the tool's result, and then repeats. ReAct reduces hallucinations and makes the decision process auditable: the agent can form hypotheses (`thought`), test them with tools (`action`), and update its plan based on feedback (`observation`).
-
-A ReAct loop runs until a stop condition - i.e., when the model emits a final answer or an iteration limit is reached.
+[An LLM Agent runs tools in a loop to achieve a goal](https://simonwillison.net/2025/Sep/18/agents/).
+An agent runs until a stop condition is met - i.e., when the model emits a final output or an iteration limit is reached.
 
 ```mermaid
 %%{
@@ -31,10 +30,10 @@ A ReAct loop runs until a stop condition - i.e., when the model emits a final an
 }%%
 graph TD
   %% Outside the agent
-  QUERY([query])
-  LLM{thought}
+  QUERY([input])
+  LLM{model}
   TOOL(tools)
-  ANSWER([answer])
+  ANSWER([output])
 
   %% Main flows (no inline labels)
   QUERY --> LLM
@@ -51,10 +50,10 @@ graph TD
 <Info>
 
 :::python
-`create_agent()` builds a **graph**-based agent runtime using [LangGraph](/oss/langgraph/overview). A graph consists of nodes (steps) and edges (connections) that define how your agent processes information. The agent moves through this graph, executing nodes like the model node (which calls the model), the tools node (which executes tools), or pre/post model hook nodes.
+`create_agent()` builds a **graph**-based agent runtime using [LangGraph](/oss/langgraph/overview). A graph consists of nodes (steps) and edges (connections) that define how your agent processes information. The agent moves through this graph, executing nodes like the model node (which calls the model), the tools node (which executes tools), or middleware.
 :::
 :::js
-`createAgent()` builds a **graph**-based agent runtime using [LangGraph](/oss/langgraph/overview). A graph consists of nodes (steps) and edges (connections) that define how your agent processes information. The agent moves through this graph, executing nodes like the model node (which calls the model), the tools node (which executes tools), or pre/post model hook nodes.
+`createAgent()` builds a **graph**-based agent runtime using [LangGraph](/oss/langgraph/overview). A graph consists of nodes (steps) and edges (connections) that define how your agent processes information. The agent moves through this graph, executing nodes like the model node (which calls the model), the tools node (which executes tools), or middleware.
 :::
 
 Learn more about the [graph API](/oss/langgraph/graph-api).
