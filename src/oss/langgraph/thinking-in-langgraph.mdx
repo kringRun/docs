@@ -3,7 +3,7 @@ title: Thinking in LangGraph
 description: Learn how to think about building agents with LangGraph by breaking down a customer support email agent into discrete steps
 ---
 
-LangGraph can change how you think about the agents you build. When you build an agent with LangGraph, you will first break it apart into discrete steps called **nodes**. Then, you will describe the different decisions and transitions for each of your nodes. Finally, you will connect your nodes together with a shared **state** that flows through them. In this tutorial, we'll guide you through the thought process of building a customer support email agent with LangGraph.
+LangGraph can change how you think about the agents you build. When you build an agent with LangGraph, you will first break it apart into discrete steps called **nodes**. Then, you will describe the different decisions and transitions for each of your nodes. Finally, you will connect your nodes together through a shared **state** that each node can read from and write to. In this tutorial, we'll guide you through the thought process of building a customer support email agent with LangGraph.
 
 ## Start with the process you want to automate
 
@@ -33,74 +33,44 @@ To implement an agent in LangGraph, you will usually follow the same five steps.
 Start by identifying the distinct steps in your process. Each step will become a **node** (a function that does one specific thing). Then sketch how these steps connect to each other.
 
 ```
-     ┌─────────────┐
-     │   START     │
-     └──────┬──────┘
-            ↓
-     ┌─────────────┐
-     │ Read Email  │
-     └──────┬──────┘
-            ↓
-     ┌─────────────┐
-     │  Classify   │
-     │   Intent    │ ──────────┐
-     └──────┬──────┘           │
-           ╱ ╲                 │
-          ╱   ╲                │
-         ╱     ╲               ↓
-   ┌────────┐ ┌────────┐ ┌────────┐
-   │  Doc   │ │  Bug   │ │ Human  │
-   │ Search │ │ Track  │ │ Review │
-   └────┬───┘ └────┬───┘ └────┬───┘
-        ╲         ╱            │
-         ╲       ╱             │
-     ┌─────────────┐           │
-     │Draft Reply  │ ──────────┘
-     └──────┬──────┘
-           ╱ ╲
-          ╱   ╲
-   ┌────────┐ ┌────────┐
-   │ Human  │ │  Send  │
-   │ Review │ │ Reply  │
-   └────┬───┘ └────┬───┘
-        │          │
-        ↓          ↓
-     ┌─────────────┐
-     │     END     │
-     └─────────────┘
-
+            ┌─────────────┐
+            │   START     │
+            └──────┬──────┘
+                   ↓
+            ┌─────────────┐
+            │ Read Email  │
+            └──────┬──────┘
+                   ↓
+            ┌─────────────┐
+            │  Classify   │
+            │   Intent    │ ─────────┐
+            └──────┬──────┘          │
+                  ╱ ╲                │
+                 ╱   ╲               │
+                ╱     ╲              ↓
+          ┌────────┐ ┌────────┐ ┌────────┐
+          │  Doc   │ │  Bug   │ │ Human  │
+          │ Search │ │ Track  │ │ Review │
+          └────┬───┘ └────┬───┘ └────┬───┘
+               ╲         ╱           │
+                ╲       ╱            │
+            ┌─────────────┐          │
+            │ Draft Reply │ ─────────┘
+            └──────┬──────┘
+                  ╱ ╲
+                 ╱   ╲
+          ┌────────┐ ┌────────┐
+          │ Human  │ │  Send  │
+          │ Review │ │ Reply  │
+          └────┬───┘ └────┬───┘
+               │          │
+               ↓          ↓
+            ┌─────────────┐
+            │     END     │
+            └─────────────┘
 ```
 
-```mermaid
----
-config:
-  flowchart:
-    curve: linear
----
-graph TD;
-    __start__([<p>__start__</p>]):::first
-    read_email(read_email)
-    classify_intent(classify_intent)
-    search_documentation(search_documentation)
-    write_response(write_response)
-    human_review(human_review)
-    send_reply(send_reply)
-    __end__([<p>__end__</p>]):::last
-    __start__ --> read_email;
-    classify_intent --> search_documentation;
-    human_review -.-> __end__;
-    human_review -.-> send_reply;
-    read_email --> classify_intent;
-    search_documentation --> write_response;
-    write_response -.-> human_review;
-    write_response -.-> send_reply;
-    send_reply --> __end__;
-    classDef default fill:#f2f0ff,line-height:1.2
-    classDef first fill-opacity:0
-    classDef last fill:#bfb6fc
-```
-
-The arrows show possible paths, but the actual decision of which path to take happens inside each node using Command.
+The arrows show possible paths, but the actual decision of which path to take happens inside each node.
 
 Now that you've identified the components in your workflow, let's understand what each node needs to do:
 
@@ -180,14 +150,14 @@ Note: When combining user input with other operations in the same node, always p
 
 ## Step 3: Design your state
 
-State is the shared memory that flows through your agent. Think of it as the notebook your agent uses to keep track of everything it learns and decides as it works through the process.
+State is the shared [memory](/oss/concepts/memory) accessible to all nodes in your agent. Think of it as the notebook your agent uses to keep track of everything it learns and decides as it works through the process.
 
 ### What belongs in state?
 
 Ask yourself these questions about each piece of data:
 
 - **Does it need to persist across steps?** If yes, it goes in state.
-- **Can you derive it from other data?** If yes, compute it when needed instead of storing it.
+- **Can you derive it from other data?** If yes, compute it when needed instead of storing it in state.
 
 For our email agent, we need to track:
 
@@ -275,14 +245,14 @@ def execute_tool(state: State) -> Command[Literal["agent", "execute_tool"]]:
 **User-fixable errors (missing credentials, unclear instructions)** - Pause and ask for help:
 
 ```python
-def api_call(state: State) -> Command[Literal["continue"]]:
-    if not state.get('api_key'):
+def draft_response(state: State) -> Command[Literal["continue"]]:
+    if not state.get('customer_account_id'):
         user_input = interrupt({
-            "error": "API key missing",
-            "request": "Please provide your API key"
+            "error": "Customer account ID missing",
+            "request": "Please provide the customer's account ID to look up their history"
         })
         return Command(
-            update={"api_key": user_input['api_key']},
+            update={"customer_account_id": user_input['account_id']},
             goto="continue"
         )
 ```
@@ -542,14 +512,12 @@ The graph pauses when it hits `interrupt()`, saves everything to the checkpointe
 
 This was an introduction to thinking about building agents with LangGraph. You can extend this foundation with:
 
-- **Enhanced human-in-the-loop patterns**:
-    - Tool approval before execution
-    - Batch approval for multiple actions
-- **Create subgraphs** for complex multi-step operations
-- **Add streaming** to show real-time progress to users
+- **Enhanced human-in-the-loop patterns**: Learn how to add [tool approval before execution, batch approval, and other patterns](/oss/langgraph/add-human-in-the-loop)
+- **Create subgraphs** for [complex multi-step operations](/oss/langgraph/use-subgraphs)
+- **Add streaming** to [show real-time progress to users](/oss/langgraph/streaming)
 - **Integrate more tools** for web search, database queries, and API calls
 - **Implement retry logic** with exponential backoff for failed operations
-- **Add observability** with LangSmith for debugging and monitoring
+- **Add observability** with [LangSmith for debugging and monitoring](/oss/langgraph/observability)
 
 ## Key Insights
 
