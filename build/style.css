@@ -1,0 +1,44 @@
+/* Light mode CSS variables */
+:root {
+  /* Light Mode Colors - Figma Design Tokens */
+  --bg-primary: #ffffff;
+  --bg-tertiary: #f4f4f5;
+  --text-primary-900: #101828;
+  --text-secondary-700: #3f3f46;
+  --text-tertiary-600: #51525c;
+  --text-quaternary-500: #70707b;
+  --border-primary: #d1d1d6;
+  --border-secondary: #e4e4e7;
+  --border-tertiary: #f4f4f5;
+  --brand-600: #2f6868;
+  --brand-100: #d9eeec;
+  --fg-primary-900: #1a1a1e;
+
+  /* Typography - Figma Tokens */
+  --font-family: "Inter", system-ui, -apple-system, sans-serif;
+}
+
+/* Dark Mode Colors */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-primary: #1a1a1e;
+    --bg-tertiary: #2a2a2e;
+    --text-primary-900: #ffffff;
+    --text-secondary-700: #d1d1d6;
+    --text-tertiary-600: #a1a1aa;
+    --text-quaternary-500: #8a8a95;
+    --border-primary: #3f3f46;
+    --border-secondary: #2a2a2e;
+    --border-tertiary: #1f1f23;
+    --brand-600: #2f6868;
+    --brand-100: #1a2c2a;
+    --fg-primary-900: #ffffff;
+  }
+}
+
+/* Fix vertical alignment in table cells with mixed content (text and images) */
+.prose table td, article table td, .markdown table td, .content table td, [class*="prose"] table td,
+.prose table th, article table th, .markdown table th, .content table th, [class*="prose"] table th {
+  vertical-align: middle !important; /* Center align content vertically */
+  line-height: 1.5 !important; /* Consistent line height */
+}
