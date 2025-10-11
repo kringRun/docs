@@ -1,12 +1,24 @@
 ---
 title: LangChain v1 migration guide
-sidebarTitle: Migrate to v1
+sidebarTitle: Migration guide
 ---
 
-This guide outlines the major changes between LangChain v1 and previous versions.
+This migration guide outlines the major changes in LangChain v1. To learn more about the new features of v1, see the [introductory post](/oss/python/releases/langchain-v1).
+
+To upgrade,
+
+<CodeGroup>
+```bash pip
+pip install --pre -U langchain
+```
+```bash uv
+uv add --prerelease=allow langchain
+```
+</CodeGroup>
+
 ## Migrate to `create_agent`
 
-In v1, the agent prebuilt is now in the langchain package. The table below outlines what functionality has changed:
+In v1, the react agent prebuilt is now in the langchain package. The table below outlines what functionality has changed:
 
 | Section | What changed |
 |---------|--------------|
@@ -27,14 +39,10 @@ In v1, the agent prebuilt is now in the langchain package. The table below outli
 The import path for the agent prebuilt has changed from `langgraph.prebuilt` to `langchain.agents`.
 The name of the function has changed from `create_react_agent` to `create_agent`:
 
-<CodeGroup>
-```python v1 (new)
-from langchain.agents import create_agent
+```python
+from langgraph.prebuilt import create_react_agent # [!code --]
+from langchain.agents import create_agent # [!code ++]
 ```
-```python v0 (old)
-from langgraph.prebuilt import create_react_agent
-```
-</CodeGroup>
 
 For more information, see [Agents](/oss/python/langchain/agents).
 
@@ -612,6 +620,111 @@ result = agent.invoke(
 
 <Note>
     The old `config["configurable"]` pattern still works for backward compatibility, but using the new `context` parameter is recommended for new applications or applications migrating to v1.
+</Note>
+
+---
+
+## Standard content
+
+In v1, messages gain provider-agnostic standard content blocks. Access them via `message.content_blocks` for a consistent, typed view across providers. The existing `message.content` field remains unchanged for strings or provider-native structures.
+
+### What changed
+
+- New `content_blocks` property on messages for normalized content
+- Standardized block shapes, documented in [Messages](/oss/langchain/messages#standard-content-blocks)
+- Optional serialization of standard blocks into `content` via `LC_OUTPUT_VERSION=v1` or `output_version="v1"`
+
+### Read standardized content
+
+<CodeGroup>
+```python v1 (new)
+from langchain.chat_models import init_chat_model
+
+model = init_chat_model("openai:gpt-5-nano")
+response = model.invoke("Explain AI")
+
+for block in response.content_blocks:
+    if block["type"] == "reasoning":
+        print(block.get("reasoning"))
+    elif block["type"] == "text":
+        print(block.get("text"))
+```
+```python v0 (old)
+# Provider-native formats vary; you needed per-provider handling
+response = model.invoke("Explain AI")
+for item in response.content:
+    if item.get("type") == "reasoning":
+        ...  # OpenAI-style reasoning
+    elif item.get("type") == "thinking":
+        ...  # Anthropic-style thinking
+    elif item.get("type") == "text":
+        ...  # Text
+```
+</CodeGroup>
+
+### Create multimodal messages
+
+<CodeGroup>
+```python v1 (new)
+from langchain.messages import HumanMessage
+
+message = HumanMessage(content_blocks=[
+    {"type": "text", "text": "Describe this image."},
+    {"type": "image", "url": "https://example.com/image.jpg"},
+])
+res = model.invoke([message])
+```
+```python v0 (old)
+from langchain.messages import HumanMessage
+
+message = HumanMessage(content=[
+    # Provider-native structure
+    {"type": "text", "text": "Describe this image."},
+    {"type": "image_url", "image_url": {"url": "https://example.com/image.jpg"}},
+])
+res = model.invoke([message])
+```
+</CodeGroup>
+
+### Example block shapes
+
+```python
+# Text block
+text_block = {
+    "type": "text",
+    "text": "Hello world",
+}
+
+# Image block
+image_block = {
+    "type": "image",
+    "url": "https://example.com/image.png",
+    "mime_type": "image/png",
+}
+```
+
+See the content blocks [reference](/oss/langchain/messages#content-block-reference) for more details.
+
+### Serialize standard content
+
+Standard content blocks are **not serialized** into the `content` attribute by default. If you need to access standard content blocks in the `content` attribute (e.g., when sending messages to a client), you can opt-in to serializing them into `content`.
+
+<CodeGroup>
+```bash
+export LC_OUTPUT_VERSION=v1
+```
+```python
+from langchain.chat_models import init_chat_model
+
+model = init_chat_model(
+    "openai:gpt-5-nano",
+    output_version="v1",
+)
+```
+</CodeGroup>
+
+<Note>
+    Learn more: [Messages](/oss/langchain/messages#content), [Standard content blocks](/oss/langchain/messages#standard-content-blocks), and [Multimodal](/oss/langchain/messages#multimodal).
 </Note>
 
 ---
