@@ -10,8 +10,6 @@ Middleware provides a way to more tightly control what happens inside the agent.
 
 The core agent loop involves calling a `model`, letting it choose `tools` to execute, and then finishing when it calls no more tools.
 
-![Core agent loop](/images/core_agent_loop.png)
-
 Middleware provides control over what happens before and after those steps.
 
 ![Middleware flow diagram](/images/middleware_final.png)
@@ -98,17 +96,11 @@ const agent = createAgent({
 
 ## Built-in middleware
 
-LangChain provides several built-in middleware to use off-the-shelf:
+LangChain provides several built in middleware to use off-the-shelf
 
-- [Summarization](#summarization) - Automatic conversation history summarization
-- [Human-in-the-loop](#human-in-the-loop) - Human oversight for tool calls
-- [Anthropic prompt caching](#anthropic-prompt-caching) - Enable native prompt caching
-- [Planning](#planning) - Todo list management for complex tasks
-- [Model fallback](#model-fallback) - Automatic fallback to alternative models
-- [Tool selection](#tool-selection) - LLM-based tool filtering
-- [Model call limit](#model-call-limit) - Enforce model call limits
-- [Tool call limit](#tool-call-limit) - Enforce tool call limits
-- [PII detection](#pii-detection) - Detect and handle personally identifiable information
+- [Summarization](#summarization)
+- [Human-in-the-loop](#human-in-the-loop)
+- [Anthropic prompt caching](#anthropic-prompt-caching)
 
 ### Summarization
 
@@ -266,235 +258,7 @@ const result = await agent.invoke({
 ```
 :::
 
-### Planning
-
-The `PlanningMiddleware` provides todo list management capabilities to agents. This middleware adds a `write_todos` tool that allows agents to create and manage structured task lists for complex multi-step operations.
-
-**Key features:**
-
-- Automatic todo list tracking with status management
-- Tool for agents to update progress
-- Customizable prompts and tool descriptions
-
-**Use cases:**
-
-- Complex multi-step tasks requiring organization
-- Tasks where progress visibility is important
-- Agent workflows with multiple sequential operations
-
-:::python
-```python
-from langchain.agents import create_agent
-from langchain.agents.middleware import PlanningMiddleware
-
-agent = create_agent(
-    model="openai:gpt-4o",
-    tools=[...],
-    middleware=[PlanningMiddleware()],
-)
-
-# Agent now has access to write_todos tool
-result = await agent.invoke({"messages": [HumanMessage("Help me refactor my codebase")]})
-
-# Access todos from result
-print(result["todos"])  # [{"content": "...", "status": "completed", ...}, ...]
-```
-
-**Configuration options:**
-
-- `system_prompt`: Custom guidance for using the todo tool (optional)
-- `tool_description`: Custom description for the write_todos tool (optional)
-:::
-
-### Model fallback
-
-The `ModelFallbackMiddleware` provides automatic fallback to alternative models on errors. When the primary model fails, it retries with fallback models in sequence until success or all models are exhausted.
-
-**Use cases:**
-
-- Improve reliability with backup models
-- Cost optimization (try cheaper model first, fallback to more capable)
-- Handle rate limits or service outages
-
-:::python
-```python
-from langchain.agents.middleware import ModelFallbackMiddleware
-from langchain.agents import create_agent
-
-fallback = ModelFallbackMiddleware(
-    "openai:gpt-4o-mini",  # Try first on error
-    "anthropic:claude-3-5-sonnet-20241022",  # Then this
-)
-
-agent = create_agent(
-    model="openai:gpt-4o",  # Primary model
-    middleware=[fallback],
-)
-
-# If primary fails: tries gpt-4o-mini, then claude-3-5-sonnet
-result = await agent.invoke({"messages": [HumanMessage("Hello")]})
-```
-:::
-
-### Tool selection
-
-The `LLMToolSelectorMiddleware` uses an LLM to dynamically select the most relevant tools before calling the main model. This is useful when you have many tools available but want to reduce token usage and help the model focus.
-
-**Key features:**
-
-- LLM-based tool relevance scoring
-- Configurable maximum tool count
-- Always-include tool lists
-- Uses smaller/cheaper model for selection
-
-**Use cases:**
-
-- Agents with large tool catalogs
-- Reducing token usage in model calls
-- Improving tool selection accuracy
-
-:::python
-```python
-from langchain.agents.middleware import LLMToolSelectorMiddleware
-from langchain.agents import create_agent
-
-middleware = LLMToolSelectorMiddleware(
-    model="openai:gpt-4o-mini",  # Use cheaper model for selection
-    max_tools=3,  # Limit to 3 most relevant tools
-    always_include=["help_tool"],  # Always include this tool
-)
-
-agent = create_agent(
-    model="openai:gpt-4o",
-    tools=[tool1, tool2, tool3, tool4, tool5],  # Many tools
-    middleware=[middleware],
-)
-```
-
-**Configuration options:**
-
-- `model`: Model to use for selection (defaults to agent's model)
-- `system_prompt`: Instructions for the selection model
-- `max_tools`: Maximum number of tools to select (default: no limit)
-- `always_include`: Tool names to always include
-:::
-
-### Model call limit
-
-The `ModelCallLimitMiddleware` tracks model call counts and enforces limits. It supports both thread-level (across multiple invocations) and run-level (per invocation) counting.
-
-**Use cases:**
-
-- Prevent infinite loops or runaway costs
-- Enforce usage quotas
-- Debug and monitor model call frequency
-
-:::python
-```python
-from langchain.agents.middleware import ModelCallLimitMiddleware
-from langchain.agents import create_agent
-
-call_tracker = ModelCallLimitMiddleware(
-    thread_limit=10,  # Max 10 calls per thread (persisted)
-    run_limit=5,  # Max 5 calls per run (single invocation)
-    exit_behavior="end",  # Jump to end when limit exceeded
-)
-
-agent = create_agent(
-    model="openai:gpt-4o",
-    middleware=[call_tracker],
-    tools=[...],
-)
-```
-
-**Configuration options:**
-
-- `thread_limit`: Maximum calls per thread (persisted across runs)
-- `run_limit`: Maximum calls per single invocation
-- `exit_behavior`: `"end"` (graceful termination) or `"error"` (raise exception)
-:::
-
-### Tool call limit
-
-The `ToolCallLimitMiddleware` tracks tool call counts and enforces limits, similar to model call limits.
-
-:::python
-```python
-from langchain.agents.middleware import ToolCallLimitMiddleware
-
-tool_limiter = ToolCallLimitMiddleware(
-    thread_limit=20,
-    run_limit=10,
-    exit_behavior="end",
-)
-```
-
-Configuration options are identical to `ModelCallLimitMiddleware`.
-:::
-
-### PII detection
-
-The `PIIMiddleware` detects and handles Personally Identifiable Information (PII) in agent conversations. It can detect emails, credit cards, IP addresses, MAC addresses, and URLs in both user input and agent output.
-
-**Built-in PII types:**
-
-- `email`: Email addresses
-- `credit_card`: Credit card numbers (validated with Luhn algorithm)
-- `ip`: IP addresses (validated with stdlib)
-- `mac_address`: MAC addresses
-- `url`: URLs (both http/https and bare URLs)
-
-**Strategies:**
-
-- `block`: Raise an exception when PII is detected
-- `redact`: Replace PII with `[REDACTED_TYPE]` placeholders
-- `mask`: Partially mask PII (e.g., `****-****-****-1234` for credit card)
-- `hash`: Replace PII with deterministic hash (e.g., `<email_hash:a1b2c3d4>`)
-
-:::python
-```python
-from langchain.agents.middleware import PIIMiddleware
-from langchain.agents import create_agent
-
-# Redact all emails in user input
-agent = create_agent(
-    model="openai:gpt-4o",
-    middleware=[
-        PIIMiddleware("email", strategy="redact"),
-    ],
-    tools=[...],
-)
-
-# Use different strategies for different PII types
-agent = create_agent(
-    model="openai:gpt-4o",
-    middleware=[
-        PIIMiddleware("credit_card", strategy="mask"),
-        PIIMiddleware("url", strategy="redact"),
-        PIIMiddleware("ip", strategy="hash"),
-    ],
-    tools=[...],
-)
-
-# Custom PII type with regex
-agent = create_agent(
-    model="openai:gpt-4o",
-    middleware=[
-        PIIMiddleware("api_key", detector=r"sk-[a-zA-Z0-9]{32}", strategy="block"),
-    ],
-    tools=[...],
-)
-```
-
-**Configuration options:**
-
-- `pii_type`: Type of PII to detect (built-in or custom name)
-- `strategy`: How to handle detected PII
-- `detector`: Custom detector function or regex pattern
-- `apply_to_input`: Check user messages (default: `True`)
-- `apply_to_output`: Check AI messages (default: `False`)
-- `apply_to_tool_results`: Check tool results (default: `False`)
-:::
+## Custom Middleware
 
 ## Custom middleware
 
@@ -559,7 +323,7 @@ const loggingMiddleware = createMiddleware({
 :::python
 ```python
 from langchain.agents.middleware import AgentMiddleware, AgentState
-from langchain_core.messages import AIMessage
+from langchain.messages import AIMessage
 from langgraph.runtime import Runtime
 from typing import Any
 
@@ -818,8 +582,6 @@ const callCounterMiddleware = createMiddleware({
 ```
 :::
 
-When invoking the agent with custom state, TypeScript/type checking will enforce that required properties are provided:
-
 :::python
 ```python
 agent = create_agent(
@@ -854,11 +616,13 @@ const result = await agent.invoke({
 ```
 :::
 
+
+:::python
+
 ### Decorator-based middleware
 
 For simple middleware that only needs a single hook, use decorator shortcuts:
 
-:::python
 ```python
 from langchain.agents.middleware import before_model, after_model, wrap_model_call
 from langchain.agents.middleware import AgentState, ModelRequest, ModelResponse
@@ -892,44 +656,6 @@ agent = create_agent(
     tools=[...],
 )
 ```
-:::
-
-:::js
-```typescript
-import { createMiddleware, createAgent } from "langchain";
-
-// Simple function-based middleware
-const logBeforeModel = createMiddleware({
-  name: "LogBeforeModel",
-  beforeModel: (state) => {
-    console.log(`About to call model with ${state.messages.length} messages`);
-    return;
-  },
-});
-
-// Wrap-style middleware
-const retryModel = createMiddleware({
-  name: "RetryModel",
-  wrapModelCall: (request, handler) => {
-    for (let attempt = 0; attempt < 3; attempt++) {
-      try {
-        return handler(request);
-      } catch (e) {
-        if (attempt === 2) throw e;
-      }
-    }
-    throw new Error("Unreachable");
-  },
-});
-
-// Use in agent
-const agent = createAgent({
-  model: "openai:gpt-4o",
-  middleware: [logBeforeModel, retryModel],
-  tools: [...],
-});
-```
-:::
 
 Available decorators:
 - `@before_agent`
@@ -1285,202 +1011,3 @@ await agent.invoke(
 :::
 
 </Expandable>
-
-### Implementing rate limiting
-
-Use middleware to implement rate limiting across model or tool calls:
-
-:::python
-```python
-from langchain.agents.middleware import AgentMiddleware, ModelRequest, ModelResponse
-from typing import Callable
-import time
-
-class RateLimitMiddleware(AgentMiddleware):
-    def __init__(self, calls_per_minute: int = 10):
-        super().__init__()
-        self.calls_per_minute = calls_per_minute
-        self.call_times = []
-
-    def wrap_model_call(
-        self,
-        request: ModelRequest,
-        handler: Callable[[ModelRequest], ModelResponse],
-    ) -> ModelResponse:
-        # Remove calls older than 1 minute
-        now = time.time()
-        self.call_times = [t for t in self.call_times if now - t < 60]
-
-        # Check if we've exceeded the rate limit
-        if len(self.call_times) >= self.calls_per_minute:
-            oldest_call = self.call_times[0]
-            wait_time = 60 - (now - oldest_call)
-            print(f"Rate limit reached. Waiting {wait_time:.1f}s...")
-            time.sleep(wait_time)
-            self.call_times = []
-
-        # Record this call
-        self.call_times.append(time.time())
-
-        return handler(request)
-```
-:::
-
-### Implementing caching
-
-Use `wrap_model_call` to implement response caching:
-
-:::python
-```python
-from langchain.agents.middleware import AgentMiddleware, ModelRequest, ModelResponse
-from typing import Callable
-import hashlib
-import json
-
-class CachingMiddleware(AgentMiddleware):
-    def __init__(self):
-        super().__init__()
-        self.cache = {}
-
-    def wrap_model_call(
-        self,
-        request: ModelRequest,
-        handler: Callable[[ModelRequest], ModelResponse],
-    ) -> ModelResponse:
-        # Create cache key from messages
-        cache_key = hashlib.md5(
-            json.dumps([m.dict() for m in request.messages]).encode()
-        ).hexdigest()
-
-        # Check cache
-        if cache_key in self.cache:
-            print("Cache hit!")
-            return self.cache[cache_key]
-
-        # Call model and cache result
-        response = handler(request)
-        self.cache[cache_key] = response
-
-        return response
-```
-:::
-
-### Validating tool outputs
-
-Use `wrap_tool_call` to validate tool outputs and retry on failure:
-
-:::python
-```python
-from langchain.agents.middleware import AgentMiddleware
-from langchain.tools.tool_node import ToolCallRequest
-from langchain_core.messages import ToolMessage
-from langgraph.types import Command
-from typing import Callable
-
-class ToolValidationMiddleware(AgentMiddleware):
-    def wrap_tool_call(
-        self,
-        request: ToolCallRequest,
-        handler: Callable[[ToolCallRequest], ToolMessage | Command],
-    ) -> ToolMessage | Command:
-        max_retries = 3
-
-        for attempt in range(max_retries):
-            result = handler(request)
-
-            # Validate result
-            if isinstance(result, ToolMessage) and self.is_valid(result):
-                return result
-
-            if attempt < max_retries - 1:
-                print(f"Invalid tool result, retrying ({attempt + 1}/{max_retries})...")
-                continue
-
-            # Return error message after max retries
-            return ToolMessage(
-                content="Tool validation failed after multiple attempts",
-                tool_call_id=request.tool_call["id"],
-                status="error",
-            )
-
-        return result  # Unreachable but satisfies type checker
-
-    def is_valid(self, result: ToolMessage) -> bool:
-        # Implement your validation logic here
-        return result.status != "error" and len(result.content) > 0
-```
-:::
-
-### Content moderation
-
-Implement content moderation using `after_model`:
-
-:::python
-```python
-from langchain.agents.middleware import AgentMiddleware, AgentState
-from langchain_core.messages import AIMessage
-from langgraph.runtime import Runtime
-from typing import Any
-
-class ModerationMiddleware(AgentMiddleware):
-    def __init__(self, blocked_words: list[str]):
-        super().__init__()
-        self.blocked_words = [w.lower() for w in blocked_words]
-
-    def after_model(self, state: AgentState, runtime: Runtime) -> dict[str, Any] | None:
-        last_message = state["messages"][-1]
-
-        if not isinstance(last_message, AIMessage):
-            return None
-
-        content = last_message.content.lower()
-
-        # Check for blocked words
-        for word in self.blocked_words:
-            if word in content:
-                return {
-                    "messages": [AIMessage("I apologize, I cannot provide that response.")],
-                    "jump_to": "end"
-                }
-
-        return None
-```
-:::
-
-### Multi-model agent
-
-Use multiple models for different parts of the conversation:
-
-:::python
-```python
-from langchain.agents.middleware import AgentMiddleware, ModelRequest, ModelResponse
-from langchain.chat_models import init_chat_model
-from typing import Callable
-
-class MultiModelMiddleware(AgentMiddleware):
-    def __init__(self):
-        super().__init__()
-        self.fast_model = init_chat_model("openai:gpt-4o-mini")
-        self.smart_model = init_chat_model("openai:gpt-4o")
-
-    def wrap_model_call(
-        self,
-        request: ModelRequest,
-        handler: Callable[[ModelRequest], ModelResponse],
-    ) -> ModelResponse:
-        # Use fast model for simple queries, smart model for complex ones
-        last_message = request.messages[-1].content
-
-        if self.is_complex_query(last_message):
-            request.model = self.smart_model
-        else:
-            request.model = self.fast_model
-
-        return handler(request)
-
-    def is_complex_query(self, query: str) -> bool:
-        # Implement your complexity detection logic
-        complex_keywords = ["explain", "analyze", "compare", "design"]
-        return any(kw in query.lower() for kw in complex_keywords)
-```
-:::
