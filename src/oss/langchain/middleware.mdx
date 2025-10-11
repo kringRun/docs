@@ -615,6 +615,52 @@ const result = await agent.invoke({
 :::
 
 
+:::js
+### Context extension
+
+Context properties are configuration values passed through the runnable config. Unlike state, context is read-only and typically used for configuration that doesn't change during execution.
+
+
+Middleware can define context requirements that must be satisfied through the agent's configuration:
+
+```typescript
+import { z } from "zod";
+import { createMiddleware, HumanMessage } from "langchain";
+
+const rateLimitMiddleware = createMiddleware({
+  name: "RateLimitMiddleware",
+  contextSchema: z.object({
+    maxRequestsPerMinute: z.number(),
+    apiKey: z.string(),
+  }),
+  beforeModel: async (state, runtime) => {
+    // Access context through runtime
+    const { maxRequestsPerMinute, apiKey } = runtime.context;
+
+    // Implement rate limiting logic
+    const allowed = await checkRateLimit(apiKey, maxRequestsPerMinute);
+    if (!allowed) {
+      return { jumpTo: "END" };
+    }
+
+    return state;
+  },
+});
+
+// Context is provided through config
+await agent.invoke(
+  { messages: [new HumanMessage("Process data")] },
+  {
+    context: {
+      maxRequestsPerMinute: 60,
+      apiKey: "api-key-123",
+    },
+  }
+);
+```
+:::
+
+
 :::python
 
 ### Decorator-based middleware
