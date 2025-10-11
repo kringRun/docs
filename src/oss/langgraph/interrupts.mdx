@@ -53,7 +53,7 @@ import { interrupt } from "@langchain/langgraph";
 
 async function approvalNode(state: State) {
     // Pause and ask for approval
-    const approved = await interrupt("Do you approve this action?");
+    const approved = interrupt("Do you approve this action?");
 
     // Command({ resume: ... }) provides the value returned into this variable
     return { approved };
@@ -119,96 +119,6 @@ await graph.invoke(new Command({ resume: true }), config);
 - The value passed to `Command(resume=...)` becomes the return value of the `interrupt` call
 - The node restarts from the beginning of the node where the `interrupt` was called when resumed, so any code before the `interrupt` runs again
 - You can pass any JSON-serializable value as the resume value
-
-<Accordion title="Full example">
-    :::python
-
-    ```python
-    import sqlite3
-    from typing import Optional, TypedDict
-
-    from langgraph.graph import StateGraph, START, END
-    from langgraph.checkpoint.sqlite import SqliteSaver  # pip install langgraph-checkpoint-sqlite
-    from langgraph.types import Command, interrupt
-
-
-    class ApprovalState(TypedDict):
-        input: str
-        approved: Optional[bool]
-
-
-    def approval_node(state: ApprovalState):
-        # Emit payload for the caller; shows up under result["__interrupt__"]
-        approved = interrupt({
-            "question": "Approve this action?",
-            "input": state["input"],
-        })
-        return {"approved": approved}
-
-
-    builder = StateGraph(ApprovalState)
-    builder.add_node("approval", approval_node)
-    builder.add_edge(START, "approval")
-    builder.add_edge("approval", END)
-
-    # Persist checkpoints so another worker (or later process) can resume safely
-    checkpointer = SqliteSaver(sqlite3.connect("approval.db"))
-    graph = builder.compile(checkpointer=checkpointer)
-
-    # thread_id is your persistent pointer back to the saved checkpoint
-    config = {"configurable": {"thread_id": "workflow-42"}}
-    initial = graph.invoke({"input": "transfer $500"}, config=config)
-    print(initial["__interrupt__"])  # -> [Interrupt(value={'question': ..., 'input': ...})]
-
-    # Later, resume with the same thread_id; the payload becomes the return value of interrupt()
-    graph.invoke(Command(resume=True), config=config)
-    ```
-    :::
-
-    :::js
-
-    ```typescript
-    import {
-      StateGraph,
-      START,
-      END,
-      MemorySaver,
-      Command,
-      interrupt,
-    } from "@langchain/langgraph";
-    import { z } from "zod";
-
-    const State = z.object({
-      input: z.string(),
-      approved: z.boolean().nullable(),
-    });
-
-    const builder = new StateGraph(State)
-      .addNode("approval", async (state) => {
-        // Emit payload for the caller; appears in result.__interrupt__
-        const approved = await interrupt({
-        question: "Approve this action?",
-        input: state.input,
-        });
-        return { approved };
-      })
-      .addEdge(START, "approval")
-      .addEdge("approval", END);
-
-    const checkpointer = new MemorySaver();
-    const graph = builder.compile({ checkpointer });
-
-    // thread_id is the stable pointer to the saved checkpoint
-    const config = { configurable: { thread_id: "workflow-42" } };
-    const initial = await graph.invoke({ input: "transfer $500" }, config);
-    console.log(initial.__interrupt__); // -> [{ value: { question: ..., input: ... } }]
-
-    // Resume with the user's answer; the value is returned from interrupt() in the node
-    await graph.invoke(new Command({ resume: true }), config);
-    ```
-    :::
-
-</Accordion>
 
 ## Common patterns
 
@@ -527,7 +437,7 @@ await graph.invoke(
     const builder = new StateGraph(State)
       .addNode("review", async (state) => {
         // Ask a reviewer to edit the generated content
-        const updated = await interrupt({
+        const updated = interrupt({
           instruction: "Review and edit this content",
           content: state.generatedText,
         });
@@ -628,7 +538,7 @@ const sendEmailTool = tool(
 ```
 :::
 
-See the full runnable example below.
+This approach is useful when you want the approval logic to live with the tool itself, making it reusable across different parts of your graph. The LLM can call the tool naturally, and the interrupt will pause execution whenever the tool is invoked, allowing you to approve, edit, or cancel the action.
 
 <Accordion title="Full example">
     :::python
@@ -728,7 +638,7 @@ See the full runnable example below.
     const sendEmailTool = tool(
       async ({ to, subject, body }) => {
         // Pause before sending; payload surfaces in result.__interrupt__
-        const response = await interrupt({
+        const response = interrupt({
           action: "send_email",
           to,
           subject,
@@ -802,8 +712,6 @@ See the full runnable example below.
     :::
 
 </Accordion>
-
-This approach is useful when you want the approval logic to live with the tool itself, making it reusable across different parts of your graph. The LLM can call the tool naturally, and the interrupt will pause execution whenever the tool is invoked, allowing you to approve, edit, or cancel the action.
 
 ### Validating human input
 
@@ -963,7 +871,7 @@ Each time you resume the graph with invalid input, it will ask again with a clea
 
 When you call `interrupt` within a node, LangGraph suspends execution by raising an exception that signals the runtime to pause. This exception propagates up through the call stack and is caught by the runtime, which notifies the graph to save the current state and wait for external input.
 
-When execution resumes (after you provide the requested input), the runtime restarts the entire node from the beginning—it does not resume from the exact line where `interrupt` was called. This means any code that ran before the `interrupt` will execute again. Because of this, there's a few important patterns to follow when working with interrupts to ensure they behave as expected.
+When execution resumes (after you provide the requested input), the runtime restarts the entire node from the beginning—it does not resume from the exact line where `interrupt` was called. This means any code that ran before the `interrupt` will execute again. Because of this, there's a few important rules to follow when working with interrupts to ensure they behave as expected.
 
 :::python
 ### Do not wrap `interrupt` calls in try/except
@@ -1024,7 +932,7 @@ The way that `interrupt` pauses execution at the point of the call is by throwin
 ```typescript Separating logic
 async function nodeA(state: State) {
     // ✅ Good: interrupting first, then handling error conditions separately
-    const name = await interrupt("What's your name?");
+    const name = interrupt("What's your name?");
     try {
         await fetchData(); // This can fail
     } catch (err) {
@@ -1094,9 +1002,9 @@ def node_a(state: State):
 ```typescript
 async function nodeA(state: State) {
     // ✅ Good: interrupt calls happen in the same order every time
-    const name = await interrupt("What's your name?");
-    const age = await interrupt("What's your age?");
-    const city = await interrupt("What's your city?");
+    const name = interrupt("What's your name?");
+    const age = interrupt("What's your age?");
+    const city = interrupt("What's your city?");
 
     return {
         name,
@@ -1144,15 +1052,15 @@ def node_a(state: State):
 ```typescript Skipping interrupts
 async function nodeA(state: State) {
     // ❌ Bad: conditionally skipping interrupts changes the order
-    const name = await interrupt("What's your name?");
+    const name = interrupt("What's your name?");
 
     // On first run, this might skip the interrupt
     // On resume, it might not skip it - causing index mismatch
     if (state.needsAge) {
-        const age = await interrupt("What's your age?");
+        const age = interrupt("What's your age?");
     }
 
-    const city = await interrupt("What's your city?");
+    const city = interrupt("What's your city?");
 
     return { name, city };
 }
@@ -1163,7 +1071,7 @@ async function nodeA(state: State) {
     // The number of interrupts changes between executions
     const results = [];
     for (const item of state.dynamicList || []) {  // List might change between runs
-        const result = await interrupt(`Approve ${item}?`);
+        const result = interrupt(`Approve ${item}?`);
         results.push(result);
     }
 
@@ -1210,9 +1118,9 @@ def node_a(state: State):
 ```typescript Simple values
 async function nodeA(state: State) {
     // ✅ Good: passing simple types that are serializable
-    const name = await interrupt("What's your name?");
-    const count = await interrupt(42);
-    const approved = await interrupt(true);
+    const name = interrupt("What's your name?");
+    const count = interrupt(42);
+    const approved = interrupt(true);
 
     return { name, count, approved };
 }
@@ -1220,7 +1128,7 @@ async function nodeA(state: State) {
 ```typescript Structured data
 async function nodeA(state: State) {
     // ✅ Good: passing objects with simple values
-    const response = await interrupt({
+    const response = interrupt({
         question: "Enter user details",
         fields: ["name", "email", "age"],
         currentValues: state.user || {}
@@ -1278,7 +1186,7 @@ function validateInput(value: string): boolean {
 async function nodeA(state: State) {
     // ❌ Bad: passing a function to interrupt
     // The function cannot be serialized
-    const response = await interrupt({
+    const response = interrupt({
         question: "What's your name?",
         validator: validateInput  // This will fail
     });
@@ -1295,7 +1203,7 @@ async function nodeA(state: State) {
 
     // ❌ Bad: passing a class instance to interrupt
     // The instance cannot be serialized
-    const response = await interrupt({
+    const response = interrupt({
         question: "Enter data to process",
         processor: processor  // This will fail
     });
@@ -1376,7 +1284,7 @@ async function nodeA(state: State) {
         status: "pending_approval"
     });
 
-    const approved = await interrupt("Approve this change?");
+    const approved = interrupt("Approve this change?");
 
     return { approved };
 }
@@ -1385,7 +1293,7 @@ async function nodeA(state: State) {
 async function nodeA(state: State) {
     // ✅ Good: placing side effect after the interrupt
     // This ensures it only runs once after approval is received
-    const approved = await interrupt("Approve this change?");
+    const approved = interrupt("Approve this change?");
 
     if (approved) {
         await db.createAuditLog({
@@ -1400,7 +1308,7 @@ async function nodeA(state: State) {
 ```typescript Separating into different nodes
 async function approvalNode(state: State) {
     // ✅ Good: only handling the interrupt in this node
-    const approved = await interrupt("Approve this change?");
+    const approved = interrupt("Approve this change?");
 
     return { approved };
 }
@@ -1465,7 +1373,7 @@ async function nodeA(state: State) {
         timestamp: new Date()
     });
 
-    const approved = await interrupt("Approve this change?");
+    const approved = interrupt("Approve this change?");
 
     return { approved, auditId };
 }
@@ -1476,7 +1384,7 @@ async function nodeA(state: State) {
     // This will add duplicate entries on each resume
     await db.appendToHistory(state.userId, "approval_requested");
 
-    const approved = await interrupt("Approve this change?");
+    const approved = interrupt("Approve this change?");
 
     return { approved };
 }
@@ -1515,7 +1423,7 @@ async function nodeInParentGraph(state: State) {
 
 async function nodeInSubgraph(state: State) {
     someOtherCode(); // <-- This will also re-execute when resumed
-    const result = await interrupt("What's your name?");
+    const result = interrupt("What's your name?");
     // ...
 }
 ```
