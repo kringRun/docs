@@ -107,7 +107,7 @@ def call_subagent1(query: str):
     result = subagent1.invoke({
         "messages": [{"role": "user", "content": query}]
     })
-    return result["messages"].text
+    return result["messages"][-1].content
 
 agent = create_agent(..., tools=[call_subagent1])
 ```
@@ -169,21 +169,24 @@ from typing import Annotated
 from langchain.agents import AgentState
 from langchain.tools import InjectedState
 
+class CustomState(AgentState):
+    example_state_key: str
+
 @tool(
     name="subagent1_name",
     description="subagent1_description"
 )
-def call_subagent1(query: str, state: Annotated[CustomState, InjectedState]):
+def call_subagent1(query: str, state: Annotated[AgentState, InjectedState]):
     # Apply any logic needed to transform the messages into a suitable input
-    subagent_input = some_logic(query, state.messages)
+    subagent_input = some_logic(query, state["messages"])
     result = subagent1.invoke({
         "messages": subagent_input,
         # You could also pass other state keys here as needed.
         # Make sure to define these in both the main and subagent's
         # state schemas.
-        "example_state_key": state.example_state_key
+        "example_state_key": state["example_state_key"]
     })
-    return result["messages"][-1].text
+    return result["messages"][-1].content
 ```
 :::
 :::js
@@ -252,8 +255,9 @@ def call_subagent1(
         "example_state_key": result["example_state_key"],
         "messages": [
             ToolMessage(
+                content=result["messages"][-1].content,
                 # We need to include the tool call id so it matches up with the right tool call
-                result["messages"][-1].text, tool_call_id=tool_call_id
+                tool_call_id=tool_call_id
             )
         ]
     })
