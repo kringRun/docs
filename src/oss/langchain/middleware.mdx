@@ -1,5 +1,6 @@
 ---
 title: Middleware
+description: Control and customize agent execution at every step
 ---
 
 import AlphaCallout from '/snippets/alpha-lc-callout.mdx';
@@ -8,62 +9,51 @@ import AlphaCallout from '/snippets/alpha-lc-callout.mdx';
 
 Middleware provides a way to more tightly control what happens inside the agent.
 
-The core agent loop involves calling a `model`, letting it choose `tools` to execute, and then finishing when it calls no more tools.
+The core agent loop involves calling a model, letting it choose tools to execute, and then finishing when it calls no more tools:
 
-Middleware provides control over what happens before and after those steps.
+<div style={{ display: "flex", justifyContent: "center" }}>
+  <img
+    src="/oss/images/core_agent_loop.png"
+    alt="Core agent loop diagram"
+    height="300"
+    className="rounded-lg"
+  />
+</div>
 
-![Middleware flow diagram](/images/middleware_final.png)
+Middleware exposes hooks before and after each of those steps:
 
-## Overview
+<div style={{ display: "flex", justifyContent: "center" }}>
+  <img
+    src="/oss/images/middleware_final.png"
+    alt="Middleware flow diagram"
+    height="300"
+    className="rounded-lg"
+  />
+</div>
 
-Middleware intercepts the agent execution flow at specific points, allowing you to:
+<div style={{ display: "flex", justifyContent: "center" }}>
+</div>
 
-- **Monitor** execution (logging, analytics, debugging)
-- **Modify** requests and responses (prompts, tool selection, output formatting)
-- **Control** flow (early termination, retries, fallbacks)
-- **Enforce** policies (rate limits, guardrails, PII detection)
+## What can middleware do?
 
-### Available Hooks
+<CardGroup cols={2}>
+  <Card title="Monitor" icon="chart-line">
+    Track agent behavior with logging, analytics, and debugging
+  </Card>
+  <Card title="Modify" icon="pencil">
+    Transform prompts, tool selection, and output formatting
+  </Card>
+  <Card title="Control" icon="sliders">
+    Add retries, fallbacks, and early termination logic
+  </Card>
+  <Card title="Enforce" icon="shield">
+    Apply rate limits, guardrails, and PII detection
+  </Card>
+</CardGroup>
 
-Build custom middleware by implementing any of these hooks on a subclass of the `AgentMiddleware` class:
-
-:::python
-| Hook | When it runs | Use cases |
-|------|--------------|-----------|
-| `before_agent` | Before calling the agent (once per invocation) | Load memory, validate input |
-| `before_model` | Before each LLM call | Update prompts, trim messages |
-| `wrap_model_call` | Around each LLM call | Retry logic, fallbacks, caching |
-| `after_model` | After each LLM response | Validate output, apply guardrails |
-| `wrap_tool_call` | Around each tool call | Retry, monitoring, modification |
-| `after_agent` | After agent completes (once per invocation) | Save results, cleanup |
-:::
-:::js
-| Hook | When it runs | Use cases |
-|------|--------------|-----------|
-| `beforeAgent` | Before calling the agent (once per invocation) | Load memory, validate input |
-| `beforeModel` | Before each LLM call | Update prompts, trim messages |
-| `wrapModelCall` | Around each LLM call | Retry logic, fallbacks, caching |
-| `afterModel` | After each LLM response | Validate output, apply guardrails |
-| `wrapToolCall` | Around each tool call | Retry, monitoring, modification |
-| `afterAgent` | After agent completes (once per invocation) | Save results, cleanup |
-:::
-
-**Node-style hooks** (`before_agent`, `before_model`, `after_model`, `after_agent`) run sequentially and can:
-- Return state updates to merge into agent state
-- Return `{"jump_to": "end/model/tools"}` to jump to a different part of the graph
-- Access and modify `state` and `runtime`
-
-**Wrap-style hooks** (`wrap_model_call`, `wrap_tool_call`) intercept execution and can:
-- Call the `handler` function zero, one, or multiple times
-- Modify requests before calling the handler
-- Transform responses before returning
-- Implement retry logic, caching, or short-circuiting
-
-### Using in an agent
+Add middleware by passing it to `create_agent`:
 
 :::python
-You can use middleware in an agent by passing it to `create_agent`:
-
 ```python
 from langchain.agents import create_agent
 from langchain.agents.middleware import SummarizationMiddleware, HumanInTheLoopMiddleware
@@ -77,8 +67,6 @@ agent = create_agent(
 :::
 
 :::js
-You can use middleware in an agent by passing it to `createAgent`:
-
 ```typescript
 import {
   createAgent,
@@ -96,26 +84,20 @@ const agent = createAgent({
 
 ## Built-in middleware
 
-LangChain provides several built in middleware to use off-the-shelf
-
-- [Summarization](#summarization)
-- [Human-in-the-loop](#human-in-the-loop)
-- [Anthropic prompt caching](#anthropic-prompt-caching)
+LangChain provides prebuilt middleware for common use cases:
 
 ### Summarization
 
-The `SummarizationMiddleware` automatically manages conversation history by summarizing older messages when token limits are approached. This middleware monitors the total token count of messages and creates concise summaries to preserve context while staying within model limits.
+Automatically summarize conversation history when approaching token limits.
+
+**Use cases:**
+- Long-running conversations
+- Multi-turn dialogues with extensive context
 
 **Key features:**
-
 - Automatic token counting and threshold monitoring
-- Intelligent message partitioning that preserves AI/Tool message pairs
-- Customizable summary prompts and token limits
-
-**Use Cases:**
-
-- Long-running conversations that exceed token limits
-- Multi-turn dialogues with extensive context
+- Preserves AI/Tool message pairs
+- Customizable prompts and limits
 
 :::python
 ```python
@@ -156,53 +138,37 @@ const agent = createAgent({
 ```
 :::
 
-**Configuration options:**
-
 :::python
-- `model`: Language model to use for generating summaries (required)
-- `max_tokens_before_summary`: Token threshold that triggers summarization
-- `messages_to_keep`: Number of recent messages to preserve (default: 20)
-- `token_counter`: Custom function for counting tokens (defaults to character-based approximation)
-- `summary_prompt`: Custom prompt template for summary generation
-- `summary_prefix`: Prefix added to system messages containing summaries (default: "## Previous conversation summary:")
+**Configuration:**
+- `model`: Model for generating summaries (required)
+- `max_tokens_before_summary`: Token threshold for triggering summarization
+- `messages_to_keep`: Recent messages to preserve (default: 20)
+- `token_counter`: Custom token counting function
+- `summary_prompt`: Custom prompt template
+- `summary_prefix`: Prefix for summary messages
 :::
 
 :::js
-
-- `model`: Language model to use for generating summaries (required)
-- `maxTokensBeforeSummary`: Token threshold that triggers summarization
-- `messagesToKeep`: Number of recent messages to preserve (default: 20)
-- `tokenCounter`: Custom function for counting tokens (defaults to character-based approximation)
-- `summaryPrompt`: Custom prompt template for summary generation
-- `summaryPrefix`: Prefix added to system messages containing summaries (default: "## Previous conversation summary:")
+**Configuration:**
+- `model`: Model for generating summaries (required)
+- `maxTokensBeforeSummary`: Token threshold for triggering summarization
+- `messagesToKeep`: Recent messages to preserve (default: 20)
+- `tokenCounter`: Custom token counting function
+- `summaryPrompt`: Custom prompt template
+- `summaryPrefix`: Prefix for summary messages
 :::
-
-The middleware ensures tool call integrity by:
-
-1. Never splitting AI messages from their corresponding tool responses
-2. Preserving the most recent messages for continuity
-3. Including previous summaries in new summarization cycles
 
 ### Human-in-the-loop
 
-The `HumanInTheLoopMiddleware` enables human oversight and intervention for tool calls made by the agents. Please
-see [human-in-the-loop documentation](/oss/python/langchain/human-in-the-loop) for more details.
-
-This middleware intercepts tool executions and allows human operators to approve, modify, reject, or manually respond to tool calls before they execute.
+Enable human oversight and intervention for tool calls. See the [human-in-the-loop documentation](/oss/python/langchain/human-in-the-loop) for details.
 
 ### Anthropic prompt caching
 
-`AnthropicPromptCachingMiddleware` is a middleware that enables you to enable Anthropic's native prompt caching.
-
-Prompt caching enables optimal API usage by allowing resuming from specific prefixes in your prompts.
-This is particularly useful for tasks with repetitive prompts or prompts with redundant information.
+Cache repetitive prompt prefixes to reduce API costs with Anthropic models.
 
 <Info>
-Learn more about Anthropic Prompt Caching (strategies, limitations, etc.) [here](https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching#cache-limitations).
+Learn more about [Anthropic Prompt Caching](https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching#cache-limitations).
 </Info>
-
-When using prompt caching, you'll likely want to use a checkpointer to store conversation
-history across invocations.
 
 :::python
 ```python
@@ -260,23 +226,36 @@ const result = await agent.invoke({
 
 ## Custom middleware
 
-### Creating middleware with hooks
+Build custom middleware by implementing hooks that run at specific points in the agent execution flow.
 
-Middleware for agents are subclasses of `AgentMiddleware`, which implement one or more of its hooks.
+### Two hook styles
 
-There are two styles of hooks:
-
-1. **Node-style hooks** - Run sequentially at specific points
-2. **Wrap-style hooks** - Intercept and control execution via handler callbacks
+<CardGroup cols={2}>
+  <Card title="Node-style hooks" icon="diagram-project">
+    Run sequentially at specific execution points. Use for logging, validation, and state updates.
+  </Card>
+  <Card title="Wrap-style hooks" icon="arrows-rotate">
+    Intercept execution with full control over handler calls. Use for retries, caching, and transformation.
+  </Card>
+</CardGroup>
 
 #### Node-style hooks
 
-Node-style hooks run sequentially and can return state updates or trigger jumps:
+Run at specific points in the execution flow:
 
-- `before_agent`: runs before the agent starts
-- `before_model`: runs before each model call
-- `after_model`: runs after each model response
-- `after_agent`: runs after the agent completes
+:::python
+- `before_agent` - Before agent starts (once per invocation)
+- `before_model` - Before each model call
+- `after_model` - After each model response
+- `after_agent` - After agent completes (up to once per invocation)
+:::
+
+:::js
+- `beforeAgent` - Before agent starts (once per invocation)
+- `beforeModel` - Before each model call
+- `afterModel` - After each model response
+- `afterAgent` - After agent completes (up to once per invocation)
+:::
 
 **Example: Logging middleware**
 
@@ -361,17 +340,21 @@ const createMessageLimitMiddleware = (maxMessages: number = 50) => {
 ```
 :::
 
-#### Wrap-style hooks (Interceptors)
+#### Wrap-style hooks
 
-Wrap-style hooks intercept execution and provide a handler callback. You control when (and if) the handler is called:
+Intercept execution and control when the handler is called:
 
-- `wrap_model_call`: wraps each model call
-- `wrap_tool_call`: wraps each tool call
+:::python
+- `wrap_model_call` - Around each model call
+- `wrap_tool_call` - Around each tool call
+:::
 
-The handler can be called:
-- **Zero times** - Short-circuit with cached/pre-computed result
-- **Once** - Normal execution with request/response modification
-- **Multiple times** - Retry logic or iterative improvement
+:::js
+- `wrapModelCall` - Around each model call
+- `wrapToolCall` - Around each tool call
+:::
+
+You decide if the handler is called zero times (short-circuit), once (normal flow), or multiple times (retry logic).
 
 **Example: Model retry middleware**
 
@@ -711,21 +694,9 @@ Available decorators:
 - `@dynamic_prompt` - Convenience for dynamic system prompts
 :::
 
-### Combining and ordering middleware
+### Execution order
 
-When using multiple middleware, they execute in a specific order:
-
-**Node-style hooks:**
-- `before_agent`: Runs in order (first to last)
-- `before_model`: Runs in order (first to last)
-- `after_model`: Runs in **reverse** order (last to first)
-- `after_agent`: Runs in **reverse** order (last to first)
-
-**Wrap-style hooks:**
-- `wrap_model_call`: Composes like nested function calls (first middleware wraps all subsequent ones)
-- `wrap_tool_call`: Composes like nested function calls
-
-**Example:**
+When using multiple middleware, understanding execution order is important:
 
 :::python
 ```python
@@ -747,7 +718,9 @@ const agent = createAgent({
 ```
 :::
 
-Execution order:
+<Accordion title="Execution flow (click to expand)">
+
+**Before hooks run in order:**
 1. `middleware1.before_agent()`
 2. `middleware2.before_agent()`
 3. `middleware3.before_agent()`
@@ -755,7 +728,13 @@ Execution order:
 5. `middleware1.before_model()`
 6. `middleware2.before_model()`
 7. `middleware3.before_model()`
-8. `middleware1.wrap_model_call()` → calls `middleware2.wrap_model_call()` → calls `middleware3.wrap_model_call()` → actual model call
+
+**Wrap hooks nest like function calls:**
+
+8. `middleware1.wrap_model_call()` → `middleware2.wrap_model_call()` → `middleware3.wrap_model_call()` → model
+
+**After hooks run in reverse order:**
+
 9. `middleware3.after_model()`
 10. `middleware2.after_model()`
 11. `middleware1.after_model()`
@@ -763,6 +742,13 @@ Execution order:
 13. `middleware3.after_agent()`
 14. `middleware2.after_agent()`
 15. `middleware1.after_agent()`
+
+</Accordion>
+
+**Key rules:**
+- `before_*` hooks: First to last
+- `after_*` hooks: Last to first (reverse)
+- `wrap_*` hooks: Nested (first middleware wraps all others)
 
 ### Agent jumps
 
@@ -853,21 +839,17 @@ const conditionalMiddleware = createMiddleware({
 5. **Test middleware independently** - Unit test middleware before integrating
 6. **Consider execution order** - Place critical middleware first in the list
 7. **Use built-in middleware when possible** - Don't reinvent the wheel
-:::
 
 ## Examples
 
 ### Dynamically selecting tools
 
-In many applications, you may have a large set of tools, but only a small subset is relevant for a specific request. To optimize performance and accuracy, it's best to **expose only the tools that are needed for each request**.
+Select relevant tools at runtime to improve performance and accuracy.
 
-Doing so provides several benefits:
-
-* **Shorter prompts** – reducing unnecessary complexity.
-* **Improved accuracy** – the model chooses from fewer options.
-* **Permission control** – can select tools based on user permissions.
-
-Use middleware to dynamically select which tools are available at runtime based on context.
+**Benefits:**
+- Shorter prompts with less complexity
+- Better tool selection from fewer options
+- Permission-based tool access
 
 :::python
 ```python
@@ -919,9 +901,7 @@ const agent = createAgent({
 ```
 :::
 
-<Expandable title="Extended example: Select tools based on runtime context">
-
-This example shows how to select between GitHub and GitLab tools based on the user's provider.
+<Expandable title="Extended example: GitHub vs GitLab tool selection">
 
 :::python
 ```python
@@ -1045,13 +1025,18 @@ await agent.invoke(
 ```
 :::
 
+:::python
 **Key points:**
+- Register all tools upfront
+- Middleware selects the relevant subset per request
+- Use `context_schema` for configuration requirements
+:::
 
-- Register all tools with the agent upfront
-- Use middleware to select the relevant subset per request
-- Define required context properties using `context_schema`
-- Use context for configuration that doesn't change during execution
-- Use state for values that change during the agent run
+:::js
+**Key points:**
+- Register all tools upfront
+- Middleware selects the relevant subset per request
+- Use `contextSchema` for configuration requirements
 :::
 
 </Expandable>
