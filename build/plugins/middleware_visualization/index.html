@@ -1,0 +1,401 @@
+<!-- Middleware Hooks Visualizer -->
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 550px;
+    margin: 0;
+}
+
+body {
+    font-family: var(--font-sans, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif);
+    color: var(--text-primary, #1a202c);
+    padding: 1.25rem;
+    line-height: 1.6;
+    overflow: hidden;
+    height: 500px;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.main-layout {
+    display: grid;
+    grid-template-columns: 60% 1fr;
+    gap: 1.5rem;
+    align-items: start;
+    height: 100%;
+    flex: 1;
+}
+
+.left-column {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    height: 100%;
+}
+
+h3 {
+    font-family: var(--font-family, 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif);
+    font-size: 1.125em;
+    font-weight: 400;
+    margin: 0 0 1.25rem 0;
+    color: var(--text-primary, #1a202c);
+    line-height: 1.4;
+}
+
+h4 {
+    font-family: var(--font-family, 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif);
+    font-size: 0.9375em;
+    font-weight: 500;
+    margin: 0 0 0.75rem 0;
+    color: var(--text-primary, #1a202c);
+    line-height: 1.4;
+}
+
+h4.section-spacing {
+    margin-top: 1.5rem;
+}
+
+.section-title {
+    font-family: var(--font-heading, 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif);
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    color: var(--text-primary, #1a202c);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-size: 0.75rem;
+}
+
+.hooks-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.hook-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.625rem;
+    padding: 0.375rem;
+    border-radius: 6px;
+    transition: background-color 0.15s ease;
+}
+
+.tools-item {
+    border-top: 1px solid var(--border-color, #e5e7eb);
+    padding-top: 0.75rem;
+    margin-top: 0.5rem;
+}
+
+.hook-item:hover {
+    background-color: var(--hover-bg, rgba(0, 0, 0, 0.02));
+}
+
+.hook-checkbox {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    accent-color: var(--primary, #7c3aed);
+    margin-top: 2px;
+    flex-shrink: 0;
+}
+
+.hook-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.hook-item-title {
+    font-weight: 500;
+    font-size: 0.8125rem;
+    color: var(--text-primary, #1a202c);
+    cursor: pointer;
+}
+
+.hook-item-desc {
+    font-size: 0.9rem;
+    color: var(--text-secondary, #6b7280);
+    line-height: 1.5;
+}
+
+/* Inline code styling to match Mintlify */
+code {
+    font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace);
+    font-size: 1.25em;
+    font-weight: 700;
+    font-variant-ligatures: none;
+    border-radius: 0.375rem;
+    background-color: rgba(243, 244, 246, 0.5);
+    padding: 0.125rem 0.5rem;
+    color: var(--text-primary, #4b5563);
+}
+
+.right-column {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.graph-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+#agent-graph {
+    flex: 1;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    min-height: 0;
+    overflow: hidden;
+}
+
+#agent-graph svg {
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+@media (max-width: 400px) {
+    .main-layout {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+
+<div class="container">
+    <div class="main-layout">
+    <!-- Left Column: Hooks with Checkboxes -->
+    <div class="left-column">
+        <section>
+        <h3>Agent Configuration</h3>
+
+        <h4>Available Hooks</h4>
+        <div class="hooks-list">
+            <div class="hook-item">
+            <input type="checkbox" id="before_agent" class="hook-checkbox">
+            <div class="hook-content">
+                <label for="before_agent" class="hook-item-title"><code data-hook="before_agent">before_agent</code></label>
+                <div class="hook-item-desc">Before agent starts (once per invocation).</div>
+            </div>
+            </div>
+
+            <div class="hook-item">
+            <input type="checkbox" id="before_model" class="hook-checkbox">
+            <div class="hook-content">
+                <label for="before_model" class="hook-item-title"><code data-hook="before_model">before_model</code></label>
+                <div class="hook-item-desc">Before each model call.</div>
+            </div>
+            </div>
+
+            <div class="hook-item">
+            <input type="checkbox" id="after_model" class="hook-checkbox">
+            <div class="hook-content">
+                <label for="after_model" class="hook-item-title"><code data-hook="after_model">after_model</code></label>
+                <div class="hook-item-desc">After each model response.</div>
+            </div>
+            </div>
+
+            <div class="hook-item">
+            <input type="checkbox" id="after_agent" class="hook-checkbox">
+            <div class="hook-content">
+                <label for="after_agent" class="hook-item-title"><code data-hook="after_agent">after_agent</code></label>
+                <div class="hook-item-desc">After agent completes (once per invocation).</div>
+            </div>
+            </div>
+        </div>
+
+        <h4 class="section-spacing">Other Configuration</h4>
+        <div class="hooks-list">
+            <div class="hook-item tools-item">
+            <input type="checkbox" id="tools" class="hook-checkbox" checked>
+            <div class="hook-content">
+                <label for="tools" class="hook-item-title"><code data-hook="tools">tools</code></label>
+                <div class="hook-item-desc">Tools available to the agent.</div>
+            </div>
+            </div>
+        </div>
+        </section>
+    </div>
+
+    <!-- Right Column: Agent Graph -->
+    <div class="right-column">
+        <div class="graph-wrapper">
+        <h3>Agent Graph</h3>
+        <div id="agent-graph">Loading...</div>
+        </div>
+    </div>
+    </div>
+</div>
+
+<script id="diagrams-python" src="./diagrams_python.js"></script>
+<script id="diagrams-js" src="./diagrams_js.js"></script>
+<script type="module">
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+
+let currentLanguage = 'python';
+let pythonDiagrams = {};
+let jsDiagrams = {};
+
+mermaid.initialize({
+    startOnLoad: false,
+    theme: 'default'
+});
+
+function detectLanguage() {
+    const path = window.location.pathname;
+    if (path.includes('/javascript') || path.includes('/js') || path.includes('/typescript')) {
+    return 'javascript';
+    }
+    if (path.includes('/python')) {
+    return 'python';
+    }
+
+    if (window.parent && window.parent !== window) {
+    try {
+        const parentPath = window.parent.location.pathname;
+        if (parentPath.includes('/javascript') || parentPath.includes('/js') || parentPath.includes('/typescript')) {
+        return 'javascript';
+        }
+        if (parentPath.includes('/python')) {
+        return 'python';
+        }
+    } catch (e) {
+        // Cross-origin iframe, can't access parent URL
+    }
+    }
+
+    const activeTab = document.querySelector('[data-language-tab].active, [data-tab].active');
+    if (activeTab) {
+    const lang = activeTab.getAttribute('data-language') || activeTab.getAttribute('data-tab') || '';
+    if (lang.match(/^(js|javascript|typescript|ts)$/i)) {
+        return 'javascript';
+    }
+    }
+
+    const visibleCode = document.querySelector('.language-typescript:not([hidden]), .language-javascript:not([hidden]), .language-js:not([hidden])');
+    if (visibleCode) {
+    return 'javascript';
+    }
+
+    return 'python';
+}
+
+function updateHookNames(lang) {
+    const hookElements = document.querySelectorAll('code[data-hook]');
+    const isJS = lang === 'javascript';
+
+    hookElements.forEach(el => {
+    const hook = el.getAttribute('data-hook');
+    if (hook === 'tools') return;
+
+    if (hook === 'before_agent') {
+        el.textContent = isJS ? 'beforeAgent' : 'before_agent';
+    } else if (hook === 'before_model') {
+        el.textContent = isJS ? 'beforeModel' : 'before_model';
+    } else if (hook === 'after_model') {
+        el.textContent = isJS ? 'afterModel' : 'after_model';
+    } else if (hook === 'after_agent') {
+        el.textContent = isJS ? 'afterAgent' : 'after_agent';
+    }
+    });
+}
+
+async function loadDiagrams() {
+    try {
+    const pythonResponse = await fetch('./diagrams_python.js');
+    const pythonText = await pythonResponse.text();
+    const pythonMatch = pythonText.match(/const diagrams = (\{.*\});/);
+    if (pythonMatch) {
+        pythonDiagrams = JSON.parse(pythonMatch[1]);
+    }
+
+    const jsResponse = await fetch('./diagrams_js.js');
+    const jsText = await jsResponse.text();
+    const jsMatch = jsText.match(/const diagrams = (\{.*\});/);
+    if (jsMatch) {
+        jsDiagrams = JSON.parse(jsMatch[1]);
+    }
+    } catch (e) {
+    console.error('Failed to load diagrams:', e);
+    pythonDiagrams = window.diagrams || {};
+    jsDiagrams = window.diagrams || {};
+    }
+
+    currentLanguage = detectLanguage();
+    updateHookNames(currentLanguage);
+    render();
+}
+
+function getKey() {
+    return [
+    document.getElementById('tools').checked ? '1' : '0',
+    document.getElementById('before_agent').checked ? '1' : '0',
+    document.getElementById('before_model').checked ? '1' : '0',
+    document.getElementById('after_model').checked ? '1' : '0',
+    document.getElementById('after_agent').checked ? '1' : '0',
+    ].join('');
+}
+
+async function render() {
+    const key = getKey();
+    const graphEl = document.getElementById('agent-graph');
+
+    const diagrams = currentLanguage === 'javascript' ? jsDiagrams : pythonDiagrams;
+
+    if (!diagrams[key]) {
+    graphEl.innerHTML = `<div style="color: #e53e3e;">Diagram not found for key: ${key}<br>Language: ${currentLanguage}<br>Available keys: ${Object.keys(diagrams).length > 0 ? Object.keys(diagrams).slice(0, 5).join(', ') + '...' : 'none loaded'}</div>`;
+    return;
+    }
+
+    try {
+    const id = `mermaid-${Date.now()}`;
+    const { svg } = await mermaid.render(id, diagrams[key]);
+    graphEl.innerHTML = svg;
+    } catch (error) {
+    graphEl.innerHTML = `<div style="color: #e53e3e;">Render error: ${error.message}</div>`;
+    }
+}
+
+function initializeWidget() {
+    loadDiagrams();
+    document.querySelectorAll('.hook-checkbox').forEach((input) => {
+    input.addEventListener('change', render);
+    });
+
+    document.addEventListener('click', (e) => {
+    if (e.target.matches('[data-language-tab], [data-tab]')) {
+        setTimeout(() => {
+        const newLang = detectLanguage();
+        if (newLang !== currentLanguage) {
+            currentLanguage = newLang;
+            updateHookNames(currentLanguage);
+            render();
+        }
+        }, 50);
+    }
+    });
+}
+
+window.addEventListener('DOMContentLoaded', initializeWidget);
+if (typeof document$ !== 'undefined') {
+    document$.subscribe(initializeWidget);
+}
+</script>
