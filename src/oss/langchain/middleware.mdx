@@ -90,14 +90,12 @@ LangChain provides prebuilt middleware for common use cases:
 
 Automatically summarize conversation history when approaching token limits.
 
-**Use cases:**
-- Long-running conversations
-- Multi-turn dialogues with extensive context
-
-**Key features:**
-- Automatic token counting and threshold monitoring
-- Preserves AI/Tool message pairs
-- Customizable prompts and limits
+<Tip>
+**Perfect for:**
+- Long-running conversations that exceed context windows
+- Multi-turn dialogues with extensive history
+- Applications where preserving full conversation context matters
+</Tip>
 
 :::python
 ```python
@@ -138,36 +136,111 @@ const agent = createAgent({
 ```
 :::
 
+<Accordion title="Configuration options">
+
 :::python
-**Configuration:**
-- `model`: Model for generating summaries (required)
-- `max_tokens_before_summary`: Token threshold for triggering summarization
-- `messages_to_keep`: Recent messages to preserve (default: 20)
-- `token_counter`: Custom token counting function
-- `summary_prompt`: Custom prompt template
-- `summary_prefix`: Prefix for summary messages
+| Parameter | Description | Default |
+|-----------|-------------|---------|
+| `model` | Model for generating summaries | Required |
+| `max_tokens_before_summary` | Token threshold for triggering summarization | - |
+| `messages_to_keep` | Recent messages to preserve | `20` |
+| `token_counter` | Custom token counting function | Character-based |
+| `summary_prompt` | Custom prompt template | Built-in |
+| `summary_prefix` | Prefix for summary messages | `"## Previous conversation summary:"` |
 :::
 
 :::js
-**Configuration:**
-- `model`: Model for generating summaries (required)
-- `maxTokensBeforeSummary`: Token threshold for triggering summarization
-- `messagesToKeep`: Recent messages to preserve (default: 20)
-- `tokenCounter`: Custom token counting function
-- `summaryPrompt`: Custom prompt template
-- `summaryPrefix`: Prefix for summary messages
+| Parameter | Description | Default |
+|-----------|-------------|---------|
+| `model` | Model for generating summaries | Required |
+| `maxTokensBeforeSummary` | Token threshold for triggering summarization | - |
+| `messagesToKeep` | Recent messages to preserve | `20` |
+| `tokenCounter` | Custom token counting function | Character-based |
+| `summaryPrompt` | Custom prompt template | Built-in |
+| `summaryPrefix` | Prefix for summary messages | `"## Previous conversation summary:"` |
 :::
+
+</Accordion>
 
 ### Human-in-the-loop
 
-Enable human oversight and intervention for tool calls. See the [human-in-the-loop documentation](/oss/python/langchain/human-in-the-loop) for details.
+Pause agent execution for human approval, editing, or rejection of tool calls before they execute.
+
+<Tip>
+**Perfect for:**
+- High-stakes operations requiring human approval (database writes, financial transactions)
+- Compliance workflows where human oversight is mandatory
+- Long running conversations where human feedback is used to guide the agent
+</Tip>
+
+:::python
+```python
+from langchain.agents import create_agent
+from langchain.agents.middleware import HumanInTheLoopMiddleware
+
+agent = create_agent(
+    model="openai:gpt-4o",
+    tools=[read_email_tool, send_email_tool],
+    middleware=[
+        HumanInTheLoopMiddleware(
+            interrupt_on={
+                # Require approval, editing, or rejection for sending emails
+                "send_email": {
+                    "allowed_decisions": ["approve", "edit", "reject"],
+                },
+                # Auto-approve reading emails
+                "read_email": False,
+            }
+        ),
+    ],
+)
+```
+:::
+
+:::js
+```typescript
+import { createAgent, humanInTheLoopMiddleware } from "langchain";
+
+const agent = createAgent({
+  model: "openai:gpt-4o",
+  tools: [readEmailTool, sendEmailTool],
+  middleware: [
+    humanInTheLoopMiddleware({
+      interruptOn: {
+        // Require approval, editing, or rejection for sending emails
+        send_email: {
+          allowAccept: true,
+          allowEdit: true,
+          allowRespond: true,
+        },
+        // Auto-approve reading emails
+        read_email: false,
+      }
+    })
+  ]
+});
+```
+:::
+
+<Note>
+**Important:** Human-in-the-loop middleware requires a [checkpointer](/oss/python/langgraph/checkpointing) to maintain state across interruptions.
+
+See the [human-in-the-loop documentation](/oss/python/langchain/human-in-the-loop) for complete examples and integration patterns.
+</Note>
 
 ### Anthropic prompt caching
 
-Cache repetitive prompt prefixes to reduce API costs with Anthropic models.
+Reduce costs by caching repetitive prompt prefixes with Anthropic models.
+
+<Tip>
+**Perfect for:**
+- Applications with long, repeated system prompts
+- Agents that reuse the same context across invocations
+- Reducing API costs for high-volume deployments
+</Tip>
 
 <Info>
-Learn more about [Anthropic Prompt Caching](https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching#cache-limitations).
+Learn more about [Anthropic Prompt Caching](https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching#cache-limitations) strategies and limitations.
 </Info>
 
 :::python
@@ -220,6 +293,419 @@ await agent.invoke({
 // cache hit, system prompt is cached
 const result = await agent.invoke({
   messages: [new HumanMessage("What's my name?")]
+});
+```
+:::
+
+### Model call limit
+
+Limit the number of model calls to prevent infinite loops or excessive costs.
+
+<Tip>
+**Perfect for:**
+- Preventing runaway agents from making too many API calls
+- Enforcing cost controls on production deployments
+- Testing agent behavior within specific call budgets
+</Tip>
+
+:::python
+```python
+from langchain.agents import create_agent
+from langchain.agents.middleware import ModelCallLimitMiddleware
+
+agent = create_agent(
+    model="openai:gpt-4o",
+    tools=[...],
+    middleware=[
+        ModelCallLimitMiddleware(
+            thread_limit=10,  # Max 10 calls per thread (across runs)
+            run_limit=5,  # Max 5 calls per run (single invocation)
+            exit_behavior="end",  # Or "error" to raise exception
+        ),
+    ],
+)
+```
+:::
+
+:::js
+```typescript
+import { createAgent, modelCallLimitMiddleware } from "langchain";
+
+const agent = createAgent({
+  model: "openai:gpt-4o",
+  tools: [...],
+  middleware: [
+    modelCallLimitMiddleware({
+      threadLimit: 10, // Max 10 calls per thread (across runs)
+      runLimit: 5, // Max 5 calls per run (single invocation)
+      exitBehavior: "end", // Or "error" to throw exception
+    }),
+  ],
+});
+```
+:::
+
+<Accordion title="Configuration options">
+
+:::python
+| Parameter | Description | Default |
+|-----------|-------------|---------|
+| `thread_limit` | Max calls across all runs in thread | `None` (no limit) |
+| `run_limit` | Max calls per single invocation | `None` (no limit) |
+| `exit_behavior` | `"end"` (graceful) or `"error"` (exception) | `"end"` |
+:::
+
+:::js
+| Parameter | Description | Default |
+|-----------|-------------|---------|
+| `threadLimit` | Max calls across all runs in thread | `undefined` (no limit) |
+| `runLimit` | Max calls per single invocation | `undefined` (no limit) |
+| `exitBehavior` | `"end"` (graceful) or `"error"` (exception) | `"end"` |
+:::
+
+</Accordion>
+
+### Tool call limit
+
+Limit the number of tool calls to specific tools or all tools.
+
+<Tip>
+**Perfect for:**
+- Preventing excessive calls to expensive external APIs
+- Limiting web searches or database queries
+- Enforcing rate limits on specific tool usage
+</Tip>
+
+:::python
+```python
+from langchain.agents import create_agent
+from langchain.agents.middleware import ToolCallLimitMiddleware
+
+# Limit all tool calls
+global_limiter = ToolCallLimitMiddleware(thread_limit=20, run_limit=10)
+
+# Limit specific tool
+search_limiter = ToolCallLimitMiddleware(
+    tool_name="search",
+    thread_limit=5,
+    run_limit=3,
+)
+
+agent = create_agent(
+    model="openai:gpt-4o",
+    tools=[...],
+    middleware=[global_limiter, search_limiter],
+)
+```
+:::
+
+:::js
+```typescript
+import { createAgent, toolCallLimitMiddleware } from "langchain";
+
+// Limit all tool calls
+const globalLimiter = toolCallLimitMiddleware({ threadLimit: 20, runLimit: 10 });
+
+// Limit specific tool
+const searchLimiter = toolCallLimitMiddleware({
+  toolName: "search",
+  threadLimit: 5,
+  runLimit: 3,
+});
+
+const agent = createAgent({
+  model: "openai:gpt-4o",
+  tools: [...],
+  middleware: [globalLimiter, searchLimiter],
+});
+```
+:::
+
+<Accordion title="Configuration options">
+
+:::python
+| Parameter | Description | Default |
+|-----------|-------------|---------|
+| `tool_name` | Specific tool to limit (`None` = all tools) | `None` |
+| `thread_limit` | Max calls across all runs in thread | `None` (no limit) |
+| `run_limit` | Max calls per single invocation | `None` (no limit) |
+| `exit_behavior` | `"end"` (graceful) or `"error"` (exception) | `"end"` |
+:::
+
+:::js
+| Parameter | Description | Default |
+|-----------|-------------|---------|
+| `toolName` | Specific tool to limit (`undefined` = all tools) | `undefined` |
+| `threadLimit` | Max calls across all runs in thread | `undefined` (no limit) |
+| `runLimit` | Max calls per single invocation | `undefined` (no limit) |
+| `exitBehavior` | `"end"` (graceful) or `"error"` (exception) | `"end"` |
+:::
+
+</Accordion>
+
+### Model fallback
+
+Automatically fallback to alternative models when the primary model fails.
+
+<Tip>
+**Perfect for:**
+- Building resilient agents that handle model outages
+- Cost optimization by falling back to cheaper models
+- Provider redundancy across OpenAI, Anthropic, etc.
+</Tip>
+
+:::python
+```python
+from langchain.agents import create_agent
+from langchain.agents.middleware import ModelFallbackMiddleware
+
+agent = create_agent(
+    model="openai:gpt-4o",  # Primary model
+    tools=[...],
+    middleware=[
+        ModelFallbackMiddleware(
+            "openai:gpt-4o-mini",  # Try first on error
+            "anthropic:claude-3-5-sonnet-20241022",  # Then this
+        ),
+    ],
+)
+```
+:::
+
+:::js
+```typescript
+import { createAgent, modelFallbackMiddleware } from "langchain";
+
+const agent = createAgent({
+  model: "openai:gpt-4o", // Primary model
+  tools: [...],
+  middleware: [
+    modelFallbackMiddleware(
+      "openai:gpt-4o-mini", // Try first on error
+      "anthropic:claude-3-5-sonnet-20241022" // Then this
+    ),
+  ],
+});
+```
+:::
+
+### PII detection
+
+Detect and handle Personally Identifiable Information in conversations.
+
+<Tip>
+**Perfect for:**
+- Healthcare and financial applications with compliance requirements
+- Customer service agents that need to sanitize logs
+- Any application handling sensitive user data
+</Tip>
+
+:::python
+```python
+from langchain.agents import create_agent
+from langchain.agents.middleware import PIIMiddleware
+
+agent = create_agent(
+    model="openai:gpt-4o",
+    tools=[...],
+    middleware=[
+        # Redact emails in user input
+        PIIMiddleware("email", strategy="redact", apply_to_input=True),
+        # Mask credit cards (show last 4 digits)
+        PIIMiddleware("credit_card", strategy="mask", apply_to_input=True),
+        # Custom PII type with regex
+        PIIMiddleware(
+            "api_key",
+            detector=r"sk-[a-zA-Z0-9]{32}",
+            strategy="block",  # Raise error if detected
+        ),
+    ],
+)
+```
+:::
+
+:::js
+```typescript
+import { createAgent, piiRedactionMiddleware } from "langchain";
+
+const agent = createAgent({
+  model: "openai:gpt-4o",
+  tools: [...],
+  middleware: [
+    // Redact emails in user input
+    piiRedactionMiddleware({
+      piiType: "email",
+      strategy: "redact",
+      applyToInput: true,
+    }),
+    // Mask credit cards (show last 4 digits)
+    piiRedactionMiddleware({
+      piiType: "credit_card",
+      strategy: "mask",
+      applyToInput: true,
+    }),
+    // Custom PII type with regex
+    piiRedactionMiddleware({
+      piiType: "api_key",
+      detector: /sk-[a-zA-Z0-9]{32}/,
+      strategy: "block", // Throw error if detected
+    }),
+  ],
+});
+```
+:::
+
+<Accordion title="Built-in PII types and strategies">
+
+**Built-in PII types:**
+- `email` - Email addresses
+- `credit_card` - Credit card numbers (Luhn validated)
+- `ip` - IP addresses
+- `mac_address` - MAC addresses
+- `url` - URLs
+
+**Strategies:**
+- `block` - Raise exception when detected
+- `redact` - Replace with `[REDACTED_TYPE]`
+- `mask` - Partially mask (e.g., `****-****-****-1234`)
+- `hash` - Replace with deterministic hash
+
+</Accordion>
+
+### Planning
+
+Add todo list management capabilities for complex multi-step tasks.
+
+<Note>
+This middleware automatically provides agents with a `write_todos` tool and system prompts to guide effective task planning.
+</Note>
+
+:::python
+```python
+from langchain.agents import create_agent
+from langchain.agents.middleware import PlanningMiddleware
+
+agent = create_agent(
+    model="openai:gpt-4o",
+    tools=[...],
+    middleware=[PlanningMiddleware()],
+)
+
+result = agent.invoke({"messages": [HumanMessage("Help me refactor my codebase")]})
+print(result["todos"])  # Array of todo items with status tracking
+```
+:::
+
+:::js
+```typescript
+import { createAgent, HumanMessage } from "langchain";
+import { planningMiddleware } from "langchain/agents/middleware";
+
+const agent = createAgent({
+  model: "openai:gpt-4o",
+  tools: [...],
+  middleware: [planningMiddleware()],
+});
+
+const result = await agent.invoke({
+  messages: [new HumanMessage("Help me refactor my codebase")],
+});
+console.log(result.todos); // Array of todo items with status tracking
+```
+:::
+
+### LLM tool selector
+
+Use an LLM to intelligently select relevant tools before calling the main model.
+
+<Tip>
+**Perfect for:**
+- Agents with many tools (10+) where most aren't relevant per query
+- Reducing token usage by filtering irrelevant tools
+- Improving model focus and accuracy
+</Tip>
+
+:::python
+```python
+from langchain.agents import create_agent
+from langchain.agents.middleware import LLMToolSelectorMiddleware
+
+agent = create_agent(
+    model="openai:gpt-4o",
+    tools=[tool1, tool2, tool3, tool4, tool5, ...],  # Many tools
+    middleware=[
+        LLMToolSelectorMiddleware(
+            model="openai:gpt-4o-mini",  # Use cheaper model for selection
+            max_tools=3,  # Limit to 3 most relevant tools
+            always_include=["search"],  # Always include certain tools
+        ),
+    ],
+)
+```
+:::
+
+:::js
+```typescript
+import { createAgent, llmToolSelectorMiddleware } from "langchain";
+
+const agent = createAgent({
+  model: "openai:gpt-4o",
+  tools: [tool1, tool2, tool3, tool4, tool5, ...], // Many tools
+  middleware: [
+    llmToolSelectorMiddleware({
+      model: "openai:gpt-4o-mini", // Use cheaper model for selection
+      maxTools: 3, // Limit to 3 most relevant tools
+      alwaysInclude: ["search"], // Always include certain tools
+    }),
+  ],
+});
+```
+:::
+
+### Context editing
+
+Manage conversation context by trimming, summarizing, or clearing tool uses.
+
+<Tip>
+**Perfect for:**
+- Long conversations that need periodic context cleanup
+- Removing failed tool attempts from context
+- Custom context management strategies
+</Tip>
+
+:::python
+```python
+from langchain.agents import create_agent
+from langchain.agents.middleware import ContextEditingMiddleware, ClearToolUsesEdit
+
+agent = create_agent(
+    model="openai:gpt-4o",
+    tools=[...],
+    middleware=[
+        ContextEditingMiddleware(
+            edits=[
+                ClearToolUsesEdit(max_tokens=1000),  # Clear old tool uses
+            ],
+        ),
+    ],
+)
+```
+:::
+
+:::js
+```typescript
+import { createAgent, contextEditingMiddleware, ClearToolUsesEdit } from "langchain";
+
+const agent = createAgent({
+  model: "openai:gpt-4o",
+  tools: [...],
+  middleware: [
+    contextEditingMiddleware({
+      edits: [
+        new ClearToolUsesEdit({ maxTokens: 1000 }), // Clear old tool uses
+      ],
+    }),
+  ],
 });
 ```
 :::
@@ -721,10 +1207,13 @@ const agent = createAgent({
 <Accordion title="Execution flow (click to expand)">
 
 **Before hooks run in order:**
+
 1. `middleware1.before_agent()`
 2. `middleware2.before_agent()`
 3. `middleware3.before_agent()`
-4. **Agent loop starts**
+
+__Agent loop starts__
+
 5. `middleware1.before_model()`
 6. `middleware2.before_model()`
 7. `middleware3.before_model()`
@@ -738,7 +1227,9 @@ const agent = createAgent({
 9. `middleware3.after_model()`
 10. `middleware2.after_model()`
 11. `middleware1.after_model()`
-12. **Agent loop ends**
+
+__Agent loop ends__
+
 13. `middleware3.after_agent()`
 14. `middleware2.after_agent()`
 15. `middleware1.after_agent()`
@@ -846,10 +1337,12 @@ const conditionalMiddleware = createMiddleware({
 
 Select relevant tools at runtime to improve performance and accuracy.
 
+<Tip>
 **Benefits:**
-- Shorter prompts with less complexity
-- Better tool selection from fewer options
-- Permission-based tool access
+- **Shorter prompts** - Reduce complexity by exposing only relevant tools
+- **Better accuracy** - Models choose correctly from fewer options
+- **Permission control** - Dynamically filter tools based on user access
+</Tip>
 
 :::python
 ```python
