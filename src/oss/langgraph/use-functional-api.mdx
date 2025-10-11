@@ -1475,10 +1475,10 @@ list(graph.get_state_history(config))  # [!code highlight]
 ```typescript
 const config = {
   configurable: {
-    thread_id: "1",  # [!code highlight]
+    thread_id: "1",  // [!code highlight]
   },
 };
-const history = [];  # [!code highlight]
+const history = [];  // [!code highlight]
 for await (const state of graph.getStateHistory(config)) {
   history.push(state);
 }

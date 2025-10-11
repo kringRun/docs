@@ -877,21 +877,15 @@ Build custom middleware by implementing hooks that run at specific points in the
 
 #### Node-style hooks
 
-Run at specific points in the execution flow:
+Run at specific points in the execution flow.
 
-:::python
-- `before_agent` - Before agent starts (once per invocation)
-- `before_model` - Before each model call
-- `after_model` - After each model response
-- `after_agent` - After agent completes (up to once per invocation)
-:::
+**Try it:** The interactive widget below shows all available hooks and lets you toggle different combinations to see how they affect the agent execution graph:
 
-:::js
-- `beforeAgent` - Before agent starts (once per invocation)
-- `beforeModel` - Before each model call
-- `afterModel` - After each model response
-- `afterAgent` - After agent completes (up to once per invocation)
-:::
+<iframe
+  src="/plugins/middleware_visualization/index.html"
+  style={{ width: "100%", height: "600px", border: "none" }}
+  title="Interactive Middleware Visualizer"
+/>
 
 **Example: Logging middleware**
 
