@@ -102,12 +102,12 @@ override-dependencies = [
 
 ## LangChain monorepo packages (alphabetical)
 ### Top level
-langchain-cli = { git = "https://github.com/langchain-ai/langchain.git", subdirectory = "libs/cli" }
+#langchain-cli = { git = "https://github.com/langchain-ai/langchain.git", subdirectory = "libs/cli" }
 langchain-core = { git = "https://github.com/langchain-ai/langchain.git", subdirectory = "libs/core" }
 langchain = { git = "https://github.com/langchain-ai/langchain.git", subdirectory = "libs/langchain_v1" }
 langchain-classic = { git = "https://github.com/langchain-ai/langchain.git", subdirectory = "libs/langchain" }
-langchain-tests = { git = "https://github.com/langchain-ai/langchain.git", subdirectory = "libs/standard-tests" }
-langchain-text-splitters = { git = "https://github.com/langchain-ai/langchain.git", subdirectory = "libs/text-splitters" }
+#langchain-tests = { git = "https://github.com/langchain-ai/langchain.git", subdirectory = "libs/standard-tests" }
+#langchain-text-splitters = { git = "https://github.com/langchain-ai/langchain.git", subdirectory = "libs/text-splitters" }
 
 ### Partners
 langchain-anthropic = { git = "https://github.com/langchain-ai/langchain.git", subdirectory = "libs/partners/anthropic" }
@@ -127,7 +127,7 @@ langchain-qdrant = { git = "https://github.com/langchain-ai/langchain.git", subd
 langchain-xai = { git = "https://github.com/langchain-ai/langchain.git", subdirectory = "libs/partners/xai" }
 
 ## Experimental
-langchain-experimental = { git = "https://github.com/langchain-ai/langchain-experimental.git", subdirectory = "libs/experimental" }
+#langchain-experimental = { git = "https://github.com/langchain-ai/langchain-experimental.git", subdirectory = "libs/experimental" }
 
 ## Community
 langchain-community = { git = "https://github.com/langchain-ai/langchain-community.git", subdirectory = "libs/community" }

@@ -1,6 +1,6 @@
 # Documents
 
-::: langchain.documents.Document
+::: langchain_core.documents.Document
     options:
         members:
         - id
