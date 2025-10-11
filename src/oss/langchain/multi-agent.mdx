@@ -20,8 +20,22 @@ Multi-agent systems are useful when:
 
 | Pattern                           | How it works                                                                                                                                                     | Control flow                                               | Example use case                                 |
 |-----------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------|--------------------------------------------------|
-| [**Tool Calling**](#tool-calling) | A central agent calls other agents as *tools*. The “tool” agents don’t talk to the user directly — they just run their task and return results.                  | Centralized: all routing passes through the calling agent. | Task orchestration, structured workflows.        |
+| [**Tool Calling**](#tool-calling) | A **supervisor** agent calls other agents as *tools*. The “tool” agents don’t talk to the user directly — they just run their task and return results.                  | Centralized: all routing passes through the calling agent. | Task orchestration, structured workflows.        |
 | [**Handoffs**](#handoffs)         | The current agent decides to **transfer control** to another agent. The active agent changes, and the user may continue interacting directly with the new agent. | Decentralized: agents can change who is active.            | Multi-domain conversations, specialist takeover. |
+
+<Card
+    title="Tutorial: Build a supervisor agent"
+    icon="sitemap"
+    href="/oss/langchain/supervisor"
+    arrow cta="Learn more"
+>
+    Learn how to build a personal assistant using the supervisor pattern, where a central supervisor agent coordinates specialized worker agents.
+    This tutorial demonstrates:
+    * Creating specialized sub-agents for different domains (calendar and email)
+    * Wrapping sub-agents as tools for centralized orchestration
+    * Adding human-in-the-loop review for sensitive actions
+</Card>
+
 
 ## Choosing a pattern
 
