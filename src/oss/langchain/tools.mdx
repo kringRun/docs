@@ -160,7 +160,7 @@ ToolNode is a prebuilt LangChain component that handles tool calls within an age
 
 :::python
 ```python wrap
-from langchain.tools import ToolNode
+from langgraph.prebuilt import ToolNode
 
 tool_node = ToolNode(
     tools=[...],              # List of tools or callables
@@ -311,7 +311,6 @@ Pass a configured `ToolNode` directly to `create_agent()`:
 ```python
 from langchain_openai import ChatOpenAI
 from langchain.agents import create_agent
-from langchain.tools import ToolNode
 import random
 
 @tool
@@ -335,14 +334,10 @@ def handle_errors(e: Exception) -> str:
         return f"Error: {e}. Try to process the transaction in smaller amounts."
     return f"Error: {e}. Please try again."
 
-tool_node = ToolNode(
-    tools=[fetch_user_data, process_transaction],
-    handle_tool_errors=handle_errors
-)
 
 agent = create_agent(
     model=ChatOpenAI(model="gpt-4o"),
-    tools=tool_node,
+    tools=[fetch_user_data, process_transaction],
     system_prompt="You are a financial assistant."
 )
 

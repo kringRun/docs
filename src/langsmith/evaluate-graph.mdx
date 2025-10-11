@@ -20,7 +20,8 @@ Lets construct a simple ReACT agent to start:
 ```python
 from typing import Annotated, Literal, TypedDict
 from langchain.chat_models import init_chat_model
-from langchain.tools import tool, ToolNode
+from langchain.tools import tool
+from langgraph.prebuilt import ToolNode
 from langgraph.graph import END, START, StateGraph
 from langgraph.graph.message import add_messages
 
@@ -254,7 +255,8 @@ node_experiment_results = await aevaluate(
 ```python
 from typing import Annotated, Literal, TypedDict
 from langchain.chat_models import init_chat_model
-from langchain.tools import tool, ToolNode
+from langchain.tools import tool
+from langgraph.prebuilt import ToolNode
 from langgraph.graph import END, START, StateGraph
 from langgraph.graph.message import add_messages
 from langsmith import Client, aevaluate

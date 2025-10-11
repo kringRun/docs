@@ -83,7 +83,8 @@ Once you've set up your environment, you can call LangChain runnables as normal.
 from typing import Literal
 from langchain.messages import HumanMessage
 from langchain_openai import ChatOpenAI
-from langchain.tools import tool, ToolNode
+from langchain.tools import tool
+from langgraph.prebuilt import ToolNode
 from langgraph.graph import StateGraph, MessagesState
 
 @tool
