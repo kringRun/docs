@@ -124,13 +124,43 @@ RAG can be implemented in multiple ways, depending on your system's needs. We ou
 
 | Architecture            | Description                                                                | Control   | Flexibility | Latency        | Example Use Case                                   |
 |-------------------------|----------------------------------------------------------------------------|-----------|-------------|----------------|----------------------------------------------------|
-| **Agentic RAG**         | An LLM-powered agent decides *when* and *how* to retrieve during reasoning | ❌ Low     | ✅ High      | ⏳ Variable     | Research assistants with access to multiple tools  |
 | **2-Step RAG**          | Retrieval always happens before generation. Simple and predictable         | ✅ High    | ❌ Low       | ⚡ Fast         | FAQs, documentation bots                           |
+| **Agentic RAG**         | An LLM-powered agent decides *when* and *how* to retrieve during reasoning | ❌ Low     | ✅ High      | ⏳ Variable     | Research assistants with access to multiple tools  |
 | **Hybrid**              | Combines characteristics of both approaches with validation steps          | ⚖️ Medium | ⚖️ Medium   | ⏳ Variable     | Domain-specific Q&A with quality validation        |
 
 <Info>
 **Latency**: Latency is generally more **predictable** in **2-Step RAG**, as the maximum number of LLM calls is known and capped. This predictability assumes that LLM inference time is the dominant factor. However, real-world latency may also be affected by the performance of retrieval steps—such as API response times, network delays, or database queries—which can vary based on the tools and infrastructure in use.
 </Info>
+
+### 2-step RAG
+
+In **2-Step RAG**, the retrieval step is always executed before the generation step. This architecture is straightforward and predictable, making it suitable for many applications where the retrieval of relevant documents is a clear prerequisite for generating an answer.
+
+```mermaid
+graph LR
+    A[User Question] --> B["Retrieve Relevant Documents"]
+    B --> C["Generate Answer"]
+    C --> D[Return Answer to User]
+
+    %% Styling
+    classDef startend fill:#2e7d32,stroke:#1b5e20,stroke-width:2px,color:#fff
+    classDef process fill:#1976d2,stroke:#0d47a1,stroke-width:1.5px,color:#fff
+
+    class A,D startend
+    class B,C process
+```
+
+<Card
+    title="Tutorial: Retrieval-Augmented Generation (RAG)"
+    icon="robot"
+    href="/oss/langchain/rag#rag-chains"
+    arrow cta="Learn more"
+>
+    See how to build a Q&A chatbot that can answer questions grounded in your data using Retrieval-Augmented Generation.
+    This tutorial walks through two approaches:
+    * A **RAG agent** that runs searches with a flexible tool—great for general-purpose use.
+    * A **2-step RAG** chain that requires just one LLM call per query—fast and efficient for simpler tasks.
+</Card>
 
 ### Agentic RAG
 
@@ -367,36 +397,6 @@ console.log(response.messages.at(-1)?.content);
     title="Tutorial: Retrieval-Augmented Generation (RAG)"
     icon="robot"
     href="/oss/langchain/rag"
-    arrow cta="Learn more"
->
-    See how to build a Q&A chatbot that can answer questions grounded in your data using Retrieval-Augmented Generation.
-    This tutorial walks through two approaches:
-    * A **RAG agent** that runs searches with a flexible tool—great for general-purpose use.
-    * A **2-step RAG** chain that requires just one LLM call per query—fast and efficient for simpler tasks.
-</Card>
-
-### 2-step RAG
-
-In **2-Step RAG**, the retrieval step is always executed before the generation step. This architecture is straightforward and predictable, making it suitable for many applications where the retrieval of relevant documents is a clear prerequisite for generating an answer.
-
-```mermaid
-graph LR
-    A[User Question] --> B["Retrieve Relevant Documents"]
-    B --> C["Generate Answer"]
-    C --> D[Return Answer to User]
-
-    %% Styling
-    classDef startend fill:#2e7d32,stroke:#1b5e20,stroke-width:2px,color:#fff
-    classDef process fill:#1976d2,stroke:#0d47a1,stroke-width:1.5px,color:#fff
-
-    class A,D startend
-    class B,C process
-```
-
-<Card
-    title="Tutorial: Retrieval-Augmented Generation (RAG)"
-    icon="robot"
-    href="/oss/langchain/rag#rag-chains"
     arrow cta="Learn more"
 >
     See how to build a Q&A chatbot that can answer questions grounded in your data using Retrieval-Augmented Generation.
