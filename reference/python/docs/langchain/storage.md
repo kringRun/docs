@@ -1,3 +1,3 @@
 # Storage
 
-::: langchain.storage
+::: langchain_classic.storage
