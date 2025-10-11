@@ -13,9 +13,9 @@ One way this can occur is if you are using a [fanout](/oss/langgraph/graph-api#m
 or other parallel execution in your graph and you have defined a graph like this:
 
 :::python
-```python {highlight={2}}
+```python
 class State(TypedDict):
-    some_key: str
+    some_key: str  # [!code highlight]
 
 def node(state: State):
     return {"some_key": "some_string_value"}
@@ -34,9 +34,9 @@ graph = builder.compile()
 :::
 
 :::js
-```typescript {highlight={2}}
+```typescript
 import { StateGraph, Annotation, START } from "@langchain/langgraph";
-import * as z from "zod";
+import * as z from "zod";  // [!code highlight]
 
 const State = z.object({
   someKey: z.string(),
@@ -71,25 +71,25 @@ there is uncertainty around how to update the internal state.
 To get around this, you can define a reducer that combines multiple values:
 
 :::python
-```python {highlight={5-6}}
+```python
 import operator
 from typing import Annotated
 
 class State(TypedDict):
-    # The operator.add reducer fn makes this append-only
-    some_key: Annotated[list, operator.add]
+    # The operator.add reducer fn makes this append-only  # [!code highlight]
+    some_key: Annotated[list, operator.add]  # [!code highlight]
 ```
 :::
 
 :::js
-```typescript {highlight={4-7}}
+```typescript
 import { registry } from "@langchain/langgraph/zod";
 import * as z from "zod";
 
-const State = z.object({
-  someKey: z.array(z.string()).register(registry, {
-    reducer: {
-      fn: (existing, update) => existing.concat(update),
+const State = z.object({  // [!code highlight]
+  someKey: z.array(z.string()).register(registry, {  // [!code highlight]
+    reducer: {  // [!code highlight]
+      fn: (existing, update) => existing.concat(update),  // [!code highlight]
     },
     default: () => [] as string[],
   }),

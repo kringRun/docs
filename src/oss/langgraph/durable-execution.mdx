@@ -105,7 +105,7 @@ If a [node](/oss/langgraph/graph-api#nodes) contains multiple operations, you ma
 :::python
 <Tabs>
     <Tab title="Original">
-    ```python {highlight={16}}
+    ```python
     from typing import NotRequired
     from typing_extensions import TypedDict
     import uuid
@@ -121,7 +121,7 @@ If a [node](/oss/langgraph/graph-api#nodes) contains multiple operations, you ma
 
     def call_api(state: State):
         """Example node that makes an API request."""
-        result = requests.get(state['url']).text[:100]  # Side-effect
+        result = requests.get(state['url']).text[:100]  # Side-effect  # [!code highlight]
         return {
             "result": result
         }
@@ -149,7 +149,7 @@ If a [node](/oss/langgraph/graph-api#nodes) contains multiple operations, you ma
 ```
     </Tab>
     <Tab title="With task">
-    ```python {highlight={19,23}}
+    ```python
     from typing import NotRequired
     from typing_extensions import TypedDict
     import uuid
@@ -168,11 +168,11 @@ If a [node](/oss/langgraph/graph-api#nodes) contains multiple operations, you ma
     @task
     def _make_request(url: str):
         """Make a request."""
-        return requests.get(url).text[:100]
+        return requests.get(url).text[:100]  # [!code highlight]
 
     def call_api(state: State):
         """Example node that makes an API request."""
-        requests = [_make_request(url) for url in state['urls']]
+        requests = [_make_request(url) for url in state['urls']]  # [!code highlight]
         results = [request.result() for request in requests]
         return {
             "results": results
@@ -206,7 +206,7 @@ If a [node](/oss/langgraph/graph-api#nodes) contains multiple operations, you ma
 :::js
 <Tabs>
     <Tab title="Original">
-    ```typescript {highlight={13}}
+    ```typescript
     import { StateGraph, START, END } from "@langchain/langgraph";
     import { MemorySaver } from "@langchain/langgraph";
     import { v4 as uuidv4 } from "uuid";
@@ -219,7 +219,7 @@ If a [node](/oss/langgraph/graph-api#nodes) contains multiple operations, you ma
     });
 
     const callApi = async (state: z.infer<typeof State>) => {
-      const response = await fetch(state.url);
+      const response = await fetch(state.url);  // [!code highlight]
       const text = await response.text();
       const result = text.slice(0, 100); // Side-effect
       return {
@@ -248,7 +248,7 @@ If a [node](/oss/langgraph/graph-api#nodes) contains multiple operations, you ma
 ```
     </Tab>
     <Tab title="With task">
-    ```typescript {highlight={14,20}}
+    ```typescript
     import { StateGraph, START, END } from "@langchain/langgraph";
     import { MemorySaver } from "@langchain/langgraph";
     import { task } from "@langchain/langgraph";
@@ -262,13 +262,13 @@ If a [node](/oss/langgraph/graph-api#nodes) contains multiple operations, you ma
     });
 
     const makeRequest = task("makeRequest", async (url: string) => {
-      const response = await fetch(url);
+      const response = await fetch(url);  // [!code highlight]
       const text = await response.text();
       return text.slice(0, 100);
     });
 
     const callApi = async (state: z.infer<typeof State>) => {
-      const requests = state.urls.map((url) => makeRequest(url));
+      const requests = state.urls.map((url) => makeRequest(url));  // [!code highlight]
       const results = await Promise.all(requests);
       return {
         results,

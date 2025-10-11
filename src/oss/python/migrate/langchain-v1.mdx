@@ -4,9 +4,58 @@ sidebarTitle: Migrate to v1
 ---
 
 This guide outlines the major changes between LangChain v1 and previous versions.
+
+## Simplified package
+
+The `langchain` package namespace has been significantly reduced in v1 to focus on essential building blocks for agents. The streamlined package makes it easier to discover and use the core functionality.
+
+### Namespace
+
+| Module | What's available | Notes |
+|--------|------------------|-------|
+| `langchain.agents` | `create_agent`, `AgentState` | Core agent creation functionality |
+| `langchain.messages` | Message types, content blocks, `trim_messages` | Re-exported from `langchain-core` |
+| `langchain.tools` | `tool`, `BaseTool`, injection helpers | Re-exported from `langchain-core` |
+| `langchain.chat_models` | `init_chat_model`, `BaseChatModel` | Unified model initialization |
+| `langchain.embeddings` | `Embeddings`, `init_embeddings`, | Embedding models |
+
+### `langchain-classic`
+
+If you were using any of the following from the `langchain` package, you'll need to install `langchain-classic` and update your imports:
+
+- Legacy chains (`LLMChain`, `ConversationChain`, etc.)
+- The indexing API
+- `langchain-community` re-exports
+- Other deprecated functionality
+
+<CodeGroup>
+```python v1 (new)
+# For legacy chains
+from langchain_classic.chains import LLMChain
+
+# For indexing
+from langchain_classic.indexes import ...
+```
+
+```python v0 (old)
+from langchain.chains import LLMChain
+from langchain.indexes import ...
+```
+</CodeGroup>
+
+**Installation**:
+```bash
+uv pip install langchain-classic
+```
+
+---
+
 ## Migrate to `create_agent`
 
-In v1, the agent prebuilt is now in the langchain package. The table below outlines what functionality has changed:
+Pre v1, we recommended you use `langgraph.prebuilt.create_react_agent` to build agents.
+In v1, we recommend you use `langchain.agents.create_agent` to build agents.
+
+The table below outlines what functionality has changed from `create_react_agent` to `create_agent`:
 
 | Section | What changed |
 |---------|--------------|
@@ -613,51 +662,6 @@ result = agent.invoke(
 <Note>
     The old `config["configurable"]` pattern still works for backward compatibility, but using the new `context` parameter is recommended for new applications or applications migrating to v1.
 </Note>
-
----
-
-## Simplified package
-
-The `langchain` package namespace has been significantly reduced in v1 to focus on essential building blocks for agents. The streamlined package makes it easier to discover and use the core functionality.
-
-### Namespace
-
-| Module | What's available | Notes |
-|--------|------------------|-------|
-| `langchain.agents` | `create_agent`, `AgentState` | Core agent creation functionality |
-| `langchain.messages` | Message types, content blocks, `trim_messages` | Re-exported from `langchain-core` |
-| `langchain.tools` | `tool`, `BaseTool`, injection helpers | Re-exported from `langchain-core` |
-| `langchain.chat_models` | `init_chat_model`, `BaseChatModel` | Unified model initialization |
-| `langchain.embeddings` | `Embeddings`, `init_embeddings`, | Embedding models |
-
-### `langchain-classic`
-
-If you were using any of the following from the `langchain` package, you'll need to install `langchain-classic` and update your imports:
-
-- Legacy chains (`LLMChain`, `ConversationChain`, etc.)
-- The indexing API
-- `langchain-community` re-exports
-- Other deprecated functionality
-
-<CodeGroup>
-```python v1 (new)
-# For legacy chains
-from langchain_classic.chains import LLMChain
-
-# For indexing
-from langchain_classic.indexes import ...
-```
-
-```python v0 (old)
-from langchain.chains import LLMChain
-from langchain.indexes import ...
-```
-</CodeGroup>
-
-**Installation**:
-```bash
-uv pip install langchain-classic
-```
 
 ---
 

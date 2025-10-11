@@ -214,8 +214,8 @@ const graph = builder.compile();
       return { foo: "hi! " + state.foo };
     })
     .addNode("node2", async (state) => {
-      const response = await subgraph.invoke({ bar: state.foo }); // (1)!
-      return { foo: response.bar }; // (2)!
+      const response = await subgraph.invoke({ bar: state.foo });   // [!code highlight]
+      return { foo: response.bar };   // [!code highlight]
     })
     .addEdge(START, "node1")
     .addEdge("node1", "node2");
@@ -354,10 +354,10 @@ const graph = builder.compile();
   const child = new StateGraph(ChildState)
     .addNode("child1", async (state) => {
       // NOTE: parent or grandchild keys won't be accessible here
-      const grandchildGraphInput = { myGrandchildKey: state.myChildKey }; // (1)!
+      const grandchildGraphInput = { myGrandchildKey: state.myChildKey };   // [!code highlight]
       const grandchildGraphOutput = await grandchildGraph.invoke(grandchildGraphInput);
-      return { myChildKey: grandchildGraphOutput.myGrandchildKey + " today?" }; // (2)!
-    }) // (3)!
+      return { myChildKey: grandchildGraphOutput.myGrandchildKey + " today?" };   // [!code highlight]
+    })   // [!code highlight]
     .addEdge(START, "child1")
     .addEdge("child1", END);
 
@@ -374,10 +374,10 @@ const graph = builder.compile();
       return { myKey: "hi " + state.myKey };
     })
     .addNode("child", async (state) => {
-      const childGraphInput = { myChildKey: state.myKey }; // (4)!
+      const childGraphInput = { myChildKey: state.myKey };   // [!code highlight]
       const childGraphOutput = await childGraph.invoke(childGraphInput);
-      return { myKey: childGraphOutput.myChildKey }; // (5)!
-    }) // (6)!
+      return { myKey: childGraphOutput.myChildKey };   // [!code highlight]
+    })   // [!code highlight]
     .addNode("parent2", (state) => {
       return { myKey: state.myKey + " bye!" };
     })
@@ -542,8 +542,8 @@ const graph = builder.compile();
 
   // Define subgraph
   const SubgraphState = z.object({
-    foo: z.string(),  // (1)!
-    bar: z.string(),  // (2)!
+    foo: z.string(),    // [!code highlight]
+    bar: z.string(),    // [!code highlight]
   });
 
   const subgraphBuilder = new StateGraph(SubgraphState)
@@ -764,7 +764,7 @@ Subgraph state can only be viewed **when the subgraph is interrupted**. Once you
 
   await graph.invoke({ foo: "" }, config);
   const parentState = await graph.getState(config);
-  const subgraphState = (await graph.getState(config, { subgraphs: true })).tasks[0].state; // (1)!
+  const subgraphState = (await graph.getState(config, { subgraphs: true })).tasks[0].state;   // [!code highlight]
 
   // resume the subgraph
   await graph.invoke(new Command({ resume: "bar" }), config);
@@ -792,7 +792,7 @@ for chunk in graph.stream(
 for await (const chunk of await graph.stream(
   { foo: "foo" },
   {
-    subgraphs: true, // (1)!
+    subgraphs: true,   // [!code highlight]
     streamMode: "updates",
   }
 )) {
@@ -903,7 +903,7 @@ for await (const chunk of await graph.stream(
     { foo: "foo" },
     {
       streamMode: "updates",
-      subgraphs: true, // (1)!
+      subgraphs: true,   // [!code highlight]
     }
   )) {
     console.log(chunk);

@@ -60,7 +60,7 @@ for await (const chunk of await graph.stream(inputs, {
 
 <Accordion title="Extended example: streaming updates">
   :::python
-  ```python {highlight={24,26}}
+  ```python
   from typing import TypedDict
   from langgraph.graph import StateGraph, START, END
 
@@ -85,11 +85,11 @@ for await (const chunk of await graph.stream(inputs, {
   )
 
   # The stream() method returns an iterator that yields streamed outputs
-  for chunk in graph.stream(
+  for chunk in graph.stream(  # [!code highlight]
       {"topic": "ice cream"},
       # Set stream_mode="updates" to stream only the updates to the graph state after each node
       # Other stream modes are also available. See supported stream modes for details
-      stream_mode="updates",
+      stream_mode="updates",  # [!code highlight]
   ):
       print(chunk)
 ```
@@ -227,10 +227,10 @@ const graph = new StateGraph(State)
     Use this to stream only the **state updates** returned by the nodes after each step. The streamed outputs include the name of the node as well as the update.
 
     :::python
-    ```python {highlight={3}}
+    ```python
     for chunk in graph.stream(
         {"topic": "ice cream"},
-        stream_mode="updates",
+        stream_mode="updates",  # [!code highlight]
     ):
         print(chunk)
     ```
@@ -251,10 +251,10 @@ const graph = new StateGraph(State)
     Use this to stream the **full state** of the graph after each step.
 
     :::python
-    ```python {highlight={3}}
+    ```python
     for chunk in graph.stream(
         {"topic": "ice cream"},
-        stream_mode="values",
+        stream_mode="values",  # [!code highlight]
     ):
         print(chunk)
     ```
@@ -280,11 +280,11 @@ To include outputs from [subgraphs](/oss/langgraph/use-subgraphs) in the streame
 
 The outputs will be streamed as tuples `(namespace, data)`, where `namespace` is a tuple with the path to the node where a subgraph is invoked, e.g. `("parent_node:<task_id>", "child_node:<task_id>")`.
 
-```python {highlight={3}}
+```python
 for chunk in graph.stream(
     {"foo": "foo"},
     # Set subgraphs=True to stream outputs from subgraphs
-    subgraphs=True,
+    subgraphs=True,  # [!code highlight]
     stream_mode="updates",
 ):
     print(chunk)
@@ -312,7 +312,7 @@ for await (const chunk of await graph.stream(
 
 <Accordion title="Extended example: streaming from subgraphs">
   :::python
-  ```python {highlight={39}}
+  ```python
   from langgraph.graph import START, StateGraph
   from typing import TypedDict
 
@@ -352,7 +352,7 @@ for await (const chunk of await graph.stream(
       {"foo": "foo"},
       stream_mode="updates",
       # Set subgraphs=True to stream outputs from subgraphs
-      subgraphs=True,
+      subgraphs=True,  # [!code highlight]
   ):
       print(chunk)
   ```
@@ -434,10 +434,10 @@ for await (const chunk of await graph.stream(
 Use the `debug` streaming mode to stream as much information as possible throughout the execution of the graph. The streamed outputs include the name of the node as well as the full state.
 
 :::python
-```python {highlight={3}}
+```python
 for chunk in graph.stream(
     {"topic": "ice cream"},
-    stream_mode="debug",
+    stream_mode="debug",  # [!code highlight]
 ):
     print(chunk)
 ```
@@ -472,7 +472,7 @@ The streamed output from [`messages` mode](#supported-stream-modes) is a tuple `
 When using Python < 3.11 with async code, you must explicitly pass `RunnableConfig` to `ainvoke()` to enable proper streaming. See [Async with Python < 3.11](#async) for details or upgrade to Python 3.11+.
 </Warning>
 
-```python {highlight={17,33}}
+```python
 from dataclasses import dataclass
 
 from langchain.chat_models import init_chat_model
@@ -490,7 +490,7 @@ llm = init_chat_model(model="openai:gpt-4o-mini")
 def call_model(state: MyState):
     """Call the LLM to generate a joke about a topic"""
     # Note that message events are emitted even when the LLM is run using .invoke rather than .stream
-    llm_response = llm.invoke(
+    llm_response = llm.invoke(  # [!code highlight]
         [
             {"role": "user", "content": f"Generate a joke about {state.topic}"}
         ]
@@ -509,7 +509,7 @@ graph = (
 # with information about the graph node where the LLM was called and other information
 for message_chunk, metadata in graph.stream(
     {"topic": "ice cream"},
-    stream_mode="messages",
+    stream_mode="messages",  # [!code highlight]
 ):
     if message_chunk.content:
         print(message_chunk.content, end="|", flush=True)
@@ -569,7 +569,7 @@ for await (const [messageChunk, metadata] of await graph.stream(
 You can associate `tags` with LLM invocations to filter the streamed tokens by LLM invocation.
 
 :::python
-```python {highlight={10}}
+```python
 from langchain.chat_models import init_chat_model
 
 # llm_1 is tagged with "joke"
@@ -583,7 +583,7 @@ graph = ... # define a graph that uses these LLMs
 # The metadata contains information about the LLM invocation, including the tags
 async for msg, metadata in graph.astream(
     {"topic": "cats"},
-    stream_mode="messages",
+    stream_mode="messages",  # [!code highlight]
 ):
     # Filter the streamed tokens by the tags field in the metadata to only include
     # the tokens from the LLM invocation with the "joke" tag
@@ -626,7 +626,7 @@ for await (const [msg, metadata] of await graph.stream(
 
 <Accordion title="Extended example: filtering by tags">
   :::python
-  ```python {highlight={42}}
+  ```python
   from typing import TypedDict
 
   from langchain.chat_models import init_chat_model
@@ -747,13 +747,13 @@ for await (const [msg, metadata] of await graph.stream(
 To stream tokens only from specific nodes, use `stream_mode="messages"` and filter the outputs by the `langgraph_node` field in the streamed metadata:
 
 :::python
-```python {highlight={3,5}}
+```python
 # The "messages" stream mode returns a tuple of (message_chunk, metadata)
 # where message_chunk is the token streamed by the LLM and metadata is a dictionary
 # with information about the graph node where the LLM was called and other information
 for msg, metadata in graph.stream(
     inputs,
-    stream_mode="messages",
+    stream_mode="messages",  # [!code highlight]
 ):
     # Filter the streamed tokens by the langgraph_node field in the metadata
     # to only include the tokens from the specified node
@@ -782,7 +782,7 @@ for await (const [msg, metadata] of await graph.stream(
 
 <Accordion title="Extended example: streaming LLM tokens from specific nodes">
   :::python
-  ```python {highlight={40,44}}
+  ```python
   from typing import TypedDict
   from langgraph.graph import START, StateGraph
   from langchain_openai import ChatOpenAI
@@ -827,7 +827,7 @@ for await (const [msg, metadata] of await graph.stream(
   # with information about the graph node where the LLM was called and other information
   for msg, metadata in graph.stream(
       {"topic": "cats"},
-      stream_mode="messages",
+      stream_mode="messages",  # [!code highlight]
   ):
       # Filter the streamed tokens by the langgraph_node field in the metadata
       # to only include the tokens from the write_poem node
@@ -935,7 +935,7 @@ See [Async with Python < 3.11](#async) for usage examples.
     ```
     </Tab>
     <Tab title="tool">
-    ```python {highlight={8,10}}
+    ```python
     from langchain.tools import tool
     from langgraph.config import get_stream_writer
 
@@ -943,9 +943,9 @@ See [Async with Python < 3.11](#async) for usage examples.
     def query_database(query: str) -> str:
         """Query the database."""
         # Access the stream writer to send custom data
-        writer = get_stream_writer()
+        writer = get_stream_writer()  # [!code highlight]
         # Emit a custom key-value pair (e.g., progress update)
-        writer({"data": "Retrieved 0/100 records", "type": "progress"})
+        writer({"data": "Retrieved 0/100 records", "type": "progress"})  # [!code highlight]
         # perform query
         # Emit another custom key-value pair
         writer({"data": "Retrieved 100/100 records", "type": "progress"})
@@ -1038,18 +1038,18 @@ You can use `stream_mode="custom"` to stream data from **any LLM API** — even 
 
 This lets you integrate raw LLM clients or external services that provide their own streaming interfaces, making LangGraph highly flexible for custom setups.
 
-```python {highlight={5,8,20}}
+```python
 from langgraph.config import get_stream_writer
 
 def call_arbitrary_model(state):
     """Example node that calls an arbitrary model and streams the output"""
     # Get the stream writer to send custom data
-    writer = get_stream_writer()
+    writer = get_stream_writer()  # [!code highlight]
     # Assume you have a streaming client that yields chunks
     # Generate LLM tokens using your custom streaming client
     for chunk in your_custom_streaming_client(state["topic"]):
         # Use the writer to send custom data to the stream
-        writer({"custom_llm_chunk": chunk})
+        writer({"custom_llm_chunk": chunk})  # [!code highlight]
     return {"result": "completed"}
 
 graph = (
@@ -1058,11 +1058,11 @@ graph = (
     # Add other nodes and edges as needed
     .compile()
 )
-
 # Set stream_mode="custom" to receive the custom data in the stream
 for chunk in graph.stream(
     {"topic": "cats"},
-    stream_mode="custom",
+    stream_mode="custom",  # [!code highlight]
+
 ):
     # The chunk will contain the custom data streamed from the llm
     print(chunk)
@@ -1361,13 +1361,14 @@ Set `disable_streaming=True` when initializing the model.
 
 <Tabs>
     <Tab title="init_chat_model">
-    ```python {highlight={5}}
+    ```python
     from langchain.chat_models import init_chat_model
 
     model = init_chat_model(
         "anthropic:claude-3-7-sonnet-latest",
         # Set disable_streaming=True to disable streaming for the chat model
-        disable_streaming=True
+        disable_streaming=True  # [!code highlight]
+
     )
     ```
     </Tab>
@@ -1407,7 +1408,7 @@ This limits LangGraph ability to automatically propagate context, and affects La
 2. You **cannot** use `get_stream_writer()` in async nodes or tools — you must pass a `writer` argument directly.
 
 <Accordion title="Extended example: async LLM call with manual config">
-  ```python {highlight={16,29}}
+  ```python
   from typing import TypedDict
   from langgraph.graph import START, StateGraph
   from langchain.chat_models import init_chat_model
@@ -1423,7 +1424,7 @@ This limits LangGraph ability to automatically propagate context, and affects La
       topic = state["topic"]
       print("Generating joke...")
       # Pass config to llm.ainvoke() to ensure proper context propagation
-      joke_response = await llm.ainvoke(
+      joke_response = await llm.ainvoke(  # [!code highlight]
           [{"role": "user", "content": f"Write a joke about {topic}"}],
           config,
       )
@@ -1439,7 +1440,7 @@ This limits LangGraph ability to automatically propagate context, and affects La
   # Set stream_mode="messages" to stream LLM tokens
   async for chunk, metadata in graph.astream(
       {"topic": "ice cream"},
-      stream_mode="messages",
+      stream_mode="messages",  # [!code highlight]
   ):
       if chunk.content:
           print(chunk.content, end="|", flush=True)
@@ -1447,7 +1448,7 @@ This limits LangGraph ability to automatically propagate context, and affects La
 </Accordion>
 
 <Accordion title="Extended example: async custom streaming with stream writer">
-  ```python {highlight={8,21}}
+  ```python
   from typing import TypedDict
   from langgraph.types import StreamWriter
 
@@ -1457,7 +1458,7 @@ This limits LangGraph ability to automatically propagate context, and affects La
 
   # Add writer as an argument in the function signature of the async node or tool
   # LangGraph will automatically pass the stream writer to the function
-  async def generate_joke(state: State, writer: StreamWriter):
+  async def generate_joke(state: State, writer: StreamWriter):  # [!code highlight]
         writer({"custom_key": "Streaming custom data while generating a joke"})
         return {"joke": f"This is a joke about {state['topic']}"}
 
@@ -1468,7 +1469,7 @@ This limits LangGraph ability to automatically propagate context, and affects La
         .compile()
   )
 
-  # Set stream_mode="custom" to receive the custom data in the stream
+  # Set stream_mode="custom" to receive the custom data in the stream  # [!code highlight]
   async for chunk in graph.astream(
         {"topic": "ice cream"},
         stream_mode="custom",

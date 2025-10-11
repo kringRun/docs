@@ -309,7 +309,7 @@ To enable caching on an element of a prompt, mark its associated content block u
 
 ### Messages
 
-```python highlight={23}
+```python 
 import requests
 from langchain_anthropic import ChatAnthropic
 
@@ -332,7 +332,7 @@ messages = [
             {
                 "type": "text",
                 "text": f"{readme}",
-                "cache_control": {"type": "ephemeral"},
+                "cache_control": {"type": "ephemeral"},  # [!code highlight]
             },
         ],
     },
@@ -365,10 +365,10 @@ Second:
 
     The cache lifetime is 5 minutes by default. If this is too short, you can apply one hour caching by enabling the `"extended-cache-ttl-2025-04-11"` beta header:
 
-    ```python highlight={3}
+    ```python 
     llm = ChatAnthropic(
         model="claude-3-7-sonnet-20250219",
-        betas=["extended-cache-ttl-2025-04-11"],
+        betas=["extended-cache-ttl-2025-04-11"],  # [!code highlight]
     )
     ```
     and specifying `"cache_control": {"type": "ephemeral", "ttl": "1h"}`.
@@ -397,7 +397,7 @@ Second:
 
 ### Tools
 
-```python highlight={17,18}
+```python 
 from langchain_anthropic import convert_to_anthropic_tool
 from langchain.tools import tool
 
@@ -414,8 +414,8 @@ def get_weather(location: str) -> str:
 
 
 # Enable caching on the tool
-weather_tool = convert_to_anthropic_tool(get_weather)
-weather_tool["cache_control"] = {"type": "ephemeral"}
+weather_tool = convert_to_anthropic_tool(get_weather)  # [!code highlight]
+weather_tool["cache_control"] = {"type": "ephemeral"}  # [!code highlight]
 
 llm = ChatAnthropic(model="claude-3-7-sonnet-20250219")
 llm_with_tools = llm.bind_tools([weather_tool])
@@ -575,13 +575,13 @@ In the [LangSmith trace](https://smith.langchain.com/public/4d0584d8-5f9e-4b91-8
 
 Anthropic supports a (beta) [token-efficient tool use](https://docs.anthropic.com/en/docs/agents-and-tools/tool-use/token-efficient-tool-use) feature. To use it, specify the relevant beta-headers when instantiating the model.
 
-```python highlight={6}
+```python 
 from langchain_anthropic import ChatAnthropic
 from langchain.tools import tool
 
 llm = ChatAnthropic(
     model="claude-3-7-sonnet-20250219",
-    betas=["token-efficient-tools-2025-02-19"],
+    betas=["token-efficient-tools-2025-02-19"],  # [!code highlight]
 )
 
 

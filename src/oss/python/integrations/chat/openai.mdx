@@ -124,10 +124,10 @@ OpenAI's Chat Completions API does not stream token usage statistics by default
 To recover token counts when streaming with `ChatOpenAI` or `AzureChatOpenAI`, set
 `stream_usage=True` as an initialization parameter or on invocation:
 
-```python highlight={3}
+```python
 from langchain_openai import ChatOpenAI
 
-llm = ChatOpenAI(model="gpt-4.1-mini", stream_usage=True)
+llm = ChatOpenAI(model="gpt-4.1-mini", stream_usage=True)  # [!code highlight]
 ```
 
 ## Tool calling
@@ -305,7 +305,7 @@ Name: execute_code
 
 OpenAI supports the specification of a [context-free grammar](https://platform.openai.com/docs/guides/function-calling#context-free-grammars) for custom tool inputs in `lark` or `regex` format. See [OpenAI docs](https://platform.openai.com/docs/guides/function-calling#context-free-grammars) for details. The `format` parameter can be passed into `@custom_tool` as shown below:
 
-```python highlight={20}
+```python
 from langchain_openai import ChatOpenAI, custom_tool
 from langchain.agents import create_agent
 
@@ -325,7 +325,7 @@ MUL: "*"
 format_ = {"type": "grammar", "syntax": "lark", "definition": grammar}
 
 
-@custom_tool(format=format_)
+@custom_tool(format=format_)  # [!code highlight]
 def do_math(input_string: str) -> str:
     """Do a mathematical operation."""
     return "27"
@@ -743,19 +743,19 @@ response = llm_with_tools.invoke(
 
 Note that the above command created a new container. We can also specify an existing container ID:
 
-```python highlight={5,12}
+```python
 code_interpreter_calls = [
     item for item in response.content if item["type"] == "code_interpreter_call"
 ]
 assert len(code_interpreter_calls) == 1
-container_id = code_interpreter_calls[0]["extras"]["container_id"]
+container_id = code_interpreter_calls[0]["extras"]["container_id"]  # [!code highlight]
 
 llm_with_tools = llm.bind_tools(
     [
         {
             "type": "code_interpreter",
             # Use an existing container
-            "container": container_id,
+            "container": container_id,  # [!code highlight]
         }
     ]
 )
@@ -892,10 +892,10 @@ You mentioned that your name is Bob. How can I assist you further, Bob?
 
 When using the Responses API, LangChain messages will include an `"id"` field in its metadata. Passing this ID to subsequent invocations will continue the conversation. Note that this is [equivalent](https://platform.openai.com/docs/guides/conversation-state?api-mode=responses#openai-apis-for-conversation-state) to manually passing in messages from a billing perspective.
 
-```python highlight={3}
+```python
 second_response = llm.invoke(
     "What is my name?",
-    previous_response_id=response.id,
+    previous_response_id=response.id,  # [!code highlight]
 )
 print(second_response.text)
 ```
@@ -906,12 +906,12 @@ Your name is Bob. How can I help you today, Bob?
 
 ChatOpenAI can also automatically specify `previous_response_id` using the last response in a message sequence:
 
-```python highlight={6}
+```python
 from langchain_openai import ChatOpenAI
 
 llm = ChatOpenAI(
     model="gpt-4.1-mini",
-    use_previous_response_id=True,
+    use_previous_response_id=True,  # [!code highlight]
 )
 ```
 
@@ -1001,7 +1001,7 @@ For all modalities, LangChain supports both its cross-provider standard as well 
 
 To pass multimodal data into `ChatOpenAI`, create a [content block](/oss/langchain/messages/) containing the data and incorporate it into a message, e.g., as below:
 
-```python highlight={9}
+```python
 message = {
     "role": "user",
     "content": [
@@ -1010,7 +1010,7 @@ message = {
             # Update prompt as desired
             "text": "Describe the (image / PDF / audio...)",
         },
-        content_block,
+        content_block,  # [!code highlight]
     ],
 }
 ```
@@ -1068,13 +1068,13 @@ Refer to examples in the how-to guide [here](/oss/langchain/messages#multimodal#
 
 In-line base64 data:
 
-```python highlight={7}
+```python
 # LangChain format
 content_block = {
     "type": "file",
     "base64": base64_string,
     "mime_type": "application/pdf",
-    "filename": "my-file.pdf",
+    "filename": "my-file.pdf",  # [!code highlight]
 }
 
 # OpenAI Chat Completions format

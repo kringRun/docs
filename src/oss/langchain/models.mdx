@@ -522,7 +522,7 @@ Some model providers offer built-in tools that can be enabled via model paramete
 </Tip>
 
 :::python
-```python Binding user tools highlight={8}
+```python Binding user tools
 from langchain.tools import tool
 
 @tool
@@ -531,7 +531,7 @@ def get_weather(location: str) -> str:
     return f"It's sunny in {location}."
 
 
-model_with_tools = model.bind_tools([get_weather])
+model_with_tools = model.bind_tools([get_weather])  # [!code highlight]
 
 response = model_with_tools.invoke("What's the weather like in Boston?")
 for tool_call in response.tool_calls:
@@ -542,7 +542,7 @@ for tool_call in response.tool_calls:
 :::
 
 :::js
-```typescript Binding user tools highlight={17}
+```typescript Binding user tools
 import { tool } from "langchain";
 import { z } from "zod";
 import { ChatOpenAI } from "@langchain/openai";
@@ -559,7 +559,7 @@ const getWeather = tool(
 );
 
 const model = new ChatOpenAI({ model: "gpt-4o" });
-const modelWithTools = model.bindTools([getWeather]);
+const modelWithTools = model.bindTools([getWeather]);  // [!code highlight]
 
 const response = await modelWithTools.invoke("What's the weather like in Boston?");
 const toolCalls = response.tool_calls || [];
@@ -1001,7 +1001,7 @@ Models can be requested to provide their response in a format matching a given s
 It can be useful to return the raw `AIMessage` object alongside the parsed representation to access response metadata such as [token counts](#token-usage). To do this, set `include_raw=True` when calling `with_structured_output`:
 
     :::python
-    ```python highlight={10}
+    ```python
     from pydantic import BaseModel, Field
 
     class Movie(BaseModel):
@@ -1011,7 +1011,7 @@ It can be useful to return the raw `AIMessage` object alongside the parsed repre
         director: str = Field(..., description="The director of the movie")
         rating: float = Field(..., description="The movie's rating out of 10")
 
-    model_with_structure = model.with_structured_output(Movie, include_raw=True)
+    model_with_structure = model.with_structured_output(Movie, include_raw=True)  # [!code highlight]
     response = model_with_structure.invoke("Provide details about the movie Inception")
     response
     # {
@@ -1023,7 +1023,7 @@ It can be useful to return the raw `AIMessage` object alongside the parsed repre
     :::
 
     :::js
-    ```typescript highlight={10}
+    ```typescript
     import { z } from "zod";
 
     const Movie = z.object({
@@ -1033,7 +1033,7 @@ It can be useful to return the raw `AIMessage` object alongside the parsed repre
       rating: z.number().describe("The movie's rating out of 10"),
       title: z.string().describe("The title of the movie"),
       year: z.number().describe("The year the movie was released"),
-      director: z.string().describe("The director of the movie"),
+      director: z.string().describe("The director of the movie"),  // [!code highlight]
       rating: z.number().describe("The movie's rating out of 10"),
     });
 
@@ -1297,7 +1297,7 @@ To help manage rate limits, chat model integrations accept a `rate_limiter` para
 <Accordion title="Initialize and use a rate limiter" icon="gauge-high">
     LangChain in comes with (an optional) built-in in memory rate limiter. This limiter is thread safe and can be shared by multiple threads in the same process.
 
-    ```python Define a rate limiter highlight={12}
+    ```python Define a rate limiter
     from langchain_core.rate_limiters import InMemoryRateLimiter
 
     rate_limiter = InMemoryRateLimiter(
@@ -1309,7 +1309,7 @@ To help manage rate limits, chat model integrations accept a `rate_limiter` para
     model = init_chat_model(
         model="gpt-5",
         model_provider="openai",
-        rate_limiter=rate_limiter
+        rate_limiter=rate_limiter  # [!code highlight]
     )
     ```
 

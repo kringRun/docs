@@ -66,11 +66,11 @@ MCP supports different transport mechanisms for client-server communication:
 :::python
 `langchain-mcp-adapters` enables agents to use tools defined across one or more MCP server.
 
-```python Accessing multiple MCP servers {highlight={1,4,19,22}} icon="server"
-from langchain_mcp_adapters.client import MultiServerMCPClient
+```python Accessing multiple MCP servers icon="server"
+from langchain_mcp_adapters.client import MultiServerMCPClient  # [!code highlight]
 from langchain.agents import create_agent
 
-client = MultiServerMCPClient(
+client = MultiServerMCPClient(  # [!code highlight]
     {
         "math": {
             "transport": "stdio",  # Local subprocess communication
@@ -86,10 +86,10 @@ client = MultiServerMCPClient(
     }
 )
 
-tools = await client.get_tools()
+tools = await client.get_tools()  # [!code highlight]
 agent = create_agent(
     "anthropic:claude-3-7-sonnet-latest",
-    tools
+    tools  # [!code highlight]
 )
 math_response = await agent.ainvoke(
     {"messages": [{"role": "user", "content": "what's (3 + 5) x 12?"}]}
@@ -104,12 +104,12 @@ weather_response = await agent.ainvoke(
 :::js
 `@langchain/mcp-adapters` enables agents to use tools defined across one or more MCP server.
 
-```ts Accessing multiple MCP servers {highlight={1,5,19,22}} icon="server"
-import { MultiServerMCPClient } from "@langchain/mcp-adapters";
+```ts Accessing multiple MCP servers icon="server"
+import { MultiServerMCPClient } from "@langchain/mcp-adapters";  // [!code highlight]
 import { ChatAnthropic } from "@langchain/anthropic";
 import { createAgent } from "langchain";
 
-const client = new MultiServerMCPClient({
+const client = new MultiServerMCPClient({  // [!code highlight]
     math: {
         transport: "stdio",  // Local subprocess communication
         command: "node",
@@ -123,10 +123,10 @@ const client = new MultiServerMCPClient({
     },
 });
 
-const tools = await client.getTools();
+const tools = await client.getTools();  // [!code highlight]
 const agent = createAgent({
     llm: new ChatAnthropic({ model: "claude-3-7-sonnet-latest" }),
-    tools,
+    tools,  // [!code highlight]
 });
 
 const mathResponse = await agent.invoke({

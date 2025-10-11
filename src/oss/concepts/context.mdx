@@ -39,30 +39,26 @@ LangGraph provides three ways to manage context, which combines the mutability a
 
 **Static runtime context** represents immutable data like user metadata, tools, and database connections that are passed to an application at the start of a run via the `context` argument to `invoke`/`stream`. This data does not change during execution.
 
-```python {highlight={7}}
+```python
 @dataclass
 class ContextSchema:
     user_name: str
 
-graph.invoke( # (1)!
-    {"messages": [{"role": "user", "content": "hi!"}]}, # (2)!
-    context={"user_name": "John Smith"} # (3)!
+graph.invoke(
+    {"messages": [{"role": "user", "content": "hi!"}]},
+    context={"user_name": "John Smith"}  # [!code highlight]
 )
 ```
 
-1. This is the invocation of the agent or graph. The `invoke` method runs the underlying graph with the provided input.
-2. This example uses messages as an input, which is common, but your application may use different input structures.
-3. This is where you pass the runtime data. The `context` parameter allows you to provide additional dependencies that the agent can use during its execution.
-
 <Tabs>
     <Tab title="Agent prompt">
-    ```python {highlight={6,20}}
+    ```python
     from langchain.messages import AnyMessage
     from langgraph.runtime import get_runtime
     from langgraph.prebuilt.chat_agent_executor import AgentState
     from langgraph.prebuilt import create_react_agent
 
-    def prompt(state: AgentState) -> list[AnyMessage]:
+    def prompt(state: AgentState) -> list[AnyMessage]:  # [!code highlight]
         runtime = get_runtime(ContextSchema)
         system_msg = f"You are a helpful assistant. Address the user as {runtime.context.user_name}."
         return [{"role": "system", "content": system_msg}] + state["messages"]
@@ -76,17 +72,17 @@ graph.invoke( # (1)!
 
     agent.invoke(
         {"messages": [{"role": "user", "content": "what is the weather in sf"}]},
-        context={"user_name": "John Smith"}
+        context={"user_name": "John Smith"}  # [!code highlight]
     )
 ```
 
     * See [Agents](/oss/langchain/agents) for details.
     </Tab>
     <Tab title="Workflow node">
-    ```python {highlight={3}}
+    ```python
     from langgraph.runtime import Runtime
 
-    def node(state: State, runtime: Runtime[ContextSchema]):
+    def node(state: State, runtime: Runtime[ContextSchema]):  # [!code highlight]
         user_name = runtime.context.user_name
         ...
 ```
@@ -94,14 +90,14 @@ graph.invoke( # (1)!
     * See [the Graph API](/oss/langgraph/graph-api#add-runtime-configuration) for details.
     </Tab>
     <Tab title="In a tool">
-    ```python {highlight={4}}
+    ```python
     from langgraph.runtime import get_runtime
 
     @tool
     def get_user_email() -> str:
         """Retrieve user information based on user ID."""
         # simulate fetching user info from a database
-        runtime = get_runtime(ContextSchema)
+        runtime = get_runtime(ContextSchema)  # [!code highlight]
         email = get_user_email_from_db(runtime.context.user_name)
         return email
 ```
@@ -130,11 +126,10 @@ Config is for immutable data like user metadata or API keys. Use this when you h
 
 Specify configuration using a key called **"configurable"** which is reserved for this purpose.
 
-```typescript {highlight={4}}
+```typescript
 await graph.invoke(
-  // (1)!
-  { messages: [{ role: "user", content: "hi!" }] }, // (2)!
-  { configurable: { user_id: "user_123" } } // (3)!
+  { messages: [{ role: "user", content: "hi!" }] },
+  { configurable: { user_id: "user_123" } } // [!code highlight]
 );
 ```
 :::
@@ -151,17 +146,17 @@ await graph.invoke(
     State can also be accessed by the agent's **tools**, which can read or update the state as needed. See [tool calling guide](/oss/langchain/tools#short-term-memory) for details.
 
     :::python
-    ```python {highlight={6,10,19}}
+    ```python
     from langchain.messages import AnyMessage
     from langchain_core.runnables import RunnableConfig
     from langgraph.prebuilt import create_react_agent
     from langgraph.prebuilt.chat_agent_executor import AgentState
 
-    class CustomState(AgentState): # (1)!
+    class CustomState(AgentState):  # [!code highlight]
         user_name: str
 
     def prompt(
-        state: CustomState
+        state: CustomState  # [!code highlight]
     ) -> list[AnyMessage]:
         user_name = state["user_name"]
         system_msg = f"You are a helpful assistant. User's name is {user_name}"
@@ -170,7 +165,7 @@ await graph.invoke(
     agent = create_react_agent(
         model="anthropic:claude-3-7-sonnet-latest",
         tools=[...],
-        state_schema=CustomState, # (2)!
+        state_schema=CustomState,  # [!code highlight]
         prompt=prompt
     )
 
@@ -179,20 +174,17 @@ await graph.invoke(
         "user_name": "John Smith"
     })
 ```
-
-    1. Define a custom state schema that extends `AgentState` or `MessagesState`.
-    2. Pass the custom state schema to the agent. This allows the agent to access and modify the state during execution.
     :::
 
     :::js
-    ```typescript {highlight={6,12,22}}
+    ```typescript
     import type { BaseMessage } from "@langchain/core/messages";
     import { createReactAgent } from "@langchain/langgraph/prebuilt";
     import { MessagesZodMeta } from "@langchain/langgraph";
     import { registry } from "@langchain/langgraph/zod";
     import * as z from "zod";
 
-    const CustomState = z.object({ // (1)!
+    const CustomState = z.object({ // [!code highlight]
       messages: z
         .array(z.custom<BaseMessage>())
         .register(registry, MessagesZodMeta),
@@ -207,10 +199,10 @@ await graph.invoke(
       return [{ role: "system", content: systemMsg }, ...state.messages];
     };
 
-    const agent = createReactAgent({
+    const agent = createReactAgent({  // [!code highlight]
       llm: model,
       tools: [...],
-      stateSchema: CustomState, // (2)!
+      stateSchema: CustomState, // [!code highlight]
       stateModifier: prompt,
     });
 
@@ -219,27 +211,24 @@ await graph.invoke(
       userName: "John Smith",
     });
 ```
-
-    1. Define a custom state schema that adds additional fields alongside the existing `messages` field.
-    2. Pass the custom state schema to the agent. This allows the agent to access and modify the state during execution.
     :::
     </Tab>
     <Tab title="In a workflow">
     :::python
-    ```python {highlight={5,9,13}}
+    ```python
     from typing_extensions import TypedDict
     from langchain.messages import AnyMessage
     from langgraph.graph import StateGraph
 
-    class CustomState(TypedDict): # (1)!
+    class CustomState(TypedDict):  # [!code highlight]
         messages: list[AnyMessage]
         extra_field: int
 
-    def node(state: CustomState): # (2)!
+    def node(state: CustomState):  # [!code highlight]
         messages = state["messages"]
         ...
-        return { # (3)!
-            "extra_field": state["extra_field"] + 1
+        return {  # [!code highlight]
+            "extra_field": state["extra_field"] + 1  # [!code highlight]
         }
 
     builder = StateGraph(State)
@@ -247,20 +236,16 @@ await graph.invoke(
     builder.set_entry_point("node")
     graph = builder.compile()
 ```
-
-    1. Define a custom state
-    2. Access the state in any node or tool
-    3. The Graph API is designed to work as easily as possible with state. The return value of a node represents a requested update to the state.
     :::
 
     :::js
-    ```typescript {highlight={6,6,14}}
+    ```typescript
     import type { BaseMessage } from "@langchain/core/messages";
     import { StateGraph, MessagesZodMeta, START } from "@langchain/langgraph";
     import { registry } from "@langchain/langgraph/zod";
     import * as z from "zod";
 
-    const CustomState = z.object({ // (1)!
+    const CustomState = z.object({  // [!code highlight]
       messages: z
         .array(z.custom<BaseMessage>())
         .register(registry, MessagesZodMeta),
@@ -268,10 +253,10 @@ await graph.invoke(
     });
 
     const builder = new StateGraph(CustomState)
-      .addNode("node", async (state) => { // (2)!
+      .addNode("node", async (state) => {  // [!code highlight]
         const messages = state.messages;
         // ...
-        return { // (3)!
+        return {  // [!code highlight]
           extraField: state.extraField + 1,
         };
       })
@@ -279,10 +264,6 @@ await graph.invoke(
 
     const graph = builder.compile();
 ```
-
-    1. Define a custom state
-    2. Access the state in any node or tool
-    3. The Graph API is designed to work as easily as possible with state. The return value of a node represents a requested update to the state.
     :::
     </Tab>
 </Tabs>

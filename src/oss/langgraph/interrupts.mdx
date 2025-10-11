@@ -1445,10 +1445,10 @@ Static interrupts are **not** recommended for human-in-the-loop workflows. Use t
 <Tabs>
     <Tab title="At compile time">
         :::python
-        ```python highlight={2,3,15,18}
+        ```python
         graph = builder.compile(
-            interrupt_before=["node_a"],
-            interrupt_after=["node_b", "node_c"],
+            interrupt_before=["node_a"],  # [!code highlight]
+            interrupt_after=["node_b", "node_c"],  # [!code highlight]
             checkpointer=checkpointer,
         )
 
@@ -1460,10 +1460,10 @@ Static interrupts are **not** recommended for human-in-the-loop workflows. Use t
         }
 
         # Run the graph until the breakpoint
-        graph.invoke(inputs, config=config)
+        graph.invoke(inputs, config=config)  # [!code highlight]
 
         # Resume the graph
-        graph.invoke(None, config=config)
+        graph.invoke(None, config=config)  # [!code highlight]
         ```
 
         1. The breakpoints are set during `compile` time.
@@ -1474,10 +1474,10 @@ Static interrupts are **not** recommended for human-in-the-loop workflows. Use t
         6. The graph is resumed by passing in `None` for the input. This will run the graph until the next breakpoint is hit.
         :::
         :::js
-        ```typescript highlight={2,3,14,17}
+        ```typescript
         const graph = builder.compile({
-            interruptBefore: ["node_a"],
-            interruptAfter: ["node_b", "node_c"],
+            interruptBefore: ["node_a"],  // [!code highlight]
+            interruptAfter: ["node_b", "node_c"],  // [!code highlight]
             checkpointer,
         });
 
@@ -1489,10 +1489,9 @@ Static interrupts are **not** recommended for human-in-the-loop workflows. Use t
         };
 
         // Run the graph until the breakpoint
-        await graph.invoke(inputs, config);
+        await graph.invoke(inputs, config);# [!code highlight]
 
-        // Resume the graph
-        await graph.invoke(null, config);
+        await graph.invoke(null, config);  # [!code highlight]
         ```
 
         1. The breakpoints are set during `compile` time.
@@ -1505,7 +1504,7 @@ Static interrupts are **not** recommended for human-in-the-loop workflows. Use t
     </Tab>
     <Tab title="At run time">
         :::python
-        ```python highlight={10,11,16}
+        ```python
         config = {
             "configurable": {
                 "thread_id": "some_thread"
@@ -1515,13 +1514,13 @@ Static interrupts are **not** recommended for human-in-the-loop workflows. Use t
         # Run the graph until the breakpoint
         graph.invoke(
             inputs,
-            interrupt_before=["node_a"],
-            interrupt_after=["node_b", "node_c"],
+            interrupt_before=["node_a"],  # [!code highlight]
+            interrupt_after=["node_b", "node_c"],  # [!code highlight]
             config=config,
         )
 
         # Resume the graph
-        graph.invoke(None, config=config)
+        graph.invoke(None, config=config)  # [!code highlight]
         ```
 
         1. `graph.invoke` is called with the `interrupt_before` and `interrupt_after` parameters. This is a run-time configuration and can be changed for every invocation.
@@ -1531,18 +1530,18 @@ Static interrupts are **not** recommended for human-in-the-loop workflows. Use t
         5. The graph is resumed by passing in `None` for the input. This will run the graph until the next breakpoint is hit.
         :::
         :::js
-        ```typescript highlight={3,4,11}
+        ```typescript
         // Run the graph until the breakpoint
         graph.invoke(inputs, {
-            interruptBefore: ["node_a"],
-            interruptAfter: ["node_b", "node_c"],
+            interruptBefore: ["node_a"],  // [!code highlight]
+            interruptAfter: ["node_b", "node_c"],  // [!code highlight]
             configurable: {
                 thread_id: "some_thread"
             }
         });
 
         // Resume the graph
-        await graph.invoke(null, config);
+        await graph.invoke(null, config);  // [!code highlight]
         ```
 
         1. `graph.invoke` is called with the `interruptBefore` and `interruptAfter` parameters. This is a run-time configuration and can be changed for every invocation.

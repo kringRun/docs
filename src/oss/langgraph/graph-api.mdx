@@ -594,9 +594,9 @@ builder.set_finish_point("expensive_node")
 
 graph = builder.compile(cache=InMemoryCache())
 
-print(graph.invoke({"x": 5}, stream_mode='updates'))  # (1)!
+print(graph.invoke({"x": 5}, stream_mode='updates'))    # [!code highlight]
 [{'expensive_node': {'result': 10}}]
-print(graph.invoke({"x": 5}, stream_mode='updates'))  # (2)!
+print(graph.invoke({"x": 5}, stream_mode='updates'))    # [!code highlight]
 [{'expensive_node': {'result': 10}, '__metadata__': {'cached': True}}]
 ```
 
@@ -637,9 +637,9 @@ const graph = new StateGraph(MessagesZodState)
   .addEdge(START, "expensive_node")
   .compile({ cache: new InMemoryCache() });
 
-await graph.invoke({ x: 5 }, { streamMode: "updates" }); // (1)!
+await graph.invoke({ x: 5 }, { streamMode: "updates" });   // [!code highlight]
 // [{"expensive_node": {"result": 10}}]
-await graph.invoke({ x: 5 }, { streamMode: "updates" }); // (2)!
+await graph.invoke({ x: 5 }, { streamMode: "updates" });   // [!code highlight]
 // [{"expensive_node": {"result": 10}, "__metadata__": {"cached": true}}]
 ```
 

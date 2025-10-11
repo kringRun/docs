@@ -917,13 +917,13 @@ Encapsulate side effects (e.g., writing to a file, sending an email) in tasks to
     In this example, a side effect (writing to a file) is directly included in the workflow, so it will be executed a second time when resuming the workflow.
 
     :::python
-    ```python {highlight={5,6}}
+    ```python
     @entrypoint(checkpointer=checkpointer)
     def my_workflow(inputs: dict) -> int:
         # This code will be executed a second time when resuming the workflow.
         # Which is likely not what you want.
-        with open("output.txt", "w") as f:
-            f.write("Side effect executed")
+        with open("output.txt", "w") as f:  # [!code highlight]
+            f.write("Side effect executed")  # [!code highlight]
         value = interrupt("question")
         return value
 ```
@@ -951,11 +951,11 @@ Encapsulate side effects (e.g., writing to a file, sending an email) in tasks to
     In this example, the side effect is encapsulated in a task, ensuring consistent execution upon resumption.
 
     :::python
-    ```typescript {highlight={3,4}}
+    ```python
     from langgraph.func import task
 
-    @task
-    def write_to_file():
+    @task  # [!code highlight]
+    def write_to_file():  # [!code highlight]
         with open("output.txt", "w") as f:
             f.write("Side effect executed")
 
@@ -1015,13 +1015,13 @@ Please read the section on [determinism](#determinism) for more details.
     In this example, the workflow uses the current time to determine which task to execute. This is non-deterministic because the result of the workflow depends on the time at which it is executed.
 
     :::python
-    ```python {highlight={6}}
+    ```python
     from langgraph.func import entrypoint
 
     @entrypoint(checkpointer=checkpointer)
     def my_workflow(inputs: dict) -> int:
         t0 = inputs["t0"]
-        t1 = time.time()
+        t1 = time.time()  # [!code highlight]
 
         delta_t = t1 - t0
 
@@ -1068,19 +1068,19 @@ Please read the section on [determinism](#determinism) for more details.
     :::python
     In this example, the workflow uses the input `t0` to determine which task to execute. This is deterministic because the result of the workflow depends only on the input.
 
-    ```typescript {highlight={5,6,12}}
+    ```python
     import time
 
     from langgraph.func import task
 
-    @task
-    def get_time() -> float:
+    @task  # [!code highlight]
+    def get_time() -> float:  # [!code highlight]
         return time.time()
 
     @entrypoint(checkpointer=checkpointer)
     def my_workflow(inputs: dict) -> int:
         t0 = inputs["t0"]
-        t1 = get_time().result()
+        t1 = get_time().result()  # [!code highlight]
 
         delta_t = t1 - t0
 

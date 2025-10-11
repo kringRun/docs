@@ -37,19 +37,19 @@ To add short-term memory (thread-level persistence) to an agent, you need to spe
 </Info>
 
 :::python
-```python {highlight={2,7,12}}
+```python
 from langchain.agents import create_agent
-from langgraph.checkpoint.memory import InMemorySaver
+from langgraph.checkpoint.memory import InMemorySaver  # [!code highlight]
 
 agent = create_agent(
     "openai:gpt-5",
     [get_user_info],
-    checkpointer=InMemorySaver(),
+    checkpointer=InMemorySaver(),  # [!code highlight]
 )
 
 agent.invoke(
     {"messages": [{"role": "user", "content": "Hi! My name is Bob."}]},
-    {"configurable": {"thread_id": "1"}},
+    {"configurable": {"thread_id": "1"}},  # [!code highlight]
 )
 ```
 :::
@@ -78,16 +78,16 @@ await agent.invoke(
 In production, use a checkpointer backed by a database:
 
 :::python
-```python {highlight={2,9}}
+```python
 from langchain.agents import create_agent
-from langgraph.checkpoint.postgres import PostgresSaver
+from langgraph.checkpoint.postgres import PostgresSaver  # [!code highlight]
 
 DB_URI = "postgresql://postgres:postgres@localhost:5442/postgres?sslmode=disable"
 with PostgresSaver.from_conn_string(DB_URI) as checkpointer:
     agent = create_agent(
         "openai:gpt-5",
         [get_user_info],
-        checkpointer=checkpointer,
+        checkpointer=checkpointer,  # [!code highlight]
     )
 ```
 :::
@@ -110,36 +110,34 @@ Users can subclass `AgentState` to add additional fields to the state.
 This custom state can then be accessed via tools and dynamic prompt / model functions.
 
 :::python
-```python highlight={3-5,10}
+```python
 from langchain.agents import create_agent, AgentState
 from langgraph.checkpoint.memory import InMemorySaver
-
-class CustomAgentState(AgentState):
-    user_id: str
+class CustomAgentState(AgentState):  # [!code highlight]
+    user_id: str  # [!code highlight]
 
 agent = create_agent(
     "openai:gpt-5",
     [get_user_info],
-    state_schema=CustomAgentState,
+    state_schema=CustomAgentState,  # [!code highlight]
     checkpointer=InMemorySaver(),
 )
 ```
 :::
 :::js
-```typescript highlight={4-7,13}
+```typescript
 import { z } from "zod";
 import { createAgent } from "langchain";
 import { MemorySaver } from "@langchain/langgraph";
-
-const stateSchema = z.object({
-    messages: z.array(z.any()),
-});
+const stateSchema = z.object({  // [!code highlight]
+    messages: z.array(z.any()),  // [!code highlight]
+}); // [!code highlight]
 
 const checkpointer = new MemorySaver();
 const agent = createAgent({
     model: "openai:gpt-5",
     tools: [],
-    stateSchema,
+    stateSchema,  // [!code highlight]
     checkpointer,
 });
 ```
@@ -271,23 +269,23 @@ The default `AgentState` provides this.
 
 To remove specific messages:
 
-```python {highlight={1,7}}
-from langchain.messages import RemoveMessage
+```python
+from langchain.messages import RemoveMessage  # [!code highlight]
 
 def delete_messages(state):
     messages = state["messages"]
     if len(messages) > 2:
         # remove the earliest two messages
-        return {"messages": [RemoveMessage(id=m.id) for m in messages[:2]]}
+        return {"messages": [RemoveMessage(id=m.id) for m in messages[:2]]}  # [!code highlight]
 ```
 
 To remove **all** messages:
 
-```python {highlight={1,4}}
-from langgraph.graph.message import REMOVE_ALL_MESSAGES
+```python
+from langgraph.graph.message import REMOVE_ALL_MESSAGES  # [!code highlight]
 
 def delete_messages(state):
-    return {"messages": [RemoveMessage(id=REMOVE_ALL_MESSAGES)]}
+    return {"messages": [RemoveMessage(id=REMOVE_ALL_MESSAGES)]}  # [!code highlight]
 ```
 :::
 
@@ -448,7 +446,7 @@ To summarize message history in an agent, use @[`pre_model_hook`][create_agent] 
 
 {/* TODO: FIX THIS EXAMPLE, NOT ABLE TO RUN */}
 
-```python {highlight={22,30,31}}
+```python
 from langmem.short_term import SummarizationNode, RunningSummary
 from langchain_core.messages.utils import count_tokens_approximately
 from langchain.agents import create_agent, AgentState
@@ -470,15 +468,14 @@ class State(AgentState):
     # Added for the SummarizationNode to be able to keep track of the running summary information
     context: dict[str, RunningSummary]
 
-
-checkpointer = InMemorySaver()
+checkpointer = InMemorySaver()  # [!code highlight]
 
 agent = create_agent(
     model=model,
     tools=[],
     pre_model_hook=summarization_node,
     state_schema=State,
-    checkpointer=checkpointer,
+    checkpointer=checkpointer,  # [!code highlight]
 )
 
 config: RunnableConfig = {"configurable": {"thread_id": "1"}}
@@ -593,7 +590,7 @@ To modify the agent's short-term memory (state) during execution, you can return
 This is useful for persisting intermediate results or making information accessible to subsequent tools or prompts.
 
 :::python
-```python {highlight={10,19,20,31,40,45}}
+```python
 from typing import Annotated
 from langchain.tools import InjectedToolCallId, InjectedState
 from langchain_core.runnables import RunnableConfig
@@ -603,7 +600,7 @@ from langgraph.runtime import get_runtime
 from langgraph.types import Command
 from pydantic import BaseModel
 
-class CustomState(AgentState):
+class CustomState(AgentState):  # [!code highlight]
     user_name: str
 
 class CustomContext(BaseModel):
@@ -613,7 +610,7 @@ def update_user_info(
     tool_call_id: Annotated[str, InjectedToolCallId],
 ) -> Command:
     """Look up and update user info."""
-    runtime = get_runtime(CustomContext)
+    runtime = get_runtime(CustomContext)  # [!code highlight]
     user_id = runtime.context.user_id
     name = "John Smith" if user_id == "user_123" else "Unknown user"
     return Command(update={
@@ -633,12 +630,12 @@ def greet(
     """Use this to greet the user once you found their info."""
     user_name = state["user_name"]
     return f"Hello {user_name}!"
-
+  # [!code highlight]
 agent = create_agent(
     model="openai:gpt-5-nano",
     tools=[update_user_info, greet],
     state_schema=CustomState,
-    context_schema=CustomContext,
+    context_schema=CustomContext,  # [!code highlight]
 )
 
 agent.invoke(
