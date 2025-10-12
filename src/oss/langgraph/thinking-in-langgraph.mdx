@@ -9,7 +9,7 @@ LangGraph can change how you think about the agents you build. When you build an
 
 Imagine that you need to build an AI agent that handles customer support emails. Your product team has given you these requirements:
 
-**The agent should:**
+The agent should:
 
 - Read incoming customer emails
 - Classify them by urgency and topic
@@ -18,19 +18,39 @@ Imagine that you need to build an AI agent that handles customer support emails.
 - Escalate complex issues to human agents
 - Schedule follow-ups when needed
 
-**Example scenarios to handle:**
+Example scenarios to handle:
 
-1. **Simple product question**: "How do I reset my password?"
-2. **Bug report**: "The export feature crashes when I select PDF format"
-3. **Urgent billing issue**: "I was charged twice for my subscription!"
-4. **Feature request**: "Can you add dark mode to the mobile app?"
-5. **Complex technical issue**: "Our API integration fails intermittently with 504 errors"
+1. Simple product question: "How do I reset my password?"
+2. Bug report: "The export feature crashes when I select PDF format"
+3. Urgent billing issue: "I was charged twice for my subscription!"
+4. Feature request: "Can you add dark mode to the mobile app?"
+5. Complex technical issue: "Our API integration fails intermittently with 504 errors"
 
 To implement an agent in LangGraph, you will usually follow the same five steps.
 
 ## Step 1: Map out your workflow as discrete steps
 
 Start by identifying the distinct steps in your process. Each step will become a **node** (a function that does one specific thing). Then sketch how these steps connect to each other.
+
+```mermaid
+flowchart TD
+    A[START] --> B[Read Email]
+    B --> C[Classify Intent]
+    
+    C -.-> D[Doc Search]
+    C -.-> E[Bug Track]
+    C -.-> F[Human Review]
+    
+    D --> G[Draft Reply]
+    E --> G
+    F --> G
+    
+    G -.-> H[Human Review]
+    G --> I[Send Reply]
+    
+    H --> J[END]
+    I --> J[END]
+```
 
 ```
             ┌─────────────┐
@@ -74,13 +94,13 @@ The arrows show possible paths, but the actual decision of which path to take ha
 
 Now that you've identified the components in your workflow, let's understand what each node needs to do:
 
-- **Read Email**: Extract and parse the email content
-- **Classify Intent**: Use an LLM to categorize urgency and topic, then route to appropriate action
-- **Doc Search**: Query your knowledge base for relevant information
-- **Bug Track**: Create or update issue in tracking system
-- **Draft Reply**: Generate an appropriate response
-- **Human Review**: Escalate to human agent for approval or handling
-- **Send Reply**: Dispatch the email response
+- Read Email: Extract and parse the email content
+- Classify Intent: Use an LLM to categorize urgency and topic, then route to appropriate action
+- Doc Search: Query your knowledge base for relevant information
+- Bug Track: Create or update issue in tracking system
+- Draft Reply: Generate an appropriate response
+- Human Review: Escalate to human agent for approval or handling
+- Send Reply: Dispatch the email response
 
 Notice that some nodes make decisions about where to go next (Classify Intent, Draft Reply, Human Review), while others always proceed to the same next step (Read Email always goes to Classify Intent, Doc Search always goes to Draft Reply).
 
@@ -89,16 +109,16 @@ Notice that some nodes make decisions about where to go next (Classify Intent, D
 For each node in your graph, determine what type of operation it represents and what context it needs to work properly.
 
 <CardGroup cols={2}>
-  <Card title="LLM Steps" icon="brain">
+  <Card title="LLM Steps" icon="brain" href="#llm-steps">
     Use when you need to understand, analyze, generate text, or make reasoning decisions
   </Card>
-  <Card title="Data Steps" icon="database">
+  <Card title="Data Steps" icon="database" href="#data-steps">
     Use when you need to retrieve information from external sources
   </Card>
-  <Card title="Action Steps" icon="bolt">
+  <Card title="Action Steps" icon="bolt" href="#action-steps">
     Use when you need to perform external actions
   </Card>
-  <Card title="User Input Steps" icon="user">
+  <Card title="User Input Steps" icon="user" href="#user-input-steps">
     Use when you need human intervention
   </Card>
 </CardGroup>
@@ -109,15 +129,15 @@ When a step needs to understand, analyze, generate text, or make reasoning decis
 
 <AccordionGroup>
   <Accordion title="Classify Intent Node">
-    - **Static context (prompt)**: Classification categories, urgency definitions, response format
-    - **Dynamic context (from state)**: Email content, sender information
-    - **Desired outcome**: Structured classification that determines routing
+    - Static context (prompt): Classification categories, urgency definitions, response format
+    - Dynamic context (from state): Email content, sender information
+    - Desired outcome: Structured classification that determines routing
   </Accordion>
 
   <Accordion title="Draft Reply Node">
-    - **Static context (prompt)**: Tone guidelines, company policies, response templates
-    - **Dynamic context (from state)**: Classification results, search results, customer history
-    - **Desired outcome**: Professional email response ready for review
+    - Static context (prompt): Tone guidelines, company policies, response templates
+    - Dynamic context (from state): Classification results, search results, customer history
+    - Desired outcome: Professional email response ready for review
   </Accordion>
 </AccordionGroup>
 
@@ -127,15 +147,15 @@ When a step needs to retrieve information from external sources:
 
 <AccordionGroup>
   <Accordion title="Doc Search Node">
-    - **Parameters**: Query built from intent and topic
-    - **Retry strategy**: Yes, with exponential backoff for transient failures
-    - **Caching**: Could cache common queries to reduce API calls
+    - Parameters: Query built from intent and topic
+    - Retry strategy: Yes, with exponential backoff for transient failures
+    - Caching: Could cache common queries to reduce API calls
   </Accordion>
 
   <Accordion title="Customer History Lookup">
-    - **Parameters**: Customer email or ID from state
-    - **Retry strategy**: Yes, but with fallback to basic info if unavailable
-    - **Caching**: Yes, with time-to-live to balance freshness and performance
+    - Parameters: Customer email or ID from state
+    - Retry strategy: Yes, but with fallback to basic info if unavailable
+    - Caching: Yes, with time-to-live to balance freshness and performance
   </Accordion>
 </AccordionGroup>
 
@@ -145,15 +165,15 @@ When a step needs to perform an external action:
 
 <AccordionGroup>
   <Accordion title="Send Reply Node">
-    - **When to execute**: After approval (human or automated)
-    - **Retry strategy**: Yes, with exponential backoff for network issues
-    - **Should not cache**: Each send is a unique action
+    - When to execute: After approval (human or automated)
+    - Retry strategy: Yes, with exponential backoff for network issues
+    - Should not cache: Each send is a unique action
   </Accordion>
 
   <Accordion title="Bug Track Node">
-    - **When to execute**: Always when intent is "bug"
-    - **Retry strategy**: Yes, critical to not lose bug reports
-    - **Returns**: Ticket ID to include in response
+    - When to execute: Always when intent is "bug"
+    - Retry strategy: Yes, critical to not lose bug reports
+    - Returns: Ticket ID to include in response
   </Accordion>
 </AccordionGroup>
 
@@ -163,9 +183,9 @@ When a step needs human intervention:
 
 <AccordionGroup>
   <Accordion title="Human Review Node">
-    - **Context for decision**: Original email, draft response, urgency, classification
-    - **Expected input format**: Approval boolean plus optional edited response
-    - **When triggered**: High urgency, complex issues, or quality concerns
+    - Context for decision: Original email, draft response, urgency, classification
+    - Expected input format: Approval boolean plus optional edited response
+    - When triggered: High urgency, complex issues, or quality concerns
   </Accordion>
 </AccordionGroup>
 
@@ -177,8 +197,15 @@ State is the shared [memory](/oss/concepts/memory) accessible to all nodes in yo
 
 Ask yourself these questions about each piece of data:
 
-- **Does it need to persist across steps?** If yes, it goes in state.
-- **Can you derive it from other data?** If yes, compute it when needed instead of storing it in state.
+<CardGroup cols={2}>
+  <Card title="Include in State" icon="check">
+    Does it need to persist across steps? If yes, it goes in state.
+  </Card>
+
+  <Card title="Don't Store" icon="code">
+    Can you derive it from other data? If yes, compute it when needed instead of storing it in state.
+  </Card>
+</CardGroup>
 
 For our email agent, we need to track:
 
@@ -240,14 +267,14 @@ Now we implement each step as a function. A node in LangGraph is just a Python f
 
 Different errors need different handling strategies:
 
-| Error Type | Strategy | When to Use |
-|------------|----------|-------------|
-| **Transient errors** (network issues, rate limits) | Retry policy | Temporary failures that usually resolve on retry |
-| **LLM-recoverable errors** (tool failures, parsing issues) | Store error in state and loop back | LLM can adjust its approach based on the error |
-| **User-fixable errors** (missing credentials, unclear instructions) | Pause with `interrupt()` | Need human input to proceed |
-| **Unexpected errors** | Let them bubble up | Unknown issues that need debugging |
+| Error Type | Who Fixes It | Strategy | When to Use |
+|------------|--------------|----------|-------------|
+| Transient errors (network issues, rate limits) | System (automatic) | Retry policy | Temporary failures that usually resolve on retry |
+| LLM-recoverable errors (tool failures, parsing issues) | LLM | Store error in state and loop back | LLM can see the error and adjust its approach |
+| User-fixable errors (missing credentials, unclear instructions) | Human | Pause with `interrupt()` | Need human input to proceed |
+| Unexpected errors | Developer | Let them bubble up | Unknown issues that need debugging |
 
-**Transient errors (network issues, rate limits)** - Add a retry policy to automatically retry:
+Transient errors (network issues, rate limits) - Add a retry policy to automatically retry:
 
 ```python
 from langgraph.types import RetryPolicy
@@ -259,7 +286,7 @@ workflow.add_node(
 )
 ```
 
-**LLM-recoverable errors (tool failures, parsing issues)** - Store the error in state and loop back:
+LLM-recoverable errors (tool failures, parsing issues) - Store the error in state and loop back:
 
 ```python
 def execute_tool(state: State) -> Command[Literal["agent", "execute_tool"]]:
@@ -274,7 +301,7 @@ def execute_tool(state: State) -> Command[Literal["agent", "execute_tool"]]:
         )
 ```
 
-**User-fixable errors (missing credentials, unclear instructions)** - Pause and ask for help:
+User-fixable errors (missing credentials, unclear instructions) - Pause and ask for help:
 
 ```python
 def draft_response(state: State) -> Command[Literal["continue"]]:
@@ -289,7 +316,16 @@ def draft_response(state: State) -> Command[Literal["continue"]]:
         )
 ```
 
-**Unexpected errors** - Let them bubble up for debugging. Don't catch what you can't handle.
+Unexpected errors - Let them bubble up for debugging. Don't catch what you can't handle.
+
+```python
+def send_reply(state: EmailAgentState):
+    try:
+        email_service.send(state["draft_response"])
+    except Exception:
+        raise  # Surface unexpected errors
+```
+
 
 ### Implementing our email agent nodes
 
@@ -558,17 +594,31 @@ The graph pauses when it hits `interrupt()`, saves everything to the checkpointe
 
 Building this email agent has shown us the LangGraph way of thinking:
 
-**Break complex processes into discrete steps.** Each node does one thing well. This decomposition enables streaming progress updates, durable execution that can pause and resume, and clear debugging since you can inspect state between steps.
+<CardGroup cols={2}>
+  <Card title="Break into discrete steps" icon="sitemap">
+    Each node does one thing well. This decomposition enables streaming progress updates, durable execution that can pause and resume, and clear debugging since you can inspect state between steps.
+  </Card>
 
-**State flows through your graph like a shared notebook.** Store raw data, not formatted text. This lets different nodes use the same information in different ways.
+  <Card title="State is a shared notebook" icon="book">
+    Store raw data, not formatted text. This lets different nodes use the same information in different ways.
+  </Card>
 
-**Nodes are just functions.** They take state, do work, and return updates. When they need to make routing decisions, they specify both the state updates and the next destination.
+  <Card title="Nodes are functions" icon="code">
+    They take state, do work, and return updates. When they need to make routing decisions, they specify both the state updates and the next destination.
+  </Card>
 
-**Errors are part of the flow.** Transient failures get retries, LLM-recoverable errors loop back with context, user-fixable problems pause for input, and unexpected errors bubble up for debugging.
+  <Card title="Errors are part of the flow" icon="triangle-exclamation">
+    Transient failures get retries, LLM-recoverable errors loop back with context, user-fixable problems pause for input, and unexpected errors bubble up for debugging.
+  </Card>
 
-**Human input is a first-class concept.** The `interrupt()` function pauses execution indefinitely, saves all state, and resumes exactly where it left off when you provide input. When combined with other operations in a node, it must come first.
+  <Card title="Human input is first-class" icon="user">
+    The `interrupt()` function pauses execution indefinitely, saves all state, and resumes exactly where it left off when you provide input. When combined with other operations in a node, it must come first.
+  </Card>
 
-The graph structure emerges naturally from your process. You define the essential connections, and your nodes handle their own routing logic. This keeps control flow explicit and traceable - you can always understand what your agent will do next by looking at the current node.
+  <Card title="Graph structure emerges naturally" icon="diagram-project">
+    You define the essential connections, and your nodes handle their own routing logic. This keeps control flow explicit and traceable - you can always understand what your agent will do next by looking at the current node.
+  </Card>
+</CardGroup>
 
 ### Advanced considerations
 
@@ -578,35 +628,52 @@ This section explores the trade-offs in node granularity design. Most applicatio
 
 #### Node granularity trade-offs
 
-You might wonder: why not combine Read Email and Classify Intent into one node? Or why separate Doc Search from Draft Reply? The answer involves trade-offs between resilience, observability, and performance.
+You might wonder: why not combine Read Email and Classify Intent into one node? Or why separate Doc Search from Draft Reply? The answer involves trade-offs between resilience and observability.
 
-**The performance consideration:** LangGraph serializes and deserializes state at each node boundary, creating a checkpoint. This overhead is typically small (milliseconds), but it does exist. For most applications, this is negligible compared to LLM and API call latencies. However, if you're building an extremely latency-sensitive application, you might choose to combine nodes to reduce the number of checkpoints.
+The resilience consideration: LangGraph's [durable execution](/oss/langgraph/durable-execution) creates checkpoints at node boundaries. When a workflow resumes after an interruption or failure, it starts from the beginning of the node where execution stopped. Smaller nodes mean more frequent checkpoints, which means less work to repeat if something goes wrong. If you combine multiple operations into one large node, a failure near the end means re-executing everything from the start of that node.
 
-**The resilience consideration:** LangGraph's [durable execution](/oss/langgraph/durable-execution) creates checkpoints at node boundaries. When a workflow resumes after an interruption or failure, it starts from the beginning of the node where execution stopped. Smaller nodes mean more frequent checkpoints, which means less work to repeat if something goes wrong. If you combine multiple operations into one large node, a failure near the end means re-executing everything from the start of that node.
+Why we chose this breakdown for the email agent:
 
-**Why we chose this breakdown for the email agent:**
+- Isolation of external services: Doc Search and Bug Track are separate nodes because they call external APIs. If the search service is slow or fails, we want to isolate that from the LLM calls. We can add retry policies to these specific nodes without affecting others.
 
-- **Isolation of external services**: Doc Search and Bug Track are separate nodes because they call external APIs. If the search service is slow or fails, we want to isolate that from the LLM calls. We can add retry policies to these specific nodes without affecting others.
+- Intermediate visibility: Having Classify Intent as its own node lets us inspect what the LLM decided before taking action. This is valuable for debugging and monitoring—you can see exactly when and why the agent routes to human review.
 
-- **Intermediate visibility**: Having Classify Intent as its own node lets us inspect what the LLM decided before taking action. This is valuable for debugging and monitoring—you can see exactly when and why the agent routes to human review.
+- Different failure modes: LLM calls, database lookups, and email sending have different retry strategies. Separate nodes let you configure these independently.
 
-- **Different failure modes**: LLM calls, database lookups, and email sending have different retry strategies. Separate nodes let you configure these independently.
+- Reusability and testing: Smaller nodes are easier to test in isolation and reuse in other workflows.
 
-- **Reusability and testing**: Smaller nodes are easier to test in isolation and reuse in other workflows.
+A different valid approach: You could combine Read Email and Classify Intent into a single node. You'd lose the ability to inspect the raw email before classification and would repeat both operations on any failure in that node. For most applications, the observability and debugging benefits of separate nodes are worth the trade-off.
 
-**Application-level concerns:** The caching discussion in Step 2 (whether to cache search results) is an application-level decision, not a LangGraph framework feature. You implement caching within your node functions based on your specific requirements—LangGraph doesn't prescribe this.
+Application-level concerns: The caching discussion in Step 2 (whether to cache search results) is an application-level decision, not a LangGraph framework feature. You implement caching within your node functions based on your specific requirements—LangGraph doesn't prescribe this.
 
-**A different valid approach:** You could combine Read Email and Classify Intent into a single node to reduce one checkpoint. The performance gain would be small (one less serialization/deserialization), but you'd lose the ability to inspect the raw email before classification and would repeat both operations on any failure in that node. For most applications, the observability and debugging benefits of separate nodes outweigh the minimal performance cost.
-
-**Tuning durability vs. performance:** If checkpointing overhead becomes a concern for your application, you can adjust the [durability mode](/oss/langgraph/durable-execution#durability-modes) when executing your graph. The default `"async"` mode provides good performance while maintaining durability. For maximum performance in long-running graphs where you don't need mid-execution recovery, use `"exit"` mode (checkpoints only at completion). For critical workflows where you need guaranteed checkpoint writes, use `"sync"` mode.
+Controlling checkpoint behavior: You can adjust when checkpoints are written using [durability modes](/oss/langgraph/durable-execution#durability-modes). The default `"async"` mode writes checkpoints in the background for good performance while maintaining durability. Use `"exit"` mode to checkpoint only at completion (faster for long-running graphs where mid-execution recovery isn't needed), or `"sync"` mode for guaranteed checkpoint writes before proceeding (critical workflows where data loss isn't acceptable).
 
 ### Where to go from here
 
 This was an introduction to thinking about building agents with LangGraph. You can extend this foundation with:
 
-- **Enhanced human-in-the-loop patterns**: Learn how to add [tool approval before execution, batch approval, and other patterns](/oss/langgraph/add-human-in-the-loop)
-- **Create subgraphs** for [complex multi-step operations](/oss/langgraph/use-subgraphs)
-- **Add streaming** to [show real-time progress to users](/oss/langgraph/streaming)
-- **Integrate more tools** for web search, database queries, and API calls
-- **Implement retry logic** with exponential backoff for failed operations
-- **Add observability** with [LangSmith for debugging and monitoring](/oss/langgraph/observability)
+<CardGroup cols={2}>
+  <Card title="Human-in-the-loop patterns" icon="user-check" href="/oss/langgraph/add-human-in-the-loop">
+    Learn how to add tool approval before execution, batch approval, and other patterns
+  </Card>
+
+  <Card title="Subgraphs" icon="diagram-nested" href="/oss/langgraph/use-subgraphs">
+    Create subgraphs for complex multi-step operations
+  </Card>
+
+  <Card title="Streaming" icon="tower-broadcast" href="/oss/langgraph/streaming">
+    Add streaming to show real-time progress to users
+  </Card>
+
+  <Card title="Observability" icon="chart-line" href="/oss/langgraph/observability">
+    Add observability with LangSmith for debugging and monitoring
+  </Card>
+
+  <Card title="Tool Integration" icon="wrench" href="/oss/langchain/tools">
+    Integrate more tools for web search, database queries, and API calls
+  </Card>
+
+  <Card title="Retry Logic" icon="rotate" href="/oss/langgraph/use-graph-api#add-retry-policies">
+    Implement retry logic with exponential backoff for failed operations
+  </Card>
+</CardGroup>
