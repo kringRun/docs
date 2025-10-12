@@ -86,67 +86,88 @@ Notice that some nodes make decisions about where to go next (Classify Intent, D
 
 ## Step 2: Identify what each step needs to do
 
-For each node in your graph, determine what type of operation it represents and what context needs to work properly.
+For each node in your graph, determine what type of operation it represents and what context it needs to work properly.
+
+<CardGroup cols={2}>
+  <Card title="LLM Steps" icon="brain">
+    Use when you need to understand, analyze, generate text, or make reasoning decisions
+  </Card>
+  <Card title="Data Steps" icon="database">
+    Use when you need to retrieve information from external sources
+  </Card>
+  <Card title="Action Steps" icon="bolt">
+    Use when you need to perform external actions
+  </Card>
+  <Card title="User Input Steps" icon="user">
+    Use when you need human intervention
+  </Card>
+</CardGroup>
 
 ### LLM Steps
 
 When a step needs to understand, analyze, generate text, or make reasoning decisions:
 
-**Classify Intent Node:**
+<AccordionGroup>
+  <Accordion title="Classify Intent Node">
+    - **Static context (prompt)**: Classification categories, urgency definitions, response format
+    - **Dynamic context (from state)**: Email content, sender information
+    - **Desired outcome**: Structured classification that determines routing
+  </Accordion>
 
-- **Static context (prompt)**: Classification categories, urgency definitions, response format
-- **Dynamic context (from state)**: Email content, sender information
-- **Desired outcome**: Structured classification that determines routing
-
-**Draft Reply Node:**
-
-- **Static context (prompt)**: Tone guidelines, company policies, response templates
-- **Dynamic context (from state)**: Classification results, search results, customer history
-- **Desired outcome**: Professional email response ready for review
+  <Accordion title="Draft Reply Node">
+    - **Static context (prompt)**: Tone guidelines, company policies, response templates
+    - **Dynamic context (from state)**: Classification results, search results, customer history
+    - **Desired outcome**: Professional email response ready for review
+  </Accordion>
+</AccordionGroup>
 
 ### Data Steps
 
 When a step needs to retrieve information from external sources:
 
-**Doc Search Node:**
+<AccordionGroup>
+  <Accordion title="Doc Search Node">
+    - **Parameters**: Query built from intent and topic
+    - **Retry strategy**: Yes, with exponential backoff for transient failures
+    - **Caching**: Could cache common queries to reduce API calls
+  </Accordion>
 
-- **Parameters**: Query built from intent and topic
-- **Retry strategy**: Yes, with exponential backoff for transient failures
-- **Caching**: Could cache common queries to reduce API calls
-
-**Customer History Lookup:**
-
-- **Parameters**: Customer email or ID from state
-- **Retry strategy**: Yes, but with fallback to basic info if unavailable
-- **Caching**: Yes, with time-to-live to balance freshness and performance
+  <Accordion title="Customer History Lookup">
+    - **Parameters**: Customer email or ID from state
+    - **Retry strategy**: Yes, but with fallback to basic info if unavailable
+    - **Caching**: Yes, with time-to-live to balance freshness and performance
+  </Accordion>
+</AccordionGroup>
 
 ### Action Steps
 
 When a step needs to perform an external action:
 
-**Send Reply Node:**
+<AccordionGroup>
+  <Accordion title="Send Reply Node">
+    - **When to execute**: After approval (human or automated)
+    - **Retry strategy**: Yes, with exponential backoff for network issues
+    - **Should not cache**: Each send is a unique action
+  </Accordion>
 
-- **When to execute**: After approval (human or automated)
-- **Retry strategy**: Yes, with exponential backoff for network issues
-- **Should not cache**: Each send is a unique action
-
-**Bug Track Node:**
-
-- **When to execute**: Always when intent is "bug"
-- **Retry strategy**: Yes, critical to not lose bug reports
-- **Returns**: Ticket ID to include in response
+  <Accordion title="Bug Track Node">
+    - **When to execute**: Always when intent is "bug"
+    - **Retry strategy**: Yes, critical to not lose bug reports
+    - **Returns**: Ticket ID to include in response
+  </Accordion>
+</AccordionGroup>
 
 ### User Input Steps
 
 When a step needs human intervention:
 
-**Human Review Node:**
-
-- **Context for decision**: Original email, draft response, urgency, classification
-- **Expected input format**: Approval boolean plus optional edited response
-- **When triggered**: High urgency, complex issues, or quality concerns
-
-Note: When combining user input with other operations in the same node, always put the `interrupt()` call first. Any code before it will re-run when the graph resumes.
+<AccordionGroup>
+  <Accordion title="Human Review Node">
+    - **Context for decision**: Original email, draft response, urgency, classification
+    - **Expected input format**: Approval boolean plus optional edited response
+    - **When triggered**: High urgency, complex issues, or quality concerns
+  </Accordion>
+</AccordionGroup>
 
 ## Step 3: Design your state
 
@@ -169,7 +190,11 @@ For our email agent, we need to track:
 
 ### Keep state raw, format prompts on-demand
 
-A key principle: your state should store raw data, not formatted text. Format prompts inside nodes when you need them. This separation means:
+<Tip>
+A key principle: your state should store raw data, not formatted text. Format prompts inside nodes when you need them.
+</Tip>
+
+This separation means:
 
 - Different nodes can format the same data differently for their needs
 - You can change prompt templates without modifying your state schema
@@ -214,6 +239,13 @@ Now we implement each step as a function. A node in LangGraph is just a Python f
 ### Handle errors appropriately
 
 Different errors need different handling strategies:
+
+| Error Type | Strategy | When to Use |
+|------------|----------|-------------|
+| **Transient errors** (network issues, rate limits) | Retry policy | Temporary failures that usually resolve on retry |
+| **LLM-recoverable errors** (tool failures, parsing issues) | Store error in state and loop back | LLM can adjust its approach based on the error |
+| **User-fixable errors** (missing credentials, unclear instructions) | Pause with `interrupt()` | Need human input to proceed |
+| **Unexpected errors** | Let them bubble up | Unknown issues that need debugging |
 
 **Transient errors (network issues, rate limits)** - Add a retry policy to automatically retry:
 
@@ -260,6 +292,10 @@ def draft_response(state: State) -> Command[Literal["continue"]]:
 **Unexpected errors** - Let them bubble up for debugging. Don't catch what you can't handle.
 
 ### Implementing our email agent nodes
+
+We'll implement each node as a simple function. Remember: nodes take state, do work, and return updates.
+
+#### Read and classify nodes
 
 ```python
 from typing import Literal
@@ -312,7 +348,11 @@ def classify_intent(state: EmailAgentState) -> Command[Literal["search_documenta
         update={"classification": classification},
         goto=goto
     )
+```
 
+#### Search and tracking nodes
+
+```python
 def search_documentation(state: EmailAgentState) -> Command[Literal["draft_response"]]:
     """Search knowledge base for relevant information"""
 
@@ -350,7 +390,11 @@ def bug_tracking(state: EmailAgentState) -> Command[Literal["draft_response"]]:
         },
         goto="draft_response"
     )
+```
 
+#### Response nodes
+
+```python
 def draft_response(state: EmailAgentState) -> Command[Literal["human_review", "send_reply"]]:
     """Generate response using context and route based on quality"""
 
@@ -527,6 +571,10 @@ Building this email agent has shown us the LangGraph way of thinking:
 The graph structure emerges naturally from your process. You define the essential connections, and your nodes handle their own routing logic. This keeps control flow explicit and traceable - you can always understand what your agent will do next by looking at the current node.
 
 ### Advanced considerations
+
+<Info>
+This section explores the trade-offs in node granularity design. Most applications can skip this and use the patterns shown above.
+</Info>
 
 #### Node granularity trade-offs
 
